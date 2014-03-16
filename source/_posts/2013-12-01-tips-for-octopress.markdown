@@ -4,6 +4,9 @@ title: "tips for octopress"
 date: 2013-12-01 14:52
 comments: true
 categories: 
+- 扫盲随记
+tags:
+- Octopress
 ---
 周末，把之前建立的Octopress blog在新机器上重新配置了下，顺便整理一下配置过程，以备查询。从头配置一个Octopress blog，可以直接参照[官方文档](http://octopress.org/docs/setup/)，步骤很清晰，没有什么难度。这篇文档主要整理如何在windows上重新部署Octopress。
 <!--more-->
