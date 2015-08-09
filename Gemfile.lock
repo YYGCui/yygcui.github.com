@@ -83,9 +83,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rdiscount (2.1.7.1)
     redcarpet (3.2.2)
-    rubypants (0.2.0)
     safe_yaml (1.0.4)
     sass (3.4.9)
     sass-globbing (1.0.0)
@@ -113,12 +111,11 @@ DEPENDENCIES
   haml (~> 4.0)
   jekyll (~> 2.0)
   jekyll-sitemap
+  kramdown
   octopress-date-format (~> 2.0)
   octopress-hooks (~> 2.2)
   rake (~> 10.0)
   rb-fsevent (~> 0.9)
-  rdiscount (~> 2.0)
-  rubypants (~> 0.2.0)
   sass-globbing (~> 1.0.0)
   sinatra (~> 1.4.2)
   stringex (~> 1.4.0)

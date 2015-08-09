@@ -1,2 +1,50 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+p,blockquote,ul,ol{margin-bottom: 0.618em}  /* 调整行距*/
+
+#markdown-toc:before {
+    content: "Table of Contents";
+    font-weight: bold;
+}
+ul#markdown-toc {
+    list-style: none;
+    margin-left:0px;
+    @include shadow-box;
+    background-color: white;
+}
+.blog-index #markdown-toc {
+    display: none;
+}
+
+div.footnotes{
+    border-top: 1px dashed grey;
+    font-size: 0.8em;
+    
+}
+
+div.footnotes > ol:before{
+    margin-left: -20px;
+    font-weight: bold;
+    content: "Footnotes";
+}
+
+div.footnotes p{
+    margin-bottom: 0px;
+}
+
+a[rel="footnote"]:after{
+    content: "]";
+}
+
+a[rel="footnote"]:before{
+    content: "[";
+}
+
+a[rev="footnote"]:after{
+    content: "]";
+}
+
+a[rev="footnote"]:before{
+    content: "[";
+}

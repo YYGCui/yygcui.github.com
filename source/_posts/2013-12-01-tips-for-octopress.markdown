@@ -13,7 +13,7 @@ tags:
 环境配置
 ----------
 1. 安装[Git for windows](DefaultConfig.bin)。
-2. 安装[Ruby for windows](http://rubyinstaller.org/downloads/)，建议使用1.9.3版本。安装完成后讲个人环境变量中`Path`的值添加到系统环境变量`Path`中。
+2. 安装[Ruby for windows](http://rubyinstaller.org/downloads/)，建议使用1.9.3版本。安装完成后将个人环境变量中`Path`的值添加到系统环境变量`Path`中。
 3. 安装[Ruby Develop Kit](http://rubyinstaller.org/downloads/)，该安装包是一压缩文件，安装就是解压到某一目录，如`D:/RubyDevKit`。然后打开`Git Bash`运行如下命令：
 
 		cd D:/RubyDevKit
