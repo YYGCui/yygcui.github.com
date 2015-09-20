@@ -20,10 +20,10 @@ tags:
 
 在大多数Linux发布版中，Core dump是默认不开启的。可以使用命令ulimit -c来查看core file的大小限制以及配置开启core dump。
 
-~~~ bash
+{% codeblock lang:bash %}
 $ulimit -c
 0 #0个字节说明不能创建core file, core dump没有开启
-~~~
+{% endcodeblock %}
 
 <!-- more -->
 
@@ -31,17 +31,17 @@ $ulimit -c
 
 编辑/etc/profile，找到如下行
 
-~~~ bash
+{% codeblock lang:bash %}
 # No core files by default
 ulimit -S -c 0 > /dev/null 2>&1
-~~~
+{% endcodeblock %}
 
 修改为
 
-~~~ bash    
+{% codeblock lang:bash %}
 # No core files by default
 ulimit -S -c unlimited > /dev/null 2>&1
-~~~
+{% endcodeblock %}
 
 可编辑/etc/sysctl.conf，配置core file文件名以及文件存储位置等，如下：
 
@@ -67,7 +67,7 @@ ulimit -S -c unlimited > /dev/null 2>&1
 
 以backtrace示例程序为例，此示例会因为段错误(signal 11)使程序崩溃，在开启core dump后(没有配置kernel.core_pattern)，在程序所在目录下生成core.PID文件，如core.4025
 
-~~~ bash
+{% codeblock lang:bash %}
 [yygc@172.24.178.125 :~/test]$gdb ./backtrace core.4025
 
 ...省略gdb版本信息输出...
@@ -86,7 +86,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0x0804898f in func_b () at backtrace.c:59
 59 printf("%d\n", *p);
 (gdb)
-~~~
+{% endcodeblock %}
 
 使用gdb调试时，可以看到在产生signal 11的代码处，自动插入了断点#0 0x08048720 in ?? ()，当执行run时，可以看到是在代码59行处设置的断点`59 printf("%d\n", *p);` 那么接下来就知道可能是输出这个指针时出现了无效内存引用，查看一下代码就明确问题了。
 
@@ -94,7 +94,7 @@ Program received signal SIGSEGV, Segmentation fault.
 
 调用backtrace函数可以通过一个指针列表来检查堆栈的每一帧，得到当前进程的调用地址。然后通过backtrace_symbols函数将backtrace得到的信息翻译成字符串。废话不多说，直接看示例。
 
-```c
+{% codeblock lang:c %}
 /***************************************
 * backtrace example
 * by YYGCui
@@ -185,11 +185,11 @@ int main(int argc, char *argv[])
     
     return 0;
 }
-```
+{% endcodeblock %}
 
 在该示例中，我们只处理SIGSEGV信号，编译时使用`-g -rdynamic` (使链接器将所有的符号记录在符号表中)。可以通过backtrace看出区别
 
-~~~ bash    
+{% codeblock lang:bash %}
 [yygc@172.24.178.125 :~/test]$./backtrace
 sigaction register ok
 0
@@ -223,11 +223,11 @@ Catch Signal: ./backtrace(main+0x98) [0x8048a38]
 Catch Signal: /lib/tls/libc.so.6(__libc_start_main+0xed) [0x19e79d]
 Catch Signal: ./backtrace(backtrace_symbols+0x31) [0x80487a9]
 Segmentation fault
-~~~
+{% endcodeblock %}
 
 不加-rdynamic时backtrace如下 (只列出了部分输出)，无法定位问题。
 
-~~~ bash    
+{% codeblock lang:bash %}
 Segmentation Fault! info.si_code = 128, info.si_addr = (nil)
 [Catch Signal] [Execution path]
 Catch Signal: ./nodybk(backtrace_symbols+0x217) [0x8048663]
@@ -236,7 +236,7 @@ Catch Signal: ./nodybk [0x804870c]
 Catch Signal: /lib/tls/libc.so.6(__libc_start_main+0xed) [0x9d979d]
 Catch Signal: ./nodybk(backtrace_symbols+0x31) [0x804847d]
 Segmentation fault
-~~~
+{% endcodeblock %}
 
 调试方法有两种：
 
@@ -244,17 +244,17 @@ Segmentation fault
 
 将地址信息转化成对应的函数和行号，可直接看到哪行代码出了问题
 
-~~~ bash    
+{% codeblock lang:bash %}
 [yygc@172.24.178.125 :~/test]$addr2line 0x804898f -e ./backtrace -f
 func_b
 /home/yanbaoc/test/backtrace.c:59
-~~~
+{% endcodeblock %}
 
 ### 2.2 使用GDB调试
 
 使用disassemble命令可以看到崩溃地方的汇编代码，汇编已然看不太懂了，就不在详细说了。
 
-~~~ bash    
+{% codeblock lang:bash %}
 $gdb ./backtrace
 (gdb) disassemble func_b+0x23
 Dump of assembler code for function func_b:
@@ -276,19 +276,19 @@ Dump of assembler code for function func_b:
 0x0804899f <func_b+51>: ret
 End of assembler dump.
 (gdb)
-~~~
+{% endcodeblock %}
 
 或者创建崩溃地方处的断点，这也能看出程序哪一行出现了问题
 
-~~~ bash    
+{% codeblock lang:bash %}
 (gdb) break *func_b+0x23
 Breakpoint 1 at 0x804898f: file backtrace.c, line 59.
 (gdb)
-~~~
+{% endcodeblock %}
 
 使用list命令可以列出崩溃代码前后总共10行
 
-~~~ bash    
+{% codeblock lang:bash %}
 (gdb) list *func_b+0x23
 0x804898f is in func_b (backtrace.c:59).
 54     int func_b()
@@ -302,7 +302,7 @@ Breakpoint 1 at 0x804898f: file backtrace.c, line 59.
 62     int main(int argc, char *argv[])
 63     {
 (gdb)
-~~~
+{% endcodeblock %}
 
 ## 3. 产生SIGSEGV信号的方法
 
@@ -310,28 +310,28 @@ Breakpoint 1 at 0x804898f: file backtrace.c, line 59.
 
 ### 3.1 使用kill -11，signal code=0 (SI\_USER)，当用kill或raise时。
 
-~~~ bash    
+{% codeblock lang:bash %}
 $kill -11 PID
-~~~
+{% endcodeblock %}
 
 ### 3.2 定义一个非法指针，signal code=128 (SI\_KERNEL)，引起内核中断，有内核发出。
 
-~~~ c    
+{% codeblock lang:c %}
 int *foo = (int *)-1;
 printf("%d\n", *foo);
-~~~
+{% endcodeblock %}
 
 ### 3.3定义一个空指针并赋值，signal code=1 (SEGV\_MAPERR)，地址未映射到具体对象。
 
-~~~ c    
+{% codeblock lang:c %}
 int *foo = NULL;
 *foo = 0;
 printf("%d\n", *foo);
-~~~
+{% endcodeblock %}
 
 ### 3.4申请一段内存并保护它，signal code=2 (SEGV\_ACCERR)，对映射对象无操作权限。
 
-~~~ c    
+{% codeblock lang:c %}
 #include <sys/mman.h>
 
 char *foo;
@@ -339,13 +339,15 @@ posix_memalign(&foo, getpagesize(), getpagesize());
 memset(foo, 'A', getpagesize());
 mprotect(foo, getpagesize(), PROT_NONE);
 printf("%d\n", foo[0]);
-~~~
+{% endcodeblock %}
 
 参考：
 
-1.[http://www.cyberciti.biz/tips/linux-core-dumps.html](http://www.cyberciti.biz/tips/linux-core-dumps.html)
-2.[http://www.linuxinsight.com/proc_sys_fs_suid_dumpable.html
-](http://www.linuxinsight.com/proc_sys_fs_suid_dumpable.html)3.[http://www.gnu.org/software/libc/manual/html_node/Backtraces.html](http://www.gnu.org/software/libc/manual/html_node/Backtraces.html)
-4.[http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/063/6391/6391l3.html](http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/063/6391/6391l3.html)
-5. [http://blog.csdn.net/challen537/article/details/5648180
-](http://blog.csdn.net/challen537/article/details/5648180)6.[http://gcc.gnu.org/onlinedocs/gcc/Link-Options.html](http://gcc.gnu.org/onlinedocs/gcc/Link-Options.html)
+1. [http://www.cyberciti.biz/tips/linux-core-dumps.html](http://www.cyberciti.biz/tips/linux-core-dumps.html)
+2. [http://www.linuxinsight.com/proc_sys_fs_suid_dumpable.html
+](http://www.linuxinsight.com/proc_sys_fs_suid_dumpable.html)
+3. [http://www.gnu.org/software/libc/manual/html_node/Backtraces.html](http://www.gnu.org/software/libc/manual/html_node/Backtraces.html)
+4. [http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/063/6391/6391l3.html](http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/063/6391/6391l3.html)
+5. [http://blog.csdn.net/challen537/article/details/5648180
+](http://blog.csdn.net/challen537/article/details/5648180)
+6. [http://gcc.gnu.org/onlinedocs/gcc/Link-Options.html](http://gcc.gnu.org/onlinedocs/gcc/Link-Options.html)

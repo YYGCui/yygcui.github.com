@@ -33,6 +33,7 @@ GEM
     haml (4.0.6)
       tilt
     hitimes (1.2.2)
+    hitimes (1.2.2-x86-mingw32)
     jekyll (2.5.3)
       classifier-reborn (~> 2.0)
       colorator (~> 0.1)
@@ -70,6 +71,9 @@ GEM
       octopress-hooks (~> 2.0)
     octopress-hooks (2.2.3)
       jekyll (~> 2.0)
+    octopress-pullquote-tag (1.0.1)
+      jekyll
+      rubypants-unicode
     parslet (1.5.0)
       blankslate (~> 2.0)
     posix-spawn (0.3.9)
@@ -84,6 +88,7 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     redcarpet (3.2.2)
+    rubypants-unicode (0.2.5)
     safe_yaml (1.0.4)
     sass (3.4.9)
     sass-globbing (1.0.0)
@@ -114,6 +119,7 @@ DEPENDENCIES
   kramdown
   octopress-date-format (~> 2.0)
   octopress-hooks (~> 2.2)
+  octopress-pullquote-tag
   rake (~> 10.0)
   rb-fsevent (~> 0.9)
   sass-globbing (~> 1.0.0)
