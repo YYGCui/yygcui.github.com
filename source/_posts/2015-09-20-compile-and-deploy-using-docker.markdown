@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install -y \
     libtool \
     git \
    # and the libraries needed by your app
+   --no-install-recommends \
    && rm -rf /var/lib/apt/lists/*
 
 # download your app source code to /home/myapp
@@ -128,6 +129,7 @@ RUN apt-get update && apt-get -qqy upgrade
 RUN apt-get update && apt-get install -y \
     git \
    # and the libraries needed by your app
+   --no-install-recommends \
    && rm -rf /var/lib/apt/lists/*
 
 # download your app source code to /home/myapp
@@ -161,6 +163,7 @@ RUN apt-get update && apt-get -qqy upgrade
 RUN apt-get update && apt-get install -y \
     wget \
    # and the libraries needed by your app
+   --no-install-recommends \
    && rm -rf /var/lib/apt/lists/*
 
 # download your app source code to /home/myapp
