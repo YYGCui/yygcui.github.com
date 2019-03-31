@@ -1,0 +1,191 @@
+# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: YYGCui
+subtitle: 思考自然的本性，抚摸上帝的脉搏
+author: YYGCui
+language: 
+timezone: 
+
+# custom Site settings
+# more detail check out docs
+SEOTitle: YYGCui's blog 
+header-img: //o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg
+email: yygcui@gmail.com
+description: "YYGCui的个人博客"
+keyword: # seo key words
+
+favicon: /favicon.png # your favicon png
+# custom end
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://blog.cuicc.com
+root: /
+permalink: blog/:year/:month/:day/:title/
+permalink_defaults:
+
+# SNS settings
+# RSS:
+weibo_username: yygccui
+zhihu_username: cui-yan-bao
+github_username: YYGCui
+twitter_username: 
+facebook_username:  
+linkedin_username: yanbaoc 
+
+# Build settings
+anchorjs: false                        # if you want to customize anchor. check out line:181 of `post.html`
+
+
+# Disqus settings 
+disqus_username: yygcui
+
+# Duoshuo settings
+duoshuo_username:  # 你的多说帐号
+# Share component is depend on Comment so we can NOT use share only.
+duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+
+
+# Analytics settings
+# Baidu Analytics
+ba_track_id:
+# Google Analytics
+ga_track_id: UA-37316447-1            # Format: UA-xxxxxx-xx
+ga_domain:
+
+# Sidebar settings
+sidebar-about-description: 思考自然的本性，抚摸上帝的脉搏  # 个人描述
+sidebar-avatar: /images/yygcui.png    # use absolute URL
+
+
+# Featured Tags
+featured-tags: true                     # whether or not using Feature-Tags
+featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+
+# friends
+friends:  # 友链
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :year-:month-:day-:title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: true
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: false
+  auto_detect: false
+  tab_replace:
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 8
+pagination_dir: page
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+
+# Markdown-it config
+## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
+    quotes: '“”‘’'
+  plugins:
+    - markdown-it-abbr
+    - markdown-it-footnote
+    - markdown-it-ins
+    - markdown-it-sub
+    - markdown-it-sup
+    - markdown-it-emoji
+  anchors:
+    # Minimum level for ID creation. (Ex. h2 to h6)
+    level: 1
+    # A suffix that is prepended to the number given if the ID is repeated.
+    collisionSuffix: 'v'           
+    # If `true`, creates an anchor tag with a permalink besides the heading.
+    permalink: true              
+    # Class used for the permalink anchor tag.
+    permalinkClass: header-anchor 
+    # The symbol used to make the permalink
+    permalinkSymbol: ''
+
+## Themes: https://hexo.io/themes/
+theme: Anisina
+
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: https://github.com/YYGCui/yygcui.github.com.git
+  branch: master
+
+
+# img CDN path
+cdn-url: /
+# 你的CDN地址
+
+# Qiniu imageView2 API
+# More info http://developer.qiniu.com/code/v6/api/kodo-api/image/imageview2.html
+clip-content: "?imageView2/1/w/1400/h/400/interlace/1/q/90"
+clip-avatar: "?imageView2/2/w/300/h/300/interlace/1/q/90"
+clip-home-post-bg: "?imageView2/1/w/800/h/300/interlace/1/q/70"
+
+# post default images
+post-default-img: /images/blog-bg-black-run.jpg #博文默认的图片
+post-default-img-mobile: /images/blog-bg-black-run.jpg #移动端显示的图片
+
+# search api , set your custom key
+swiftype_key: 
+
+category_generator:
+  per_page: 20
+category:
+  title: categories
+  description: 可以根据分类检索文章
+archive_generator:
+  per_page: 20
+  yearly: true
+  monthly: true
+  daily: false
+archive:
+  title: archives
+  description: 可以根据归档日期检索文章
+tag_generator:
+  per_page: 20
+tag:
+  title: tags
+  description: 可以根据标签检索文件
