@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        tags｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/tags/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="false" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+
+<!-- Page Header -->
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading text-center">
+                    <h1>tags</h1>
+                    <span class="subheading">可以根据标签检索文件</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- 标签云 -->
+            <div id="tag_cloud" class="tags">
+                
+                <a href="/tags/Linux/" title="Linux" rel="11">Linux</a>
+                
+                <a href="/tags/ubuntu/" title="ubuntu" rel="1">ubuntu</a>
+                
+                <a href="/tags/upgrade/" title="upgrade" rel="1">upgrade</a>
+                
+                <a href="/tags/iPhone/" title="iPhone" rel="1">iPhone</a>
+                
+                <a href="/tags/Mobile/" title="Mobile" rel="4">Mobile</a>
+                
+                <a href="/tags/debian/" title="debian" rel="2">debian</a>
+                
+                <a href="/tags/gcc/" title="gcc" rel="1">gcc</a>
+                
+                <a href="/tags/Android/" title="Android" rel="2">Android</a>
+                
+                <a href="/tags/MPI/" title="MPI" rel="1">MPI</a>
+                
+                <a href="/tags/Visual-Studio/" title="Visual Studio" rel="1">Visual Studio</a>
+                
+                <a href="/tags/求职面试/" title="求职面试" rel="1">求职面试</a>
+                
+                <a href="/tags/metro/" title="metro" rel="1">metro</a>
+                
+                <a href="/tags/twitter/" title="twitter" rel="1">twitter</a>
+                
+                <a href="/tags/vpn/" title="vpn" rel="1">vpn</a>
+                
+                <a href="/tags/团购/" title="团购" rel="1">团购</a>
+                
+                <a href="/tags/expo/" title="expo" rel="1">expo</a>
+                
+                <a href="/tags/OEM/" title="OEM" rel="1">OEM</a>
+                
+                <a href="/tags/win7/" title="win7" rel="1">win7</a>
+                
+                <a href="/tags/job/" title="job" rel="3">job</a>
+                
+                <a href="/tags/perl/" title="perl" rel="1">perl</a>
+                
+                <a href="/tags/variables/" title="variables" rel="1">variables</a>
+                
+                <a href="/tags/Programming/" title="Programming" rel="7">Programming</a>
+                
+                <a href="/tags/social-network/" title="social network" rel="1">social network</a>
+                
+                <a href="/tags/startup/" title="startup" rel="1">startup</a>
+                
+                <a href="/tags/研究生/" title="研究生" rel="1">研究生</a>
+                
+                <a href="/tags/C-C/" title="C/C++" rel="5">C/C++</a>
+                
+                <a href="/tags/endian/" title="endian" rel="1">endian</a>
+                
+                <a href="/tags/Open-Source/" title="Open Source" rel="1">Open Source</a>
+                
+                <a href="/tags/intern/" title="intern" rel="1">intern</a>
+                
+                <a href="/tags/Precompile/" title="Precompile" rel="1">Precompile</a>
+                
+                <a href="/tags/putty/" title="putty" rel="1">putty</a>
+                
+                <a href="/tags/gentoo/" title="gentoo" rel="1">gentoo</a>
+                
+                <a href="/tags/Macros/" title="Macros" rel="1">Macros</a>
+                
+                <a href="/tags/IT/" title="IT" rel="1">IT</a>
+                
+                <a href="/tags/MBR/" title="MBR" rel="1">MBR</a>
+                
+                <a href="/tags/winxp/" title="winxp" rel="1">winxp</a>
+                
+                <a href="/tags/B2C/" title="B2C" rel="1">B2C</a>
+                
+                <a href="/tags/总结/" title="总结" rel="4">总结</a>
+                
+                <a href="/tags/回家/" title="回家" rel="1">回家</a>
+                
+                <a href="/tags/租房/" title="租房" rel="1">租房</a>
+                
+                <a href="/tags/智齿/" title="智齿" rel="1">智齿</a>
+                
+                <a href="/tags/人生目标/" title="人生目标" rel="1">人生目标</a>
+                
+                <a href="/tags/KSD301/" title="KSD301" rel="1">KSD301</a>
+                
+                <a href="/tags/automation/" title="automation" rel="1">automation</a>
+                
+                <a href="/tags/BT/" title="BT" rel="1">BT</a>
+                
+                <a href="/tags/Wlan/" title="Wlan" rel="1">Wlan</a>
+                
+                <a href="/tags/DHCP/" title="DHCP" rel="1">DHCP</a>
+                
+                <a href="/tags/relay/" title="relay" rel="1">relay</a>
+                
+                <a href="/tags/nohup/" title="nohup" rel="1">nohup</a>
+                
+                <a href="/tags/screen/" title="screen" rel="1">screen</a>
+                
+                <a href="/tags/SSH/" title="SSH" rel="1">SSH</a>
+                
+                <a href="/tags/backtrace/" title="backtrace" rel="1">backtrace</a>
+                
+                <a href="/tags/core-dump/" title="core dump" rel="1">core dump</a>
+                
+                <a href="/tags/gdb/" title="gdb" rel="1">gdb</a>
+                
+                <a href="/tags/docker/" title="docker" rel="2">docker</a>
+                
+                <a href="/tags/compile/" title="compile" rel="1">compile</a>
+                
+                <a href="/tags/deploy/" title="deploy" rel="1">deploy</a>
+                
+                <a href="/tags/longtail/" title="longtail" rel="1">longtail</a>
+                
+                <a href="/tags/长尾理论/" title="长尾理论" rel="1">长尾理论</a>
+                
+                <a href="/tags/读书笔记/" title="读书笔记" rel="1">读书笔记</a>
+                
+                <a href="/tags/technology/" title="technology" rel="1">technology</a>
+                
+                <a href="/tags/mysql/" title="mysql" rel="1">mysql</a>
+                
+                <a href="/tags/心智/" title="心智" rel="1">心智</a>
+                
+                <a href="/tags/众筹/" title="众筹" rel="1">众筹</a>
+                
+                <a href="/tags/营销/" title="营销" rel="1">营销</a>
+                
+                <a href="/tags/git/" title="git" rel="1">git</a>
+                
+                <a href="/tags/submodule/" title="submodule" rel="1">submodule</a>
+                
+                <a href="/tags/kubernetes/" title="kubernetes" rel="4">kubernetes</a>
+                
+                <a href="/tags/flannel/" title="flannel" rel="1">flannel</a>
+                
+                <a href="/tags/multi-networks/" title="multi-networks" rel="1">multi-networks</a>
+                
+                <a href="/tags/Node-js/" title="Node.js" rel="2">Node.js</a>
+                
+                <a href="/tags/Octopress/" title="Octopress" rel="1">Octopress</a>
+                
+                <a href="/tags/pack/" title="pack" rel="1">pack</a>
+                
+                <a href="/tags/unpack/" title="unpack" rel="1">unpack</a>
+                
+                <a href="/tags/binutils/" title="binutils" rel="1">binutils</a>
+                
+                <a href="/tags/decompile/" title="decompile" rel="1">decompile</a>
+                
+                <a href="/tags/Sails/" title="Sails" rel="1">Sails</a>
+                
+                <a href="/tags/MVC/" title="MVC" rel="1">MVC</a>
+                
+                <a href="/tags/BlackBerry/" title="BlackBerry" rel="2">BlackBerry</a>
+                
+                <a href="/tags/DTG/" title="DTG" rel="1">DTG</a>
+                
+                <a href="/tags/Root/" title="Root" rel="1">Root</a>
+                
+                <a href="/tags/极品房东/" title="极品房东" rel="1">极品房东</a>
+                
+                <a href="/tags/microservices/" title="microservices" rel="1">microservices</a>
+                
+                <a href="/tags/微服务/" title="微服务" rel="1">微服务</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

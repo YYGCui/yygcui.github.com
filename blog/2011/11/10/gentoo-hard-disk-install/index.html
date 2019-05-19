@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Gentoo 硬盘安装｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2011/11/10/gentoo-hard-disk-install/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Gentoo 硬盘安装</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2011-11-10
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/gentoo/" title="gentoo">gentoo</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Gentoo 硬盘安装
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>之前试过Ubuntu硬盘安装和Debian硬盘安装，最近要搭建一个环境，所以又折腾了一下Gentoo的硬盘安装。各种Linux发布版本的硬盘安装方法都大同小异，不同的是每个发布版本都有自己的文件架构。硬盘安装都是依托于其他系统的，同样本文介绍的是在Windows XP 下硬盘安装 Gentoo。</p>
+<a id="more"></a>
+<h3 id="准备工作："><a class="header-anchor" href="#准备工作："></a>准备工作：</h3>
+<ol>
+<li>
+<p>用于多系统引导的<a href="http://sourceforge.net/projects/grub4dos/" target="_blank" rel="noopener">GRUB4DOS</a>。</p>
+</li>
+<li>
+<p>Gentoo <a href="http://www.gentoo.org/main/en/where.xml" target="_blank" rel="noopener">ISO文件</a>，硬盘安装使用livedvd。<br>
+Gentoo提供minimal ISO和livedvd ISO两种ISO文件，minimal需要额外下载stage3和portage (网络安装适用)，livedvd可进行无网络安装，64位的livedvd ISO又有两个版本，一个是x86/x86_64 混合版本(livedvd-x86-amd64-32ul-11.2.iso)，一个是x86_64 multilib 版本 (livedvd-amd64-multilib-11.2.iso)。前者根据CPU是32bit/64bit选择使用x86/x86_64  kernel，但userland是32bit的；后者只有x86_64的kernel，userland是64bit的，但可以运行32bit的应用。原文如下：<br>
+The LiveDVD is <strong>available in two flavors</strong>: a hybrid x86/x86_64 version, and an x86_64 multilib version. The livedvd-x86-amd64-32ul-11.2 version will work on 32-bit x86 or 64-bit x86_64. If your CPU architecture is x86, then boot with the default gentoo kernel. If your arch is <a href="http://www.gentoo.org/doc/en/gentoo-amd64-faq.xml#difference" target="_blank" rel="noopener">amd64</a>, boot with the gentoo64 kernel. This means you can boot a 64-bit kernel and install a customized 64-bit userland while using the provided 32-bit userland. The livedvd-amd64-multilib-11.2 version is for x86_64 only.</p>
+</li>
+<li>
+<p>Gentoo <a href="http://www.gentoo.org/doc/en/handbook/" target="_blank" rel="noopener">安装手册</a>。</p>
+</li>
+</ol>
+<h3 id="安装过程："><a class="header-anchor" href="#安装过程："></a>安装过程：</h3>
+<ol>
+<li>
+<p>解压缩GRUB4DOS里的grldr和menu.lst文件到c盘，在boot.ini的[operating systems]项中(通常是文件结尾)添加c:\grldr=“grub”.</p>
+</li>
+<li>
+<p>将Gentoo ISO文件解压缩到fat/fat32分区，假如是F盘。</p>
+</li>
+<li>
+<p>编辑menu.lst ，将文件内容改为：<br>
+title gentoo install<br>
+root (hd0,6)<br>
+kernel /boot/gentoo root=/dev/ram0 init=/linuxrc dokeymap aufs looptype=squashfs loop=/image.squashfs cdroot  vga=791 splash=silent,theme:livecd-10 console=tty1 quiet<br>
+initrd /boot/gentoo.igz<br>
+menu.lst 的内容可以根据Gentoo ISO中isolinux目录下的isolinux.cfg填写，如下：<br>
+label gentoo-x86_64<br>
+MENU LABEL Gentoo ^x86_64<br>
+kernel /boot/gentoo<br>
+append root=/dev/ram0 init=/linuxrc dokeymap aufs looptype=squashfs loop=/image.squashfs cdroot initrd=/boot/gentoo.igz vga=791 splash=silent,theme:livecd-10 console=tty1 quiet<br>
+TEXT HELP<br>
+Boot the default x86_64 Gentoo kernel<br>
+ENDTEXT<br>
+root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始，也就是D盘。在只有一块硬盘的情况下，该硬盘表示为hd0,逗号后面的数字位分区编号减1。关于磁盘分区的表示方法，详见<a href="http://www.linuxsir.org/main/node/127" target="_blank" rel="noopener">此处</a>。</p>
+</li>
+<li>
+<p>重启系统后，选择grub进入Gentoo live，安装过程根据安装手册进行，不同的地方在于：</p>
+</li>
+</ol>
+<p>[handbook]5.b 默认：使用从网上下载的stage<br>
+前面提到livedvd中集成了stage和portage，所以不需要下载。相应的5.b和5.c小节的内容改为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#mount /dev/sda6 /media  //假设iso文件位于E盘</span></span><br><span class="line"><span class="comment">#mount -o loop /media/livedvd-amd64-multilib-11.2.iso /mnt/cdrom</span></span><br><span class="line"><span class="comment">#mount -o loop /mnt/cdrom/image.squashfs /mnt/livecd</span></span><br><span class="line">//将image中的文件全部复制到/mnt/gentoo中</span><br><span class="line"><span class="comment">#cp -r /mnt/livecd/* /mnt/gentoo</span></span><br></pre></td></tr></table></figure>
+<p>[handbook]6.b 配置Portage<br>
+如若安装gnome，请注意make.conf中USE变量是否有gtk</p>
+<p>[handbook]7.c 默认：手动配置<br>
+配置内核时，Intel酷睿之后的处理器可选择 (X) Core 2/newer Xeon<br>
+选择读取硬件时钟选项Device Drivers -&gt; Character devices -&gt; &lt;<em>&gt; Generic /dev/rtc emulation &lt;</em>&gt; Extended ETC operation<br>
+电源风扇等接口在Power management and ACPI options<br>
+无线网卡选项在Device Drivers -&gt; Network drivers -&gt; Wireless LAN</p>
+<p>暂时发现的可能出问题的选项就这些，更详细的menuconfig选项介绍<a href="http://kernel.org/doc/menuconfig/" target="_blank" rel="noopener">在这里</a>。</p>
+<p>在使用genkernel编译时，可通过以下命令更新config信息然后在编译：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#genkernel --menuconfig all</span></span><br></pre></td></tr></table></figure>
+<p>我在手动编译内核后，系统无法启动，遇到<a href="http://www.gentoo.org/doc/en/grub-error-guide.xml#doc_chap4" target="_blank" rel="noopener">grub error 15</a> 的错误，问题还没解决，还在研究中…</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2011/11/15/mbr-and-boot-loader/" data-toggle="tooltip" data-placement="top" title="MBR与系统引导">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2011/10/31/just-do-it/" data-toggle="tooltip" data-placement="top" title="JUST DO IT">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作："><span class="toc-text">准备工作：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装过程："><span class="toc-text">安装过程：</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/gentoo/" title="gentoo">gentoo</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2011/11/10/gentoo-hard-disk-install/";
+    var disqus_url = "http://blog.cuicc.com/blog/2011/11/10/gentoo-hard-disk-install/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

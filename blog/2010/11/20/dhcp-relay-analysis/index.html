@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        DHCP Relay实现分析｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2010/11/20/dhcp-relay-analysis/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>DHCP Relay实现分析</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2010-11-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        
+                        <a class="tag" href="/tags/DHCP/" title="DHCP">DHCP</a>
+                        
+                        <a class="tag" href="/tags/relay/" title="relay">relay</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            DHCP Relay实现分析
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>前段时间看了一下DHCP Relay的实现代码，位于网络中使用最广泛的开源DHCP实现–<a href="http://www.isc.org/software/dhcp" target="_blank" rel="noopener">ISC’s DHCP</a>中，本以为不到一千行的代码可以很快搞定，看了才知道加上调用的函数何止一千行，何况在没有任何基础的情况下，理解起来相当费力，虽然网络中可以找到实现原理介绍，但是很难和代码结合起来。只好看了一下DHCP标准文档RFC 2131，以及relay agent的标准文档RFC 1542。为了便于下面的分析，先简单介绍一下DHCP。</p>
+<a id="more"></a>
+<p>DHCP(Dynamic Host Configuration Protocol)中文称为动态主机配置协议，用来为网络主机提供配置参数。它包括两个组件：一个是用来从服务器向客户端传送具体配置参数的协议，一个是给主机分配网络地址的机制。DHCP是以C/S模式设计的，DHCP服务器分配网络地址并传送配置参数给动态配置的主机。它是基于UDP协议传输数据的，主要有两个用途：一是给主机分配网络地址(IP地址)，一是给网络管理员对所有主机中央管理的手段。<br>
+DHCP支持三种IP地址分配机制。<br>
+自动分配：DHCP Server分配一个永久固定的IP地址给Client。<br>
+动态分配：DHCP Server分配一个一定租约期限的IP地址给Client。<br>
+手动分配：网络管理员指定一个IP地址给Client，DHCP Server只简单的负责传送。<br>
+动态分配是这三种机制中唯一可以重用已申请的不再使用的IP地址的一种机制，考虑到IP地址的有限性以及管理配置的复杂性，这种机制在使用中也是最广泛的。</p>
+<p>DHCP是一个局域网协议，只能管理同一个网络或子网(network/subnet)中的Clients，那么多个子网(subnet)存在时，可以在每个子网中设立一个DHCP Server，这显然是一种浪费，也不利于对所有子网主机的管理，于是relay agent就被引入来打破这种物理格局。值得注意的是，DHCP实际上是对BOOTP(Bootstrap Protocol)协议的加强与改进，DHCP的消息格式和BOOTP的消息格式是一样的，只是术语有所改变，所以在DHCP中relay agent就是BOOTP relay agent，这就不难理解消息类型是BOOTREQUST/BOOTREPLY了。</p>
+<p>DHCP中Client和Server交互的一般流程可分为4步：<br>
+1.DHCPDISCOVER(客户机请求IP)，Client在所在子网广播DHCPDISCOVER消息，这个消息可以包含预申请的IP地址和租约选项，若Server不在同一子网中时，则通过BOOTP relay agents传递消息。<br>
+2.DHCPOFFER(服务器响应)，Server单一传播/广播(unicast/broadcast)DHCPOFFER消息回应Client请求，消息的’yiaddr‘域中包含分配的ip地址，该地址可以是Client请求的也可以是Server另外分配的，如果需要的话，使用BOOTP relay agents传送给Client。<br>
+3.DHCPREQUEST(客户机选择IP)，Client从一个或多个Server(s)收到一个或多个DHCPOFFER消息，根据消息中的配置参数选择一个Server，并广播DHCPREQUEST消息给Server，为了保证BOOTP relay agents正确转发给相应的Server，需要在消息的’secs‘域设置和DHCPDISCOVER消息中相同的值。<br>
+4.DHCPACK/DHCPNAK(服务器)，未被选择的Server根据DHCPREQUEST消息知道Client拒绝了offer，被选择的Server把绑定信息存储在数据库，然后单一传播/广播(unicast/broadcast)给请求的Client发送一个包含配置参数(mac in ‘chaddr’, ip in ‘yiaddr’)的DHCPACK消息。</p>
+<p>这里Server的响应消息DHCPOFFER，DHCPACK等，有单一传播/广播(unicast/broadcast)两种方式，那么什么时候单一传播/广播(unicast/broadcast)呢？<br>
+一般情况下，这些响应消息都是通过单一传播(unicast)直接发送给Client的，但是有些Client在未配置IP地址前是不能接受这些单一传播(unicast)的IP数据包的，这些Client在发送的消息中会设置’flags‘域中的BROADCAST位为1，用来告知Server和BOOTP relay agent广播任何发送到Client的消息。<br>
+按消息类型划分，Client接收的消息是BOOTREPLY类型的，包括DHCPOFFER、DHCPACK等；Server接收的消息是BOOTREQUEST类型的，包括DHCPDISCOVER、DHCPREQUEST等。</p>
+<p>下面结合dhcrelay.c中的代码分析一下BOOTP relay agent具体做了什么<br>
+(为了便于分析和显示，都代码进行了精简，只保留了主要的代码段，源码下载：<a href="http://www.isc.org/software/dhcp" target="_blank" rel="noopener">http://www.isc.org/software/dhcp</a>)</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(argc, argv, envp)</span></span></span><br><span class="line"><span class="function">	<span class="keyword">int</span> argc</span>;</span><br><span class="line">	<span class="keyword">char</span> **argv, **envp;</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* parameters definition */</span></span><br><span class="line">	<span class="comment">/* Make sure we have stdin, stdout and stderr. */</span></span><br><span class="line">	<span class="comment">/* Set up the OMAPI. */</span></span><br><span class="line">	status = omapi_init ();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the OMAPI wrappers for the interface object. */</span></span><br><span class="line">	interface_setup ();</span><br><span class="line">	<span class="comment">/* usage like shell */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Default to the DHCP/BOOTP port. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the server sockaddrs. */</span></span><br><span class="line">	<span class="keyword">for</span> (sp = servers; sp; sp = sp -&gt; next) &#123;</span><br><span class="line">		sp -&gt; to.sin_port = local_port;</span><br><span class="line">		sp -&gt; to.sin_family = AF_INET;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_SA_LEN</span></span><br><span class="line">		sp -&gt; to.sin_len = <span class="keyword">sizeof</span> sp -&gt; to;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Get the current time... */</span></span><br><span class="line">	GET_TIME (&amp;cur_time);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Discover all the network interfaces. */</span></span><br><span class="line">	discover_interfaces (DISCOVER_RELAY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the bootp packet handler... */</span></span><br><span class="line">	bootp_packet_handler = relay;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Become a daemon... */</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* Start dispatching packets and timeouts... */</span></span><br><span class="line">	dispatch ();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*NOTREACHED*/</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">relay</span> <span class="params">(ip, packet, length, from_port, from, hfrom)</span></span></span><br><span class="line"><span class="function">	struct interface_info *ip</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dhcp_packet</span> *<span class="title">packet</span>;</span></span><br><span class="line">	<span class="keyword">unsigned</span> length;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> from_port;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">iaddr</span> <span class="title">from</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hardware</span> *<span class="title">hfrom</span>;</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">server_list</span> *<span class="title">sp</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">to</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">interface_info</span> *<span class="title">out</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hardware</span> <span class="title">hto</span>, *<span class="title">htop</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; hlen &gt; <span class="keyword">sizeof</span> packet -&gt; chaddr) &#123;</span><br><span class="line">		log_info (<span class="string">"Discarding packet with invalid hlen."</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Find the interface that corresponds to the giaddr</span></span><br><span class="line"><span class="comment">	   in the packet. */</span></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; giaddr.s_addr) &#123;</span><br><span class="line">		<span class="keyword">for</span> (out = interfaces; out; out = out -&gt; next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!<span class="built_in">memcmp</span> (&amp;out -&gt; primary_address,</span><br><span class="line">				     &amp;packet -&gt; giaddr,</span><br><span class="line">				     <span class="keyword">sizeof</span> packet -&gt; giaddr))</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		out = (struct interface_info *)<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If it's a bootreply, forward it to the client. */</span></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; op == BOOTREPLY) &#123;</span><br><span class="line">		<span class="keyword">if</span> (!(packet -&gt; flags &amp; htons (BOOTP_BROADCAST)) &amp;&amp;</span><br><span class="line">			can_unicast_without_arp (out)) &#123;</span><br><span class="line">			to.sin_addr = packet -&gt; yiaddr;</span><br><span class="line">			to.sin_port = remote_port;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* and hardware address is not broadcast */</span></span><br><span class="line">			htop = &amp;hto;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			to.sin_addr.s_addr = htonl (INADDR_BROADCAST);</span><br><span class="line">			to.sin_port = remote_port;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* hardware address is broadcast */</span></span><br><span class="line">			htop = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		to.sin_family = AF_INET;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_SA_LEN</span></span><br><span class="line">		to.sin_len = <span class="keyword">sizeof</span> to;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">memcpy</span> (&amp;hto.hbuf [<span class="number">1</span>], packet -&gt; chaddr, packet -&gt; hlen);</span><br><span class="line">		hto.hbuf [<span class="number">0</span>] = packet -&gt; htype;</span><br><span class="line">		hto.hlen = packet -&gt; hlen + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* Wipe out the agent relay options and, if possible, figure</span></span><br><span class="line"><span class="comment">		   out which interface to use based on the contents of the</span></span><br><span class="line"><span class="comment">		   option that we put on the request to which the server is</span></span><br><span class="line"><span class="comment">		   replying. */</span></span><br><span class="line">		<span class="keyword">if</span> (!(length =</span><br><span class="line">		      strip_relay_agent_options (ip, &amp;out, packet, length)))</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!out) &#123;</span><br><span class="line">			log_error (<span class="string">"packet to bogus giaddr %s.n"</span>,</span><br><span class="line">			      inet_ntoa (packet -&gt; giaddr));</span><br><span class="line">			++bogus_giaddr_drops;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (send_packet (out,</span><br><span class="line">				 (struct packet *)<span class="number">0</span>,</span><br><span class="line">				 packet, length, out -&gt; primary_address,</span><br><span class="line">				 &amp;to, htop) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			++server_packet_errors;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log_debug (<span class="string">"forwarded BOOTREPLY for %s to %s"</span>,</span><br><span class="line">			       print_hw_addr (packet -&gt; htype, packet -&gt; hlen,</span><br><span class="line">					      packet -&gt; chaddr),</span><br><span class="line">			       inet_ntoa (to.sin_addr));</span><br><span class="line"></span><br><span class="line">			++server_packets_relayed;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If giaddr matches one of our addresses, ignore the packet -</span></span><br><span class="line"><span class="comment">	   we just sent it. */</span></span><br><span class="line">	<span class="keyword">if</span> (out)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Add relay agent options if indicated.   If something goes wrong,</span></span><br><span class="line"><span class="comment">	   drop the packet. */</span></span><br><span class="line">	<span class="keyword">if</span> (!(length = add_relay_agent_options (ip, packet, length,</span><br><span class="line">						ip -&gt; primary_address)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If giaddr is not already set, Set it so the server can</span></span><br><span class="line"><span class="comment">	   figure out what net it's from and so that we can later</span></span><br><span class="line"><span class="comment">	   forward the response to the correct net.    If it's already</span></span><br><span class="line"><span class="comment">	   set, the response will be sent directly to the relay agent</span></span><br><span class="line"><span class="comment">	   that set giaddr, so we won't see it. */</span></span><br><span class="line">	<span class="keyword">if</span> (!packet -&gt; giaddr.s_addr)</span><br><span class="line">		packet -&gt; giaddr = ip -&gt; primary_address;</span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; hops &lt; max_hop_count)</span><br><span class="line">		packet -&gt; hops = packet -&gt; hops + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Otherwise, it's a BOOTREQUEST, so forward it to all the</span></span><br><span class="line"><span class="comment">	   servers. */</span></span><br><span class="line">	<span class="keyword">for</span> (sp = servers; sp; sp = sp -&gt; next) &#123;</span><br><span class="line">		<span class="keyword">if</span> (send_packet ((fallback_interface</span><br><span class="line">				  ? fallback_interface : interfaces),</span><br><span class="line">				 (struct packet *)<span class="number">0</span>,</span><br><span class="line">				 packet, length, ip -&gt; primary_address,</span><br><span class="line">				 &amp;sp -&gt; to, (struct hardware *)<span class="number">0</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			++client_packet_errors;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log_debug (<span class="string">"forwarded BOOTREQUEST for %s to %s"</span>,</span><br><span class="line">			       print_hw_addr (packet -&gt; htype, packet -&gt; hlen,</span><br><span class="line">					      packet -&gt; chaddr),</span><br><span class="line">			       inet_ntoa (sp -&gt; to.sin_addr));</span><br><span class="line">			++client_packets_relayed;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">				 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main函数的主流程是这样的：OMPI初始化-&gt;设置Server的port-&gt;Server的socket address-&gt;discover_interfaces()找到该子网中所有的Client端口-&gt;实现relay()功能-&gt;包的分派。<br>
+其中relay()函数实现了BOOTP relay agent的主要功能，relay()功能分为两部分：1)对BOOTREPLY类型消息的操作；2)对BOOTREQUEST消息的操作。<br>
+主流程是：如果是BOOTREPLY消息-&gt;单一传播/广播-&gt;去掉relay agent option选项-&gt;send给Client，如果不是BOOTREPLY消息，那么就是BOOTREQUEST消息-&gt;添加relay agent option选项-&gt;若未设置giaddr，则将relay agent IP赋给giaddr-&gt;广播消息给所有Server。<br>
+代码流程就是这样的，下面概述一下BOOTP relay agent是如何工作的：<br>
+1.relay agent根据命令行参数，得到Server地址，并设置Server端口，以及socket接口。<br>
+2.relay agent查询子网内所有Client，并加入到列表中，函数discover_interfaces()。<br>
+3.当接收到Client消息(BOOTREQUEST类型)，在消息的option域添加relay agent的选项，检查消息的giaddr域是否设置，若未设置则将relay agent的IP赋给它，然后将消息广播给所有Server；<br>
+当接收到Server消息(BOOTREPLY类型)，根据flags域BROADCAST位是否设置，选择单一传播/广播，然后去掉消息中option域关于relay agent的选项，并将消息传递给Client。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2010/12/22/perl-predefined-special-variables/" data-toggle="tooltip" data-placement="top" title="Perl内置特殊变量(笔记)">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2010/11/16/thinkpad-win7-oem/" data-toggle="tooltip" data-placement="top" title="Thinkpad Win7之OEM">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        
+                        <a class="tag" href="/tags/DHCP/" title="DHCP">DHCP</a>
+                        
+                        <a class="tag" href="/tags/relay/" title="relay">relay</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2010/11/20/dhcp-relay-analysis/";
+    var disqus_url = "http://blog.cuicc.com/blog/2010/11/20/dhcp-relay-analysis/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

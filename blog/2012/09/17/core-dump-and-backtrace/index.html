@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Core dump与backtrace｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2012/09/17/core-dump-and-backtrace/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Core dump与backtrace</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2012-09-17
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        
+                        <a class="tag" href="/tags/C-C/" title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/backtrace/" title="backtrace">backtrace</a>
+                        
+                        <a class="tag" href="/tags/core-dump/" title="core dump">core dump</a>
+                        
+                        <a class="tag" href="/tags/gdb/" title="gdb">gdb</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Core dump与backtrace
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>项目中使用Core dump来Debug程序崩溃问题，在无盘环境下，往往无法在规定时间内及时传输出形成的大的Core file，在刘博的指导下，希望同时通过backtrace来记录系统崩溃时的log，这样在没有Core file的情况下，也可以大致上分析产生问题的地方。我也趁此机会好好学习了一下如何用Core dump来debug，如何实现backtrace和分析backtrace。</p>
+<h2 id="1-core-dump"><a class="header-anchor" href="#1-core-dump"></a>1. Core dump</h2>
+<p>在大多数Linux发布版中，Core dump是默认不开启的。可以使用命令ulimit -c来查看core file的大小限制以及配置开启core dump。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ulimit</span> -c</span><br><span class="line">0 <span class="comment">#0个字节说明不能创建core file, core dump没有开启</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="1-1-开启core-dump"><a class="header-anchor" href="#1-1-开启core-dump"></a>1.1 开启core dump</h3>
+<p>编辑/etc/profile，找到如下行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># No core files by default</span></span><br><span class="line"><span class="built_in">ulimit</span> -S -c 0 &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># No core files by default</span></span><br><span class="line"><span class="built_in">ulimit</span> -S -c unlimited &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>可编辑/etc/sysctl.conf，配置core file文件名以及文件存储位置等，如下：</p>
+<p><strong>kernel.core_uses_pid = 1</strong> - 把该程序的进程号附在core file名字后，生成文件名为core.PID。<br>
+<strong>fs.suid_dumpable = 2</strong> - 确保为调用了setuid的程序生成core file，该变量值如下 (参考2)：</p>
+<ul>
+<li>0 (default) - This provides the traditional behaviour. A core dump will not be produced for a process which has changed credentials (by calling seteuid(2), setgid(2), or similar, or by executing a set-user-ID or set-group-ID program) or whose binary does not have read permission enabled.</li>
+<li>1 (“debug”) - All processes dump core when possible. The core dump is owned by the file system user ID of the dumping process and no security is applied. This is intended for system debugging situations only. Ptrace is unchecked.</li>
+<li>2 (“suidsafe”) - Any binary which normally would not be dumped (see “0” above) is dumped readable by root only. This allows the user to remove the core dump file but not to read it. For security reasons core dumps in this mode will not overwrite one another or other files. This mode is appropriate when administrators are attempting to debug problems in a normal environment.</li>
+</ul>
+<p><strong>kernel.core_pattern = /tmp/core-%e-%s-%u-%g-%p-%t</strong> - When the application terminates abnormally, a core file should appear in the /tmp. The kernel.core_pattern sysctl controls exact location of core file. You can define the core file name with the following template whih can contain % specifiers which are substituted by the following values when a core file is created:</p>
+<p>**%% **- A single % character<br>
+**%p **- PID of dumped process<br>
+**%u **- real UID of dumped process<br>
+**%g **- real GID of dumped process<br>
+**%s **- number of signal causing dump<br>
+**%t **- time of dump (seconds since 0:00h, 1 Jan 1970)<br>
+**%h **- hostname (same as ’nodename’ returned by uname(2))<br>
+**%e **- executable filename</p>
+<h3 id="1-2-使用core-file调试"><a class="header-anchor" href="#1-2-使用core-file调试"></a>1.2 使用core file调试</h3>
+<p>以backtrace示例程序为例，此示例会因为段错误(signal 11)使程序崩溃，在开启core dump后(没有配置kernel.core_pattern)，在程序所在目录下生成core.PID文件，如core.4025</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@172.24.178.125 :~/<span class="built_in">test</span>]<span class="variable">$gdb</span> ./backtrace core.4025</span><br><span class="line"></span><br><span class="line">...省略gdb版本信息输出...</span><br><span class="line"></span><br><span class="line">Core was generated by <span class="string">'./backtrace'</span>.</span><br><span class="line">Program terminated with signal 11, Segmentation fault.</span><br><span class="line"><span class="comment">#0 0x08048720 in ?? ()</span></span><br><span class="line">(gdb) r</span><br><span class="line">Starting program: /home/yanbaoc/<span class="built_in">test</span>/backtrace</span><br><span class="line">sigaction register ok</span><br><span class="line">0</span><br><span class="line">This is func_a</span><br><span class="line">This is func_b</span><br><span class="line"></span><br><span class="line">Program received signal SIGSEGV, Segmentation fault.</span><br><span class="line">0x0804898f <span class="keyword">in</span> func_b () at backtrace.c:59</span><br><span class="line">59 <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, *p);</span><br><span class="line">(gdb)</span><br></pre></td></tr></table></figure>
+<p>使用gdb调试时，可以看到在产生signal 11的代码处，自动插入了断点#0 0x08048720 in ?? ()，当执行run时，可以看到是在代码59行处设置的断点<code>59 printf(&quot;%d\n&quot;, *p);</code> 那么接下来就知道可能是输出这个指针时出现了无效内存引用，查看一下代码就明确问题了。</p>
+<h2 id="2-backtrace"><a class="header-anchor" href="#2-backtrace"></a>2. backtrace</h2>
+<p>调用backtrace函数可以通过一个指针列表来检查堆栈的每一帧，得到当前进程的调用地址。然后通过backtrace_symbols函数将backtrace得到的信息翻译成字符串。废话不多说，直接看示例。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/***************************************</span></span><br><span class="line"><span class="comment">* backtrace example</span></span><br><span class="line"><span class="comment">* by YYGCui</span></span><br><span class="line"><span class="comment">****************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;execinfo.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ucontext.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SignalHandler</span><span class="params">(<span class="keyword">int</span> num, <span class="keyword">siginfo_t</span> *info, <span class="keyword">void</span> *ptr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    <span class="keyword">void</span> *trace[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">char</span> **messages = (<span class="keyword">char</span> **)<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">int</span> trace_size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">ucontext_t</span> *ucontext = (<span class="keyword">ucontext_t</span> *)ptr;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    if ((fp = fopen("bt.txt","a")) == NULL)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        printf("Error to open bt.txt, exit");</span></span><br><span class="line"><span class="comment">        fp = stderr;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    fp = <span class="built_in">stderr</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(fp, <span class="string">"-----backtrace-----\n"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* display general registers, NGREG=19 */</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; NGREG; i++)</span><br><span class="line">        <span class="built_in">fprintf</span>(fp, <span class="string">"reg[%02d] = 0x%08x\n"</span>, i, ucontext-&gt;uc_mcontext.gregs[i]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fprintf</span>(fp, <span class="string">"Segmentation Fault! info.si_code = %d, info.si_addr = %p\n"</span>, </span><br><span class="line">            info-&gt;si_code, info-&gt;si_addr);</span><br><span class="line"></span><br><span class="line">    trace_size = backtrace(trace, <span class="number">16</span>);</span><br><span class="line">    <span class="comment">/* overwrite sigaction with caller's address */</span></span><br><span class="line">    trace[<span class="number">1</span>] = (<span class="keyword">void</span> *)ucontext-&gt;uc_mcontext.gregs[REG_EIP];</span><br><span class="line">    messages = (<span class="keyword">char</span> **)backtrace_symbols(trace, trace_size);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(fp, <span class="string">"[Catch Signal]\t[Execution path]\n"</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; trace_size; i++)</span><br><span class="line">        <span class="built_in">fprintf</span>(fp, <span class="string">"Catch Signal:\t%s\n"</span>, messages[i]);</span><br><span class="line"></span><br><span class="line">    fclose(fp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func_a</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is func_a\n"</span>);</span><br><span class="line">    func_b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func_b</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is func_b\n"</span>);</span><br><span class="line">    <span class="comment">/* illegal pointer, si_code = 128 (send by kernel) */</span></span><br><span class="line">    <span class="keyword">int</span> *p = (<span class="keyword">int</span> *)<span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, *p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> retVal;</span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sa</span>;</span></span><br><span class="line">    sigemptyset(&amp;sa.sa_mask);</span><br><span class="line">    sa.sa_sigaction = SignalHandler;</span><br><span class="line">    sa.sa_flags = SA_RESETHAND | SA_SIGINFO;</span><br><span class="line">    </span><br><span class="line">    retVal = sigaction(SIGSEGV, &amp;sa, <span class="literal">NULL</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (retVal != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"sigaction register failed (%d).\n"</span>, retVal);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"sigaction register ok\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ((c=getchar()) != <span class="string">'0'</span>);</span><br><span class="line">    func_a();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在该示例中，我们只处理SIGSEGV信号，编译时使用<code>-g -rdynamic</code> (使链接器将所有的符号记录在符号表中)。可以通过backtrace看出区别</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@172.24.178.125 :~/<span class="built_in">test</span>]$./backtrace</span><br><span class="line">sigaction register ok</span><br><span class="line">0</span><br><span class="line">This is func_a</span><br><span class="line">This is func_b</span><br><span class="line">-----backtrace-----</span><br><span class="line">reg[00] = 0x00000033</span><br><span class="line">reg[01] = 0x00000000</span><br><span class="line">reg[02] = 0x0000002b</span><br><span class="line">reg[03] = 0x0000002b</span><br><span class="line">reg[04] = 0x00000001</span><br><span class="line">reg[05] = 0xbfffd084</span><br><span class="line">reg[06] = 0xbfffcf38</span><br><span class="line">reg[07] = 0xbfffcf28</span><br><span class="line">reg[08] = 0x002bde98</span><br><span class="line">reg[09] = 0x0000000f</span><br><span class="line">reg[10] = 0x002bc2a0</span><br><span class="line">reg[11] = 0xffffffff</span><br><span class="line">reg[12] = 0x0000000d</span><br><span class="line">reg[13] = 0x00000000</span><br><span class="line">reg[14] = 0x0804898f</span><br><span class="line">reg[15] = 0x00000023</span><br><span class="line">reg[16] = 0x00010296</span><br><span class="line">reg[17] = 0xbfffcf28</span><br><span class="line">reg[18] = 0x0000002b</span><br><span class="line">Segmentation Fault! info.si_code = 128, info.si_addr = (nil)</span><br><span class="line">[Catch Signal] [Execution path]</span><br><span class="line">Catch Signal: ./backtrace(func_b+0x23) [0x804898f]</span><br><span class="line">Catch Signal: ./backtrace(func_a+0x1b) [0x804896a]</span><br><span class="line">Catch Signal: ./backtrace(main+0x98) [0x8048a38]</span><br><span class="line">Catch Signal: /lib/tls/libc.so.6(__libc_start_main+0xed) [0x19e79d]</span><br><span class="line">Catch Signal: ./backtrace(backtrace_symbols+0x31) [0x80487a9]</span><br><span class="line">Segmentation fault</span><br></pre></td></tr></table></figure>
+<p>不加-rdynamic时backtrace如下 (只列出了部分输出)，无法定位问题。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Segmentation Fault! info.si_code = 128, info.si_addr = (nil)</span><br><span class="line">[Catch Signal] [Execution path]</span><br><span class="line">Catch Signal: ./nodybk(backtrace_symbols+0x217) [0x8048663]</span><br><span class="line">Catch Signal: ./nodybk(backtrace_symbols+0x1f2) [0x804863e]</span><br><span class="line">Catch Signal: ./nodybk [0x804870c]</span><br><span class="line">Catch Signal: /lib/tls/libc.so.6(__libc_start_main+0xed) [0x9d979d]</span><br><span class="line">Catch Signal: ./nodybk(backtrace_symbols+0x31) [0x804847d]</span><br><span class="line">Segmentation fault</span><br></pre></td></tr></table></figure>
+<p>调试方法有两种：</p>
+<h3 id="2-1-使用addr2line命令"><a class="header-anchor" href="#2-1-使用addr2line命令"></a>2.1 使用addr2line命令</h3>
+<p>将地址信息转化成对应的函数和行号，可直接看到哪行代码出了问题</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@172.24.178.125 :~/<span class="built_in">test</span>]<span class="variable">$addr2line</span> 0x804898f -e ./backtrace -f</span><br><span class="line">func_b</span><br><span class="line">/home/yanbaoc/<span class="built_in">test</span>/backtrace.c:59</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-使用gdb调试"><a class="header-anchor" href="#2-2-使用gdb调试"></a>2.2 使用GDB调试</h3>
+<p>使用disassemble命令可以看到崩溃地方的汇编代码，汇编已然看不太懂了，就不在详细说了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$gdb</span> ./backtrace</span><br><span class="line">(gdb) disassemble func_b+0x23</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> <span class="keyword">function</span> func_b:</span><br><span class="line">0x0804896c &lt;func_b+0&gt;: push %ebp</span><br><span class="line">0x0804896d &lt;func_b+1&gt;: mov %esp,%ebp</span><br><span class="line">0x0804896f &lt;func_b+3&gt;: sub <span class="variable">$0x8</span>,%esp</span><br><span class="line">0x08048972 &lt;func_b+6&gt;: sub <span class="variable">$0xc</span>,%esp</span><br><span class="line">0x08048975 &lt;func_b+9&gt;: push <span class="variable">$0x8048bbf</span></span><br><span class="line">0x0804897a &lt;func_b+14&gt;: call 0x8048748 &lt;<span class="built_in">printf</span>&gt;</span><br><span class="line">0x0804897f &lt;func_b+19&gt;: add <span class="variable">$0x10</span>,%esp</span><br><span class="line">0x08048982 &lt;func_b+22&gt;: movl <span class="variable">$0xffffffff</span>,0xfffffffc(%ebp)</span><br><span class="line">0x08048989 &lt;func_b+29&gt;: sub <span class="variable">$0x8</span>,%esp</span><br><span class="line">0x0804898c &lt;func_b+32&gt;: mov 0xfffffffc(%ebp),%eax</span><br><span class="line">0x0804898f &lt;func_b+35&gt;: pushl (%eax)</span><br><span class="line">0x08048991 &lt;func_b+37&gt;: push <span class="variable">$0x8048bcf</span></span><br><span class="line">0x08048996 &lt;func_b+42&gt;: call 0x8048748 &lt;<span class="built_in">printf</span>&gt;</span><br><span class="line">0x0804899b &lt;func_b+47&gt;: add <span class="variable">$0x10</span>,%esp</span><br><span class="line">0x0804899e &lt;func_b+50&gt;: leave</span><br><span class="line">0x0804899f &lt;func_b+51&gt;: ret</span><br><span class="line">End of assembler dump.</span><br><span class="line">(gdb)</span><br></pre></td></tr></table></figure>
+<p>或者创建崩溃地方处的断点，这也能看出程序哪一行出现了问题</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(gdb) <span class="built_in">break</span> *func_b+0x23</span><br><span class="line">Breakpoint 1 at 0x804898f: file backtrace.c, line 59.</span><br><span class="line">(gdb)</span><br></pre></td></tr></table></figure>
+<p>使用list命令可以列出崩溃代码前后总共10行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(gdb) list *func_b+0x23</span><br><span class="line">0x804898f is <span class="keyword">in</span> func_b (backtrace.c:59).</span><br><span class="line">54     int func_b()</span><br><span class="line">55     &#123;</span><br><span class="line">56         <span class="built_in">printf</span>(<span class="string">"This is func_b\n"</span>);</span><br><span class="line">57         /* illegal pointer, si_code = 128 (send by kernel) */</span><br><span class="line">58         int *p = (int *)-1;</span><br><span class="line">59         <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, *p);</span><br><span class="line">60     &#125;</span><br><span class="line">61</span><br><span class="line">62     int main(int argc, char *argv[])</span><br><span class="line">63     &#123;</span><br><span class="line">(gdb)</span><br></pre></td></tr></table></figure>
+<h2 id="3-产生sigsegv信号的方法"><a class="header-anchor" href="#3-产生sigsegv信号的方法"></a>3. 产生SIGSEGV信号的方法</h2>
+<p>当引用无效的内存或者segmentation fault时，SIGSEGV信号将产生，所以可以直接向该进程发送SIGSEGV信号或者产生内存泄露。虽然可以有多种方法产生SIGSEGV，但是他们的signal code是不一样的。</p>
+<h3 id="3-1-使用kill-11-signal-code-0-si-user-当用kill或raise时"><a class="header-anchor" href="#3-1-使用kill-11-signal-code-0-si-user-当用kill或raise时"></a>3.1 使用kill -11，signal code=0 (SI_USER)，当用kill或raise时。</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$kill</span> -11 PID</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-定义一个非法指针-signal-code-128-si-kernel-引起内核中断-有内核发出"><a class="header-anchor" href="#3-2-定义一个非法指针-signal-code-128-si-kernel-引起内核中断-有内核发出"></a>3.2 定义一个非法指针，signal code=128 (SI_KERNEL)，引起内核中断，有内核发出。</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> *foo = (<span class="keyword">int</span> *)<span class="number">-1</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, *foo);</span><br></pre></td></tr></table></figure>
+<h3 id="3-3定义一个空指针并赋值-signal-code-1-segv-maperr-地址未映射到具体对象"><a class="header-anchor" href="#3-3定义一个空指针并赋值-signal-code-1-segv-maperr-地址未映射到具体对象"></a>3.3定义一个空指针并赋值，signal code=1 (SEGV_MAPERR)，地址未映射到具体对象。</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> *foo = <span class="literal">NULL</span>;</span><br><span class="line">*foo = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, *foo);</span><br></pre></td></tr></table></figure>
+<h3 id="3-4申请一段内存并保护它-signal-code-2-segv-accerr-对映射对象无操作权限"><a class="header-anchor" href="#3-4申请一段内存并保护它-signal-code-2-segv-accerr-对映射对象无操作权限"></a>3.4申请一段内存并保护它，signal code=2 (SEGV_ACCERR)，对映射对象无操作权限。</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *foo;</span><br><span class="line">posix_memalign(&amp;foo, getpagesize(), getpagesize());</span><br><span class="line"><span class="built_in">memset</span>(foo, <span class="string">'A'</span>, getpagesize());</span><br><span class="line">mprotect(foo, getpagesize(), PROT_NONE);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, foo[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<ol>
+<li><a href="http://www.cyberciti.biz/tips/linux-core-dumps.html" target="_blank" rel="noopener">http://www.cyberciti.biz/tips/linux-core-dumps.html</a></li>
+<li><a href="http://www.linuxinsight.com/proc_sys_fs_suid_dumpable.html" target="_blank" rel="noopener">http://www.linuxinsight.com/proc_sys_fs_suid_dumpable.html<br>
+</a></li>
+<li><a href="http://www.gnu.org/software/libc/manual/html_node/Backtraces.html" target="_blank" rel="noopener">http://www.gnu.org/software/libc/manual/html_node/Backtraces.html</a></li>
+<li><a href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/063/6391/6391l3.html" target="_blank" rel="noopener">http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/063/6391/6391l3.html</a></li>
+<li><a href="http://blog.csdn.net/challen537/article/details/5648180" target="_blank" rel="noopener">http://blog.csdn.net/challen537/article/details/5648180<br>
+</a></li>
+<li><a href="http://gcc.gnu.org/onlinedocs/gcc/Link-Options.html" target="_blank" rel="noopener">http://gcc.gnu.org/onlinedocs/gcc/Link-Options.html</a></li>
+</ol>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2012/11/26/time-vs-us/" data-toggle="tooltip" data-placement="top" title="时间是静止的，流逝的是我们">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2012/04/19/disgusting-landlord/" data-toggle="tooltip" data-placement="top" title="后极品房东">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-core-dump"><span class="toc-text">1. Core dump</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-开启core-dump"><span class="toc-text">1.1 开启core dump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-使用core-file调试"><span class="toc-text">1.2 使用core file调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-backtrace"><span class="toc-text">2. backtrace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-使用addr2line命令"><span class="toc-text">2.1 使用addr2line命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-使用gdb调试"><span class="toc-text">2.2 使用GDB调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-产生sigsegv信号的方法"><span class="toc-text">3. 产生SIGSEGV信号的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-使用kill-11-signal-code-0-si-user-当用kill或raise时"><span class="toc-text">3.1 使用kill -11，signal code=0 (SI_USER)，当用kill或raise时。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-定义一个非法指针-signal-code-128-si-kernel-引起内核中断-有内核发出"><span class="toc-text">3.2 定义一个非法指针，signal code=128 (SI_KERNEL)，引起内核中断，有内核发出。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3定义一个空指针并赋值-signal-code-1-segv-maperr-地址未映射到具体对象"><span class="toc-text">3.3定义一个空指针并赋值，signal code=1 (SEGV_MAPERR)，地址未映射到具体对象。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4申请一段内存并保护它-signal-code-2-segv-accerr-对映射对象无操作权限"><span class="toc-text">3.4申请一段内存并保护它，signal code=2 (SEGV_ACCERR)，对映射对象无操作权限。</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        
+                        <a class="tag" href="/tags/C-C/" title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/backtrace/" title="backtrace">backtrace</a>
+                        
+                        <a class="tag" href="/tags/core-dump/" title="core dump">core dump</a>
+                        
+                        <a class="tag" href="/tags/gdb/" title="gdb">gdb</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2012/09/17/core-dump-and-backtrace/";
+    var disqus_url = "http://blog.cuicc.com/blog/2012/09/17/core-dump-and-backtrace/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

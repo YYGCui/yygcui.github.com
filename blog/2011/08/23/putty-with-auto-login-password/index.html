@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        修改PuTTY实现保存密码自动登录｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2011/08/23/putty-with-auto-login-password/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>修改PuTTY实现保存密码自动登录</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2011-08-23
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        
+                        <a class="tag" href="/tags/C-C/" title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/putty/" title="putty">putty</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            修改PuTTY实现保存密码自动登录
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>一直钟情于PuTTY的小巧精悍，是我SSH连接之必选。虽然喜欢这款软件的小巧，但亦要承受其不方便之苦。最希望PuTTY添加的两个功能是自动登录和Tab支持。这也是众多使用者的wishlist，但官方已明确的断了大家的念想。<br>
+关于自动登录(auto-login password)，当然需要保存密码的功能，官方的回应是记住密码会带来显著的安全问题：任何能使用你的设备的人都能轻而易举的得到你的密码，使用它，甚至滥用他。建议通过SSH的公钥验证来自动登录，它更加方便和安全。详细回应<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/faq.html#faq-password-remember" target="_blank" rel="noopener">参看这里</a>。<br>
+关于Tab支持，官方的回应是需要重构windows相关的代码，代价比较大，再者并不是所有人都喜欢tab…，详细回应<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/multiple-connections.html" target="_blank" rel="noopener">参看这里</a>。</p>
+<a id="more"></a>
+<p>PuTTY是开源的，我们可以很容易得到它的源代码，这是能够修改PuTTY功能的前提。在PuTTY的Connection-&gt;Data选项中有Auto-login username这一项，我们可以在源代码中定位到插入点，文件为Config.c ，Auto-login password就是要插入的密码文本框项(Line5-9)。事实上，username是修改整个代码的参照系，从以下代码片段中也可以看出。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">    ctrl_editbox(s, <span class="string">"Auto-login username"</span>, <span class="string">'u'</span>, <span class="number">50</span>,</span><br><span class="line">        HELPCTX(connection_username),</span><br><span class="line">		dlg_stdeditbox_handler, I(offsetof(Config,username)),</span><br><span class="line">		I(<span class="keyword">sizeof</span>(((Config *)<span class="number">0</span>)-&amp;gt;username)));</span><br><span class="line">    c = ctrl_editbox(s, <span class="string">"Auto-login password"</span>, <span class="string">'w'</span>, <span class="number">50</span>,</span><br><span class="line">		HELPCTX(connection_password),</span><br><span class="line">		dlg_stdeditbox_handler, I(offsetof(Config,password)),</span><br><span class="line">		I(<span class="keyword">sizeof</span>(((Config *)<span class="number">0</span>)-&amp;gt;password)));</span><br><span class="line">    c-&amp;gt;editbox.password = <span class="number">1</span>; <span class="comment">//password type, do not display directly</span></span><br><span class="line">```    </span><br><span class="line">定位HELPCTX函数，文件为windows/&lt;del&gt;Winhelp.c&lt;/del&gt;Winhelp.h，在connection_username行下插入(Line2)：</span><br><span class="line">``` c </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> WINHELP_CTX_connection_username <span class="meta-string">"connection.username:config-username"</span></span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> WINHELP_CTX_connection_password <span class="meta-string">"connection.password:config-password"</span></span></span><br></pre></td></tr></table></figure>
+<p>定位Config变量，得知其为config_tag类型的结构体，定位到putty.h，在该结构体中加入password的声明(Line2)：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> username[<span class="number">100</span>];</span><br><span class="line"><span class="keyword">char</span> password[<span class="number">100</span>];</span><br></pre></td></tr></table></figure>
+<p>接下来就是对password的处理了，在ssh连接的auto login时，会处理username，同理在该函数中，添加对password的处理。ssh连接有两种方式：ssh1和ssh2，所以对应的两个函数都要修改。文件为Ssh.c。对ssh1的修改如下(位于do_ssh1_login()中)(Line8-18)：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* Show password prompt, having first obtained it via a TIS</span></span><br><span class="line"><span class="comment">* or CryptoCard exchange if we're doing TIS or CryptoCard</span></span><br><span class="line"><span class="comment">* authentication.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> ret; <span class="comment">/* need not be kept over crReturn */</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strlen</span>(ssh-&gt;cfg.password) == <span class="number">0</span>) &#123;</span><br><span class="line">	    ret = get_userpass_input(s-&gt;cur_prompt, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">	    <span class="keyword">while</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		ssh-&gt;send_ok = <span class="number">1</span>;</span><br><span class="line">		crWaitUntil(!pktin);</span><br><span class="line">		ret = get_userpass_input(s-&gt;cur_prompt, in, inlen);</span><br><span class="line">		ssh-&gt;send_ok = <span class="number">0</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		ret = <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">strcpy</span>(s-&gt;cur_prompt-&gt;prompts[<span class="number">0</span>]-&gt;result, ssh-&gt;cfg.password);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>对ssh2的修改如下(位于do_ssh2_authconn()中)(Line17-27)：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* Plain old password authentication.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">int</span> ret; <span class="comment">/* not live over crReturn */</span></span><br><span class="line"><span class="keyword">int</span> changereq_first_time; <span class="comment">/* not live over crReturn */</span></span><br><span class="line"></span><br><span class="line">ssh-&gt;pkt_actx = SSH2_PKTCTX_PASSWORD;</span><br><span class="line"></span><br><span class="line">s-&gt;cur_prompt = new_prompts(ssh-&gt;frontend);</span><br><span class="line">s-&gt;cur_prompt-&gt;to_server = TRUE;</span><br><span class="line">s-&gt;cur_prompt-&gt;name = dupstr(<span class="string">"SSH password"</span>);</span><br><span class="line">add_prompt(s-&gt;cur_prompt, dupprintf(<span class="string">"%.90s@%.90s's password: "</span>,</span><br><span class="line">    s-&gt;username,ssh-&gt;savedhost),FALSE, SSH_MAX_PASSWORD_LEN);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">strlen</span>(ssh-&gt;cfg.password) == <span class="number">0</span>) &#123;</span><br><span class="line">    ret = get_userpass_input(s-&gt;cur_prompt, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">while</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">	    ssh-&gt;send_ok = <span class="number">1</span>;</span><br><span class="line">		crWaitUntilV(!pktin);</span><br><span class="line">		ret = get_userpass_input(s-&gt;cur_prompt, in, inlen);</span><br><span class="line">		ssh-&gt;send_ok = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	ret = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">strcpy</span>(s-&gt;cur_prompt-&gt;prompts[<span class="number">0</span>]-&gt;result, ssh-&gt;cfg.password);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，ssh的Auto-login password已实现。但是还需要就password的保存绑定到load和save功能上，这两个功能的实现位于在Settings.c文件中。在函数save_open_settings()中添加(Line2)：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">write_setting_s(sesskey, <span class="string">"UserName"</span>, cfg-&gt;username);</span><br><span class="line">write_setting_s(sesskey, <span class="string">"PassWord"</span>, cfg-&gt;password);</span><br></pre></td></tr></table></figure>
+<p>在函数load_open_settings()中添加(Line2)：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">gpps(sesskey, <span class="string">"UserName"</span>, <span class="string">""</span>, cfg-&gt;username, <span class="keyword">sizeof</span>(cfg-&gt;username));</span><br><span class="line">gpps(sesskey, <span class="string">"PassWord"</span>, <span class="string">""</span>, cfg-&gt;password, <span class="keyword">sizeof</span>(cfg-&gt;password));</span><br></pre></td></tr></table></figure>
+<p>至此，所有代码修改完成，根据README文件的提示，我使用MinGW编译了一下，MinGW可以在<a href="http://www.mingw.org/" target="_blank" rel="noopener">这里</a>得到。编译方法如下：</p>
+<pre><code class="language-bash">    $cd putty-src/windows
+    $make -f makefile.cyg
+</code></pre>
+<p>在该windows目录下生成所有的可执行文件。如果你不想修改编译，可以直接下载我编译好的，下载地址在<a href="http://www.box.net/shared/3j344ux1ssc5681m5qgd" target="_blank" rel="noopener">这里</a>。</p>
+<p><strong>Update:</strong> 修改后的源代码已经放在Github上：<a href="https://github.com/YYGCui/putty-improvement" target="_blank" rel="noopener">putty-improvement</a>。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2011/09/30/three-phases-of-job/" data-toggle="tooltip" data-placement="top" title="鱼渔欲">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2011/07/27/standard-predefined-macros-of-c/" data-toggle="tooltip" data-placement="top" title="C标准预定义宏">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        
+                        <a class="tag" href="/tags/C-C/" title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/putty/" title="putty">putty</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2011/08/23/putty-with-auto-login-password/";
+    var disqus_url = "http://blog.cuicc.com/blog/2011/08/23/putty-with-auto-login-password/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

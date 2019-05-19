@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        kubernetes之多网络策略｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2017/09/10/kubernetes-network-policy/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>kubernetes之多网络策略</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2017-09-10
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            kubernetes之多网络策略
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>网络策略(<code>Network Policy</code>)是<code>Kubernetes</code>提供的一种规范，它描述了一组<code>Pod</code>是如何被允许相互通信的，以及和其他端点是如何通信的。<code>Kubernetes</code>只提供了这样的机制，具体功能由网络插件(<code>Network Plugins</code>)实现，流行的网络插件有很多，但并不是所有的网络插件都提供了网络策略功能，如<code>flannel</code>就没有提供这样的功能，目前已知的支持网络策略的有<code>Calico</code>, <code>Cilium</code>, <code>Kube-router</code>, <code>Romana</code>, <code>Weave Net</code>, <code>Canal</code>。</p>
+<p>网络策略的应用和<code>Kubernetes</code>中很多操作类似，是通过<code>labels</code>来选取一组<code>Pods</code>的，然后再配置具体的规则(目前的实现都是通过配置<code>iptables rule</code>)来控制什么流量被允许发送到这组选取的<code>Pods</code>。</p>
+<p><em>注:</em> 笔者使用的<strong>Kubernetes 1.6</strong>版本中网络策略还处于<code>beta</code>状态，其配置和<strong>Kubernetes 1.7</strong>中网络策略正式版略有差异。这里略作批注。</p>
+<h2 id="网络策略"><a class="header-anchor" href="#网络策略"></a>网络策略</h2>
+<p>使用网络策略的一般步骤如下(以<code>Calico</code>为例):</p>
+<h3 id="配置网络策略"><a class="header-anchor" href="#配置网络策略"></a>配置网络策略</h3>
+<ol>
+<li>修改<code>kube-apiserver</code>的配置文件，添加配置项<code>--runtime-config=extensions/v1beta1/networkpolicies=true</code>，表示启用网络策略(<strong>Kubernetes 1.6</strong>版本中)</li>
+<li>修改<code>kubelet</code>的配置文件，添加配置项<code>--network-plugin=cni</code>，表示使用CNI网络插件</li>
+<li>根据<code>calico</code>相应版本的<a href="https://docs.projectcalico.org/v2.5/getting-started/kubernetes/installation/" target="_blank" rel="noopener">安装文档</a>，安装<code>calico</code>插件，<strong>Calico Kubernetes Hosted Install</strong>方式比较简单。</li>
+</ol>
+<h3 id="使用网络策略"><a class="header-anchor" href="#使用网络策略"></a>使用网络策略</h3>
+<p><code>kubernetes</code>官方文档有<a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/" target="_blank" rel="noopener">详细的说明</a>，这里简要列一下几个关键配置。</p>
+<ol>
+<li>
+<p>默认配置下，<code>Pods</code>是不做隔离的，即集群内所有<code>Pod</code>之间都是互通的。<br>
+a. <strong>Kubernetes 1.6</strong>版本中在使用网络策略之前，需要先配置<code>namespace</code>为默认隔离，配置如下：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;metadata&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &quot;mynamespace&quot;,</span><br><span class="line">        &quot;labels&quot;: &#123;</span><br><span class="line">            &quot;name&quot;: &quot;mynamespace&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;annotations&quot;: &#123;</span><br><span class="line">            &quot;net.beta.kubernetes.io/network-policy&quot;: &quot;&#123;\&quot;ingress\&quot;: &#123;\&quot;isolation\&quot;: \&quot;DefaultDeny\&quot;&#125;&#125;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时，该<code>namespace</code>下的所有<code>Pod</code>都是隔离状态的，不接收任何来源的流量。</p>
+<p>b. <strong>Kubernetes 1.7</strong>版本中直接通过网络策略配置，即配置网络策略的应用网络策略规则，未配置网络策略的还是未隔离状态。</p>
+</li>
+<li>
+<p>使用标签选择器配置一组<code>Pod</code>的网路策略，即接收哪些来源的流量， 示例如下(<strong>Kubernetes 1.6</strong>版本<code>apiVersion</code>不同)，该配置表示：</p>
+<ul>
+<li>在名为<code>default</code>的命名空间中隔离所有标签为<code>role=db</code>的<code>Pod</code>， 如果没有隔离的话(<strong>Kubernetes 1.7</strong>版本)。</li>
+<li>允许标签为<code>project=myproject</code>的命名空间中的所有<code>Pod</code>通过<code>TCP</code>连接该<code>default</code>命令空间里的标签为<code>role=db</code>的<code>Pod</code>的<code>6379</code>端口。</li>
+<li>允许标签为<code>role=frontend</code>的<code>defult</code>命名空间中的所有<code>Pod</code>通过<code>TCP</code>连接该<code>default</code>命令空间里的标签为<code>role=db</code>的<code>Pod</code>的<code>6379</code>端口。</li>
+</ul>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;apiVersion&quot;: &quot;networking.k8s.io/v1&quot;,</span><br><span class="line">&quot;kind&quot;: &quot;NetworkPolicy&quot;,</span><br><span class="line">&quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;test-network-policy&quot;,</span><br><span class="line">    &quot;namespace&quot;: &quot;default&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;spec&quot;: &#123;</span><br><span class="line">    &quot;podSelector&quot;: &#123;</span><br><span class="line">    &quot;matchLabels&quot;: &#123;</span><br><span class="line">        &quot;role&quot;: &quot;db&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;ingress&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;from&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;namespaceSelector&quot;: &#123;</span><br><span class="line">            &quot;matchLabels&quot;: &#123;</span><br><span class="line">                &quot;project&quot;: &quot;myproject&quot;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;podSelector&quot;: &#123;</span><br><span class="line">            &quot;matchLabels&quot;: &#123;</span><br><span class="line">                &quot;role&quot;: &quot;frontend&quot;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;ports&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;protocol&quot;: &quot;TCP&quot;,</span><br><span class="line">            &quot;port&quot;: 6379</span><br><span class="line">        &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>同样的，<strong>Kubernetes 1.7</strong>版本中，也提供了默认策略<br>
+a. 默认全隔离策略，类似于<strong>Kubernetes 1.6</strong>版本对<code>namespace</code>的配置，作用的命名空间下所有<code>Pod</code>在未应用其他网络策略的情况下是隔离状态。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;apiVersion&quot;: &quot;networking.k8s.io/v1&quot;,</span><br><span class="line">    &quot;kind&quot;: &quot;NetworkPolicy&quot;,</span><br><span class="line">    &quot;metadata&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &quot;default-deny&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;spec&quot;: &#123;</span><br><span class="line">        &quot;podSelector&quot;: null</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b. 全通策略，作用的命名空间下所有<code>Pod</code>可接收任何流量，无视其上配置的其他网络策略。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;apiVersion&quot;: &quot;networking.k8s.io/v1&quot;,</span><br><span class="line">    &quot;kind&quot;: &quot;NetworkPolicy&quot;,</span><br><span class="line">    &quot;metadata&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &quot;allow-all&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;spec&quot;: &#123;</span><br><span class="line">        &quot;podSelector&quot;: null,</span><br><span class="line">        &quot;ingress&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="多网络策略"><a class="header-anchor" href="#多网络策略"></a>多网络策略</h2>
+<p>在文章[kubernetes之多网络支持]中，以<code>flannel</code>为例讲述了多网络的配置方法。由于<code>flannel</code>不支持网络策略，这里使用<a href="https://github.com/Huawei-PaaS/CNI-Genie" target="_blank" rel="noopener">Huawei-PaaS/CNI-Genie</a>插件为例，<code>CNI-Genie</code>也是集成引导插件，本身不做具体功能，由引用的插件完成网络功能，其支持<code>Calico</code>, <code>Weave Net</code>, <code>Canal</code>, <code>Romana</code>等。</p>
+<h3 id="配置多插件"><a class="header-anchor" href="#配置多插件"></a>配置多插件</h3>
+<p>在前述配置网络策略的基础上，再安装<code>CNI-Genie</code>, <code>Weave Net</code>, <code>Canal</code>, <code>Romana</code>等插件，以上插件官方都有<code>Kubernetes Hosted Install</code>的安装脚本，直接下载应用即可。这里<code>CNI-Genie</code>的配置文件是<code>00-**.conf</code>，而其他插件的配置文件是<code>10-**.conf</code>，所以按优先级默认加载的插件是<code>CNI-Genie</code>。</p>
+<h3 id="使用多网络"><a class="header-anchor" href="#使用多网络"></a>使用多网络</h3>
+<p><code>CNI-Genie</code>使用动态选择插件的策略，即每次部署都可以指定不同的插件，通过<code>Kubernetes</code>的<code>annotations</code>实现，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: mytest</span><br><span class="line">  namespace: mynamespace</span><br><span class="line">  labels:</span><br><span class="line">    name: mytest</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      name: mytest</span><br><span class="line">      namespace: mynamespace</span><br><span class="line">      labels:</span><br><span class="line">        name: mytest</span><br><span class="line">      annotations:</span><br><span class="line">        cni: &quot;calico,weave&quot;</span><br><span class="line">        multi-ip-preferences: |</span><br><span class="line">          &#123;</span><br><span class="line">            &quot;multi_entry&quot;: 0,</span><br><span class="line">            &quot;ips&quot;: &#123;</span><br><span class="line">              &quot;&quot;: &#123;</span><br><span class="line">                &quot;ip&quot;: &quot;&quot;,</span><br><span class="line">                &quot;interface&quot;: &quot;&quot;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: mytest</span><br><span class="line">          image: mytest:latest</span><br><span class="line">          imagePullPolicy: IfNotPresent</span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 21234</span><br></pre></td></tr></table></figure>
+<p>这里<code>annotations</code>添加了两个字段，<code>cni</code>表示该部署使用的网络插件，如这里使用的是<code>Calico</code>和<code>Weave Net</code>。<code>multi-ip-preferences</code>字段用于反填网络插件配置的ip地址和网络编号，以<code>ip1</code>, <code>ip2</code>, … 命名。</p>
+<p><em>注</em>: <code>Calico</code>由于本身实现的问题，笔者在验证时不能作为非第一网络使用，具体参看<a href="https://github.com/projectcalico/cni-plugin/issues/352" target="_blank" rel="noopener">github issue</a></p>
+<h3 id="多网络策略-v2"><a class="header-anchor" href="#多网络策略-v2"></a>多网络策略</h3>
+<p>网络策略的实现都是以<code>Kubernetes</code>里的<code>PodIP</code>为入参施加网络规则的，但在多网络配置下只有第一网络的ip被上报给<code>Kubernetes</code>，作为<code>PodIP</code>。也就是说我们无法通过<code>Kubernetes</code>存储的数据获取到多网络地址。这里我们可以利用<code>multi-ip-preferences</code>字段的值来满足定制化需求。</p>
+<p>以<code>Weave Net</code>为例，需要定制其<code>npc</code>实现，所有获取<code>PodIP</code>的地方替换成如下方式获取的ip(获取第二网络地址，这里示例不具有灵活性，可考虑在<code>multi-ip-preferences</code>添加一个字段表示该ip属于哪个插件)。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func getIPFromAnnotation(pod *coreapi.Pod) string &#123;</span><br><span class="line">	var podIP2 string = &quot;&quot;</span><br><span class="line">	var mip MultiIPPreferences</span><br><span class="line">	</span><br><span class="line">	mipJSON, found := pod.ObjectMeta.Annotations[&quot;multi-ip-preferences&quot;]</span><br><span class="line">	if found &#123;</span><br><span class="line">		if err := json.Unmarshal([]byte(mipJSON), &amp;mip); err == nil &#123;</span><br><span class="line">			if value, ok := mip.Ips[&quot;ip2&quot;]; ok &#123;</span><br><span class="line">				podIP2 = value</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return podIP2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，我们的多网络配置下，可以使网络策略作用于所有配置网络。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2017/12/31/my-personal-review-2017/" data-toggle="tooltip" data-placement="top" title="我的2017个人总结">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2017/07/23/kubernetes-probe/" data-toggle="tooltip" data-placement="top" title="kubernetes之探针">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络策略"><span class="toc-text">网络策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络策略"><span class="toc-text">配置网络策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用网络策略"><span class="toc-text">使用网络策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多网络策略"><span class="toc-text">多网络策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置多插件"><span class="toc-text">配置多插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用多网络"><span class="toc-text">使用多网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多网络策略-v2"><span class="toc-text">多网络策略</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2017/09/10/kubernetes-network-policy/";
+    var disqus_url = "http://blog.cuicc.com/blog/2017/09/10/kubernetes-network-policy/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

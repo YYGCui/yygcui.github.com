@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        BlackBerry使用小记及软件应用｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2010/06/06/blackberry-use-tips-and-apps/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>BlackBerry使用小记及软件应用</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2010-06-06
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/业界追踪/" title="业界追踪">业界追踪</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Mobile/" title="Mobile">Mobile</a>
+                        
+                        <a class="tag" href="/tags/BlackBerry/" title="BlackBerry">BlackBerry</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            BlackBerry使用小记及软件应用
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>还记得第一次见到黑莓是在回家的火车上，坐在斜对面的小伙拿着一个7290，第一印象是感觉这款手机很霸气，再配上全键盘给人一种高端的感觉。<br>
+入手黑莓8700（都快成古董机了）已一年有余，使我从一个新手渐渐变成了老鸟（只是比新手熟悉一点，感觉离老鸟还差很远～～～），网上的教程比比皆是，可写体验感受的并不是非常多，当然每个人的偏好是不一样的，自然感受也不同。晒一晒我的使用感受以及我安装的应用程序。</p>
+<p>使用感受：外形很酷，犹如一个盾牌，2.6寸的横屏（貌似是4:3）配以全键盘，整个外观给人一种高端霸气的感觉，当然，这些都是外在的，重要的还是使用起来的感受。</p>
+<a id="more"></a>
+<p>1.系统方面我没有发言权，因为这是我用过的第一个智能机系统，所以无法比较，它给我的第一印象是很快，使用起来很稳定，但是当你安装的应用越来越多时，不仅仅是对仅有的64MB存储空间的考验，内存也是极大的一个限制因素。<br>
+2.快捷键方面，丰富的快捷键及快捷键软件(KeyMaster, KBLauncher)，带来了极大的方便，这是我感受黑莓最爽的一部分，打开任何一个应用最多只用3个操作。其快捷性所向披靡。<br>
+3.电话操作，短信操作的细节上做的不错，比如电话时你可以暂时屏蔽自己的语音，短信是以聊天的方式，在发短信的时候可以看到对方的短信。但是电话本操作，闹铃操作就相对差一点，好在可以用相应的软件弥补(SmartDial)，如电话本不支持拼音查找，闹铃只能设置一个。<br>
+4.不得不提的是4.5的ROM没有自带的拼音输入法，而第三方的输入法(点讯输入法)无法融入系统，这让全键盘显得像鸡肋一样，4.2的ROM有自带的拼音输入法，但是这输入法和搜狗，谷歌，百度，QQ等输入法相比相差太远…<br>
+5.软件应用方面，近来黑莓得到越来越多的国内软件应用商的关注，这和中电信引入黑莓有极大的相关性。除了输入法（据说是因为API受限），其他常用的软件都已发布黑莓版本，如QQ，飞信（感觉官方版太差），UC浏览器，同花顺，大智慧…</p>
+<p>从我个人的使用感受来说，黑莓是一款不错的手机，你值得拥有！下面是个人应用列表：</p>
+<p>1.拼音输入法：<a href="http://www.dayhand.com/bbs/viewthread.php?tid=14573" target="_blank" rel="noopener">点讯输入法</a> (必备)<br>
+    点讯输入法是目前黑莓上最好的拼音输入法，可惜的是系统集成性表现很弱，据说是API受限，无法完全融入系统，导致第三方程序无法直接调入使用。<br>
+2.快捷键软件：<a href="http://bbdev.org/tag/keymaster/" target="_blank" rel="noopener">KeyMaster</a>，<a href="http://www.bbercn.com/tag/kblauncher" target="_blank" rel="noopener">KBLauncher</a> (必备)<br>
+    KeyMaster是bbdev.org的原创作品，可以自定义快捷键，如果再配合KBLauncher，那就相当完美了。<br>
+3.黑莓来电助手：<a href="http://bbdev.org/category/blackberry-find-location/" target="_blank" rel="noopener">CallAssistant</a> (必备)<br>
+    CallAssistant也是bbdev.org的原创作品，难得是还是一款免费作品，提供通话提醒，来电归属地查询等实用功能。berrymail 也有一款类似功能软件<a href="http://www.berrymail.cn/phoneassist" target="_blank" rel="noopener">PhoneAssistant</a>，不过是收费软件，所以没用过没有发言权<br>
+4.Google系列：Google Sync、Gmail、Google Maps (必备) 手机登录m.google.com下载<br>
+    Google Sync是一个同步软件，可以将电话簿同步到Gmail邮箱中，这样就不用担心电话簿会丢失了，今年中国移动也推出了一款类似软件 <a href="http://i.139.com/tongbu/" target="_blank" rel="noopener">i联系</a> 可以将电话簿同步到139社区。<br>
+    Gmail 客户端，这个不用解释了，用来收发gmail邮件的，类似的邮件客户端有很多，如 139黑莓客户端， <a href="http://www.shangmail.com/" target="_blank" rel="noopener">shangmail</a>（传说中使用了Push技术），<a href="http://www.berrymail.cn/" target="_blank" rel="noopener">berrymail</a> … 版本之多可以参看<a href="http://ota.bbercn.com/subcate.asp?id=35" target="_blank" rel="noopener">莓园无线</a>。<br>
+    Google Maps是出行必备，有GPS可以GPS导航，无GPS可以基站定位，实在是居家旅行，杀人越货必备之利器。<br>
+5.农历软件：<a href="http://ota.bbercn.com/list.asp?ThisItem=2673" target="_blank" rel="noopener">LunarHome</a> (必备)<br>
+    让我无法接受的是，黑莓上还没有一款比较完美的农历软件，LunarHome是莓文化出品的比较优秀的一款，但是功能太少了，只显示当天对应的农历。<br>
+6.天气软件：<a href="http://www.bbercn.com/berryweather-free-update-to-2-210.html" target="_blank" rel="noopener">Berryweather</a> (必备)<br>
+    Berryweather号称是黑莓上最优秀的天气软件，预报相当准确，难得是推出了免费版本。另 <a href="http://www.bbercn.com/tag/bbweather" target="_blank" rel="noopener">BBWeather</a>，也是不错的一款天气预报软件。<br>
+7.RSS阅读工具：<a href="http://www.viigo.com" target="_blank" rel="noopener">viigo</a> (必备)<br>
+    viigo是黑莓上最优秀的RSS阅读工具，其实它不仅仅是一个RSS阅读软件，还提供了天气，运动，娱乐，旅行，财经等多方面查阅功能。国内也有一款比较优秀的RSS阅读工具<a href="http://www.goonuu.com/" target="_blank" rel="noopener">GooNuu</a>。</p>
+<ol start="8">
+<li>智能拨号软件：<a href="http://berryware360.cn/" target="_blank" rel="noopener">SmartDial</a> (必备)<br>
+    SmartDial解决了4.5ROM无法拼音查询电话簿的问题，又是一实用利器。谁用谁知道。<br>
+9.浏览器：<a href="http://www.operachina.com/mini/" target="_blank" rel="noopener">Opera Mini</a>，<a href="http://www.uc.cn/" target="_blank" rel="noopener">UC</a> (必备)<br>
+    Opera Mini是全球最流行的手机浏览器，很久以前可以用国际版翻越防火长城，虽然现在被封掉了，还是可以通过自定义代理服务器翻越。<br>
+    UCWeb是一款优秀的国产浏览器，尤其是最近发布的7.2版本，在浏览体验上上升了好几个层次，无疑成为手机浏览器的领跑者。<br>
+10.电子词典：<a href="http://dict.cn/" target="_blank" rel="noopener">海词词典</a> (必备)<br>
+    海词词典是一款网络词典，支持网络查词功能，软件体积比较小，当然词典软件那是相当多，具体参看<a href="http://ota.bbercn.com/" target="_blank" rel="noopener">莓园无线</a>。 <br>
+11.文件管理：<a href="http://www.emacberry.com/bbfilescout.html" target="_blank" rel="noopener">FileScout</a> (必备)<br>
+    FileScout是一款功能强大的文件管理软件，其免费版本只能在App World里下载，好在国内黑莓玩家已经download下来了，参看莓园无线。<br>
+12.理财软件：<a href="http://ascendo-inc.com/Money.html" target="_blank" rel="noopener">Ascendo Money</a> (必备)<br>
+    Ascendo Money是一款相当专业的理财软件，唯一不足之处是没有中文版，这款软件是收费的，不过可以内存法××。<br>
+13.定时短信软件：<a href="http://www.s4bb.com/software/messageschedule/" target="_blank" rel="noopener">MessageSchedule</a> (必备)<br>
+    MessageSchedule是S4BB公司出品的一款定时发送短信、邮件的软件，这款软件对我来说属于基本不用但相当有用的软件，这是一款收费但无需注册的软件，下载即可使用。<br>
+14.文本编辑软件：<a href="http://www.coolove.pcriot.com/" target="_blank" rel="noopener">BBNotePad</a> (必备)<br>
+    BBNotePad是一款非常方便的文本编辑工具，支持较多的编码格式，支持zip解压缩，更可贵的是体积很小。<br>
+15.IM软件: QQ、飞信、BerryFetion、Btalk、Ubertwitter、foursquare(已被墙)、人人、Windows Live Messenger、Snaptu<br>
+    即时聊天软件是现在生活的必备品了，QQ、飞信、人人、Windows Live Messenger就不用介绍了，地球人都知道。<br>
+    BerryFetion是一款飞信API客户端，莓文化开发的一款可以在黑莓上快速发送飞信的软件。它不需要漫长的登录和长期在线，只消耗很少的流量。<br>
+    Btalk是一款Gtalk黑莓客户端。<br>
+    Ubertwitter是黑莓上非常优秀的twitter客户端，支持自定义代理服务器，在twitter被封的今天依然可以自由twitter。<br>
+    foursquare是一款根据地理位置交友的SNS客户端，个人觉得创意非常赞，只可惜前天刚被封掉…<br>
+    Snaptu可以称之为神器，在不用设置的情况下可以自由使用facebook、twitter。</li>
+</ol>
+<p>就写这么多吧，其实我64MB的内存上不仅仅安装了这些，还有巨大无比的Documents To Go（相当于office），BatteryBooster（节省电池电量），同花顺，大智慧，光大证券，还有一个从来就没觉得有用的MemoryBooster（内存整理软件）。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2010/06/24/write-when-iphone4-is-selling/" data-toggle="tooltip" data-placement="top" title="写在iPhone 4正式发售之时">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2010/05/21/the-days-to-find-internship/" data-toggle="tooltip" data-placement="top" title="那些笔试与被鄙视的日子">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Mobile/" title="Mobile">Mobile</a>
+                        
+                        <a class="tag" href="/tags/BlackBerry/" title="BlackBerry">BlackBerry</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2010/06/06/blackberry-use-tips-and-apps/";
+    var disqus_url = "http://blog.cuicc.com/blog/2010/06/06/blackberry-use-tips-and-apps/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

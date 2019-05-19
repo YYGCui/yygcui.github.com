@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        kubernetes之网络分析｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>kubernetes之网络分析</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2017-04-30
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/docker/" title="docker">docker</a>
+                        
+                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            kubernetes之网络分析
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><code>Kubernetes</code>是一个开源的容器集群管理平台，可用来自动化部署、扩展和运维应用容器。关于这个平台本身的各组件及具体功能不在本文讨论范围，本文主要关注<code>kubernetes</code>的网络方案。在讨论网络之前有必要先了解下相关概念，这些概念和网络息息相关。</p>
+<h2 id="基本概念"><a class="header-anchor" href="#基本概念"></a>基本概念</h2>
+<p><code>Containers</code>是最小的资源单位，用于轻松地打包应用程序及相关配置。但在<code>kubernetes</code>中，容器不是操作的最小单位，甚至容器本身对<code>kubernetes</code>是不可见的，而是通过包装在外面的<code>Pod</code>进行资源的管理。</p>
+<p><code>Pods</code>是最小的部署单位，是部署在<code>kubernetes</code>中的应用的一个实例。可包含一组相关容器，<code>Pod</code>内共享的存储资源，一个唯一的网络IP以及一些选项配置容器该怎样运行。<code>Pod</code>中的所有容器共享一个网络IP，容器间可直接用<code>localhost</code>访问。</p>
+<p><code>Replica sets</code>是<code>ReplicationController</code>的下一代实现，它和后者基本上是一样的，除了对选择器<code>Selector</code>的支持不一样。该控制器用来保证始终都有一定数量的<code>Pod</code>副本在运行，它会自动替换故障/被删除/被终止的副本。也就是说，少于设定的固定数量时，会自动创建到达该数量；多于该数量时，会自动删除到该数量。官方不建议直接使用该控制器，可用更高层的<code>Deployment</code>来管理。</p>
+<p><code>Deployment</code>为<code>Pods</code>和<code>Replica sets</code>提供了声明更新，也就是说该控制器用来保证达到你描述的期望状态。使用该控制器可以方便的更新<code>Pods</code>(滚动升级)，如更新了容器镜像；可以方面的回滚到之前的部署版本；可以随时暂停和启动部署。</p>
+<p><code>Service</code>有时也被称为微服务，是一个抽象的概念，它定义了一组<code>Pods</code>以及访问它们的策略。<code>Pods</code>是通过标签选择器<code>Label Selector</code>被集合在一起的。该抽象层屏蔽了后端的<code>Pods</code>副本，对外呈现一个访问入口。这样即使后端被替换，对外也是不感知的。所以，不管是对内还是对外提供的功能，都以<code>Service</code>作为服务入口是合理的做法。</p>
+<p><code>Service</code>和<code>Deployment</code>可以看作是同一级的概念，<code>Service</code>用于<code>Pods</code>对外提供服务的管理，<code>Deployment</code>用于<code>Pods</code>本身的管理。以上各个概念之间的关系如下图：</p>
+<img src="/images/k8s-concepts.png" title="Kubernetes概念关系图">
+<p><code>Nodes</code>是指<code>kubernetes</code>集群的节点，提供能力的机器，如虚拟机等，这里列举一下便于下面的网络讨论。</p>
+<h2 id="网络方案"><a class="header-anchor" href="#网络方案"></a>网络方案</h2>
+<p>基于以上的概念，可以看到涉及到的网络通信有容器间的通信，<code>Pod</code>间的通信，服务间的通信，跨节点的通信，以及延伸一下跨集群的通信。那么这些网络通信在<code>kubernetes</code>里都是如何实施的呢？<code>kubernetes</code>官方给出了一个使用<code>OpenVSwitch</code>的<a href="https://kubernetes.io/docs/admin/ovs-networking/" target="_blank" rel="noopener">网络方案</a>。这里基于这个网络方案图扩展一下，试图涵盖所有的网络连接类型。如下图所示，针对每种网络连接类型，后面会详细讨论。</p>
+<img src="/images/k8s-network.png" title="Kubernetes网络方案图">
+<h3 id="container-to-container"><a class="header-anchor" href="#container-to-container"></a>Container-to-Container</h3>
+<p>上面我们已经提到，<code>kubernetes</code>不会直接操作容器本身，对外呈现的最小操作单位是<code>Pod</code>，这里容器之间的通信是指一个<code>Pod</code>内的容器之间如何通信。我们观察一个<code>Pod</code>里的资源时，会发现有一个自己启动的<code>pause</code>容器，这个容器的作用是为<code>Pod</code>提供网络，所有其他的容器(也就是我们通过模板启动的容器)，都是共享<code>pause</code>容器网络的。在实现上，如<code>Docker</code>提供了<code>--net=container:ID</code>这样的选项。</p>
+<p>每个<code>pod</code>对外呈现一个唯一的IP，<code>Pod</code>内的各容器共享这个IP，也就是说各容器处于同一网络空间中，可直接使用<code>localhost</code>互相访问，需要注意的是各容器使用的端口不能冲突，可以认为<code>IP:Port</code>能够唯一确定一个容器。类比一个系统内的多个网络进程。</p>
+<h3 id="pod-to-pod"><a class="header-anchor" href="#pod-to-pod"></a>Pod-to-Pod</h3>
+<p><code>kubernetes</code>网络实现基于以下三个原则：</p>
+<ul>
+<li>所有容器和其他容器的通信不需要NAT</li>
+<li>所有<code>node</code>和容器间的通信不需要NAT</li>
+<li>容器自己看到的IP就是对外呈现的IP</li>
+</ul>
+<p>那么，这是如何做到的呢？在同一<code>node</code>时，是通过容器网桥实现的，如<code>Docker</code>默认使用的网桥<code>Docker0</code>；在跨<code>node</code>通信时，是通过<code>node</code>间的<code>overlay network</code>实现互联的，如<code>flannel</code>, <code>OpenVSwitch</code>提供的<code>VxLAN tunnel</code>。官方列举了更多的<code>overlay network</code>实现，<a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/" target="_blank" rel="noopener">参考链接</a>。</p>
+<h3 id="pod-to-service"><a class="header-anchor" href="#pod-to-service"></a>Pod-to-Service</h3>
+<p>作为前端的<code>Service</code>与作为后端的<code>Pods</code>之间是通过<code>kubernetes</code>的组件<code>kube-proxy</code>实现通信的。<code>kube-proxy</code>为<code>Service</code>实现了虚拟IP的形式，即<code>ClusterIP</code>。有两种代理模式，<code>userspace</code>和<code>iptables</code>。</p>
+<ul>
+<li><code>userspace</code>模式下，需要在本<code>node</code>上分配<code>proxy port</code>，该port被代理到后端的<code>Pods</code>，这样来自<code>ClusterIP:Port</code>的信息被重定向到<code>proxy port</code>，然后代理到后端的<code>Pods</code>。</li>
+<li><code>iptables</code>模式下，<code>kube-proxy</code>通过直接增删<code>iptables</code>规则实现重定向转发。它比<code>userspace</code>模式更快更可靠，缺点是当前<code>Pod</code>无响应时，它无法自动重试其他<code>Pod</code>，需要借助<code>readiness probes</code>实现。</li>
+</ul>
+<p>关于两种模式更详细的描述参考<a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener">官网文档</a></p>
+<h3 id="service-to-external"><a class="header-anchor" href="#service-to-external"></a>Service-to-External</h3>
+<p><code>Service</code>是以<code>ClusterIP</code>的形式对外提供服务的，但<code>ClusterIP</code>是集群内的虚拟IP网络。那么和集群外是如何通信的呢？可以通过以下方式实现：</p>
+<ul>
+<li>
+<p><code>NodePort</code>: <code>kubernetes</code>从配置的端口范围(默认配置30000-32767)内分配一个端口，每个节点都会把该端口上的信息转发到<code>Service</code>中。这种方式可以通过集群内的任一节点<code>NodeIP:NodePort</code>访问到<code>Service</code>。这意味着整个集群最多只支持6万多个这种类型的服务。该类型的服务同样会分配一个内部的<code>ClusterIP</code>。</p>
+</li>
+<li>
+<p><code>LoadBalancer</code>: 依赖于外部云提供商提供的服务均衡器，这同样需要<code>kubernetes</code>有相应的插件支持，具体的服务均衡策略由外部均衡器负责，信息将被定向到后端的<code>Pods</code>。这种类型的服务下，某些云提供商支持配置<code>LoadBalancerIP</code>，除此之外，上述的<code>ClusterIP</code>和<code>NodePort</code>也同样会分配以便正确的路由到<code>Service</code>。</p>
+</li>
+<li>
+<p><code>ExternalName</code>: 该类型和上述几种不一样，它不需要代理或转发，它是通过<code>kube-dns</code>解析<code>CNAME</code>记录的方式重定向url实现的。</p>
+</li>
+</ul>
+<p>从上面可以看出，<code>ClusterIP</code>, <code>NodePort</code>, <code>LoadBalancer</code>这三种类型是层层嵌套实现的。但对云提供商没有严格要求这样做，只是目前的API是这样的。</p>
+<p>除了这几种服务类型之外，还可以使用<code>ExternalIPs</code>实现集群内外的互通，所谓的<code>ExternalIP</code>是指能够被路由到<code>kubernetes</code>节点的IP的，在公有云上，也就是我们所说的公网IP。<code>ExternelIPs</code>可以和任一类型的<code>Service</code>一起使用。</p>
+<p>具体配置模板可参考<a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener">官网文档</a></p>
+<h2 id="总结"><a class="header-anchor" href="#总结"></a>总结</h2>
+<p>至此，已涵盖网络方案图里的所有通信类型。在使用上做几点总结：</p>
+<ul>
+<li>
+<p><code>Pod</code>(应用)的各<code>Container</code>(进程)通信可以看作是<code>VM</code>上各进程间的通信，<code>Pod</code>类似<code>VM</code>。</p>
+</li>
+<li>
+<p><code>Pod</code>作为功能提供方时，以<code>Service</code>方式提供，屏蔽后端的具体实现，不直接对外暴露<code>Pod</code>。</p>
+</li>
+<li>
+<p>集群<code>node</code>间的<code>overlay</code>网络不要和大网互通，保持集群的私密性。需要和外部交互时，通过<code>Service</code>。</p>
+</li>
+<li>
+<p>集群内外通信，大网IP充足时，使用<code>ExternalIPs</code>，不拘泥于<code>Service</code>类型，否则使用<code>NodePort</code>，私有集群下基本够用。</p>
+</li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2017/05/14/kubernetes-multi-networks/" data-toggle="tooltip" data-placement="top" title="kubernetes之多网络支持">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2017/04/09/Sails-MVC-framework-for-Node-js/" data-toggle="tooltip" data-placement="top" title="Sails:Node.js的MVC框架">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络方案"><span class="toc-text">网络方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#container-to-container"><span class="toc-text">Container-to-Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pod-to-pod"><span class="toc-text">Pod-to-Pod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pod-to-service"><span class="toc-text">Pod-to-Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#service-to-external"><span class="toc-text">Service-to-External</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/docker/" title="docker">docker</a>
+                        
+                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/";
+    var disqus_url = "http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

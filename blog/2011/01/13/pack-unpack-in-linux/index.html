@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Linux下打包解包｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2011/01/13/pack-unpack-in-linux/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Linux下打包解包</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2011-01-13
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/pack/" title="pack">pack</a>
+                        
+                        <a class="tag" href="/tags/unpack/" title="unpack">unpack</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Linux下打包解包
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>题记: 包文件格式以及压缩技术的发展造就了今日多种的压缩包格式，如rar, zip, tar, tar.gz, tar.bz2等等，不同的是在windows下我们可以用一个软件搞定，如WinRAR，或者WinMount等等。而在Linux命令行下却很难一个命令搞定，所以整理一下了Linux下的打包解包命令。</p>
+<a id="more"></a>
+<ol>
+<li>
+<p>.tar<br>
+.tar格式的文件只是一个包文件，未经过任何压缩。 换句话说，tar是一种文件格式，而不是一种压缩技术。<br>
+打包命令：<code>tar cvf filename.tar dirname</code><br>
+解包命令：<code>tar xvf filename.tar</code><br>
+注：简单解释一下参数的意义，-c是–create，即创建一个文件；-v是–verbose，即显示处理过程；-f是–file，即指定处理的文件；-x是–extract，即解开文件。在我们日常使用中，-f参数可谓是必不可少的，一般我们总是要指定要处理的文件的。另外，还有一些其他常用的操作，如-A(合并存档到一新的存档中)，-d(比较tar文件与当前文件的不同)，–delete(从存档中删除文件)，-r(添加文件到存档结尾)，-t(显示存档内容列表)等。更加详细的解释以及更多的参数介绍，请查看manual帮助，命令man tar。</p>
+</li>
+<li>
+<p>.gz / .tar.gz (.tgz)<br>
+.gz压缩文件格式是使用gzip (GNU zip) 压缩工具压缩的文件格式。只能单文件压缩，不能压缩目录。<br>
+压缩命令1：<code>gzip filename</code> 直接将filename文件压缩成filename.gz，不保留原文件。<br>
+压缩命令2：<code>gzip -c  filename &gt; name.gz</code> 将filename文件压缩到name.gz，若name与filename不同名，则同时将filename文件名改为name。<br>
+解压命令1：<code>gunzip filename.gz</code><br>
+解压命令2：<code>gzip -d filename.gz</code><br>
+.tar.gz是对tar格式包进行压缩，也即通常所说的压缩包。其缩略写法为.tgz。<br>
+压缩命令：<code>tar zcvf filename.tar.gz dirname</code> 或 <code>tar zcvf filename.tgz dirname</code><br>
+解压命令：<code>tar zxvf filename.tar.gz</code> 或 <code>tar zxvf filename.tgz</code><br>
+注：-z是–gzip, --gunzip，也即用gzip工具对tar包进行压缩。</p>
+</li>
+<li>
+<p>.bz2 / .bz / tar.bz2 (tbz2) / <a href="http://tar.bz" target="_blank" rel="noopener">tar.bz</a> (tbz)<br>
+.bz2/.bz压缩文件格式是使用bzip2压缩工具压缩的文件格式，bzip2具有比 <a href="http://en.wikipedia.org/wiki/LZW" target="_blank" rel="noopener">LZW</a> (.Z) 和 zip，gzip 更有效的压缩性能，但是相当地慢。不能压缩目录。<br>
+压缩命令1：<code>bzip2 -z filename</code> 直接生成filename.bz2，不保留原文件。<br>
+压缩命令2：<code>bzip2 -cz filename &gt; name.bz2 (name.bz)</code> 生成name.bz2，保留原文件。<br>
+解压命令1：<code>bunzip2 filename.bz2 (filenam.bz)</code><br>
+解压命令2：<code>bzip2 -d filename.bz2 (filename.bz)</code><br>
+注：没有找到如何压缩成bz格式，但可以通过压缩命令2实现。在 <a href="http://bzip.org/" target="_blank" rel="noopener">http://bzip.org/</a>的官方网站的介绍中并未提及bzip (或者根本就不存在这个东西)，另一方面，在Linux下后缀名只是一个提示作用，所以我猜测bz格式只是对bz2的简写，仅仅猜测而已。<br>
+.tar.bz2 等同tar.gz一样，调用bzip2对tar文件包进行压缩。<br>
+压缩命令：<code>tar jcvf filename.tar.bz2 dirname</code> 或 <code>tar jcvf filename.tbz2 dirname</code><br>
+解压命令：<code>tar jxvf filename.tar.bz</code> 或 <code>tar jxvf filename.tbz</code></p>
+</li>
+<li>
+<p>.Z / .tar.Z (.taz)<br>
+.Z压缩文件格式是用compress压缩工具压缩的文件格式， 应该是这几种压缩中最古老的，也是压缩性能最差的。不能压缩目录。<br>
+压缩命令：<code>compress filename</code><br>
+解压命令：<code>uncompress filename.Z</code><br>
+.tar.Z是用compress压缩tar包的文件格式，其简写形式是.taz<br>
+压缩命令：<code>tar Zcvf filename.tar.Z dirname</code><br>
+解压命令：<code>tar Zxvf filename.tar.Z</code></p>
+</li>
+<li>
+<p>.zip<br>
+.zip压缩文件格式是由zip压缩工具压缩而成的，并且是商业的，这也是gzip出现的原因吧。<br>
+压缩命令：<code>zip filename.zip dirname</code><br>
+解压命令：<code>unzip filename.zip</code></p>
+</li>
+<li>
+<p>.rar<br>
+.rar压缩文件格式算是在windows环境下用的最多的格式之一吧。很明显其也是商业的。<br>
+压缩命令：<code>rar e filename.rar dirname</code><br>
+解压命令：<code>rar a filename.rar</code></p>
+</li>
+</ol>
+<p>其他还有一些不常见的格式，如.lz, .xz, .lha等，这里就不一一介绍了。收工。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2011/02/28/social-network-review/" data-toggle="tooltip" data-placement="top" title="Social Network感悟">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2010/12/22/perl-predefined-special-variables/" data-toggle="tooltip" data-placement="top" title="Perl内置特殊变量(笔记)">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/pack/" title="pack">pack</a>
+                        
+                        <a class="tag" href="/tags/unpack/" title="unpack">unpack</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2011/01/13/pack-unpack-in-linux/";
+    var disqus_url = "http://blog.cuicc.com/blog/2011/01/13/pack-unpack-in-linux/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

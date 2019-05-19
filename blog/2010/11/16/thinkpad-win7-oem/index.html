@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Thinkpad Win7之OEM｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2010/11/16/thinkpad-win7-oem/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Thinkpad Win7之OEM</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2010-11-16
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/OEM/" title="OEM">OEM</a>
+                        
+                        <a class="tag" href="/tags/win7/" title="win7">win7</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Thinkpad Win7之OEM
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>以万恶的毕业论文为名，入手一thinkpad港行，话说港行就没有国内的这些服务了，没有预装系统，没有系统修复盘…好在学校提供了正版系统，从windows xp、vista到win7 professional中英文版都有，恩，对于一个强烈想享受正版却没有钱的学生来说，这无疑是最好的选择，使用了好长一段时间win7 pro了，可以这么说，win7的确是继xp之后最好用的windows，可惜这是建立在vista的失败之上的，也可以这么说，没有vista的失败，就不会有win7的成功，废话不多说了，转入正题，前段时间从网上下载了据说是MSDN放出的win7 ultimate版，由于没有序列号不能激活，所以没有尝试，在搜索Thinkpad 官方修复盘时发现了一个更好的方案，自己制作OEM版，不知道这算不算是盗版哈。</p>
+<a id="more"></a>
+<p>需要的文件：<br>
+1.win7 ultimate ISO文件，<a href="http://www.verycd.com/groups/0202/731660.topic" target="_blank" rel="noopener">VeryCD下载源</a><br>
+2.OEM证书：<a href="http://www.box.net/shared/j1d00o686c" target="_blank" rel="noopener">x86版</a>，<a href="http://www.box.net/shared/uz2zxaaud3" target="_blank" rel="noopener">x64版</a><br>
+要求：<br>
+BIOS中的SLIC为2.1版，即SLIC2.1</p>
+<p>制作OEM版的步骤如下：<br>
+1.用UltraISO等能编辑ISO文件的软甲打开win7 iso文件。<br>
+2.用OEM证书中的sources文件夹中的文件替换win7 iso文件中的同名文件夹里的文件，然后保存即可。</p>
+<p>其实是替换了一个文件ei.cfg，并增加了一个文件夹$OEM$，ei.cfg是一个强大的文件，打开它可以看到有三项：<br>
+[EditionID]是指定自动选择安装的版本，只有第一个有效，当EditionID无内容时会弹出系统版本选择菜单。<br>
+[Channel] 直译是渠道 ， 指定许可协议 OEM 或者 Retail 两种许可协议 不过 Starter 不论[Channel]为何，许可协议都是 OEM的<br>
+[VL] 当 VL 里的数值为 0 或 1 时，自动选择安装 EditionID 里指定的第一个版本，当 VL 里的数值大于 1 时，安装时弹出系统版本选择菜单。</p>
+<p>从上面的解释可以知道，可以通过修改ei.cfg文件得到win7的任何版本，前提是你有该版本的序列号可以用来激活。</p>
+<p>什么是SLIC呢，以及MS是如何通过SLIC控制OEM版的版权的呢？(来源：<a href="http://zh.wikipedia.org/zh/%E8%BD%AF%E4%BB%B6%E8%AE%B8%E5%8F%AF%E5%86%85%E9%83%A8%E7%A0%81" target="_blank" rel="noopener">维基百科</a>)</p>
+<h3 id="1-概述"><a class="header-anchor" href="#1-概述"></a>1.概述</h3>
+<p>微软公司用SLIC来控制用户对OEM版本的非法使用。OEM（Original Equipment Manufacture）的基本含义是定牌生产合作，俗称“代工”。微软为特定的合作伙伴发放操作系统的OEM版本，以满足合作双赢的需求。这些OEM版本的操作系统随机器预安装，并采用批量许可的授权模式。这样的批量许可难以有效识别合法用户和非法用户，可能被滥用而导致版权问题。为了控制这个问题，微软规定在安装每一个操作系统时将其激活。OEM可在安装过程中根据OEM和批量许可的媒体安装映像。OEM销售的大部分系统包括由制造商预激活的Windows Vista标准版。<br>
+一般认为主板是硬件升级中最不可能更换的部件，甚至有观点认为，主板的更换约等于整台机器的更换。要有效识别一台机器是否为OEM合法用户，可以在每台预装操作系统的机器主板上，在BIOS里写入特定的信息，来标示这是一台OEM合法用户的机器。这样的信息就是SLIC。不同的OEM厂商的SLIC不同，所以他们的OEM操作系统不能混用。在没有预装系统的机器，即便是品牌机，也不会含有SLIC信息。这样，OEM版的操作系统就可以限定在OEM机器上使用。<br>
+SLIC一般是写在SLDT（Software Licensing Description Table，软件许可描述表）中的，SLDT长374字节。而SLDT写在ACPI（Advanced Configuration and Power Management Interface，高级配置和电源管理接口）。</p>
+<h3 id="2-运作模式"><a class="header-anchor" href="#2-运作模式"></a>2.运作模式</h3>
+<p>Windows XP OEM版激活，使用的是微软SLP 1.0。SLP（Software Licensing and Protection，软件许可和保护）服务是一项软件激活服务，使独立软件开发商为他们的用户采取灵活的软件许可条款。该1.0版本的激活技术并未使用数字签名技术，而是一段明文标识，比较容易被破解。<br>
+Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激活。其并使用的是微软SLP 2.x，公钥取代了明文，给破解造成一定的困难。SLP 2.x技术的验证具体过程如下：<br>
+1)当安装的时候，零售版本用户需要输入光盘盒上的序列号（CD-KEY）。对于随机购买了OEM版本Vista的用户，可以在主机上找到一个相应版本的标签，作为购买OEM版的凭证。标签上面有一个带有象征意义的序列号，因为OEM版本的用户并不需要输入序列号。系统根据序列号识别Vista的不同版本，如基本家庭版、高级家庭版、商业版、旗舰版等。安装完毕后，序列号会被转换为四组字母或数字，即在“系统属性”里看到的“产品ID”。其中第二组是“OEM”的，即为OEM版本的序列号（CD-KEY）。从这里开始，产品ID代替了CD-KEY。同时，安装程序为OEM版本的安装生成一个OEM证书。<br>
+2)当每次系统启动时，BIOS里的信息就会被加载到内存中。<br>
+3)当登录系统之后，系统调用SLP服务，验证操作系统的许可权，尤其是激活状态。开始根据产品ID来识别系统的授权状态。如果没有检测到产品ID或者没有检测到合法的零售版产品ID，则视为未激活。如果检测到合法的零售版产品ID，则视为成功激活。如果检测到OEM版的产品ID，则继续验证。<br>
+4)如果检测到OEM版产品ID，验证过程启动，并检查已安装的OEM证书是否正确。主要是用先前从BIOS加载到内存里的SLIC的公钥验证产品证书的数字签名。如果验证失败，则视为未激活。<br>
+5)验证ACPI里SLIC与RSDT（Root System Description Table，根系统描述表）的OEM ID字段比较，以及用ACPI里SLIC标志和XSDT（Extended System Description Table，扩展系统描述表）中的OEM ID和OEM Table ID字段比较，如果不一致，则视为未激活。<br>
+6)经过以上重重关卡之后，方视为正确的OEM授权，否则视为未激活并按照相关流程处理，例如要求激活。</p>
+<p>SLIC有三部分组成：表头、SLP pubkey、SLP Maker，在大多数BIOS中是以明文存放的，可以用简单替换升级SLIC (未验证，从论坛中得到的信息)。</p>
+<p>既然知道了SLIC是微软用来控制OEM版版权的，那么可以通过破解SLIC解除这种控制，可以通过刷BIOS实现硬件破解，也可以通过修改SLIC内存副本来实现软件上的破解，具体实现请Google</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2010/11/20/dhcp-relay-analysis/" data-toggle="tooltip" data-placement="top" title="DHCP Relay实现分析">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2010/11/14/choose-first-job/" data-toggle="tooltip" data-placement="top" title="艰难的决定:第一份工作">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-概述"><span class="toc-text">1.概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运作模式"><span class="toc-text">2.运作模式</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/OEM/" title="OEM">OEM</a>
+                        
+                        <a class="tag" href="/tags/win7/" title="win7">win7</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2010/11/16/thinkpad-win7-oem/";
+    var disqus_url = "http://blog.cuicc.com/blog/2010/11/16/thinkpad-win7-oem/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Back Track Linux与无线安全｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2011/05/02/back-track-linux-and-wlan-security/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Back Track Linux与无线安全</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2011-05-02
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/BT/" title="BT">BT</a>
+                        
+                        <a class="tag" href="/tags/Wlan/" title="Wlan">Wlan</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Back Track Linux与无线安全
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><a href="http://www.backtrack-linux.org/" target="_blank" rel="noopener">Back Track Linux</a>是什么？知道这个全称的人可能不是很多，但说起BT3或者BT4，crack无线的都知道，若说起卡王卡皇，那可谓家喻户晓…所谓的蹭网卡(卡王卡皇之类)就是一个大功率的无线网卡，加上一个BT Linux；而BT3或BT4则是指Back Track与版本号的简写。</p>
+<p>Back Track是基于Whoppix, IWHAX 以及 Auditor这三个live Linux发布开发的，这几个Linux发布版的共同点就是都聚焦于penetration test (渗透测试)与信息安全领域。从Back Track 4开始，Back Track开始基于Ubuntu开发，同时集成了从端口扫描到密码破解的一系列安全工具。由于其强大的工具集，Back Track已成为破解无线网络密码的专用工具。关于Back Track的更详细介绍以及工具集介绍可以从<a href="http://www.backtrack-linux.org/" target="_blank" rel="noopener">官方网站</a>或<a href="http://en.wikipedia.org/wiki/BackTrack" target="_blank" rel="noopener">wiki</a>查看。</p>
+<a id="more"></a>
+<p>说到破解无线网络密码，不得不提到一个举足轻重的工具<a href="http://www.aircrack-ng.org/" target="_blank" rel="noopener">aircrack-ng</a> (其官方网站已被墙)，以下是摘自官方的介绍：</p>
+<p>Aircrack-ng is an 802.11 WEP and WPA-PSK keys cracking program that can recover keys once enough data packets have been captured. It implements the standard FMS attack along with some optimizations like KoreK attacks, as well as the all-new PTW attack, thus making the attack much faster compared to other WEP cracking tools.</p>
+<p>In fact, Aircrack-ng is a set of tools for auditing wireless networks.</p>
+<p>可以看出，只要抓取到了足够的数据，Aircrack-ng 可以得到 WEP 和 WPA-PSK 加密的密码，这也是目前大多数无线网卡使用的加密方式，当然还有更加安全的WPA2，貌似现在也可以recover keys，只是比较难而已。关于这几种加密算法，稍后会详细介绍一下。aircrack-ng是一个工具集，从改变网卡模式、注入入侵到抓取数据包、破解密码：</p>
+<ul>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airbase-ng" target="_blank" rel="noopener">airbase-ng</a> – Multi-purpose tool aimed at attacking clients as opposed to the Access Point (AP) itself.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=aircrack-ng" target="_blank" rel="noopener">aircrack-ng</a> – 802.11 WEP and WPA/WPA2-PSK key cracking program.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airdecap-ng" target="_blank" rel="noopener">airdecap-ng</a> – Decrypt WEP/WPA/WPA2 capture files.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airdecloak-ng" target="_blank" rel="noopener">airdecloak-ng</a> – Remove WEP Cloaking™ from a packet capture file.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airdriver-ng" target="_blank" rel="noopener">airdriver-ng</a> – Script providing information and allowing installation of wireless drivers.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airdrop-ng" target="_blank" rel="noopener">airdrop-ng</a> – A rule based wireless deauthication tool.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=aireplay-ng" target="_blank" rel="noopener">aireplay-ng</a> – Inject and replay wireless frames.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airgraph-ng" target="_blank" rel="noopener">airgraph-ng</a> – Graph wireless networks.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airmon-ng" target="_blank" rel="noopener">airmon-ng</a> – Enable and disable monitor mode on wireless interfaces.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airodump-ng" target="_blank" rel="noopener">airodump-ng</a> – Capture raw 802.11 frames.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airolib-ng" target="_blank" rel="noopener">airolib-ng</a> – Precompute WPA/WPA2 passphrases in a database to use it later with aircrack-ng.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airserv-ng" target="_blank" rel="noopener">airserv-ng</a> – Wireless card TCP/IP server which allows multiple application to use a wireless card.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=airtun-ng" target="_blank" rel="noopener">airtun-ng</a> – Virtual tunnel interface creator.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=easside-ng" target="_blank" rel="noopener">easside-ng</a> – Auto-magic tool which allows you to communicate to an WEP-encrypted Access Point without knowing the key.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=packetforge-ng" target="_blank" rel="noopener">packetforge-ng</a> – Create various type of encrypted packets that can be used for injection.</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=tkiptun-ng" target="_blank" rel="noopener">tkiptun-ng</a> – Proof-of-concept implementation the WPA/TKIP attack: inject a few frames into a WPA TKIP network with QoS</p>
+</li>
+<li>
+<p><a href="http://www.aircrack-ng.org/doku.php?id=wesside-ng" target="_blank" rel="noopener">wesside-ng</a> – Auto-magic tool which incorporates a number of techniques to seamlessly obtain a WEP key in minutes.</p>
+</li>
+</ul>
+<p>一个crack的基本流程是：airmon-ng --&gt; airodump-ng --&gt; aireplay-ng --&gt; aircrack-ng. 安全工具是一把双刃剑，有些人用它来安全检测，防患于未然，而有些人则用它来谋取私利。这关乎一个道德问题…关于Back Track Linux以及无线安全工具的介绍就到这里，下面介绍一下无线安全的几种方法以及其优劣。</p>
+<p>Wi-Fi是一个国际通用的无线标准，应该说几乎所有的有无线功能的产品都支持这个标准，但是它同时也因为存在着一些不安全因素而被大家所诟病，这也是我朝开发WAPI无线标准的一方面原因，当然，最重要的原因不是这个，你懂的…</p>
+<p>关于Wi-Fi的简单介绍可以参看<a href="http://zh.wikipedia.org/zh-cn/Wi-Fi" target="_blank" rel="noopener">Wiki:Wi-Fi</a>，其基本工作原理是(摘自wiki)：</p>
+<p>Wi-Fi的设置至少需要一个Access Point（ap）和一个或一个以上的client（hi）。AP每100ms将SSID（Service  Set Identifier）经由beacons（信号台）分组广播一次，beacons分组的传输速率是1  Mbit/s，并且长度相当的短，所以这个广播动作对网络效能的影响不大。因为Wi-Fi规定的最低传输速率是1  Mbit/s，所以确保所有的Wi-Fi  client端都能收到这个SSID广播分组，client可以借此决定是否要和这一个SSID的AP连接。用户可以设置要连接到哪一个SSID。Wi- Fi系统总是对客户端开放其连接标准，并支持漫游，这就是Wi-Fi的好处。但亦意味着，一个无线适配器有可能在性能上优于其他的适配器。</p>
+<p>作为无线使用者，在设置无线路由时，可以从这几个方面考虑安全性：</p>
+<p>1.隐藏SSID，隐藏SSID的作用是其他无线client搜寻不到你的AP，或者说是看不到你的AP的存在。但是在无线扫描器的淫威下，隐藏了也无处遁形，如大名鼎鼎的<a href="http://www.stumbler.net/" target="_blank" rel="noopener">NetStumbler</a>。</p>
+<p>2.设置mac过滤，mac过滤是一个很好的安全措施，通过设置mac黑名单，让只能允许的mac才能通过验证，但是如若知道了client的mac，通过伪装mac可以轻易的逃过mac过滤。</p>
+<p>3.WEP 是最先被破解的无线加密算法，全称Wired Equivalent Privacy。WEP使用RC4 (Rivest Cipher)串流加密技术达到机密性，并使用CRC-32验和正确性。 标准的64比特WEP使用40比特的钥匙接上24比特的初向量（initialization vector，IV）成为 RC4 用的钥匙。24比特的IV很难保证在繁忙的网络上不重复，所以很容易受到攻击。</p>
+<p>4.为解决WEP的不安全性，Wi-Fi联盟开发了WPA，全称Wi-Fi Protected Access。WPA使用128比特的钥匙和一个 48比特的初向量 (IV) 的RC4 stream cipher来加密。WPA 超越 WEP 的主要改进就是在使用中可以动态改变钥匙的“临时钥匙完整性协定”（Temporal Key Integrity Protocol, TKIP），加上更长的初向量，这可以击败针对 WEP 的攻击。其Michael加密算法有效的避免了WEP中的replay-attack攻击。但是由于固件的原因，并不是所有的无线路由都支持WPA，很大一部分无线路由仅仅支持WEP。</p>
+<p>5.在WPA的基础上，Wi-Fi联盟开发了WPA2，WPA2最大的改进是CCMP讯息认证码取代了Michael算法，AES取代了RC4。WPA和WPA2的设计是使用一个802.1X认证服务器分配不同的钥匙给各个用户，但是也可以使用较不保险的PSK (Pre-Shared Key)模式，让每个用户都使用相同的密钥。WPA-PSK/WPA2-PSK也称为WPA/WPA2个人版，由于使用相同的密钥，使得攻击者有机可乘，降低了其安全性。</p>
+<p>由于本身对无线网络不是很深入，在研究Back Track时暂时想到这些，如果想到其他的好方法再补充一下。可以认为WPA和WPA2是目前比较安全的加密方式，不易受到攻击，但是需要相应的固件支持。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2011/05/22/temptation-of-open-source/" data-toggle="tooltip" data-placement="top" title="开源的诱惑">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2011/04/27/postgraduate-viewpoint/" data-toggle="tooltip" data-placement="top" title="研究生之我见">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/BT/" title="BT">BT</a>
+                        
+                        <a class="tag" href="/tags/Wlan/" title="Wlan">Wlan</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2011/05/02/back-track-linux-and-wlan-security/";
+    var disqus_url = "http://blog.cuicc.com/blog/2011/05/02/back-track-linux-and-wlan-security/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

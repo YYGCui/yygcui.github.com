@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        自动化脚本让我手动了一晚上｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2012/04/16/fuck-bad-automation-script/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>自动化脚本让我手动了一晚上</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2012-04-16
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/automation/" title="automation">automation</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            自动化脚本让我手动了一晚上
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>每到周五delivery的时候，就是体现我是一个苦逼的IT民工的时候。如果幸得春哥曾哥庇佑，一切顺利的话，只需要跑跑自动化脚本就好了，这倒没有什么令人抓狂的，因为一切都是按照理想状态发展的。即便有时候被硬件平台block住，也是短暂时间可以解决的，即使查不到原因，重启一下平台也就搞定了。最苦逼的莫过于硬件平台莫名其妙的挂掉了，自动化脚本莫名其妙的终止了。不幸的是上周五就被我遇上了，幸运的是我该考虑改进这个“拿来即用”的脚本了…</p>
+<a id="more"></a>
+<p>一般周五中午我们team的rpm就发出来了，然后我要开始MT，理想状态下一个小时左右就搞定了。然后deliver给PF team，PF team开始做CD2-MXPF-<version>.iso文件，并进行Basic Test，这个过程大约需要三四个小时。我在MT的时候，硬件平台出现了问题，导致了多数test case无法通过，查看log发现线路丢包严重，分析是由一个模块从factory启动导致的，重启无法解决，重新升级改模块还是无法解决，最后插拔了一下解决了，花了接近一个小时，又重新MT了一下，结果就到下班时间了。因为我们MT的问题block了PF的deliver，所以PF的deliver就由我来做了。以上是背景。</version></p>
+<p>先说说PF team做iso和BT的自动化脚本，嗯，在理想状态下，那是很爽的，跑上脚本，然后等着邮件就可以了。以前我遇到的问题很容易就可以搞定：undo checkout然后重新跑一下，或者因为平台问题要手动跑一下BT。而周五遇到的问题让我严重怀疑这个脚本的鲁棒性。</p>
+<p>周五做完MT就下班回家了，到家后开始做delivery (我太敬业了~)。有句话怎么说来着：要么不发生，要么接踵而至。跑deliver脚本出现了ISO create failed，无法生成iso文件，从最近的log可以看出是ClearCase找不到要check out的文件，但是我查看一下这些文件是存在的，这不是直接问题。在往上查看log，发现某些在共用区域 (如/tmp/下) 创建的文件操作permission deny了，ps查看了一下进程，当前没有用户执行相同脚本。查看了一下我们普通用户创建的文件权限是644，也就是说无法修改他人创建的文件，ls发现这些文件是xq同学创建的，fuck，肯定是中途中断脚本导致文件没有自动删除，而后也没有手动清理掉。果断su到xq账户，删除这些tmp文件。</p>
+<p>又跑了一下脚本，发现还有一些/tmp/下的文件没有操作权限，该文件是bd同学创建的，最后修改于20分钟前，问bd同学，他说一直在玩游戏，没有做任何操作，fuck，这是哪位无良同学用别人账户玩，再次删除之。</p>
+<p>再跑脚本发现还是有问题，得到的上一个版本的label是S标的，fuck，S标签只用于branch上，哪位同学给搞到main分支上了，修改脚本，手动设定成最近的一个P标签的label。</p>
+<p>然后再运行之，还是ISO create failed，查看log发现check rpm file失败了，找不到上一个version的CD2 的文件，在delivernote.lst里的文件名和存放iso文件isoimg文件夹下的文件对应不起来，查看了一下isoimg文件件下的最近修改时间，是今天中午11点26分生成的，fuck，又是哪位无良同学，运行脚本之前不先config，导致覆盖掉了上一个version的文件。</p>
+<p>我手动设定上一个version的CD2的前一个label，试图再次生成上一个version的CD2文件，可能由于脚本的问题，生成的文件版本和delivernote.lst里的文件名对应不起来，试了几次，总有些文件对应不起来，最后忽然想到可以从iso拷贝出所有的rpm覆盖掉isoimg下的文件，然后再删掉不相关的文件，才搞定这事。</p>
+<p>再次执行，God bless me，终于成功了。从晚上7点钟到凌晨2点钟，我手动做做两遍都能做完了。我只想说，在一些不管三七二十一随便乱用的同学的蹂躏下，这个脚本显得多么的脆弱，脆弱到自动化成了最大的诟病。</p>
+<p>在愤怒前面一些同学的肆意妄为时，也促使我思考自动化脚本要注意些什么。</p>
+<ol>
+<li>像其他程序一样，强烈要求最小模块化，这样做可以使脚本更容易定制，通过参数设置可以很容易做到只生成iso而不做BT，这是目前的脚本做不到的 (只是说太弱了~) 。</li>
+</ol>
+<p>2.模块化的另一目的就是步步为营，要考虑到每个模块出错时的行为，而不是到最后报一个error，导致看似莫名其妙的错误。当某一模块出错时，前面的所有模块是否需要回退。</p>
+<p>3.充分考虑多进程情况下的问题，同一用户只能运行一个进程实例，不同用户间共用文件，给共用文件设置正确的权限，如同组用户可以修改；也可以创建不同的文件以消除竞争，比如文件名包含用户名，这样每个用户的文件都是独立的，即使在共用目录下。</p>
+<p>3.再自动的脚本也不是完美的，强烈要求出个memo，或者给使用者培训一下，避免让人想骂SB的不正常错误出现。</p>
+<p>暂时想到这么多，以后遇到其他情况随时补充。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2012/04/19/disgusting-landlord/" data-toggle="tooltip" data-placement="top" title="后极品房东">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2012/03/27/boring-renting/" data-toggle="tooltip" data-placement="top" title="租房很烦心">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/automation/" title="automation">automation</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2012/04/16/fuck-bad-automation-script/";
+    var disqus_url = "http://blog.cuicc.com/blog/2012/04/16/fuck-bad-automation-script/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

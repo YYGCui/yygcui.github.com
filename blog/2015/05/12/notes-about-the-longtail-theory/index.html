@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        无处不在的长尾｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2015/05/12/notes-about-the-longtail-theory/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>无处不在的长尾</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2015-05-12
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/读书笔记/" title="读书笔记">读书笔记</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/longtail/" title="longtail">longtail</a>
+                        
+                        <a class="tag" href="/tags/长尾理论/" title="长尾理论">长尾理论</a>
+                        
+                        <a class="tag" href="/tags/读书笔记/" title="读书笔记">读书笔记</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            无处不在的长尾
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="80-20法则"><a class="header-anchor" href="#80-20法则"></a>80/20法则</h2>
+<p>传统经济中，经济行为通常满足80/20法则，例如20%的产品创造了80%的销售额。这20%也就是所谓的热门产品。</p>
+<blockquote>
+<p><a href="http://book.douban.com/subject/3038761/" title="《80/20法则》" target="_blank" rel="noopener">《80/20法则》</a>认为，少量的原因、投入和付出将获得大量的结果、产出和回报。<br>
+从该法则可以看出，在原因与结果、投入与产出、付出与回报之间存在着一种内在的失衡。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="热门经济学"><a class="header-anchor" href="#热门经济学"></a>热门经济学</h2>
+<p>热门之所以存在，是因为供给匮乏，我们没有足够的空间为每一个人提供每一样东西。如果只有那么几个货架、几个波段，唯一明智的做法就是把它们留给最热门的东西。</p>
+<h2 id="地理和物理的限制"><a class="header-anchor" href="#地理和物理的限制"></a>地理和物理的限制</h2>
+<p>热门是怎么产生的呢，热门产品是被大众普遍喜爱的产品。大众之所以体现出一定共性，是因为选择比较少。与其说是大众热门，不如说大众被热门。</p>
+<p>例如电视节目，在有限的时间、有限的频段下，电视台只能靠黄金时间，打造热门节目。<br>
+例如企业制造，只能主力制造本地所需的产品，削减不需要产品种类。</p>
+<h2 id="丰饶经济学"><a class="header-anchor" href="#丰饶经济学"></a>丰饶经济学</h2>
+<p>当我们文化中的供需瓶颈开始消失，所有产品都能被人取得的时候，长尾便会自然发生。</p>
+<p>那么地理和物理的限制不存在了吗？</p>
+<p>限制仍旧存在，只不过技术发展、运输网络完善使这些限制的影响变的微不足道，特别是互联网的发展。试想一下，在一个没有货架空间限制(网上商城可以展示所有商品)和其他供应瓶颈的时代，任何产品都可以被方便的发现，面向特定小众群体的产品将和人们产品有同样的吸引力。</p>
+<h2 id="长尾无处不在"><a class="header-anchor" href="#长尾无处不在"></a>长尾无处不在</h2>
+<p>那么什么是长尾，长尾是相对于热门而言的，处于热门之外的产品种类。如果将长尾上的小批量多品种生意集合成一个生意，这个生意可以同大热门生意分享同样的利润。</p>
+<p>这打破了传统经济中的80/20法则。例如亚马逊热门图书和长尾图书，在线音乐网站的热门音乐和长尾音乐。</p>
+<p>长尾之所以无处不在，是因为</p>
+<p>###生产工具的普及<br>
+业余爱好者利用先进的工具能做大以前只有专业人士才能做得事。这大大丰富了产品多样性。<br>
+###网络是最好的口碑放大器<br>
+产品再多，如果无人欣赏，一切便毫无意义。互联网的出现，大大降低了接触消费者的成本。消费者在网店上可以接触到应有尽有的商品市场。<br>
+###过滤让人们能找到任何东西<br>
+产品应有尽有，消费者如何快速找到想要的小众产品，离不开搜索引擎的帮助。</p>
+<h2 id="利基市场"><a class="header-anchor" href="#利基市场"></a>利基市场</h2>
+<blockquote><p>是指由已有市场绝对优势的企业所忽略的某些细分市场并且在此市场尚未有完善的供应服务。一般由较小的产品市场并具有持续发展的潜力中一些需要且尚未被满足的族群消费者所组成为了满足特定的市场需求，价格区间，产品质量，针对细分后的产品进入这个小型市场且有盈利的基础。经由专业化的经营将品牌意识灌输到该特定消费者族群中逐渐形成该族群的领导品牌。</p>
+<footer><strong>利基市场</strong><cite><a href="http://zh.wikipedia.org/wiki/%E5%88%A9%E5%9F%BA%E5%B8%82%E5%9C%BA" target="_blank" rel="noopener">维基百科</a></cite></footer></blockquote>
+<p>利基市场，从维基百科定义来看，也即长尾经济，通过发掘或扩展已有市场的长尾市场，获取特定群体的青睐。</p>
+<p>例如豆瓣，面向文艺青年的社区</p>
+<p>例如途牛，在携程大旅游平台下发展在线旅游。</p>
+<p>例如陌陌，在微信一统移动IM下在陌生人社交中独占一隅。</p>
+<p>例如YY，在QQ雄霸IM市场下在团队语音市场越战越勇。</p>
+<p>在你想做的领域，你想到了什么？</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2015/07/22/microservices/" data-toggle="tooltip" data-placement="top" title="微服务">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2013/12/01/tips-for-octopress/" data-toggle="tooltip" data-placement="top" title="tips for octopress">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#80-20法则"><span class="toc-text">80/20法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#热门经济学"><span class="toc-text">热门经济学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#地理和物理的限制"><span class="toc-text">地理和物理的限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#丰饶经济学"><span class="toc-text">丰饶经济学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#长尾无处不在"><span class="toc-text">长尾无处不在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利基市场"><span class="toc-text">利基市场</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/longtail/" title="longtail">longtail</a>
+                        
+                        <a class="tag" href="/tags/长尾理论/" title="长尾理论">长尾理论</a>
+                        
+                        <a class="tag" href="/tags/读书笔记/" title="读书笔记">读书笔记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2015/05/12/notes-about-the-longtail-theory/";
+    var disqus_url = "http://blog.cuicc.com/blog/2015/05/12/notes-about-the-longtail-theory/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

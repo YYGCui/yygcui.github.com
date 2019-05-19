@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        MBR与系统引导｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2011/11/15/mbr-and-boot-loader/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>MBR与系统引导</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2011-11-15
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/MBR/" title="MBR">MBR</a>
+                        
+                        <a class="tag" href="/tags/winxp/" title="winxp">winxp</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            MBR与系统引导
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>周末不小心把Linux的boot分区由主分区改成了逻辑分区，导致用GRUB引导程序无法正常加载，后果是直接无法进入Windows和Linux系统，GRUB出现的错误如下图所示。虽然我知道进入DOS用命令fdisk /mbr重写一下MBR可以修复引导分区进入Windows，或者用Linux livecd启动重装一下GRUB修复GRUB引导程序，但有几个问题没有想明白：我将GRUB安装到MBR了，为啥更改boot分区会导致GRUB无法引导？进而想MBR是怎样引导系统的，难道要找到boot分区运行GRUB程序？我在Wiki找到了答案：<a href="http://en.wikipedia.org/wiki/Master_boot_record" target="_blank" rel="noopener">MBR</a> (<a href="http://zh.wikipedia.org/zh-cn/MBR" target="_blank" rel="noopener">中文</a>)，<a href="http://en.wikipedia.org/wiki/Boot_loader#Boot_loader" target="_blank" rel="noopener">boot loader</a>，<a href="http://en.wikipedia.org/wiki/GNU_GRUB" target="_blank" rel="noopener">GRUB</a> (<a href="http://zh.wikipedia.org/wiki/GNU_GRUB" target="_blank" rel="noopener">中文</a>)。</p>
+<a id="more"></a>
+<p><img src="http://farm9.staticflickr.com/8361/8325122410_0202a5b1b1_o.jpg" alt="Grub Load Error"></p>
+<p><strong>什么是MBR？</strong></p>
+<p>MBR (Master Boot Record, 主引导记录) 是指存储设备的第一个扇区的前512个字节。对硬盘而言，一个扇区的可能字节数为128×2n  (n=0,1,2,3) ，大多数情况下，n=2，即一个扇区的大小为512个字节，所以MBR又被称为主引导扇区。MBR的基本结构为：</p>
+<table class="aligncenter" style="margin-left: auto; margin-right: auto;" border="1">
+<tr>
+<th colspan="3">Address</th>
+<th style="vertical-align: middle;" rowspan="2" colspan="2">Description</th>
+<th style="vertical-align: middle;" rowspan="2">Size in <a title="Byte" href="http://en.wikipedia.org/wiki/Byte" target="_blank">bytes</a></th>
+</tr>
+<tr>
+<th style="width: 3em;"><a title="Hexadecimal" href="http://en.wikipedia.org/wiki/Hexadecimal" target="_blank">Hex</a></th>
+<th style="width: 3em;"><a title="Octal" href="http://en.wikipedia.org/wiki/Octal" target="_blank">Oct</a></th>
+<th style="width: 3em;"><a title="Decimal" href="http://en.wikipedia.org/wiki/Decimal" target="_blank">Dec</a></th>
+</tr>
+<tr>
+<td style="text-align: center;"><code>0000</code></td>
+<td style="text-align: center;"><code>0000</code></td>
+<td style="text-align: center;">0</td>
+<td colspan="2">code area (代码区)</td>
+<td style="text-align: center;"><strong>440</strong><br>(max.446)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>01B8</code></td>
+<td style="text-align: center;"><code>0670</code></td>
+<td style="text-align: center;">440</td>
+<td colspan="2">disk signature (optional) (磁盘标记，可选)</td>
+<td style="text-align: center;"><strong>4</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>01BC</code></td>
+<td style="text-align: center;"><code>0674</code></td>
+<td style="text-align: center;">444</td>
+<td colspan="2">Usually nulls; 0&#215;0000(一般为空)</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>01BE</code></td>
+<td style="text-align: center;"><code>0676</code></td>
+<td style="text-align: center;">446</td>
+<td colspan="2"><strong>Table of primary partitions (主分区表)</strong><br>(Four 16-byte entries, IBM partition table scheme)</td>
+<td style="text-align: center;"><strong>64</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>01FE</code></td>
+<td style="text-align: center;"><code>0776</code></td>
+<td style="text-align: center;">510</td>
+<td style="text-align: center;">55h</td>
+<td style="vertical-align: middle; text-align: center;" rowspan="2">MBR signature (MBR标记)</td>
+<td style="text-align: center;" rowspan="2"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>01FF</code></td>
+<td style="text-align: center;"><code>0777</code></td>
+<td style="text-align: center;">511</td>
+<td style="text-align: center;">AAh</td>
+</tr>
+<tr>
+<th style="text-align: right;" colspan="5">MBR, total size: 446 + 64 + 2 =</th>
+<th style="text-align: center;">512</th>
+</tr>
+</table>
+<p>从MBR的结构可以看出，硬盘分区表仅占64个字节，根据IBM分区表方案，用16个字节表示一个分区，所以采用MBR分区结构的系统最多能识别4个主分区，如windows。为了能够使用更多的分区，引入了扩展分区的概念，扩展分区也是主分区的一种，但它与主分区的不同之处在于理论上扩展分区可以划分出无数个逻辑分区。扩展分区中逻辑驱动器的引导记录是链式的。每一个逻辑分区都有一个和MBR结构类似的<strong>扩展引导记录</strong>(<strong><a href="http://en.wikipedia.org/wiki/Extended_boot_record" target="_blank" rel="noopener">EBR</a></strong>)，其分区表的第一项指向该逻辑分区本身的引导扇区，第二项指向下一个逻辑驱动器的EBR，分区表第三、第四项没有用到。</p>
+<p>在windows中，我们可以使用的分区方案：最多4主分区，或者最多3主分区+1扩展分区 (包含任意数量的逻辑分区)。</p>
+<p>在Linux中，同样采用MBR分区方案：最多4主分区(sda1<sub>sda4或者hda1</sub>hda4)，或者最多3主分区+1扩展分区 (逻辑分区编号从sda5/hda5开始)。</p>
+<p><strong>系统是如何被引导启动的？</strong></p>
+<p>系统启动时，CPU执行位于BIOS的存储单元CS:IP F000:FFF0 (线性地址0xFFFF0处)处的指令，跳转到ROM中的BOIS引导程序，引导程序运行加电自检(Power-On Self Test, POST) 检查和初始化需要的硬件设备。</p>
+<p>BIOS按照预配置的非易失存储设备 (引导设备序列) 查找可引导的设备。引导设备定义为能够从中读取数据，并且第一扇区的最后两个字节是0xAA55 (也即引导标记)。</p>
+<p>一旦BIOS找到一个可引导设备，它将该设备的引导扇区 (第一扇区) 加载到内存线性地址0x7C00处，然后跳转到该地址执行引导程序。</p>
+<p>以windows的引导为例：</p>
+<p>BIOS加电自检后，MBR引导代码从MBR的主分区表中查找可引导的分区 (即活动分区)，然后MBR引导代码加载活动分区的引导扇区代码 (系统引导程序) 并执行，该引导程序将系统内核加载到内存中并将控制权移交给内核。</p>
+<p><strong>GRUB是如何启动的？</strong></p>
+<p>以上的内容还不足以解释GRUB为何加载失败了。再来看MBR的结构，MBR引导代码最多能占用446个字节，对于只引导Windows这样的单一功能已经足够了；但对于像GRUB、LILO等复杂的多引导支持的引导程序来说，446个字节难以实现如此复杂的功能，这时就用到了多级引导的概念。以GRUB为例：</p>
+<p>将GRUB安装到MBR时，实际上只是将GRUB的stage 1安装到了MBR的代码区，stage 1的功能是通过加载磁盘起始处附近从一固定处开始的一些扇区来加载GRUB的下一个stage。</p>
+<p>stage 1可以直接加载stage 2，但通常被设置为加载stage 1.5，然后stage 1.5直接加载stage 2。stage 1.5是指紧接着MBR之后的在第一个磁盘分区前的30千字节。它包含了具体的文件系统驱动。该驱动允许stage 1.5直接加载位于文件系统/boot/grub下的stage 2。</p>
+<p>stage 2加载配置文件并呈现一个界面让用户选择要启动的操作系统内核，然后将选择载入的内核加载到内存并把控制权转交给内核。GRUB也可以通过链式启动(<a href="http://en.wikipedia.org/wiki/Chain_loading" target="_blank" rel="noopener">chain loading</a>)把启动控制权转交给其他引导程序，如通过GRUB引导Windows时的chainload (hdX,Y)+1，通常是(hd0,0)+1，即第一个主分区的引导扇区。</p>
+<p>那么现在就很好解释了，由于把/boot分区由主分区改成了逻辑分区，stage 1.5找不到该分区，也就找不到stage 2，所以GRUB引导程序加载失败了。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2011/12/04/wisdom-tooth-extraction/" data-toggle="tooltip" data-placement="top" title="拔智齿小记">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2011/11/10/gentoo-hard-disk-install/" data-toggle="tooltip" data-placement="top" title="Gentoo 硬盘安装">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        
+                        <a class="tag" href="/tags/MBR/" title="MBR">MBR</a>
+                        
+                        <a class="tag" href="/tags/winxp/" title="winxp">winxp</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2011/11/15/mbr-and-boot-loader/";
+    var disqus_url = "http://blog.cuicc.com/blog/2011/11/15/mbr-and-boot-loader/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

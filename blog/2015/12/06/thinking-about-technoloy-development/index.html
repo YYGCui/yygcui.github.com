@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        技术开发的一些思考｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2015/12/06/thinking-about-technoloy-development/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>技术开发的一些思考</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2015-12-06
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/职场感悟/" title="职场感悟">职场感悟</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/technology/" title="technology">technology</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            技术开发的一些思考
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h3 id="技术开发是什么"><a class="header-anchor" href="#技术开发是什么"></a>技术开发是什么</h3>
+<p>维基百科上没有相关词条，百度百科解释如下：</p>
+<blockquote><p>技术开发（Technical Development）是把研究所得到的发现或一般科学知识应用于产品和工艺上的技术活动。 工业企业技术开发的对象主要有：产品的开发、设备与工具的开发、生产工艺的开发、能源与原材料的开发、改善环境的技术开发等。不同的企业可根据不同的情况选择技术开发的重点。</p>
+<footer><strong>技术开发</strong><cite><a href="http://baike.baidu.com/view/1273954.htm" target="_blank" rel="noopener">百度百科</a></cite></footer></blockquote>
+<p>归纳总结一下，现在的技术开发无外乎以下两点：</p>
+<ol>
+<li>发明创造新技术解决(潜在)问题</li>
+<li>组合现有前沿技术解决(潜在)问题</li>
+</ol>
+<p>对大多数企业来说，大多数时候都是在用第2点。能够做到第1点的少之又少。</p>
+<a id="more"></a>
+<h3 id="技术开发做什么"><a class="header-anchor" href="#技术开发做什么"></a>技术开发做什么</h3>
+<p>我所理解的技术开发要快速做出产品原型，验证是否可用于正式产品中。基于这个理解，技术开发需要做以下两点：</p>
+<ol>
+<li>可行性验证，验证该技术方案是否可行，能否达到需求的目标</li>
+<li>可用性实施，在可行性基础上，该技术方案能否易于实施，达到可用易用的程度。</li>
+</ol>
+<p><em>对产品实践来说，真正的技术积累来自于可用性，可行性无法识别问题点</em></p>
+<h3 id="技术开发问题点"><a class="header-anchor" href="#技术开发问题点"></a>技术开发问题点</h3>
+<p>通常我们的开发方式，我们的架构演进方式是：</p>
+<ol>
+<li>先实现，先达到需求的目标</li>
+<li>再优化，优化设计不好的地方</li>
+<li>服务化，服务化改造</li>
+<li>合适化，选择合适的技术实现</li>
+</ol>
+<h4 id="我们遇到的问题"><a class="header-anchor" href="#我们遇到的问题"></a>我们遇到的问题</h4>
+<ol>
+<li>只有大饼，没有实施目标</li>
+<li>大饼的概念，大饼的概念图，怎么做饼？</li>
+<li>SE/项目经理职责不明确
+<ol>
+<li>目标具体化及分解</li>
+<li>软件架构设计</li>
+</ol>
+</li>
+<li>项目经理太弱势
+<ol>
+<li>项目实施决策</li>
+<li>技术背景权威</li>
+<li>迭代划分实施</li>
+<li>责任划分跟踪</li>
+<li>迭代目标评估</li>
+</ol>
+</li>
+<li>不思求变
+<ol>
+<li>历史包袱太重，如何平衡兼容与创新</li>
+<li>拥抱先进生产力工具，提高效率</li>
+</ol>
+</li>
+</ol>
+<h4 id="结果如何"><a class="header-anchor" href="#结果如何"></a>结果如何</h4>
+<ol>
+<li>原型基本就是过家家</li>
+<li>假装能以及解决了问题</li>
+<li>自以为做的很高大上</li>
+<li>盲目追求/包装新概念</li>
+</ol>
+<h3 id="技术开发怎么做"><a class="header-anchor" href="#技术开发怎么做"></a>技术开发怎么做</h3>
+<p>回到最初的看法，把技术开发团队想象成是一家创业公司，应该怎么做。</p>
+<p>从想法/需求到快速实现原型，到投入市场验证，到不断迭代优化，到用户体验良好的产品。</p>
+<p>对于我们来说，看起来是这样的：</p>
+<ol>
+<li>需求分析出明确目标，目标分解，架构设计，迭代划分</li>
+<li>从原型最小集出发，每个迭代都是可用的(可投入“市场”验证)</li>
+<li>根据市场反馈，迭代优化，再次循环</li>
+</ol>
+<p>从具体开发来说：</p>
+<ol>
+<li>每次迭代目标对齐，做什么</li>
+<li>每次迭代需求与设计明确</li>
+<li>每次迭代各模块自我充分的分析与设计</li>
+<li>每次迭代完成系统是可以用的，保证这个基本点</li>
+</ol>
+<p><em>暂时想到这么多</em></p>
+<p><em>仅从个人角度看，感觉有点片面，从高层看是否如此呢</em></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/2016/01/02/my-personal-review-2015/" data-toggle="tooltip" data-placement="top" title="我的2015个人总结">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2015/10/25/tips-for-git-submodule/" data-toggle="tooltip" data-placement="top" title="tips for git submodule">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#技术开发是什么"><span class="toc-text">技术开发是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技术开发做什么"><span class="toc-text">技术开发做什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技术开发问题点"><span class="toc-text">技术开发问题点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#我们遇到的问题"><span class="toc-text">我们遇到的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结果如何"><span class="toc-text">结果如何</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技术开发怎么做"><span class="toc-text">技术开发怎么做</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/technology/" title="technology">technology</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yygcui";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2015/12/06/thinking-about-technoloy-development/";
+    var disqus_url = "http://blog.cuicc.com/blog/2015/12/06/thinking-about-technoloy-development/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-37316447-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>
