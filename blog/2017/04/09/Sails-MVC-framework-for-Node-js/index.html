@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2017/04/09/Sails-MVC-framework-for-Node-js/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Node-js/" title="Node.js">Node.js</a>
+                        <a class="tag" href="/tags/Node-js/"
+                           title="Node.js">Node.js</a>
                         
-                        <a class="tag" href="/tags/Sails/" title="Sails">Sails</a>
+                        <a class="tag" href="/tags/Sails/"
+                           title="Sails">Sails</a>
                         
-                        <a class="tag" href="/tags/MVC/" title="MVC">MVC</a>
+                        <a class="tag" href="/tags/MVC/"
+                           title="MVC">MVC</a>
                         
                     </div>
                 </div>
@@ -214,11 +226,11 @@
 <p><code>Sails</code>在使用上提供了极大的便利性，创建一个项目使用命令<code>sails new &lt;project name&gt;</code>，运行则在项目目录下执行<code>sails lift</code>，然后可以通过<code>ip:1337</code>访问，如<code>localhost:1337</code>。</p>
 <p>在开发上可使用命令<code>sails generate api cats</code>来生成<code>controller</code>和<code>model</code>，分别是<code>api/controllers/CatsController.js</code>和<code>api/models/Cats.js</code>。<code>view</code>则放在<code>views</code>目录下，支持多种模板语言，如<code>ejs</code>, <code>swig</code>等。</p>
 <p>这里不深入探讨基本用法，主要侧重在<code>Sails</code>比较具有代表性的两个功能上，<code>Blueprints</code>和<code>Waterline</code>。</p>
-<h2 id="blueprints"><a class="header-anchor" href="#blueprints"></a>Blueprints</h2>
+<h2 id="Blueprints"><a class="header-anchor" href="#Blueprints"></a>Blueprints</h2>
 <p><code>Blueprints</code>旨在减少代码数量及节约时间，它提供了一种快速生成API <code>routes</code>和<code>actions</code>(actions是指controller里定义的方法)的方法。<code>blueprint API</code>由两部分组成：<code>blueprint routes</code>和<code>blueprint actions</code>。</p>
-<h3 id="blueprint-actions"><a class="header-anchor" href="#blueprint-actions"></a>Blueprint Actions</h3>
+<h3 id="Blueprint-Actions"><a class="header-anchor" href="#Blueprint-Actions"></a>Blueprint Actions</h3>
 <p><code>Blueprint actions</code>是指一些通用方法，它们作用于任何<code>controller</code>来操作它的同名<code>model</code>，例如<code>CatsController.js</code>需要有<code>Cats.js</code>。这些方法是内置方法，即使<code>controller</code>是空的情况下也可以使用。方法如下：<code>find</code>, <code>findOne</code>, <code>create</code>, <code>update</code>, <code>destroy</code>, <code>populate</code>, <code>add</code>, <code>remove</code>，这些方法也就是下面的数据模型操作的<code>Waterline</code>所提供的方法。</p>
-<h3 id="blueprint-routes"><a class="header-anchor" href="#blueprint-routes"></a>Blueprint routes</h3>
+<h3 id="Blueprint-routes"><a class="header-anchor" href="#Blueprint-routes"></a>Blueprint routes</h3>
 <p><code>Blueprint routes</code>是在执行<code>sails lift</code>时根据<code>controller</code>, <code>model</code>, <code>config</code>自动生成的路由。默认情况下，一个route指向一个action。有以下三种路由配置，配置文件位于<code>config/blueprints.js</code>。</p>
 <ul>
 <li>
@@ -231,29 +243,29 @@
 <p><strong>Action routes</strong> 当你在<code>controller</code>中实现了一些自定义的方法时，该功能可自动生成对应的路由，如<code>CatsController.js</code>中有方法<code>meow</code>，那么可通过<code>/cats/meow</code>接口访问。这里和其他<code>MVC</code>自动生成<code>controller</code>的路由一样的用法。和上面不同的是，自定义方法时同名<code>model</code>不是必须的。</p>
 </li>
 </ul>
-<h2 id="waterline"><a class="header-anchor" href="#waterline"></a>Waterline</h2>
+<h2 id="Waterline"><a class="header-anchor" href="#Waterline"></a>Waterline</h2>
 <p><code>Waterline</code>是数据无关的一个抽象适配层，让你在操作数据时无需关心底层数据库类型，不用写某种数据库专用的操作代码。其底层支持<code>SQL</code>型和<code>NoSQL</code>型数据库, 如<code>MySQL</code>, <code>MongoDB</code>等。对接某一具体数据库时，你所需要做的就是在<code>config/connections.js</code>里配置适配器，在<code>config/models.js</code>配置<code>models</code>默认连接的具体适配器，当然也可以在某一具体<code>model</code>里指定连接的适配器。这样，需要切换数据库时，只需修改连接的适配器即可，不需要修改一行代码。</p>
 <p><code>model</code>中的数据模型结构如下，虽然某些字段看起来时<code>SQL</code>型数据库专用的，但定义了这些字段并不影响<code>NoSQL</code>型数据库使用。这里该<code>model</code>中的<code>connection</code>定义会覆盖掉<code>config/models.js</code>里的定义。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Model example</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connection: <span class="string">'MySQLDB'</span>,</span><br><span class="line">  tableName: <span class="string">'users'</span>,</span><br><span class="line">  attributes: &#123;</span><br><span class="line">    id: &#123;</span><br><span class="line">      type: <span class="string">'integer'</span>,</span><br><span class="line">      unique: <span class="literal">true</span>,</span><br><span class="line">      primaryKey: <span class="literal">true</span>,</span><br><span class="line">      columnName: <span class="string">'the_primary_key'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    name: &#123;</span><br><span class="line">      type: <span class="string">'string'</span>,</span><br><span class="line">      columnName: <span class="string">'full_name'</span></span><br><span class="line">    &#125;，</span><br><span class="line"></span><br><span class="line">    getFullName: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   enroll: <span class="function"><span class="keyword">function</span> (<span class="params">options, cb</span>) </span>&#123;</span><br><span class="line">       ...</span><br><span class="line">       cb(err, data);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Model example</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">connection</span>: <span class="string">&#x27;MySQLDB&#x27;</span>,</span><br><span class="line">  <span class="attr">tableName</span>: <span class="string">&#x27;users&#x27;</span>,</span><br><span class="line">  <span class="attr">attributes</span>: &#123;</span><br><span class="line">    <span class="attr">id</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;integer&#x27;</span>,</span><br><span class="line">      <span class="attr">unique</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">primaryKey</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">columnName</span>: <span class="string">&#x27;the_primary_key&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">name</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">      <span class="attr">columnName</span>: <span class="string">&#x27;full_name&#x27;</span></span><br><span class="line">    &#125;，</span><br><span class="line"></span><br><span class="line">    <span class="attr">getFullName</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="attr">enroll</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options, cb</span>) </span>&#123;</span><br><span class="line">       ...</span><br><span class="line">       cb(err, data);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从上面的<code>model</code>示例可以看到，除了属性字段定义外，还有一些函数定义。这里看到的是我们自定义的函数，<code>Sails</code>还提供了一些内置函数。我们还发现函数可以在属性内，也可以在属性外，下面详细介绍一下。</p>
-<h3 id="model-method"><a class="header-anchor" href="#model-method"></a>Model Method</h3>
-<p>模型方法也称为静态方法或者类方法，放在面向对象里很好理解，就是该类提供的静态方法，不需要实例化可直接使用的方法。上面放在<code>attributes</code>外定义的方法就是模型方法。<code>Sails</code>提供的内置模型方法涵盖了增删改查，具体方法列表看<a href="http://sailsjs.com/documentation/reference/waterline-orm/models" target="_blank" rel="noopener">官方文档</a>。除了这些方法外，还支持动态查找功能，以上面的<code>model</code>为例，该<code>model</code>有属性<code>id</code>和<code>name</code>，那么就有动态查找方法<code>findById</code>和<code>findByName</code>。</p>
+<h3 id="Model-Method"><a class="header-anchor" href="#Model-Method"></a>Model Method</h3>
+<p>模型方法也称为静态方法或者类方法，放在面向对象里很好理解，就是该类提供的静态方法，不需要实例化可直接使用的方法。上面放在<code>attributes</code>外定义的方法就是模型方法。<code>Sails</code>提供的内置模型方法涵盖了增删改查，具体方法列表看<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/reference/waterline-orm/models">官方文档</a>。除了这些方法外，还支持动态查找功能，以上面的<code>model</code>为例，该<code>model</code>有属性<code>id</code>和<code>name</code>，那么就有动态查找方法<code>findById</code>和<code>findByName</code>。</p>
 <p>需要注意的是，模型静态方法都是异步方法，方法有两个参数，第一个是输入值，第二个是回调函数。输入值最好是一个完整记录或者时主键。自定义模型静态方法的好处是你可以把数据操作方法放在<code>controller</code>之外，放在<code>model</code>里，这样你在其他<code>controller</code>中也可以重用，当然前提是与<code>req</code>和<code>res</code>无关的操作。</p>
-<h3 id="attribute-method"><a class="header-anchor" href="#attribute-method"></a>Attribute Method</h3>
-<p>属性方法也称为记录方法或者实例方法，顾名思义，它是作用于某一实例或某一记录的方法。放在<code>attributes</code>内定义的方法就是自定义属性方法，当然<code>Sails</code>也提供了一些内置的属性方法，包括<code>.toJSON()</code>, <code>.save()</code>, <code>.toObject()</code>，详细介绍看<a href="http://sailsjs.com/documentation/reference/waterline-orm/records" target="_blank" rel="noopener">官方文档</a>。</p>
+<h3 id="Attribute-Method"><a class="header-anchor" href="#Attribute-Method"></a>Attribute Method</h3>
+<p>属性方法也称为记录方法或者实例方法，顾名思义，它是作用于某一实例或某一记录的方法。放在<code>attributes</code>内定义的方法就是自定义属性方法，当然<code>Sails</code>也提供了一些内置的属性方法，包括<code>.toJSON()</code>, <code>.save()</code>, <code>.toObject()</code>，详细介绍看<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/reference/waterline-orm/records">官方文档</a>。</p>
 <p>除了内置方法<code>.save()</code>外，属性方法都应当是同步的方法。因为自定义异步属性方法时，很难保证不出现意外结果。在命名属性方法时，最好加上前缀<code>is</code>，<code>get</code>等以区分其他属性，并对方法提供一定的自解释。</p>
-<h3 id="more"><a class="header-anchor" href="#more"></a>more…</h3>
-<p>这里只是管中窥豹，只介绍了最表面的冰山一角，以说明Waterline的功能强大，其他还有<code>Associations</code>, <code>Validations</code>等等，如有兴趣，强烈建议看一下<a href="http://sailsjs.com/documentation/concepts/models-and-orm" target="_blank" rel="noopener">官方文档</a>。</p>
+<h3 id="more…"><a class="header-anchor" href="#more…"></a>more…</h3>
+<p>这里只是管中窥豹，只介绍了最表面的冰山一角，以说明Waterline的功能强大，其他还有<code>Associations</code>, <code>Validations</code>等等，如有兴趣，强烈建议看一下<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/concepts/models-and-orm">官方文档</a>。</p>
 <h2 id="官方文档"><a class="header-anchor" href="#官方文档"></a>官方文档</h2>
 <ul>
 <li>
-<p>工程结构请参考<a href="http://sailsjs.com/documentation/anatomy" target="_blank" rel="noopener">APP Structure</a></p>
+<p>工程结构请参考<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/anatomy">APP Structure</a></p>
 </li>
 <li>
-<p>基本概念请参考<a href="http://sailsjs.com/documentation/concepts" target="_blank" rel="noopener">Concepts</a></p>
+<p>基本概念请参考<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/concepts">Concepts</a></p>
 </li>
 <li>
-<p>接口使用请参考<a href="http://sailsjs.com/documentation/reference" target="_blank" rel="noopener">API Reference</a></p>
+<p>接口使用请参考<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/reference">API Reference</a></p>
 </li>
 </ul>
 
@@ -263,12 +275,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2017/04/30/kubernetes-network/" data-toggle="tooltip" data-placement="top" title="kubernetes之网络分析">&larr; Previous Post</a>
+                        <a href="/blog/2017/04/30/kubernetes-network/" data-toggle="tooltip" data-placement="top"
+                           title="kubernetes之网络分析">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2017/03/26/nodejs-ECONNRESET/" data-toggle="tooltip" data-placement="top" title="Node.js抛异常ECONNRESET退出">Next Post &rarr;</a>
+                        <a href="/blog/2017/03/26/nodejs-ECONNRESET/" data-toggle="tooltip" data-placement="top"
+                           title="Node.js抛异常ECONNRESET退出">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -287,7 +301,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本用法"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blueprints"><span class="toc-text">Blueprints</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#blueprint-actions"><span class="toc-text">Blueprint Actions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#blueprint-routes"><span class="toc-text">Blueprint routes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#waterline"><span class="toc-text">Waterline</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#model-method"><span class="toc-text">Model Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-method"><span class="toc-text">Attribute Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more"><span class="toc-text">more…</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方文档"><span class="toc-text">官方文档</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blueprints"><span class="toc-text">Blueprints</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Blueprint-Actions"><span class="toc-text">Blueprint Actions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blueprint-routes"><span class="toc-text">Blueprint routes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Waterline"><span class="toc-text">Waterline</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-Method"><span class="toc-text">Model Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attribute-Method"><span class="toc-text">Attribute Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more%E2%80%A6"><span class="toc-text">more…</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="toc-text">官方文档</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -309,11 +323,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Node-js/" title="Node.js">Node.js</a>
+                        <a class="tag" href="/tags/Node-js/"
+                           title="Node.js">Node.js</a>
                         
-                        <a class="tag" href="/tags/Sails/" title="Sails">Sails</a>
+                        <a class="tag" href="/tags/Sails/"
+                           title="Sails">Sails</a>
                         
-                        <a class="tag" href="/tags/MVC/" title="MVC">MVC</a>
+                        <a class="tag" href="/tags/MVC/"
+                           title="MVC">MVC</a>
                         
                     </div>
                 </section>
@@ -385,7 +402,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -396,7 +413,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -407,11 +424,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -420,13 +437,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -489,7 +512,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

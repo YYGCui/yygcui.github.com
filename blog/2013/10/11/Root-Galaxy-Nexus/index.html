@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2013/10/11/Root-Galaxy-Nexus/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Android/" title="Android">Android</a>
+                        <a class="tag" href="/tags/Android/"
+                           title="Android">Android</a>
                         
-                        <a class="tag" href="/tags/Root/" title="Root">Root</a>
+                        <a class="tag" href="/tags/Root/"
+                           title="Root">Root</a>
                         
                     </div>
                 </div>
@@ -207,16 +218,16 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>为了用一些应用，必须要取得root权限，Google了一下，发现了这个神奇<a href="http://forum.xda-developers.com/showthread.php?t=1614827" target="_blank" rel="noopener">GNEX TOOLKIT</a>，简单易用，功能强大。它不仅可以root，还可以刷入google官方的image，刷入recovery，解锁bootloader。但是，有一点比较不爽的是，它更新的没有那么及时，或许donate版比较及时吧，这个就不知道了。</p>
+                <p>为了用一些应用，必须要取得root权限，Google了一下，发现了这个神奇<a target="_blank" rel="noopener" href="http://forum.xda-developers.com/showthread.php?t=1614827">GNEX TOOLKIT</a>，简单易用，功能强大。它不仅可以root，还可以刷入google官方的image，刷入recovery，解锁bootloader。但是，有一点比较不爽的是，它更新的没有那么及时，或许donate版比较及时吧，这个就不知道了。</p>
 <p>这个工具相当于把以下步骤和工具封装了一下，简单选几个选项就ok了。同样只要有相应的工具，手动做也不是什么难事。</p>
-<a id="more"></a>
-<h2 id="准备工作："><a class="header-anchor" href="#准备工作："></a>准备工作：</h2>
+<h2 id="more-准备工作："><a class="header-anchor" href="#more-准备工作："></a><span id="more"></span><br>
+准备工作：</h2>
 <ol>
 <li>在开发者选项里打开“USB调试”模式。</li>
 <li>确保手机已经解锁bootloader</li>
 <li>安装android SDK，其中包含了fastboot</li>
-<li>下载<a href="http://www.chainfire.eu/" target="_blank" rel="noopener">superSU最新版</a>，并将该zip文件放在手机存储的根目录下</li>
-<li>下载与手机相适应的<a href="http://www.clockworkmod.com/rommanager" target="_blank" rel="noopener">recovery CWM img</a>，请根据手机型号及系统版本下载。</li>
+<li>下载<a target="_blank" rel="noopener" href="http://www.chainfire.eu/">superSU最新版</a>，并将该zip文件放在手机存储的根目录下</li>
+<li>下载与手机相适应的<a target="_blank" rel="noopener" href="http://www.clockworkmod.com/rommanager">recovery CWM img</a>，请根据手机型号及系统版本下载。</li>
 </ol>
 <h2 id="root步骤："><a class="header-anchor" href="#root步骤："></a>root步骤：</h2>
 <ol>
@@ -225,9 +236,9 @@
 </li>
 <li>
 <p>使用fastboot刷入recovery, 命令行如下：</p>
-<pre><code>fastboot flash recovery recovery-clockwork-....img
-#注意：由于android的保护机制，在重启之后该recovery将被重置掉，对root没有影响
-#该recovery主要用来从SD加载superSU zip文件来实现root。
+<pre><code> fastboot flash recovery recovery-clockwork-....img
+ #注意：由于android的保护机制，在重启之后该recovery将被重置掉，对root没有影响
+ #该recovery主要用来从SD加载superSU zip文件来实现root。
 </code></pre>
 </li>
 <li>
@@ -244,12 +255,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2013/12/01/tips-for-octopress/" data-toggle="tooltip" data-placement="top" title="tips for octopress">&larr; Previous Post</a>
+                        <a href="/blog/2013/12/01/tips-for-octopress/" data-toggle="tooltip" data-placement="top"
+                           title="tips for octopress">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2012/12/08/water-dispenser-is-not-safe/" data-toggle="tooltip" data-placement="top" title="85度安全侧漏">Next Post &rarr;</a>
+                        <a href="/blog/2012/12/08/water-dispenser-is-not-safe/" data-toggle="tooltip" data-placement="top"
+                           title="85度安全侧漏">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -268,7 +281,9 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作："><span class="toc-text">准备工作：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#root步骤："><span class="toc-text">root步骤：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#more-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="toc-text">
+
+准备工作：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#root%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-text">root步骤：</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -290,9 +305,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Android/" title="Android">Android</a>
+                        <a class="tag" href="/tags/Android/"
+                           title="Android">Android</a>
                         
-                        <a class="tag" href="/tags/Root/" title="Root">Root</a>
+                        <a class="tag" href="/tags/Root/"
+                           title="Root">Root</a>
                         
                     </div>
                 </section>
@@ -364,7 +381,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -375,7 +392,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -386,11 +403,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -399,13 +416,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -468,7 +491,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2015/09/20/compile-and-deploy-using-docker/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/docker/" title="docker">docker</a>
+                        <a class="tag" href="/tags/docker/"
+                           title="docker">docker</a>
                         
-                        <a class="tag" href="/tags/compile/" title="compile">compile</a>
+                        <a class="tag" href="/tags/compile/"
+                           title="compile">compile</a>
                         
-                        <a class="tag" href="/tags/deploy/" title="deploy">deploy</a>
+                        <a class="tag" href="/tags/deploy/"
+                           title="deploy">deploy</a>
                         
                     </div>
                 </div>
@@ -212,25 +224,25 @@
                 <p>容器不是一个新技术，lxc已经存在了很长时间，但Docker却使它更加方便易用。Docker火了之后，我一直没有明白它为啥这么火，除了它宣称的轻量化之外，还有什么。它能做的事情，虚拟机都可以做，并且虚拟机有更好的隔离性。</p>
 <p>在使用场景上，貌似布道的更多的是环境一致性，即开发、测试、部署环境都能很好的保持一致。而至于在生产环境中使用它有什么好处，除了DevOps所倡导的自动化，简化运维，我就没有其他概念了。</p>
 <p>最近在研究微服务的东西，那么微服务必然需要DevOps，必然也就需要高度自动化。Docker，或者说容器，很好的迎合了这一契机。可以说Docker极大的简化了自动化部署的难度。本文就从最近的实践看一看以前没发现的好处。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="用源码直接编译部署"><a class="header-anchor" href="#用源码直接编译部署"></a>用源码直接编译部署</h2>
-<p>这种方式直接从VCS仓库下载源码，安装相关依赖库，然后编译安装，生成Docker镜像。其Dockerfile可能是这样的，以构建运行ubuntu的镜像为例。关于Dockerfile语法等可以参考<a href="https://docs.docker.com/reference/builder/" target="_blank" rel="noopener">Dockerfile reference</a></p>
-<figure class="highlight plain"><figcaption><span>Dockerfile</span></figcaption><table><tr><td class="code"><pre><span class="line"># A Dockerfile example</span><br><span class="line">FROM ubuntu:14.04</span><br><span class="line">MAINTAINER YYGCui&lt;yygcui@cuicc.com&gt;</span><br><span class="line"></span><br><span class="line"># set proxy if needed</span><br><span class="line"># set ubuntu to noninteractive </span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"></span><br><span class="line"># copy apt-get sources list to image</span><br><span class="line">COPY sources.list /etc/apt/</span><br><span class="line"></span><br><span class="line"># keep ubuntu up-to-date</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get -qqy upgrade</span><br><span class="line"></span><br><span class="line"># install tools for compile</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">    build-essential \</span><br><span class="line">    automake \</span><br><span class="line">    libtool \</span><br><span class="line">    git \</span><br><span class="line">   # and the libraries needed by your app</span><br><span class="line">   --no-install-recommends \</span><br><span class="line">   &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># download your app source code to /home/myapp</span><br><span class="line">RUN cd /home/ &amp;&amp; git clone http://github.com/yygcui/myapp.git</span><br><span class="line"></span><br><span class="line"># compile and install</span><br><span class="line">RUN cd /home/myapp \</span><br><span class="line">    &amp;&amp; ./configure \</span><br><span class="line">    &amp;&amp; make \</span><br><span class="line">    &amp;&amp; make install \</span><br><span class="line"></span><br><span class="line"># clean source code and some tools </span><br><span class="line">RUN rm -rf /home/myapp \</span><br><span class="line">    &amp;&amp; apt-get remove --purge -y git build-essential automake libtool</span><br><span class="line"></span><br><span class="line"># set run cmd</span><br><span class="line">ENTRYPOINT [&quot;myapp.bin&quot;]</span><br><span class="line">CMD [&quot;param1&quot;, &quot;param2&quot;]</span><br></pre></td></tr></table></figure>
+<p>这种方式直接从VCS仓库下载源码，安装相关依赖库，然后编译安装，生成Docker镜像。其Dockerfile可能是这样的，以构建运行ubuntu的镜像为例。关于Dockerfile语法等可以参考<a target="_blank" rel="noopener" href="https://docs.docker.com/reference/builder/">Dockerfile reference</a></p>
+<figure class="highlight plaintext"><figcaption><span>Dockerfile</span></figcaption><table><tr><td class="code"><pre><span class="line"># A Dockerfile example</span><br><span class="line">FROM ubuntu:14.04</span><br><span class="line">MAINTAINER YYGCui&lt;yygcui@cuicc.com&gt;</span><br><span class="line"></span><br><span class="line"># set proxy if needed</span><br><span class="line"># set ubuntu to noninteractive </span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"></span><br><span class="line"># copy apt-get sources list to image</span><br><span class="line">COPY sources.list /etc/apt/</span><br><span class="line"></span><br><span class="line"># keep ubuntu up-to-date</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get -qqy upgrade</span><br><span class="line"></span><br><span class="line"># install tools for compile</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">    build-essential \</span><br><span class="line">    automake \</span><br><span class="line">    libtool \</span><br><span class="line">    git \</span><br><span class="line">   # and the libraries needed by your app</span><br><span class="line">   --no-install-recommends \</span><br><span class="line">   &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># download your app source code to /home/myapp</span><br><span class="line">RUN cd /home/ &amp;&amp; git clone http://github.com/yygcui/myapp.git</span><br><span class="line"></span><br><span class="line"># compile and install</span><br><span class="line">RUN cd /home/myapp \</span><br><span class="line">    &amp;&amp; ./configure \</span><br><span class="line">    &amp;&amp; make \</span><br><span class="line">    &amp;&amp; make install \</span><br><span class="line"></span><br><span class="line"># clean source code and some tools </span><br><span class="line">RUN rm -rf /home/myapp \</span><br><span class="line">    &amp;&amp; apt-get remove --purge -y git build-essential automake libtool</span><br><span class="line"></span><br><span class="line"># set run cmd</span><br><span class="line">ENTRYPOINT [&quot;myapp.bin&quot;]</span><br><span class="line">CMD [&quot;param1&quot;, &quot;param2&quot;]</span><br></pre></td></tr></table></figure>
 <p>从Dockerfile流程可以看出，这种方法比较简单直接，省去了软件打包的过程，省去了管理安装包的麻烦，直接安装在构建镜像中。但是也带来了一些缺点，比如为防止源码泄露需要清理，在闭源的情况下，只能发布构建好的镜像；深入一点分析，各种测试结果无法复用，比如集成测试有其他部件出现bug，这可能要重新从头执行整个流程。</p>
 <h2 id="用源码编译成可执行包构建部署"><a class="header-anchor" href="#用源码编译成可执行包构建部署"></a>用源码编译成可执行包构建部署</h2>
 <p>这种思路相当于在上面的基础上进行了编译和部署的分离。分别用不同的镜像来构建。比如编译阶段，我可以预先构建好编译基础镜像，包含基本的编译工具，节省安装时间。而在构建部署阶段，直接用纯净的基础镜像，避免安装不必要的软件包，更利于环境一致性。</p>
 <h3 id="容器化编译"><a class="header-anchor" href="#容器化编译"></a>容器化编译</h3>
 <p>容器化编译可以参考docker本身的编译过程，这里简化一下，该过程需要额外构建以下文件：Makefile(用来自动化容器编译的Makefile，非app的Makefile)，编译脚本，编译镜像(Dockerfile)。</p>
 <p>Makefile主要做了三件事：创建映射目录，构建编译镜像，启动编译容器进行编译。Makefile简单示例如下。</p>
-<figure class="highlight plain"><figcaption><span>Makefile</span></figcaption><table><tr><td class="code"><pre><span class="line">.PHONY: all</span><br><span class="line"></span><br><span class="line">BIND_DIR := package</span><br><span class="line">DOCKER_MOUNT := $(if $(BIND_DIR),-v &quot;$(CURDIR)/$(BIND_DIR):/home/$(BIND_DIR)&quot;)</span><br><span class="line">DOCKER_IMAGE := myapp-compile</span><br><span class="line">DOCKER_RUN := docker run --rm -it --privileged $(DOCKER_MOUNT) &quot;$(DOCKER_IMAGE)&quot;</span><br><span class="line"></span><br><span class="line">default: all</span><br><span class="line">all: build</span><br><span class="line">    $(DOCKER_RUN) /home/build.sh</span><br><span class="line"></span><br><span class="line">build: package</span><br><span class="line">    docker build -t &quot;$(DOCKER_IMAGE)&quot; .</span><br><span class="line"></span><br><span class="line">package:</span><br><span class="line">    mkdir -p ./package</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>Makefile</span></figcaption><table><tr><td class="code"><pre><span class="line">.PHONY: all</span><br><span class="line"></span><br><span class="line">BIND_DIR := package</span><br><span class="line">DOCKER_MOUNT := $(if $(BIND_DIR),-v &quot;$(CURDIR)/$(BIND_DIR):/home/$(BIND_DIR)&quot;)</span><br><span class="line">DOCKER_IMAGE := myapp-compile</span><br><span class="line">DOCKER_RUN := docker run --rm -it --privileged $(DOCKER_MOUNT) &quot;$(DOCKER_IMAGE)&quot;</span><br><span class="line"></span><br><span class="line">default: all</span><br><span class="line">all: build</span><br><span class="line">    $(DOCKER_RUN) /home/build.sh</span><br><span class="line"></span><br><span class="line">build: package</span><br><span class="line">    docker build -t &quot;$(DOCKER_IMAGE)&quot; .</span><br><span class="line"></span><br><span class="line">package:</span><br><span class="line">    mkdir -p ./package</span><br></pre></td></tr></table></figure>
 <p>编译脚本封装了源码的编译，以及编译后的打包等工作。可执行文件与编译出来的依赖库以及打包文件都放在package目录下，这样在host上也可以访问。</p>
-<figure class="highlight plain"><figcaption><span>build.sh</span></figcaption><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># make it like a atom operate</span><br><span class="line">cd /home/myapp \</span><br><span class="line">&amp;&amp; ./configure --prefix=/home/package \</span><br><span class="line">&amp;&amp; make \</span><br><span class="line">&amp;&amp; make install</span><br><span class="line"></span><br><span class="line">#build rpm/deb/tar package if needed</span><br><span class="line">#cd /home/package \</span><br><span class="line">#&amp;&amp; tar -czvf myapp.tar.gz ./bin ./lib ./doc install.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>build.sh</span></figcaption><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># make it like a atom operate</span><br><span class="line">cd /home/myapp \</span><br><span class="line">&amp;&amp; ./configure --prefix=/home/package \</span><br><span class="line">&amp;&amp; make \</span><br><span class="line">&amp;&amp; make install</span><br><span class="line"></span><br><span class="line">#build rpm/deb/tar package if needed</span><br><span class="line">#cd /home/package \</span><br><span class="line">#&amp;&amp; tar -czvf myapp.tar.gz ./bin ./lib ./doc install.sh</span><br></pre></td></tr></table></figure>
 <p>编译镜像的Dockerfile和上面的源码直接编译的差不多，只不过不包括编译部分。同时基础镜像也可以用已经构建好的编译基础镜像。这里只需要安装myapp依赖的库以及相应的下载工具即可。</p>
-<figure class="highlight plain"><figcaption><span>Dockerfile</span></figcaption><table><tr><td class="code"><pre><span class="line"># A Dockerfile example for compile</span><br><span class="line">FROM ubuntu-compile:14.04</span><br><span class="line">MAINTAINER YYGCui&lt;yygcui@cuicc.com&gt;</span><br><span class="line"></span><br><span class="line"># set proxy if needed</span><br><span class="line"># set ubuntu to noninteractive </span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"></span><br><span class="line"># copy apt-get sources list to image</span><br><span class="line">COPY sources.list /etc/apt/</span><br><span class="line"></span><br><span class="line"># keep ubuntu up-to-date</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get -qqy upgrade</span><br><span class="line"></span><br><span class="line"># install tools for compile</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">    git \</span><br><span class="line">   # and the libraries needed by your app</span><br><span class="line">   --no-install-recommends \</span><br><span class="line">   &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># download your app source code to /home/myapp</span><br><span class="line">RUN cd /home/ &amp;&amp; git clone http://github.com/yygcui/myapp.git</span><br><span class="line"></span><br><span class="line">COPY build.sh /home/build.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>Dockerfile</span></figcaption><table><tr><td class="code"><pre><span class="line"># A Dockerfile example for compile</span><br><span class="line">FROM ubuntu-compile:14.04</span><br><span class="line">MAINTAINER YYGCui&lt;yygcui@cuicc.com&gt;</span><br><span class="line"></span><br><span class="line"># set proxy if needed</span><br><span class="line"># set ubuntu to noninteractive </span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"></span><br><span class="line"># copy apt-get sources list to image</span><br><span class="line">COPY sources.list /etc/apt/</span><br><span class="line"></span><br><span class="line"># keep ubuntu up-to-date</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get -qqy upgrade</span><br><span class="line"></span><br><span class="line"># install tools for compile</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">    git \</span><br><span class="line">   # and the libraries needed by your app</span><br><span class="line">   --no-install-recommends \</span><br><span class="line">   &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># download your app source code to /home/myapp</span><br><span class="line">RUN cd /home/ &amp;&amp; git clone http://github.com/yygcui/myapp.git</span><br><span class="line"></span><br><span class="line">COPY build.sh /home/build.sh</span><br></pre></td></tr></table></figure>
 <p>这样，你的下一步流程可以对该软件包进行各种测试，通过后可以上传到二进制包管理库。后续用到该软件时，都直接从二进制库下载。</p>
 <h3 id="容器化部署"><a class="header-anchor" href="#容器化部署"></a>容器化部署</h3>
 <p>这里部署的概念只是紧接着编译测试后如何构建部署镜像。部署镜像依赖于上一步的二进制包。其Dockerfile可能是这样的。</p>
-<figure class="highlight plain"><figcaption><span>Dockerfile</span></figcaption><table><tr><td class="code"><pre><span class="line"># A Dockerfile example for deploy</span><br><span class="line">FROM ubuntu:14.04</span><br><span class="line">MAINTAINER YYGCui&lt;yygcui@cuicc.com&gt;</span><br><span class="line"></span><br><span class="line"># set proxy if needed</span><br><span class="line"># set ubuntu to noninteractive </span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"></span><br><span class="line"># copy apt-get sources list to image</span><br><span class="line">COPY sources.list /etc/apt/</span><br><span class="line"></span><br><span class="line"># keep ubuntu up-to-date</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get -qqy upgrade</span><br><span class="line"></span><br><span class="line"># install tools for compile</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">    wget \</span><br><span class="line">   # and the libraries needed by your app</span><br><span class="line">   --no-install-recommends \</span><br><span class="line">   &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># download your app source code to /home/myapp</span><br><span class="line">RUN cd /home \</span><br><span class="line">    &amp;&amp; wget http://artifactory.com/yygcui/0.0.1/myapp.tar.gz \</span><br><span class="line">    &amp;&amp; tar -xzvf myapp.tar.gz \</span><br><span class="line">    &amp;&amp; cd myapp \</span><br><span class="line">    &amp;&amp; ./install.sh</span><br><span class="line"></span><br><span class="line"># set run cmd</span><br><span class="line">ENTRYPOINT [&quot;myapp.bin&quot;]</span><br><span class="line">CMD [&quot;param1&quot;, &quot;param2&quot;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>Dockerfile</span></figcaption><table><tr><td class="code"><pre><span class="line"># A Dockerfile example for deploy</span><br><span class="line">FROM ubuntu:14.04</span><br><span class="line">MAINTAINER YYGCui&lt;yygcui@cuicc.com&gt;</span><br><span class="line"></span><br><span class="line"># set proxy if needed</span><br><span class="line"># set ubuntu to noninteractive </span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"></span><br><span class="line"># copy apt-get sources list to image</span><br><span class="line">COPY sources.list /etc/apt/</span><br><span class="line"></span><br><span class="line"># keep ubuntu up-to-date</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get -qqy upgrade</span><br><span class="line"></span><br><span class="line"># install tools for compile</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">    wget \</span><br><span class="line">   # and the libraries needed by your app</span><br><span class="line">   --no-install-recommends \</span><br><span class="line">   &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># download your app source code to /home/myapp</span><br><span class="line">RUN cd /home \</span><br><span class="line">    &amp;&amp; wget http://artifactory.com/yygcui/0.0.1/myapp.tar.gz \</span><br><span class="line">    &amp;&amp; tar -xzvf myapp.tar.gz \</span><br><span class="line">    &amp;&amp; cd myapp \</span><br><span class="line">    &amp;&amp; ./install.sh</span><br><span class="line"></span><br><span class="line"># set run cmd</span><br><span class="line">ENTRYPOINT [&quot;myapp.bin&quot;]</span><br><span class="line">CMD [&quot;param1&quot;, &quot;param2&quot;]</span><br></pre></td></tr></table></figure>
 <h2 id="总结一下"><a class="header-anchor" href="#总结一下"></a>总结一下</h2>
 <p>从源码直接构建部署镜像，流程简单易行，自动化比较容易；但高度依赖于测试自动化，在构建的过程中需要完成基本的测试。而且每次都从源码构建，不利于前一步结果的复用(如进程测试、系统测试)。</p>
 <p>容器化编译和容器化部署分成独立的两个过程，更像传统的流程。各种测试结果基本可以复用，但是增加了自动化的难度，管理二进制包的麻烦。</p>
@@ -242,12 +254,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/" data-toggle="tooltip" data-placement="top" title="mysql掉电后无法启动 InnoDB: is in the future!">&larr; Previous Post</a>
+                        <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/" data-toggle="tooltip" data-placement="top"
+                           title="mysql掉电后无法启动 InnoDB: is in the future!">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2015/07/22/microservices/" data-toggle="tooltip" data-placement="top" title="微服务">Next Post &rarr;</a>
+                        <a href="/blog/2015/07/22/microservices/" data-toggle="tooltip" data-placement="top"
+                           title="微服务">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -266,7 +280,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用源码直接编译部署"><span class="toc-text">用源码直接编译部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用源码编译成可执行包构建部署"><span class="toc-text">用源码编译成可执行包构建部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#容器化编译"><span class="toc-text">容器化编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#容器化部署"><span class="toc-text">容器化部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结一下"><span class="toc-text">总结一下</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%BA%90%E7%A0%81%E7%9B%B4%E6%8E%A5%E7%BC%96%E8%AF%91%E9%83%A8%E7%BD%B2"><span class="toc-text">用源码直接编译部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E6%88%90%E5%8F%AF%E6%89%A7%E8%A1%8C%E5%8C%85%E6%9E%84%E5%BB%BA%E9%83%A8%E7%BD%B2"><span class="toc-text">用源码编译成可执行包构建部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%8C%96%E7%BC%96%E8%AF%91"><span class="toc-text">容器化编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2"><span class="toc-text">容器化部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-text">总结一下</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -288,11 +302,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/docker/" title="docker">docker</a>
+                        <a class="tag" href="/tags/docker/"
+                           title="docker">docker</a>
                         
-                        <a class="tag" href="/tags/compile/" title="compile">compile</a>
+                        <a class="tag" href="/tags/compile/"
+                           title="compile">compile</a>
                         
-                        <a class="tag" href="/tags/deploy/" title="deploy">deploy</a>
+                        <a class="tag" href="/tags/deploy/"
+                           title="deploy">deploy</a>
                         
                     </div>
                 </section>
@@ -364,7 +381,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -375,7 +392,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -386,11 +403,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -399,13 +416,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -468,7 +491,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2011/11/15/mbr-and-boot-loader/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/MBR/" title="MBR">MBR</a>
+                        <a class="tag" href="/tags/MBR/"
+                           title="MBR">MBR</a>
                         
-                        <a class="tag" href="/tags/winxp/" title="winxp">winxp</a>
+                        <a class="tag" href="/tags/winxp/"
+                           title="winxp">winxp</a>
                         
                     </div>
                 </div>
@@ -209,8 +221,8 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>周末不小心把Linux的boot分区由主分区改成了逻辑分区，导致用GRUB引导程序无法正常加载，后果是直接无法进入Windows和Linux系统，GRUB出现的错误如下图所示。虽然我知道进入DOS用命令fdisk /mbr重写一下MBR可以修复引导分区进入Windows，或者用Linux livecd启动重装一下GRUB修复GRUB引导程序，但有几个问题没有想明白：我将GRUB安装到MBR了，为啥更改boot分区会导致GRUB无法引导？进而想MBR是怎样引导系统的，难道要找到boot分区运行GRUB程序？我在Wiki找到了答案：<a href="http://en.wikipedia.org/wiki/Master_boot_record" target="_blank" rel="noopener">MBR</a> (<a href="http://zh.wikipedia.org/zh-cn/MBR" target="_blank" rel="noopener">中文</a>)，<a href="http://en.wikipedia.org/wiki/Boot_loader#Boot_loader" target="_blank" rel="noopener">boot loader</a>，<a href="http://en.wikipedia.org/wiki/GNU_GRUB" target="_blank" rel="noopener">GRUB</a> (<a href="http://zh.wikipedia.org/wiki/GNU_GRUB" target="_blank" rel="noopener">中文</a>)。</p>
-<a id="more"></a>
+                <p>周末不小心把Linux的boot分区由主分区改成了逻辑分区，导致用GRUB引导程序无法正常加载，后果是直接无法进入Windows和Linux系统，GRUB出现的错误如下图所示。虽然我知道进入DOS用命令fdisk /mbr重写一下MBR可以修复引导分区进入Windows，或者用Linux livecd启动重装一下GRUB修复GRUB引导程序，但有几个问题没有想明白：我将GRUB安装到MBR了，为啥更改boot分区会导致GRUB无法引导？进而想MBR是怎样引导系统的，难道要找到boot分区运行GRUB程序？我在Wiki找到了答案：<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Master_boot_record">MBR</a> (<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/zh-cn/MBR">中文</a>)，<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Boot_loader#Boot_loader">boot loader</a>，<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/GNU_GRUB">GRUB</a> (<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/GNU_GRUB">中文</a>)。</p>
+<span id="more"></span>
 <p><img src="http://farm9.staticflickr.com/8361/8325122410_0202a5b1b1_o.jpg" alt="Grub Load Error"></p>
 <p><strong>什么是MBR？</strong></p>
 <p>MBR (Master Boot Record, 主引导记录) 是指存储设备的第一个扇区的前512个字节。对硬盘而言，一个扇区的可能字节数为128×2n  (n=0,1,2,3) ，大多数情况下，n=2，即一个扇区的大小为512个字节，所以MBR又被称为主引导扇区。MBR的基本结构为：</p>
@@ -230,7 +242,7 @@
 <td style="text-align: center;"><code>0000</code></td>
 <td style="text-align: center;">0</td>
 <td colspan="2">code area (代码区)</td>
-<td style="text-align: center;"><strong>440</strong><br>(max.446)</td>
+<td style="text-align: center;"><strong>440</strong></br>(max.446)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>01B8</code></td>
@@ -250,7 +262,7 @@
 <td style="text-align: center;"><code>01BE</code></td>
 <td style="text-align: center;"><code>0676</code></td>
 <td style="text-align: center;">446</td>
-<td colspan="2"><strong>Table of primary partitions (主分区表)</strong><br>(Four 16-byte entries, IBM partition table scheme)</td>
+<td colspan="2"><strong>Table of primary partitions (主分区表)</strong></br>(Four 16-byte entries, IBM partition table scheme)</td>
 <td style="text-align: center;"><strong>64</strong></td>
 </tr>
 <tr>
@@ -272,7 +284,7 @@
 <th style="text-align: center;">512</th>
 </tr>
 </table>
-<p>从MBR的结构可以看出，硬盘分区表仅占64个字节，根据IBM分区表方案，用16个字节表示一个分区，所以采用MBR分区结构的系统最多能识别4个主分区，如windows。为了能够使用更多的分区，引入了扩展分区的概念，扩展分区也是主分区的一种，但它与主分区的不同之处在于理论上扩展分区可以划分出无数个逻辑分区。扩展分区中逻辑驱动器的引导记录是链式的。每一个逻辑分区都有一个和MBR结构类似的<strong>扩展引导记录</strong>(<strong><a href="http://en.wikipedia.org/wiki/Extended_boot_record" target="_blank" rel="noopener">EBR</a></strong>)，其分区表的第一项指向该逻辑分区本身的引导扇区，第二项指向下一个逻辑驱动器的EBR，分区表第三、第四项没有用到。</p>
+<p>从MBR的结构可以看出，硬盘分区表仅占64个字节，根据IBM分区表方案，用16个字节表示一个分区，所以采用MBR分区结构的系统最多能识别4个主分区，如windows。为了能够使用更多的分区，引入了扩展分区的概念，扩展分区也是主分区的一种，但它与主分区的不同之处在于理论上扩展分区可以划分出无数个逻辑分区。扩展分区中逻辑驱动器的引导记录是链式的。每一个逻辑分区都有一个和MBR结构类似的<strong>扩展引导记录</strong>(<strong><a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Extended_boot_record">EBR</a></strong>)，其分区表的第一项指向该逻辑分区本身的引导扇区，第二项指向下一个逻辑驱动器的EBR，分区表第三、第四项没有用到。</p>
 <p>在windows中，我们可以使用的分区方案：最多4主分区，或者最多3主分区+1扩展分区 (包含任意数量的逻辑分区)。</p>
 <p>在Linux中，同样采用MBR分区方案：最多4主分区(sda1<sub>sda4或者hda1</sub>hda4)，或者最多3主分区+1扩展分区 (逻辑分区编号从sda5/hda5开始)。</p>
 <p><strong>系统是如何被引导启动的？</strong></p>
@@ -285,7 +297,7 @@
 <p>以上的内容还不足以解释GRUB为何加载失败了。再来看MBR的结构，MBR引导代码最多能占用446个字节，对于只引导Windows这样的单一功能已经足够了；但对于像GRUB、LILO等复杂的多引导支持的引导程序来说，446个字节难以实现如此复杂的功能，这时就用到了多级引导的概念。以GRUB为例：</p>
 <p>将GRUB安装到MBR时，实际上只是将GRUB的stage 1安装到了MBR的代码区，stage 1的功能是通过加载磁盘起始处附近从一固定处开始的一些扇区来加载GRUB的下一个stage。</p>
 <p>stage 1可以直接加载stage 2，但通常被设置为加载stage 1.5，然后stage 1.5直接加载stage 2。stage 1.5是指紧接着MBR之后的在第一个磁盘分区前的30千字节。它包含了具体的文件系统驱动。该驱动允许stage 1.5直接加载位于文件系统/boot/grub下的stage 2。</p>
-<p>stage 2加载配置文件并呈现一个界面让用户选择要启动的操作系统内核，然后将选择载入的内核加载到内存并把控制权转交给内核。GRUB也可以通过链式启动(<a href="http://en.wikipedia.org/wiki/Chain_loading" target="_blank" rel="noopener">chain loading</a>)把启动控制权转交给其他引导程序，如通过GRUB引导Windows时的chainload (hdX,Y)+1，通常是(hd0,0)+1，即第一个主分区的引导扇区。</p>
+<p>stage 2加载配置文件并呈现一个界面让用户选择要启动的操作系统内核，然后将选择载入的内核加载到内存并把控制权转交给内核。GRUB也可以通过链式启动(<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Chain_loading">chain loading</a>)把启动控制权转交给其他引导程序，如通过GRUB引导Windows时的chainload (hdX,Y)+1，通常是(hd0,0)+1，即第一个主分区的引导扇区。</p>
 <p>那么现在就很好解释了，由于把/boot分区由主分区改成了逻辑分区，stage 1.5找不到该分区，也就找不到stage 2，所以GRUB引导程序加载失败了。</p>
 
                 <hr>
@@ -294,12 +306,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/12/04/wisdom-tooth-extraction/" data-toggle="tooltip" data-placement="top" title="拔智齿小记">&larr; Previous Post</a>
+                        <a href="/blog/2011/12/04/wisdom-tooth-extraction/" data-toggle="tooltip" data-placement="top"
+                           title="拔智齿小记">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/11/10/gentoo-hard-disk-install/" data-toggle="tooltip" data-placement="top" title="Gentoo 硬盘安装">Next Post &rarr;</a>
+                        <a href="/blog/2011/11/10/gentoo-hard-disk-install/" data-toggle="tooltip" data-placement="top"
+                           title="Gentoo 硬盘安装">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -340,11 +354,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/MBR/" title="MBR">MBR</a>
+                        <a class="tag" href="/tags/MBR/"
+                           title="MBR">MBR</a>
                         
-                        <a class="tag" href="/tags/winxp/" title="winxp">winxp</a>
+                        <a class="tag" href="/tags/winxp/"
+                           title="winxp">winxp</a>
                         
                     </div>
                 </section>
@@ -416,7 +433,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -427,7 +444,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -438,11 +455,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -451,13 +468,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -520,7 +543,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

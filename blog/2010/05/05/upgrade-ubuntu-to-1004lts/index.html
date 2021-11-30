@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/05/05/upgrade-ubuntu-to-1004lts/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+                        <a class="tag" href="/tags/ubuntu/"
+                           title="ubuntu">ubuntu</a>
                         
-                        <a class="tag" href="/tags/upgrade/" title="upgrade">upgrade</a>
+                        <a class="tag" href="/tags/upgrade/"
+                           title="upgrade">upgrade</a>
                         
                     </div>
                 </div>
@@ -215,24 +227,24 @@
 <p>或</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> lsb_release -a</span><br></pre></td></tr></table></figure>
 <p>同样版本升级在图形界面下可以直接通过update manager升级，也可以通过命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> <span class="keyword">do</span>-release-upgrade</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>升级过程没有什么好说的，一路确定即可，需要特别注意的是安装grub升级包时会询问安装位置，如果只有一个系统，一定要安装在MBR下，否则无法进入系统。如果是双系统或者多系统，可以选择安装在分区(boot单独分区时要安装在boot分区），然后通过其他系统引导，如在winxp下可以通过<a href="http://download.gna.org/grub4dos/" target="_blank" rel="noopener">grub4dos</a>，grub4dos的最新版本是2009年6月份发布的，而ubuntu从9.10版开始使用grub2，也就是说grub4dos还没有良好的支持grub2，无法像之前只使用grldr文件就可以引导。从Google搜索到两种方法。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> do-release-upgrade </span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>升级过程没有什么好说的，一路确定即可，需要特别注意的是安装grub升级包时会询问安装位置，如果只有一个系统，一定要安装在MBR下，否则无法进入系统。如果是双系统或者多系统，可以选择安装在分区(boot单独分区时要安装在boot分区），然后通过其他系统引导，如在winxp下可以通过<a target="_blank" rel="noopener" href="http://download.gna.org/grub4dos/">grub4dos</a>，grub4dos的最新版本是2009年6月份发布的，而ubuntu从9.10版开始使用grub2，也就是说grub4dos还没有良好的支持grub2，无法像之前只使用grldr文件就可以引导。从Google搜索到两种方法。</p>
 <ol>
-<li><a href="http://www.uuland.cn/index.php/course/use-grub4dos-to-load-grub2/" target="_blank" rel="noopener">编辑menu.lst</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.uuland.cn/index.php/course/use-grub4dos-to-load-grub2/">编辑menu.lst</a></li>
 </ol>
-<p>2.<a href="http://forum.ubuntu.org.cn/viewtopic.php?f=139&amp;t=229387" target="_blank" rel="noopener">使用修改的grldr</a></p>
+<p>2.<a target="_blank" rel="noopener" href="http://forum.ubuntu.org.cn/viewtopic.php?f=139&amp;t=229387">使用修改的grldr</a></p>
 <p>如果你想用grub2来引导系统，而又没有安装在MBR里，可以使用LiveCD来修复，具体步骤如下：</p>
 <p>1.使用LiveCD进入ubuntu系统，打开终端。</p>
 <p>2.执行以下命令（注：/dev/sda1 是指你的ubuntu的根分区，）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> mount /dev/sda1 /mnt</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /dev /mnt/dev</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /proc /mnt/proc</span><br><span class="line"><span class="variable">$sudo</span> chroot /mnt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> mount /dev/sda1 /mnt</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /dev /mnt/dev</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /proc /mnt/proc</span><br><span class="line"><span class="variable">$sudo</span> chroot /mnt </span><br></pre></td></tr></table></figure>
 <p>3.执行grub2安装命令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$grub</span>-install /dev/sda</span><br></pre></td></tr></table></figure>
 <p>如果出现错误信息，执行</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$grub</span>-install --recheck/dev/sda</span><br></pre></td></tr></table></figure>
 <p>4.退出root权限<code>$exit</code></p>
 <p>然后卸载第二步挂载的分区</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> umount /mnt</span><br><span class="line"><span class="variable">$sudo</span> umount /mnt/dev</span><br><span class="line"><span class="variable">$sudo</span> umount /mnt/proc</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> umount /mnt</span><br><span class="line"><span class="variable">$sudo</span> umount /mnt/dev</span><br><span class="line"><span class="variable">$sudo</span> umount /mnt/proc </span><br></pre></td></tr></table></figure>
 <p>5.重启系统，久违的grub出现了…</p>
 <p>如果很不幸的你把grub安装到winxp的系统分区了，修复了grub选择winxp后，又返回到grub，无法进入windows系统。这说明grub把winxp系统分区的分区表给破坏了，我们需要修复一下分区表。具体步骤如下：</p>
 <p>1.使用带有故障恢复控制台的windows光盘，在安装windows界面按下“R”键选择第二项“要使用故障控制台修复Windows XP安装，请按R”，系统自动进入恢复控制台</p>
@@ -247,7 +259,8 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/05/21/the-days-to-find-internship/" data-toggle="tooltip" data-placement="top" title="那些笔试与被鄙视的日子">&larr; Previous Post</a>
+                        <a href="/blog/2010/05/21/the-days-to-find-internship/" data-toggle="tooltip" data-placement="top"
+                           title="那些笔试与被鄙视的日子">&larr; Previous Post</a>
                     </li>
                     
                     
@@ -289,11 +302,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+                        <a class="tag" href="/tags/ubuntu/"
+                           title="ubuntu">ubuntu</a>
                         
-                        <a class="tag" href="/tags/upgrade/" title="upgrade">upgrade</a>
+                        <a class="tag" href="/tags/upgrade/"
+                           title="upgrade">upgrade</a>
                         
                     </div>
                 </section>
@@ -365,7 +381,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -376,7 +392,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -387,11 +403,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -400,13 +416,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -469,7 +491,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

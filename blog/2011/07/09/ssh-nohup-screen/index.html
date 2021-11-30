@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2011/07/09/ssh-nohup-screen/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,17 +189,22 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/nohup/" title="nohup">nohup</a>
+                        <a class="tag" href="/tags/nohup/"
+                           title="nohup">nohup</a>
                         
-                        <a class="tag" href="/tags/screen/" title="screen">screen</a>
+                        <a class="tag" href="/tags/screen/"
+                           title="screen">screen</a>
                         
-                        <a class="tag" href="/tags/SSH/" title="SSH">SSH</a>
+                        <a class="tag" href="/tags/SSH/"
+                           title="SSH">SSH</a>
                         
                     </div>
                 </div>
@@ -212,10 +225,10 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>使用ssh连接远程主机时，最常遇到的两个情况：一是当一段时间没有交互时ssh会自动断开连接，这时你通过ssh登录终端运行的程序也将会随之被终止。另一个是当你想通过ssh登录终端提交一个程序，并想让它在断开ssh连接后依然运行；或者让它在后台运行，但依然可以随时调入前台进行交互操作。如果你也遇到了这样的情况，我想下面的方法可以帮助你。</p>
-<a id="more"></a>
-<h2 id="情况一-没有交互时ssh自动断开连接-通过ssh运行的程序终止"><a class="header-anchor" href="#情况一-没有交互时ssh自动断开连接-通过ssh运行的程序终止"></a>情况一: 没有交互时ssh自动断开连接，通过ssh运行的程序终止</h2>
-<h3 id="1-ssh-idle-time-out-也就是一段时间没有交互时ssh自动断开连接"><a class="header-anchor" href="#1-ssh-idle-time-out-也就是一段时间没有交互时ssh自动断开连接"></a>1.ssh idle time out，也就是一段时间没有交互时ssh自动断开连接</h3>
-<p>对于这个问题，<a href="http://www.openssh.org/faq.html#2.12" target="_blank" rel="noopener">OpenSSH FAQ</a>给出了很好的回答：</p>
+<span id="more"></span>
+<h2 id="情况一-没有交互时ssh自动断开连接，通过ssh运行的程序终止"><a class="header-anchor" href="#情况一-没有交互时ssh自动断开连接，通过ssh运行的程序终止"></a>情况一: 没有交互时ssh自动断开连接，通过ssh运行的程序终止</h2>
+<h3 id="1-ssh-idle-time-out，也就是一段时间没有交互时ssh自动断开连接"><a class="header-anchor" href="#1-ssh-idle-time-out，也就是一段时间没有交互时ssh自动断开连接"></a>1.ssh idle time out，也就是一段时间没有交互时ssh自动断开连接</h3>
+<p>对于这个问题，<a target="_blank" rel="noopener" href="http://www.openssh.org/faq.html#2.12">OpenSSH FAQ</a>给出了很好的回答：</p>
 <pre><code>&quot;2.12 - My ssh connection freezes or drops out after N minutes of inactivity.
 This is usually the result of a packet filter or NAT device timing out your TCP connection due to inactivity. You can enable **ClientAliveInterval** in the server's _[sshd_config](http://www.openbsd.org/cgi-bin/man.cgi?query=sshd_config&amp;sektion=5)_, or enable **ServerAliveInterval** in the client's_[ssh_config](http://www.openbsd.org/cgi-bin/man.cgi?query=ssh_config&amp;sektion=5)_ (the latter is available in OpenSSH 3.8 and newer).
 Enabling either option and setting the interval for less than the time it takes to time out your session will ensure that the connection is kept &quot;fresh&quot; in the device's connection table.&quot;
@@ -242,8 +255,8 @@ Enabling either option and setting the interval for less than the time it takes 
 参数ServerAliveCountMax的作用是设置client向server发送alive request却没有收到应答的最多次数，该参数的默认值是3，其含义同ClientAliveCountMax一致。</p>
 </li>
 </ol>
-<h3 id="2-ssh断开后-通过ssh运行的程序终止"><a class="header-anchor" href="#2-ssh断开后-通过ssh运行的程序终止"></a>2. ssh断开后，通过ssh运行的程序终止</h3>
-<p>更确切的问题描述是通过ssh运行的后台程序依然会随着ssh连接断开而终止。这要从linux的进程和信号说起，以下摘自<a href="http://www.ibm.com/developerworks/cn/linux/l-cn-screen/" target="_blank" rel="noopener">IBM developWorks</a>：</p>
+<h3 id="2-ssh断开后，通过ssh运行的程序终止"><a class="header-anchor" href="#2-ssh断开后，通过ssh运行的程序终止"></a>2. ssh断开后，通过ssh运行的程序终止</h3>
+<p>更确切的问题描述是通过ssh运行的后台程序依然会随着ssh连接断开而终止。这要从linux的进程和信号说起，以下摘自<a target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/cn/linux/l-cn-screen/">IBM developWorks</a>：</p>
 <p>在Linux/Unix中，有这样几个概念：</p>
 <ul>
 <li>进程组（process group）：一个或多个进程的集合，每一个进程组有唯一一个进程组ID，即进程组长进程的ID。</li>
@@ -258,7 +271,7 @@ Enabling either option and setting the interval for less than the time it takes 
 <li>一个进程退出导致一个孤儿进程组中产生时，如果任意一个孤儿进程组进程处于STOP状态，发送SIGHUP和SIGCONT信号到该进程组中所有进程。</li>
 </ul>
 <p>因此当网络断开或终端窗口关闭后，控制进程收到SIGHUP信号退出，会导致该会话期内其他进程退出。</p>
-<h2 id="情况二-ssh连接断开后-通过ssh提交的程序依然在运行"><a class="header-anchor" href="#情况二-ssh连接断开后-通过ssh提交的程序依然在运行"></a>情况二: ssh连接断开后，通过ssh提交的程序依然在运行</h2>
+<h2 id="情况二-ssh连接断开后，通过ssh提交的程序依然在运行"><a class="header-anchor" href="#情况二-ssh连接断开后，通过ssh提交的程序依然在运行"></a>情况二: ssh连接断开后，通过ssh提交的程序依然在运行</h2>
 <p>当运行的程序需要很长时间时，在情况一下，或者想在运行该程序的同时做其他事情，或者关机下班，我们需要该程序的运行不受任何影响。这就是情况二要解决的问题。</p>
 <p>常规情况下，通过后台运行程序的方法是program&amp;，&amp;的作用是让程序在后台运行。我们可以通过命令bg查看在后台运行的进程，通过命令fg NO. 将第NO.个后台进程转到前台来运行。但是该种方法运行的程序在ssh断开后依然会因SIGHUP信号被终止。</p>
 <h2 id="1-nohup"><a class="header-anchor" href="#1-nohup"></a>1.nohup</h2>
@@ -283,7 +296,7 @@ Enabling either option and setting the interval for less than the time it takes 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@freebsd ~]$ screen -ls</span><br><span class="line">There is a screen on:</span><br><span class="line">        49454.ttyp2.freebsd     (Attached)</span><br><span class="line">1 Socket <span class="keyword">in</span> /tmp/screens/S-yygc.</span><br></pre></td></tr></table></figure>
 <p>如果想进入到一个Attached的虚拟终端，命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$screen</span> -x 49454</span><br></pre></td></tr></table></figure>
-<p>注意，C-a快捷键只能在screen创建的虚拟终端中使用，更过的快捷键请参看<a href="http://www.gnu.org/software/screen/manual/screen.html#Commands" target="_blank" rel="noopener">Screen User’s Manual</a>。关于screen的更多参数介绍以及使用方法，请大胆的输入命令</p>
+<p>注意，C-a快捷键只能在screen创建的虚拟终端中使用，更过的快捷键请参看<a target="_blank" rel="noopener" href="http://www.gnu.org/software/screen/manual/screen.html#Commands">Screen User’s Manual</a>。关于screen的更多参数介绍以及使用方法，请大胆的输入命令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$man</span> screen</span><br></pre></td></tr></table></figure>
 <p>小结一下，想通过ssh后台运行程序时，一般都是耗时较长、不需要交互的程序，这时使用nohup比较方便，所有的标准输出可以在nohup.out文件中看到。如果该程序耗时长、又需要交互，或者不想关闭打开的文件又要切换窗口，这时可以通过screen来运行，这样可以随时切换到其他窗口又不影响程序的运行、不需要关闭文件。</p>
 
@@ -293,12 +306,14 @@ Enabling either option and setting the interval for less than the time it takes 
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/07/20/binutils-of-linux/" data-toggle="tooltip" data-placement="top" title="Linux下的二进制工具(反编译工具)">&larr; Previous Post</a>
+                        <a href="/blog/2011/07/20/binutils-of-linux/" data-toggle="tooltip" data-placement="top"
+                           title="Linux下的二进制工具(反编译工具)">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/06/11/host-endian-and-net-endian/" data-toggle="tooltip" data-placement="top" title="主机字节序和网路字节序">Next Post &rarr;</a>
+                        <a href="/blog/2011/06/11/host-endian-and-net-endian/" data-toggle="tooltip" data-placement="top"
+                           title="主机字节序和网路字节序">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -317,7 +332,7 @@ Enabling either option and setting the interval for less than the time it takes 
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#情况一-没有交互时ssh自动断开连接-通过ssh运行的程序终止"><span class="toc-text">情况一: 没有交互时ssh自动断开连接，通过ssh运行的程序终止</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ssh-idle-time-out-也就是一段时间没有交互时ssh自动断开连接"><span class="toc-text">1.ssh idle time out，也就是一段时间没有交互时ssh自动断开连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ssh断开后-通过ssh运行的程序终止"><span class="toc-text">2. ssh断开后，通过ssh运行的程序终止</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#情况二-ssh连接断开后-通过ssh提交的程序依然在运行"><span class="toc-text">情况二: ssh连接断开后，通过ssh提交的程序依然在运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-nohup"><span class="toc-text">1.nohup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-screen"><span class="toc-text">2.screen</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%85%E5%86%B5%E4%B8%80-%E6%B2%A1%E6%9C%89%E4%BA%A4%E4%BA%92%E6%97%B6ssh%E8%87%AA%E5%8A%A8%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5%EF%BC%8C%E9%80%9A%E8%BF%87ssh%E8%BF%90%E8%A1%8C%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%BB%88%E6%AD%A2"><span class="toc-text">情况一: 没有交互时ssh自动断开连接，通过ssh运行的程序终止</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ssh-idle-time-out%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E6%B2%A1%E6%9C%89%E4%BA%A4%E4%BA%92%E6%97%B6ssh%E8%87%AA%E5%8A%A8%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5"><span class="toc-text">1.ssh idle time out，也就是一段时间没有交互时ssh自动断开连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ssh%E6%96%AD%E5%BC%80%E5%90%8E%EF%BC%8C%E9%80%9A%E8%BF%87ssh%E8%BF%90%E8%A1%8C%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%BB%88%E6%AD%A2"><span class="toc-text">2. ssh断开后，通过ssh运行的程序终止</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%85%E5%86%B5%E4%BA%8C-ssh%E8%BF%9E%E6%8E%A5%E6%96%AD%E5%BC%80%E5%90%8E%EF%BC%8C%E9%80%9A%E8%BF%87ssh%E6%8F%90%E4%BA%A4%E7%9A%84%E7%A8%8B%E5%BA%8F%E4%BE%9D%E7%84%B6%E5%9C%A8%E8%BF%90%E8%A1%8C"><span class="toc-text">情况二: ssh连接断开后，通过ssh提交的程序依然在运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-nohup"><span class="toc-text">1.nohup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-screen"><span class="toc-text">2.screen</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -339,13 +354,17 @@ Enabling either option and setting the interval for less than the time it takes 
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/nohup/" title="nohup">nohup</a>
+                        <a class="tag" href="/tags/nohup/"
+                           title="nohup">nohup</a>
                         
-                        <a class="tag" href="/tags/screen/" title="screen">screen</a>
+                        <a class="tag" href="/tags/screen/"
+                           title="screen">screen</a>
                         
-                        <a class="tag" href="/tags/SSH/" title="SSH">SSH</a>
+                        <a class="tag" href="/tags/SSH/"
+                           title="SSH">SSH</a>
                         
                     </div>
                 </section>
@@ -417,7 +436,7 @@ Enabling either option and setting the interval for less than the time it takes 
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -428,7 +447,7 @@ Enabling either option and setting the interval for less than the time it takes 
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -439,11 +458,11 @@ Enabling either option and setting the interval for less than the time it takes 
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -452,13 +471,19 @@ Enabling either option and setting the interval for less than the time it takes 
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -521,7 +546,7 @@ Enabling either option and setting the interval for less than the time it takes 
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

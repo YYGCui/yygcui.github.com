@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/08/14/my-view-on-android/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/业界追踪/" title="业界追踪">业界追踪</a>
+                        <a class="tag" href="/categories/业界追踪/"
+                           title="业界追踪">业界追踪</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Android/" title="Android">Android</a>
+                        <a class="tag" href="/tags/Android/"
+                           title="Android">Android</a>
                         
                     </div>
                 </div>
@@ -205,9 +215,9 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>今天在浏览Google黑板报时发现还有这么一个活动(官方叫做大赛，我只是分享一下我个人的想法，重在纪念版礼品哈，所以只能是说参加活动了)－－“<a href="http://www.google.com/intl/zh-CN/daxue/blog2010/" target="_blank" rel="noopener">首届 Google 暑期大学生博客分享大赛——2010 Andriod 篇</a>”，从HTC G1发布，我开始关注android系统的手机，到G3完美的展现，Nexus one的强力推出…我确信我的下一部手机将是android手机(只能畅想一下了，没有银子阿)。<br>
+                <p>今天在浏览Google黑板报时发现还有这么一个活动(官方叫做大赛，我只是分享一下我个人的想法，重在纪念版礼品哈，所以只能是说参加活动了)－－“<a target="_blank" rel="noopener" href="http://www.google.com/intl/zh-CN/daxue/blog2010/">首届 Google 暑期大学生博客分享大赛——2010 Andriod 篇</a>”，从HTC G1发布，我开始关注android系统的手机，到G3完美的展现，Nexus one的强力推出…我确信我的下一部手机将是android手机(只能畅想一下了，没有银子阿)。<br>
 既然是畅想，就说说我对android系统的看法吧：</p>
-<a id="more"></a>
+<span id="more"></span>
 <ol>
 <li>android系统是基于Linux的开源手机操作系统，我不否认android是开源的(Linux基金会都承认，我能说它不开源吗，开玩笑～～～android是符合GPL的)，但是我觉得这种开源只是形式上的开源，代码上的开源，之所以这样说，是因为它无法统一android平台，同样采用Android系统，Motorola的界面是MOTOBLUR, HTC的界面是Sense，三星的叫TouchWiz，索尼爱立信有两种Timescape和Mediascape，联想的叫乐PhoneUI，这导致了手机无法及时更新到Google发布的最新android系统，它不像Linux可以直接升级内核，必须等到这些手机制造商定制后(也就是把界面加进去之后)才能升级。这造成了市面上众多的android系统表现形式，限制了系统的市场发展。<br>
 还好，据说Google在android 3.0系统将限制界面API，从而打破这一格局。我的思考：1).android是否也可以微内核化，或者叫做核心功能化，类似于Linux Kernel，提供一个最基本的core，设备制造商可以在其上开发自己的应用，当然可以直接升级这个core；2).或者Google将android系统局部的社区化，主要是和各制造商共同维护上层应用部分，像上面提到的这么多界面，可以全部集成到系统中，在安装的时候自动选择相应设备的界面安装。</li>
@@ -228,12 +238,14 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/08/22/install-gcc-4-5-1-in-debian-lenny/" data-toggle="tooltip" data-placement="top" title="debian lenny编译安装GCC 4.5.1">&larr; Previous Post</a>
+                        <a href="/blog/2010/08/22/install-gcc-4-5-1-in-debian-lenny/" data-toggle="tooltip" data-placement="top"
+                           title="debian lenny编译安装GCC 4.5.1">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/08/02/documents-to-go-downsize/" data-toggle="tooltip" data-placement="top" title="Documents To Go 2.0004.018精简">Next Post &rarr;</a>
+                        <a href="/blog/2010/08/02/documents-to-go-downsize/" data-toggle="tooltip" data-placement="top"
+                           title="Documents To Go 2.0004.018精简">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -274,7 +286,8 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Android/" title="Android">Android</a>
+                        <a class="tag" href="/tags/Android/"
+                           title="Android">Android</a>
                         
                     </div>
                 </section>
@@ -346,7 +359,7 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -357,7 +370,7 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -368,11 +381,11 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -381,13 +394,19 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -450,7 +469,7 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

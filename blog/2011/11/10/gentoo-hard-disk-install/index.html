@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2011/11/10/gentoo-hard-disk-install/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/gentoo/" title="gentoo">gentoo</a>
+                        <a class="tag" href="/tags/gentoo/"
+                           title="gentoo">gentoo</a>
                         
                     </div>
                 </div>
@@ -208,19 +219,19 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>之前试过Ubuntu硬盘安装和Debian硬盘安装，最近要搭建一个环境，所以又折腾了一下Gentoo的硬盘安装。各种Linux发布版本的硬盘安装方法都大同小异，不同的是每个发布版本都有自己的文件架构。硬盘安装都是依托于其他系统的，同样本文介绍的是在Windows XP 下硬盘安装 Gentoo。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="准备工作："><a class="header-anchor" href="#准备工作："></a>准备工作：</h3>
 <ol>
 <li>
-<p>用于多系统引导的<a href="http://sourceforge.net/projects/grub4dos/" target="_blank" rel="noopener">GRUB4DOS</a>。</p>
+<p>用于多系统引导的<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/grub4dos/">GRUB4DOS</a>。</p>
 </li>
 <li>
-<p>Gentoo <a href="http://www.gentoo.org/main/en/where.xml" target="_blank" rel="noopener">ISO文件</a>，硬盘安装使用livedvd。<br>
+<p>Gentoo <a target="_blank" rel="noopener" href="http://www.gentoo.org/main/en/where.xml">ISO文件</a>，硬盘安装使用livedvd。<br>
 Gentoo提供minimal ISO和livedvd ISO两种ISO文件，minimal需要额外下载stage3和portage (网络安装适用)，livedvd可进行无网络安装，64位的livedvd ISO又有两个版本，一个是x86/x86_64 混合版本(livedvd-x86-amd64-32ul-11.2.iso)，一个是x86_64 multilib 版本 (livedvd-amd64-multilib-11.2.iso)。前者根据CPU是32bit/64bit选择使用x86/x86_64  kernel，但userland是32bit的；后者只有x86_64的kernel，userland是64bit的，但可以运行32bit的应用。原文如下：<br>
-The LiveDVD is <strong>available in two flavors</strong>: a hybrid x86/x86_64 version, and an x86_64 multilib version. The livedvd-x86-amd64-32ul-11.2 version will work on 32-bit x86 or 64-bit x86_64. If your CPU architecture is x86, then boot with the default gentoo kernel. If your arch is <a href="http://www.gentoo.org/doc/en/gentoo-amd64-faq.xml#difference" target="_blank" rel="noopener">amd64</a>, boot with the gentoo64 kernel. This means you can boot a 64-bit kernel and install a customized 64-bit userland while using the provided 32-bit userland. The livedvd-amd64-multilib-11.2 version is for x86_64 only.</p>
+The LiveDVD is <strong>available in two flavors</strong>: a hybrid x86/x86_64 version, and an x86_64 multilib version. The livedvd-x86-amd64-32ul-11.2 version will work on 32-bit x86 or 64-bit x86_64. If your CPU architecture is x86, then boot with the default gentoo kernel. If your arch is <a target="_blank" rel="noopener" href="http://www.gentoo.org/doc/en/gentoo-amd64-faq.xml#difference">amd64</a>, boot with the gentoo64 kernel. This means you can boot a 64-bit kernel and install a customized 64-bit userland while using the provided 32-bit userland. The livedvd-amd64-multilib-11.2 version is for x86_64 only.</p>
 </li>
 <li>
-<p>Gentoo <a href="http://www.gentoo.org/doc/en/handbook/" target="_blank" rel="noopener">安装手册</a>。</p>
+<p>Gentoo <a target="_blank" rel="noopener" href="http://www.gentoo.org/doc/en/handbook/">安装手册</a>。</p>
 </li>
 </ol>
 <h3 id="安装过程："><a class="header-anchor" href="#安装过程："></a>安装过程：</h3>
@@ -245,7 +256,7 @@ append root=/dev/ram0 init=/linuxrc dokeymap aufs looptype=squashfs loop=/image.
 TEXT HELP<br>
 Boot the default x86_64 Gentoo kernel<br>
 ENDTEXT<br>
-root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始，也就是D盘。在只有一块硬盘的情况下，该硬盘表示为hd0,逗号后面的数字位分区编号减1。关于磁盘分区的表示方法，详见<a href="http://www.linuxsir.org/main/node/127" target="_blank" rel="noopener">此处</a>。</p>
+root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始，也就是D盘。在只有一块硬盘的情况下，该硬盘表示为hd0,逗号后面的数字位分区编号减1。关于磁盘分区的表示方法，详见<a target="_blank" rel="noopener" href="http://www.linuxsir.org/main/node/127">此处</a>。</p>
 </li>
 <li>
 <p>重启系统后，选择grub进入Gentoo live，安装过程根据安装手册进行，不同的地方在于：</p>
@@ -261,10 +272,10 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 选择读取硬件时钟选项Device Drivers -&gt; Character devices -&gt; &lt;<em>&gt; Generic /dev/rtc emulation &lt;</em>&gt; Extended ETC operation<br>
 电源风扇等接口在Power management and ACPI options<br>
 无线网卡选项在Device Drivers -&gt; Network drivers -&gt; Wireless LAN</p>
-<p>暂时发现的可能出问题的选项就这些，更详细的menuconfig选项介绍<a href="http://kernel.org/doc/menuconfig/" target="_blank" rel="noopener">在这里</a>。</p>
+<p>暂时发现的可能出问题的选项就这些，更详细的menuconfig选项介绍<a target="_blank" rel="noopener" href="http://kernel.org/doc/menuconfig/">在这里</a>。</p>
 <p>在使用genkernel编译时，可通过以下命令更新config信息然后在编译：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#genkernel --menuconfig all</span></span><br></pre></td></tr></table></figure>
-<p>我在手动编译内核后，系统无法启动，遇到<a href="http://www.gentoo.org/doc/en/grub-error-guide.xml#doc_chap4" target="_blank" rel="noopener">grub error 15</a> 的错误，问题还没解决，还在研究中…</p>
+<p>我在手动编译内核后，系统无法启动，遇到<a target="_blank" rel="noopener" href="http://www.gentoo.org/doc/en/grub-error-guide.xml#doc_chap4">grub error 15</a> 的错误，问题还没解决，还在研究中…</p>
 
                 <hr>
                 
@@ -272,12 +283,14 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/11/15/mbr-and-boot-loader/" data-toggle="tooltip" data-placement="top" title="MBR与系统引导">&larr; Previous Post</a>
+                        <a href="/blog/2011/11/15/mbr-and-boot-loader/" data-toggle="tooltip" data-placement="top"
+                           title="MBR与系统引导">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/10/31/just-do-it/" data-toggle="tooltip" data-placement="top" title="JUST DO IT">Next Post &rarr;</a>
+                        <a href="/blog/2011/10/31/just-do-it/" data-toggle="tooltip" data-placement="top"
+                           title="JUST DO IT">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -296,7 +309,7 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作："><span class="toc-text">准备工作：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装过程："><span class="toc-text">安装过程：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="toc-text">准备工作：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-text">安装过程：</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -318,9 +331,11 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/gentoo/" title="gentoo">gentoo</a>
+                        <a class="tag" href="/tags/gentoo/"
+                           title="gentoo">gentoo</a>
                         
                     </div>
                 </section>
@@ -392,7 +407,7 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -403,7 +418,7 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -414,11 +429,11 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -427,13 +442,19 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -496,7 +517,7 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

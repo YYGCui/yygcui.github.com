@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2017/12/31/my-personal-review-2017/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/daoying.jpg">
+<img class="wechat-title-img"
+     src="/images/daoying.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/生活记录/" title="生活记录">生活记录</a>
+                        <a class="tag" href="/categories/生活记录/"
+                           title="生活记录">生活记录</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/总结/" title="总结">总结</a>
+                        <a class="tag" href="/tags/总结/"
+                           title="总结">总结</a>
                         
                     </div>
                 </div>
@@ -206,7 +216,7 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote><p>燕子去了，有再來的時候；楊柳枯了，有再青的時候；桃花謝了，有再開的時候。但是，聰明的，你告訴我，我們的日子為什麼一去不復返呢？──是有人偷了他們罷：那是誰？又藏在何處呢？是他們自己逃走了罷：現在又到了那裡呢？</p>
-<footer><strong>朱自清</strong><cite><a href="https://zh.wikisource.org/wiki/%E5%8C%86%E5%8C%86" target="_blank" rel="noopener">匆匆</a></cite></footer></blockquote>
+<footer><strong>朱自清</strong><cite><a target="_blank" rel="noopener" href="https://zh.wikisource.org/wiki/%E5%8C%86%E5%8C%86">匆匆</a></cite></footer></blockquote>
 <p>每年这个时候总结一下，看看<a href="/blog/2017/01/02/my-personal-review-2016/" title="去年的目标">去年的目标</a>实现的怎么样，今年有哪些计划。</p>
 <p>2017年最大的收获是小女的降临，带给我们太多的惊喜，太多的欢乐，更惊叹生命的神奇。从一事无知的小婴儿，到第一次发音（哭声之外），第一次抓头发，第一次吐泡泡，第一次抬头，第一次翻身，第一次爬，长出第一颗牙，认识爸爸妈妈，听懂爸爸妈妈说话，慢慢学走路… 太多的惊奇。2018年让我们探索更多的惊奇。</p>
 <p>2017年最大的变化是由二人世界变成了三口之家。以前的随性而为，现在的三思而不行，在小宝宝身上以及家庭琐事上倾注了几乎所有的时间与精力。2018年希望能找到一定的平衡，对宝宝有高质量的陪伴，同时也有自己的时间，二人世界的时间。</p>
@@ -226,9 +236,15 @@
 
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/blog/2021/11/30/recover-environment-for-writing/" data-toggle="tooltip" data-placement="top"
+                           title="恢复Hexo博客环境">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/blog/2017/09/10/kubernetes-network-policy/" data-toggle="tooltip" data-placement="top" title="kubernetes之多网络策略">Next Post &rarr;</a>
+                        <a href="/blog/2017/09/10/kubernetes-network-policy/" data-toggle="tooltip" data-placement="top"
+                           title="kubernetes之多网络策略">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -269,7 +285,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/总结/" title="总结">总结</a>
+                        <a class="tag" href="/tags/总结/"
+                           title="总结">总结</a>
                         
                     </div>
                 </section>
@@ -341,7 +358,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -352,7 +369,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -363,11 +380,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -376,13 +393,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -445,7 +468,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

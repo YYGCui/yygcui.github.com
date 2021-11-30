@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/08/02/documents-to-go-downsize/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Mobile/" title="Mobile">Mobile</a>
+                        <a class="tag" href="/tags/BlackBerry/"
+                           title="BlackBerry">BlackBerry</a>
                         
-                        <a class="tag" href="/tags/BlackBerry/" title="BlackBerry">BlackBerry</a>
+                        <a class="tag" href="/tags/Mobile/"
+                           title="Mobile">Mobile</a>
                         
-                        <a class="tag" href="/tags/DTG/" title="DTG">DTG</a>
+                        <a class="tag" href="/tags/DTG/"
+                           title="DTG">DTG</a>
                         
                     </div>
                 </div>
@@ -209,14 +221,14 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>我想使用blackberry的煤油大多数都知道Documents To Go这个软件—<a href="http://www.dataviz.com/" target="_blank" rel="noopener">DataViz</a>出品的手机版office软件，可以完美编辑MicroSoft Office文件(Word, Excel, PowerPoint) 和Adobe的PDF文件。</p>
-<p>此篇日志是个人精简安装DTG的一个分享，目前的最新版本为2.0004.018，随着软件版本的升级，也即软件功能的增加，这个软件本身也变的越来越大，最新版DTG安装包是4.1MB，再加上PDFToGo安装包是1.5MB，这个庞大的数字对BB 8700g仅有的几十MB内存不亚于天文数字。起初我直接从官方下载了<a href="http://support.dataviz.com/support.srch?docid=14433#AltInstall" target="_blank" rel="noopener">DTG</a>，试图传入手机中，可惜内存空间不够用，在删除不用软件，清理掉图片日志存档后，空间还是不够，然后试图耗费4MB的流量直接OTA下载，可能是由于网络不稳定，下载了一部分之后就失败了，无奈之下，便动手精简掉了不用的语言包，精简后DTG是3.1MB。</p>
-<a id="more"></a>
+                <p>我想使用blackberry的煤油大多数都知道Documents To Go这个软件—<a target="_blank" rel="noopener" href="http://www.dataviz.com/">DataViz</a>出品的手机版office软件，可以完美编辑MicroSoft Office文件(Word, Excel, PowerPoint) 和Adobe的PDF文件。</p>
+<p>此篇日志是个人精简安装DTG的一个分享，目前的最新版本为2.0004.018，随着软件版本的升级，也即软件功能的增加，这个软件本身也变的越来越大，最新版DTG安装包是4.1MB，再加上PDFToGo安装包是1.5MB，这个庞大的数字对BB 8700g仅有的几十MB内存不亚于天文数字。起初我直接从官方下载了<a target="_blank" rel="noopener" href="http://support.dataviz.com/support.srch?docid=14433#AltInstall">DTG</a>，试图传入手机中，可惜内存空间不够用，在删除不用软件，清理掉图片日志存档后，空间还是不够，然后试图耗费4MB的流量直接OTA下载，可能是由于网络不稳定，下载了一部分之后就失败了，无奈之下，便动手精简掉了不用的语言包，精简后DTG是3.1MB。</p>
+<span id="more"></span>
 <p>OTA下载地址:<br>
-Documents To Go: <a href="http://www.dataviz.com/getdocstogo" target="_blank" rel="noopener">http://www.dataviz.com/getdocstogo</a><br>
-PDFToGo: <a href="http://www.dataviz.com/getPdfToGo2" target="_blank" rel="noopener">http://www.dataviz.com/getPdfToGo2</a><br>
-Documents To Go Files: <a href="http://www.dataviz.com/getFiles" target="_blank" rel="noopener">http://www.dataviz.com/getFiles</a></p>
-<p>其实<a href="http://www.bber.info" target="_blank" rel="noopener">莓博</a>在很早之前(3个月前，看来这最新版也已过时仨月了)就已经发布了《<a href="http://www.bber.info/post/dtg2004018" target="_blank" rel="noopener">Document To Go &amp; PDF To Go 2.0004.018 组件化分类OTA安装包含Key</a>》，不仅把DTG的WordToGo, SheetToGo, SlideshowToGo组件化了(可单独安装或卸载)，而且还删除了一些可能用不着的语言，只保留了en和Zh_CN这两个语言包，这样的话可以分开安装，不用担心内存不够用了…</p>
+Documents To Go: <a target="_blank" rel="noopener" href="http://www.dataviz.com/getdocstogo">http://www.dataviz.com/getdocstogo</a><br>
+PDFToGo: <a target="_blank" rel="noopener" href="http://www.dataviz.com/getPdfToGo2">http://www.dataviz.com/getPdfToGo2</a><br>
+Documents To Go Files: <a target="_blank" rel="noopener" href="http://www.dataviz.com/getFiles">http://www.dataviz.com/getFiles</a></p>
+<p>其实<a target="_blank" rel="noopener" href="http://www.bber.info">莓博</a>在很早之前(3个月前，看来这最新版也已过时仨月了)就已经发布了《<a target="_blank" rel="noopener" href="http://www.bber.info/post/dtg2004018">Document To Go &amp; PDF To Go 2.0004.018 组件化分类OTA安装包含Key</a>》，不仅把DTG的WordToGo, SheetToGo, SlideshowToGo组件化了(可单独安装或卸载)，而且还删除了一些可能用不着的语言，只保留了en和Zh_CN这两个语言包，这样的话可以分开安装，不用担心内存不够用了…</p>
 <p>但是，个人原因，不喜欢这种组件化安装，还是无限贴近于原装好，哈哈，另一方面，安装包中只有en(美国英语)和zh_CN(简体中文)这两个语言包，没有en_GB(英国英语)和zh_TW(繁体中文)这两个语言包，所以自己动手修改了jad文件，自己修改也很简单，只是删掉了不需要的语言包，然后重新给RIM-COD-URL编号。具体精简如下：</p>
 <p>Documents To Go:<br>
 DTG包括DocsToGoCommon(基础组件)，SheetToGo(相当于Excel)，Slideshow(相当于PowerPoint)，WordToGo(相当于Word)四部分，精简主要针对这四部分中的语言支持包，具体形式如<strong><strong><strong>Resource__</strong>.cod (其中</strong></strong><strong>表示DocsToGoCommon、SheetToGo、SlideshowToGo、WordToGo)，如 :<br>
@@ -231,8 +243,8 @@ RIM-COD-Size-20: 19528<br>
 然后对剩下的项，进行重新编号，具体文件如附件中- DocumentsToGo.jad。</p>
 <p>PDFToGo: 只保留了PDFToGoResource__en.cod，没有中文语言包，删除了 de, es, fr, it，然后删除了- PDFToGo.jad文件中相关的项。</p>
 <p>修改后的zip包下载地址：<br>
-<a href="http://www.box.net/shared/yebxz1dnuj" target="_blank" rel="noopener">Documents To Go 2.0004.018 for OS4.5-4.6</a><br>
-<a href="http://www.box.net/shared/hbk15pmyr6" target="_blank" rel="noopener">PDFToGo 2.0004.018 for OS 4.5 </a></p>
+<a target="_blank" rel="noopener" href="http://www.box.net/shared/yebxz1dnuj">Documents To Go 2.0004.018 for OS4.5-4.6</a><br>
+<a target="_blank" rel="noopener" href="http://www.box.net/shared/hbk15pmyr6">PDFToGo 2.0004.018 for OS 4.5 </a></p>
 <p>PS: 基于莓博组件化的一个思考，组件化可以有选择的安装word，sheet和slideshow，同样也可以通过修改jad文件来选择所要安装的功能，但是灵活性大打折扣~~~</p>
 
                 <hr>
@@ -241,12 +253,14 @@ RIM-COD-Size-20: 19528<br>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/08/14/my-view-on-android/" data-toggle="tooltip" data-placement="top" title="Android之我见">&larr; Previous Post</a>
+                        <a href="/blog/2010/08/14/my-view-on-android/" data-toggle="tooltip" data-placement="top"
+                           title="Android之我见">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/06/29/setting-mpi-in-visual-studio/" data-toggle="tooltip" data-placement="top" title="Visual Studio下配置MPI">Next Post &rarr;</a>
+                        <a href="/blog/2010/06/29/setting-mpi-in-visual-studio/" data-toggle="tooltip" data-placement="top"
+                           title="Visual Studio下配置MPI">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -287,11 +301,14 @@ RIM-COD-Size-20: 19528<br>
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Mobile/" title="Mobile">Mobile</a>
+                        <a class="tag" href="/tags/BlackBerry/"
+                           title="BlackBerry">BlackBerry</a>
                         
-                        <a class="tag" href="/tags/BlackBerry/" title="BlackBerry">BlackBerry</a>
+                        <a class="tag" href="/tags/Mobile/"
+                           title="Mobile">Mobile</a>
                         
-                        <a class="tag" href="/tags/DTG/" title="DTG">DTG</a>
+                        <a class="tag" href="/tags/DTG/"
+                           title="DTG">DTG</a>
                         
                     </div>
                 </section>
@@ -363,7 +380,7 @@ RIM-COD-Size-20: 19528<br>
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -374,7 +391,7 @@ RIM-COD-Size-20: 19528<br>
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -385,11 +402,11 @@ RIM-COD-Size-20: 19528<br>
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -398,13 +415,19 @@ RIM-COD-Size-20: 19528<br>
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -467,7 +490,7 @@ RIM-COD-Size-20: 19528<br>
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

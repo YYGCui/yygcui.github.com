@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2015/10/12/mysql-can-not-startup-after-loss-power/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/mysql/" title="mysql">mysql</a>
+                        <a class="tag" href="/tags/mysql/"
+                           title="mysql">mysql</a>
                         
                     </div>
                 </div>
@@ -207,13 +217,13 @@
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>公司在节假日会断电，十一忘记了关掉服务器，openstack在系统非正常关机后，无法启动。看了下日志，发现是其使用的mysql起不来。该数据库存储了所有的虚拟机相关信息，若是修复不好，损失惨重啊(别问我为什么没备份，我也不知道…)</p>
 <p>分析mysql启动失败的原因，只能从log入手了，打开log发现最后的日志是</p>
-<a id="more"></a>
-<figure class="highlight bash"><figcaption><span>mysql.log</span></figcaption><table><tr><td class="code"><pre><span class="line">error: <span class="string">'Can'</span>t connect to <span class="built_in">local</span> MySQL server through socket <span class="string">'/var/run/mysqld/mysqld.sock'</span> (2)<span class="string">'</span></span><br><span class="line"><span class="string">Check that mysqld is running and that the socket: '</span>/var/run/mysqld/mysqld.sock<span class="string">' exists!</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<figure class="highlight bash"><figcaption><span>mysql.log</span></figcaption><table><tr><td class="code"><pre><span class="line">error: <span class="string">&#x27;Can&#x27;</span>t connect to <span class="built_in">local</span> MySQL server through socket <span class="string">&#x27;/var/run/mysqld/mysqld.sock&#x27;</span> (2)<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Check that mysqld is running and that the socket: &#x27;</span>/var/run/mysqld/mysqld.sock<span class="string">&#x27; exists!</span></span><br></pre></td></tr></table></figure>
 <p>根据log查看了下，mysqld.sock是存在。google了下这个error，根据一些文档试了下，发现根本没有什么作用，也就是说这可能不是出错的原因。只好继续向前翻log，发现每次试图启动mysql时，都有大量如下日志，我怀疑是因为突然掉电，导致有些log没有写入系统，所以出现了序列号不一致情况。</p>
 <figure class="highlight bash"><figcaption><span>mysql.log</span></figcaption><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">InnoDB: Error: page 570 <span class="built_in">log</span> sequence number 7289495</span><br><span class="line">InnoDB: is <span class="keyword">in</span> the future! Current system <span class="built_in">log</span> sequence number 5574939.</span><br><span class="line">InnoDB: Your database may be corrupt or you may have copied the InnoDB</span><br><span class="line">InnoDB: tablespace but not the InnoDB <span class="built_in">log</span> files. See</span><br><span class="line">InnoDB: http://dev.mysql.com/doc/refman/5.5/en/forcing-innodb-recovery.html</span><br><span class="line">InnoDB: <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
-<p>再次google这个error，发现了这样的一篇博文<a href="https://boknowsit.wordpress.com/2012/12/22/mysql-log-is-in-the-future/" target="_blank" rel="noopener">MySQL log is in the future!</a>，这篇博文的方法简单易懂，但是首要问题是我的mysql无法启动，无法启动就不能备份数据。同时也看了下log中提到的<a href="http://dev.mysql.com/doc/refman/5.5/en/forcing-innodb-recovery.html" target="_blank" rel="noopener">Forcing InnoDB Recovery</a>。</p>
+<p>再次google这个error，发现了这样的一篇博文<a target="_blank" rel="noopener" href="https://boknowsit.wordpress.com/2012/12/22/mysql-log-is-in-the-future/">MySQL log is in the future!</a>，这篇博文的方法简单易懂，但是首要问题是我的mysql无法启动，无法启动就不能备份数据。同时也看了下log中提到的<a target="_blank" rel="noopener" href="http://dev.mysql.com/doc/refman/5.5/en/forcing-innodb-recovery.html">Forcing InnoDB Recovery</a>。</p>
 <p>Forcing InnoDB Recovery提供了6个等级的修复模式，需要注意的是值大于3的时候，会对数据文件造成永久的破坏，不可恢复。六个等级的介绍摘抄如下：</p>
-<figure class="highlight plain"><figcaption><span>Forcing InnoDB Recovery</span></figcaption><table><tr><td class="code"><pre><span class="line">1 (SRV_FORCE_IGNORE_CORRUPT)</span><br><span class="line"></span><br><span class="line">Lets the server run even if it detects a corrupt page. Tries to make SELECT * FROM tbl_name jump over corrupt index records and pages, which helps in dumping tables.</span><br><span class="line"></span><br><span class="line">2 (SRV_FORCE_NO_BACKGROUND)</span><br><span class="line"></span><br><span class="line">Prevents the master thread and any purge threads from running. If a crash would occur during the purge operation, this recovery value prevents it.</span><br><span class="line"></span><br><span class="line">3 (SRV_FORCE_NO_TRX_UNDO)</span><br><span class="line"></span><br><span class="line">Does not run transaction rollbacks after crash recovery.</span><br><span class="line"></span><br><span class="line">4 (SRV_FORCE_NO_IBUF_MERGE)</span><br><span class="line"></span><br><span class="line">Prevents insert buffer merge operations. If they would cause a crash, does not do them. Does not calculate table statistics. This value can permanently corrupt data files. After using this value, be prepared to drop and recreate all secondary indexes.</span><br><span class="line"></span><br><span class="line">5 (SRV_FORCE_NO_UNDO_LOG_SCAN)</span><br><span class="line"></span><br><span class="line">Does not look at undo logs when starting the database: InnoDB treats even incomplete transactions as committed. This value can permanently corrupt data files.</span><br><span class="line"></span><br><span class="line">6 (SRV_FORCE_NO_LOG_REDO)</span><br><span class="line"></span><br><span class="line">Does not do the redo log roll-forward in connection with recovery. This value can permanently corrupt data files. Leaves database pages in an obsolete state, which in turn may introduce more corruption into B-trees and other database structures.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>Forcing InnoDB Recovery</span></figcaption><table><tr><td class="code"><pre><span class="line">1 (SRV_FORCE_IGNORE_CORRUPT)</span><br><span class="line"></span><br><span class="line">Lets the server run even if it detects a corrupt page. Tries to make SELECT * FROM tbl_name jump over corrupt index records and pages, which helps in dumping tables.</span><br><span class="line"></span><br><span class="line">2 (SRV_FORCE_NO_BACKGROUND)</span><br><span class="line"></span><br><span class="line">Prevents the master thread and any purge threads from running. If a crash would occur during the purge operation, this recovery value prevents it.</span><br><span class="line"></span><br><span class="line">3 (SRV_FORCE_NO_TRX_UNDO)</span><br><span class="line"></span><br><span class="line">Does not run transaction rollbacks after crash recovery.</span><br><span class="line"></span><br><span class="line">4 (SRV_FORCE_NO_IBUF_MERGE)</span><br><span class="line"></span><br><span class="line">Prevents insert buffer merge operations. If they would cause a crash, does not do them. Does not calculate table statistics. This value can permanently corrupt data files. After using this value, be prepared to drop and recreate all secondary indexes.</span><br><span class="line"></span><br><span class="line">5 (SRV_FORCE_NO_UNDO_LOG_SCAN)</span><br><span class="line"></span><br><span class="line">Does not look at undo logs when starting the database: InnoDB treats even incomplete transactions as committed. This value can permanently corrupt data files.</span><br><span class="line"></span><br><span class="line">6 (SRV_FORCE_NO_LOG_REDO)</span><br><span class="line"></span><br><span class="line">Does not do the redo log roll-forward in connection with recovery. This value can permanently corrupt data files. Leaves database pages in an obsolete state, which in turn may introduce more corruption into B-trees and other database structures.</span><br></pre></td></tr></table></figure>
 <p>使用方法如下，在mysql配置文件中，添加或修改以下配置的值</p>
 <figure class="highlight bash"><figcaption><span>my.cnf</span></figcaption><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">innodb_force_recovery = 1</span><br></pre></td></tr></table></figure>
 <p>根据查到的博文提到的方法，我的修复步骤如下：</p>
@@ -246,12 +256,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/10/25/tips-for-git-submodule/" data-toggle="tooltip" data-placement="top" title="tips for git submodule">&larr; Previous Post</a>
+                        <a href="/blog/2015/10/25/tips-for-git-submodule/" data-toggle="tooltip" data-placement="top"
+                           title="tips for git submodule">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2015/09/20/compile-and-deploy-using-docker/" data-toggle="tooltip" data-placement="top" title="容器化编译和部署">Next Post &rarr;</a>
+                        <a href="/blog/2015/09/20/compile-and-deploy-using-docker/" data-toggle="tooltip" data-placement="top"
+                           title="容器化编译和部署">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -292,7 +304,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/mysql/" title="mysql">mysql</a>
+                        <a class="tag" href="/tags/mysql/"
+                           title="mysql">mysql</a>
                         
                     </div>
                 </section>
@@ -364,7 +377,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -375,7 +388,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -386,11 +399,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -399,13 +412,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -468,7 +487,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

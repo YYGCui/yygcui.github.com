@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/11/16/thinkpad-win7-oem/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/OEM/" title="OEM">OEM</a>
+                        <a class="tag" href="/tags/OEM/"
+                           title="OEM">OEM</a>
                         
-                        <a class="tag" href="/tags/win7/" title="win7">win7</a>
+                        <a class="tag" href="/tags/win7/"
+                           title="win7">win7</a>
                         
                     </div>
                 </div>
@@ -208,10 +219,10 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>以万恶的毕业论文为名，入手一thinkpad港行，话说港行就没有国内的这些服务了，没有预装系统，没有系统修复盘…好在学校提供了正版系统，从windows xp、vista到win7 professional中英文版都有，恩，对于一个强烈想享受正版却没有钱的学生来说，这无疑是最好的选择，使用了好长一段时间win7 pro了，可以这么说，win7的确是继xp之后最好用的windows，可惜这是建立在vista的失败之上的，也可以这么说，没有vista的失败，就不会有win7的成功，废话不多说了，转入正题，前段时间从网上下载了据说是MSDN放出的win7 ultimate版，由于没有序列号不能激活，所以没有尝试，在搜索Thinkpad 官方修复盘时发现了一个更好的方案，自己制作OEM版，不知道这算不算是盗版哈。</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>需要的文件：<br>
-1.win7 ultimate ISO文件，<a href="http://www.verycd.com/groups/0202/731660.topic" target="_blank" rel="noopener">VeryCD下载源</a><br>
-2.OEM证书：<a href="http://www.box.net/shared/j1d00o686c" target="_blank" rel="noopener">x86版</a>，<a href="http://www.box.net/shared/uz2zxaaud3" target="_blank" rel="noopener">x64版</a><br>
+1.win7 ultimate ISO文件，<a target="_blank" rel="noopener" href="http://www.verycd.com/groups/0202/731660.topic">VeryCD下载源</a><br>
+2.OEM证书：<a target="_blank" rel="noopener" href="http://www.box.net/shared/j1d00o686c">x86版</a>，<a target="_blank" rel="noopener" href="http://www.box.net/shared/uz2zxaaud3">x64版</a><br>
 要求：<br>
 BIOS中的SLIC为2.1版，即SLIC2.1</p>
 <p>制作OEM版的步骤如下：<br>
@@ -222,7 +233,7 @@ BIOS中的SLIC为2.1版，即SLIC2.1</p>
 [Channel] 直译是渠道 ， 指定许可协议 OEM 或者 Retail 两种许可协议 不过 Starter 不论[Channel]为何，许可协议都是 OEM的<br>
 [VL] 当 VL 里的数值为 0 或 1 时，自动选择安装 EditionID 里指定的第一个版本，当 VL 里的数值大于 1 时，安装时弹出系统版本选择菜单。</p>
 <p>从上面的解释可以知道，可以通过修改ei.cfg文件得到win7的任何版本，前提是你有该版本的序列号可以用来激活。</p>
-<p>什么是SLIC呢，以及MS是如何通过SLIC控制OEM版的版权的呢？(来源：<a href="http://zh.wikipedia.org/zh/%E8%BD%AF%E4%BB%B6%E8%AE%B8%E5%8F%AF%E5%86%85%E9%83%A8%E7%A0%81" target="_blank" rel="noopener">维基百科</a>)</p>
+<p>什么是SLIC呢，以及MS是如何通过SLIC控制OEM版的版权的呢？(来源：<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/zh/%E8%BD%AF%E4%BB%B6%E8%AE%B8%E5%8F%AF%E5%86%85%E9%83%A8%E7%A0%81">维基百科</a>)</p>
 <h3 id="1-概述"><a class="header-anchor" href="#1-概述"></a>1.概述</h3>
 <p>微软公司用SLIC来控制用户对OEM版本的非法使用。OEM（Original Equipment Manufacture）的基本含义是定牌生产合作，俗称“代工”。微软为特定的合作伙伴发放操作系统的OEM版本，以满足合作双赢的需求。这些OEM版本的操作系统随机器预安装，并采用批量许可的授权模式。这样的批量许可难以有效识别合法用户和非法用户，可能被滥用而导致版权问题。为了控制这个问题，微软规定在安装每一个操作系统时将其激活。OEM可在安装过程中根据OEM和批量许可的媒体安装映像。OEM销售的大部分系统包括由制造商预激活的Windows Vista标准版。<br>
 一般认为主板是硬件升级中最不可能更换的部件，甚至有观点认为，主板的更换约等于整台机器的更换。要有效识别一台机器是否为OEM合法用户，可以在每台预装操作系统的机器主板上，在BIOS里写入特定的信息，来标示这是一台OEM合法用户的机器。这样的信息就是SLIC。不同的OEM厂商的SLIC不同，所以他们的OEM操作系统不能混用。在没有预装系统的机器，即便是品牌机，也不会含有SLIC信息。这样，OEM版的操作系统就可以限定在OEM机器上使用。<br>
@@ -245,12 +256,14 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/11/20/dhcp-relay-analysis/" data-toggle="tooltip" data-placement="top" title="DHCP Relay实现分析">&larr; Previous Post</a>
+                        <a href="/blog/2010/11/20/dhcp-relay-analysis/" data-toggle="tooltip" data-placement="top"
+                           title="DHCP Relay实现分析">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/11/14/choose-first-job/" data-toggle="tooltip" data-placement="top" title="艰难的决定:第一份工作">Next Post &rarr;</a>
+                        <a href="/blog/2010/11/14/choose-first-job/" data-toggle="tooltip" data-placement="top"
+                           title="艰难的决定:第一份工作">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -269,7 +282,7 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-概述"><span class="toc-text">1.概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运作模式"><span class="toc-text">2.运作模式</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1.概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BF%90%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.运作模式</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -291,9 +304,11 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/OEM/" title="OEM">OEM</a>
+                        <a class="tag" href="/tags/OEM/"
+                           title="OEM">OEM</a>
                         
-                        <a class="tag" href="/tags/win7/" title="win7">win7</a>
+                        <a class="tag" href="/tags/win7/"
+                           title="win7">win7</a>
                         
                     </div>
                 </section>
@@ -365,7 +380,7 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -376,7 +391,7 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -387,11 +402,11 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -400,13 +415,19 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -469,7 +490,7 @@ Windows Vista和Windows 7，取消了其他大客户版本，仅保留OEM版激�
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

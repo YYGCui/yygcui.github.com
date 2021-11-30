@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/10/27/metro-mobile-alarm-app/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/业界追踪/" title="业界追踪">业界追踪</a>
+                        <a class="tag" href="/categories/业界追踪/"
+                           title="业界追踪">业界追踪</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Mobile/" title="Mobile">Mobile</a>
+                        <a class="tag" href="/tags/Mobile/"
+                           title="Mobile">Mobile</a>
                         
-                        <a class="tag" href="/tags/metro/" title="metro">metro</a>
+                        <a class="tag" href="/tags/metro/"
+                           title="metro">metro</a>
                         
                     </div>
                 </div>
@@ -210,7 +221,7 @@
                 <p>好久没有更新了，不是偷懒，最近累的要死，有很多想写的都积攒下来了…</p>
 <p>临近毕业，最近一直在赶场参加校园招聘笔试什么的，白天还在实习，晚上周末去笔试，所以搞的很累。都怪自己不淡定阿，要想好好找工作就干脆不去实习了，要不就好好实习留下来，两边都不想放弃，最终没时间准备找工作，又没好好实习，到头来什么都得不到啊！</p>
 <p>地铁闹铃，更确切地讲，就是通过无线终端设置到站提醒功能。这个想法的由来是缘于一次下班后乘地铁去参加宣讲会和笔试，上一天班就已经很累了，再乘坐噪杂的地铁，很难听清楚报站，灵光一闪想到了这么个想法，其实还是有一定可行性的，待我好好分析一下：</p>
-<a id="more"></a>
+<span id="more"></span>
 <p><strong>1.先说无线网络</strong>，想到三种：WiFi,  移动网络, 蓝牙。 个人觉得使用WiFi或者蓝牙比较有利一点，通过移动通信运营商有诸多不利，如地铁信号差，要耗费数据流量，还绕了很大一个圈。所以网络上是没有技术难点的。</p>
 <p><strong>2.再说地铁到站信息</strong>，首先想到的是地铁总要报站啊，报站的时候顺便广播一下到站信息也不是什么难事，可能要对报站系统做一下模块更新，这个要看政府了…还有一种是有些地铁中，车厢内有一个站点提示信号灯，好像是已过去的站点信号灯为红色，还没到达的站点信号灯为绿色，下一站将到达的站点信号灯不停闪烁，同样的道理，每个车厢都有这个的信号灯，也可以为每个车厢设置一个无线或蓝牙发射装置，发送到站信息，所以这个应该也是可行的。</p>
 <p><strong>3.终端应用客户端</strong>，这个移动应用客户端更是没有什么难度，现在的移动客户端到处都是，所以没有技术难点可言。我要说的是我想到的实现方法，比如在上海地铁一号线，你可以在上车后打开终端，下载一号线的线路站点信息，然后设置到哪一站提醒，最好是提前一站，这样准备时间充分；通过WiFi或者蓝牙的工作模式应该是一样的，将要到达一站或者其前一站时，进行匹配，看是否是设置的提醒。</p>
@@ -224,12 +235,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/11/01/emotion-of-view-expo-2010/" data-toggle="tooltip" data-placement="top" title="走，排队，看电影">&larr; Previous Post</a>
+                        <a href="/blog/2010/11/01/emotion-of-view-expo-2010/" data-toggle="tooltip" data-placement="top"
+                           title="走，排队，看电影">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/10/02/block-sales-change-life/" data-toggle="tooltip" data-placement="top" title="团购改变生活">Next Post &rarr;</a>
+                        <a href="/blog/2010/10/02/block-sales-change-life/" data-toggle="tooltip" data-placement="top"
+                           title="团购改变生活">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -270,9 +283,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Mobile/" title="Mobile">Mobile</a>
+                        <a class="tag" href="/tags/Mobile/"
+                           title="Mobile">Mobile</a>
                         
-                        <a class="tag" href="/tags/metro/" title="metro">metro</a>
+                        <a class="tag" href="/tags/metro/"
+                           title="metro">metro</a>
                         
                     </div>
                 </section>
@@ -344,7 +359,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -355,7 +370,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -366,11 +381,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -379,13 +394,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -448,7 +469,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

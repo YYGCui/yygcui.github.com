@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/08/22/install-gcc-4-5-1-in-debian-lenny/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/debian/" title="debian">debian</a>
+                        <a class="tag" href="/tags/debian/"
+                           title="debian">debian</a>
                         
-                        <a class="tag" href="/tags/gcc/" title="gcc">gcc</a>
+                        <a class="tag" href="/tags/gcc/"
+                           title="gcc">gcc</a>
                         
                     </div>
                 </div>
@@ -210,12 +222,12 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>在debian下编译程序出现错误，无法识别long long类型，定义的long long类型常量说超出了long型范围，long long type是在ISO C99标准中引入的，更确切地说是64bits整型数据表示是在C99中引入的，debian中默认安装的是GCC 4.3，从使用中得知，GCC 4.3默认使用<del>支持</del>C89标准，可通过-std=c99设置编译时使用的标准类型，<del>而不支持C99标准，所以需要安装新的版本</del>，GCC4.5分支默认使用标准是c99，目前最新版为4.5.1。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="首先要做一些准备工作："><a class="header-anchor" href="#首先要做一些准备工作："></a>首先要做一些准备工作：</h2>
-<p>1.首先从GNU上下载GCC包，下载地址是<a href="http://gcc.gnu.org/" target="_blank" rel="noopener">http://gcc.gnu.org/</a>，我使用的是最新发布版本4.5.1，首次编译安装时会出现这样的错误：<br>
+<p>1.首先从GNU上下载GCC包，下载地址是<a target="_blank" rel="noopener" href="http://gcc.gnu.org/">http://gcc.gnu.org/</a>，我使用的是最新发布版本4.5.1，首次编译安装时会出现这样的错误：<br>
 <code>gcc configure: error: Building GCC requires GMP 4.2+, MPFR 2.3.1+ and MPC 0.8.0+</code></p>
-<p>2.从编译错误中可以看出：GCC编译需要GMP, MPFR, MPC这三个库，这三个库可以从<a href="ftp://gcc.gnu.org/pub/gcc/infrastructure/" target="_blank" rel="noopener">ftp://gcc.gnu.org/pub/gcc/infrastructure/</a>上下载，我使用的版本为gmp-4.3.2，mpfr-2.4.2和mpc-0.8.1。当然这三个包也可以直接从各自官网上下载：<br>
-<a href="http://gmplib.org/" target="_blank" rel="noopener">http://gmplib.org/</a>，<a href="http://www.mpfr.org/" target="_blank" rel="noopener">http://www.mpfr.org/</a>，<a href="http://www.multiprecision.org/" target="_blank" rel="noopener">http://www.multiprecision.org/</a></p>
+<p>2.从编译错误中可以看出：GCC编译需要GMP, MPFR, MPC这三个库，这三个库可以从<a href="ftp://gcc.gnu.org/pub/gcc/infrastructure/">ftp://gcc.gnu.org/pub/gcc/infrastructure/</a>上下载，我使用的版本为gmp-4.3.2，mpfr-2.4.2和mpc-0.8.1。当然这三个包也可以直接从各自官网上下载：<br>
+<a target="_blank" rel="noopener" href="http://gmplib.org/">http://gmplib.org/</a>，<a target="_blank" rel="noopener" href="http://www.mpfr.org/">http://www.mpfr.org/</a>，<a target="_blank" rel="noopener" href="http://www.multiprecision.org/">http://www.multiprecision.org/</a></p>
 <h2 id="编译安装："><a class="header-anchor" href="#编译安装："></a>编译安装：</h2>
 <p>1.MPFR和MPC都依赖于GMP包，所以首先安装GMP</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$tar</span> xvf gmp-4.3.2.tar.bz2</span><br><span class="line"><span class="variable">$cd</span> gmp-4.3.2</span><br><span class="line">$./configure (可以使用配置参数--prefix=指定安装位置，这里使用默认/usr/<span class="built_in">local</span>/include和/usr/<span class="built_in">local</span>/lib)</span><br><span class="line"><span class="variable">$make</span></span><br><span class="line"><span class="variable">$make</span> check (这一步用来确保编译正确)</span><br><span class="line"><span class="variable">$sudo</span> make install</span><br></pre></td></tr></table></figure>
@@ -226,14 +238,14 @@
 <p>至此，三个库安装完毕，都是安装在默认位置/usr/local/include和/usr/local/lib，为了防止GCC编译时找不到这三个库，需要确认库位置是否在环境变量LD_LIBRARY_PATH中，查看环境变量内容可以用命令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$echo</span> <span class="variable">$LD_LIBRARY_PATH</span></span><br></pre></td></tr></table></figure>
 <p>如果该环境变量中不包含/usr/local/lib库的位置，需要添加库位置，命令如下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$export</span> LD_LIBRARY_PATH=<span class="string">"<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/lib"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$export</span> LD_LIBRARY_PATH=<span class="string">&quot;<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/lib&quot;</span></span><br></pre></td></tr></table></figure>
 <p>4.安装GCC</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$tar</span> xvf gcc-4.5.1.tar.gz</span><br><span class="line"><span class="variable">$cd</span> gcc-4.5.1</span><br><span class="line">$./configure</span><br><span class="line"><span class="variable">$make</span></span><br><span class="line"><span class="variable">$make</span> check</span><br><span class="line"><span class="variable">$sudo</span> make install</span><br></pre></td></tr></table></figure>
 <p>经过两三个小时的漫长等待，你可以体验GCC 4.5.1带来的快感了…<br>
 使用命令$gcc -v查看版本，你会看到</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Using built-in specs.</span><br><span class="line">COLLECT_GCC=gcc</span><br><span class="line">COLLECT_LTO_WRAPPER=/usr/<span class="built_in">local</span>/libexec/gcc/i686-pc-linux-gnu/4.5.1/lto-wrapper</span><br><span class="line">Target: i686-pc-linux-gnu</span><br><span class="line">Configured with: ./configure</span><br><span class="line">Thread model: posix</span><br><span class="line">gcc version 4.5.1 (GCC)</span><br></pre></td></tr></table></figure>
 <p>最后再罗嗦几句，主要说明两点configure和make check，configure的配置参数是相当的多，以至于我从来就没有认真的看过，配置项说明一般在安装文件里的README或者INSTALL文件里，最常用的应该就是<code>--prefix=</code>指定安装路径的配置项了，像上面的安装过程中，如果configure gmp时使用了<code>--prefix=/usr/local/gmp-4.3.2</code>，那么下面用到gmp的配置就变成了<code>--with-gmp=/usr/local/gmp-4.3.2</code>，当然环境变量也要做相应的变化。make check的功能是检测编译是否正确，减少不必要的麻烦，编译成功的话，会看到这样的信息</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">====================</span><br><span class="line">All 132 tests passed</span><br><span class="line">====================</span><br><span class="line">make[2]: Leaving directory ***************</span><br><span class="line">make[1]: Leaving directory ***************</span><br><span class="line">make[1]: Entering directory ***************</span><br><span class="line">make[1]: Nothing to be <span class="keyword">done</span> <span class="keyword">for</span> `check-am<span class="string">'.</span></span><br><span class="line"><span class="string">make[1]: Leaving directory ***************</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">====================</span><br><span class="line">All 132 tests passed</span><br><span class="line">====================</span><br><span class="line">make[2]: Leaving directory ***************</span><br><span class="line">make[1]: Leaving directory ***************</span><br><span class="line">make[1]: Entering directory ***************</span><br><span class="line">make[1]: Nothing to be <span class="keyword">done</span> <span class="keyword">for</span> `check-am<span class="string">&#x27;.</span></span><br><span class="line"><span class="string">make[1]: Leaving directory ***************</span></span><br></pre></td></tr></table></figure>
 <p>*************<strong>表示测试的路径和当前的路径，主要看上面的信息All *</strong> tests passed，说明没有错误，全部通过了。</p>
 
                 <hr>
@@ -242,12 +254,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/08/30/build-vpn-login-twitter-under-debian/" data-toggle="tooltip" data-placement="top" title="Debian下建立VPN及登录twitter的方法">&larr; Previous Post</a>
+                        <a href="/blog/2010/08/30/build-vpn-login-twitter-under-debian/" data-toggle="tooltip" data-placement="top"
+                           title="Debian下建立VPN及登录twitter的方法">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/08/14/my-view-on-android/" data-toggle="tooltip" data-placement="top" title="Android之我见">Next Post &rarr;</a>
+                        <a href="/blog/2010/08/14/my-view-on-android/" data-toggle="tooltip" data-placement="top"
+                           title="Android之我见">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -266,7 +280,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#首先要做一些准备工作："><span class="toc-text">首先要做一些准备工作：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译安装："><span class="toc-text">编译安装：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E8%A6%81%E5%81%9A%E4%B8%80%E4%BA%9B%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="toc-text">首先要做一些准备工作：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%EF%BC%9A"><span class="toc-text">编译安装：</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -288,11 +302,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/debian/" title="debian">debian</a>
+                        <a class="tag" href="/tags/debian/"
+                           title="debian">debian</a>
                         
-                        <a class="tag" href="/tags/gcc/" title="gcc">gcc</a>
+                        <a class="tag" href="/tags/gcc/"
+                           title="gcc">gcc</a>
                         
                     </div>
                 </section>
@@ -364,7 +381,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -375,7 +392,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -386,11 +403,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -399,13 +416,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -468,7 +491,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/11/20/dhcp-relay-analysis/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        <a class="tag" href="/tags/DHCP/"
+                           title="DHCP">DHCP</a>
                         
-                        <a class="tag" href="/tags/DHCP/" title="DHCP">DHCP</a>
+                        <a class="tag" href="/tags/relay/"
+                           title="relay">relay</a>
                         
-                        <a class="tag" href="/tags/relay/" title="relay">relay</a>
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
                     </div>
                 </div>
@@ -209,8 +221,8 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>前段时间看了一下DHCP Relay的实现代码，位于网络中使用最广泛的开源DHCP实现–<a href="http://www.isc.org/software/dhcp" target="_blank" rel="noopener">ISC’s DHCP</a>中，本以为不到一千行的代码可以很快搞定，看了才知道加上调用的函数何止一千行，何况在没有任何基础的情况下，理解起来相当费力，虽然网络中可以找到实现原理介绍，但是很难和代码结合起来。只好看了一下DHCP标准文档RFC 2131，以及relay agent的标准文档RFC 1542。为了便于下面的分析，先简单介绍一下DHCP。</p>
-<a id="more"></a>
+                <p>前段时间看了一下DHCP Relay的实现代码，位于网络中使用最广泛的开源DHCP实现–<a target="_blank" rel="noopener" href="http://www.isc.org/software/dhcp">ISC’s DHCP</a>中，本以为不到一千行的代码可以很快搞定，看了才知道加上调用的函数何止一千行，何况在没有任何基础的情况下，理解起来相当费力，虽然网络中可以找到实现原理介绍，但是很难和代码结合起来。只好看了一下DHCP标准文档RFC 2131，以及relay agent的标准文档RFC 1542。为了便于下面的分析，先简单介绍一下DHCP。</p>
+<span id="more"></span>
 <p>DHCP(Dynamic Host Configuration Protocol)中文称为动态主机配置协议，用来为网络主机提供配置参数。它包括两个组件：一个是用来从服务器向客户端传送具体配置参数的协议，一个是给主机分配网络地址的机制。DHCP是以C/S模式设计的，DHCP服务器分配网络地址并传送配置参数给动态配置的主机。它是基于UDP协议传输数据的，主要有两个用途：一是给主机分配网络地址(IP地址)，一是给网络管理员对所有主机中央管理的手段。<br>
 DHCP支持三种IP地址分配机制。<br>
 自动分配：DHCP Server分配一个永久固定的IP地址给Client。<br>
@@ -227,8 +239,8 @@ DHCP支持三种IP地址分配机制。<br>
 一般情况下，这些响应消息都是通过单一传播(unicast)直接发送给Client的，但是有些Client在未配置IP地址前是不能接受这些单一传播(unicast)的IP数据包的，这些Client在发送的消息中会设置’flags‘域中的BROADCAST位为1，用来告知Server和BOOTP relay agent广播任何发送到Client的消息。<br>
 按消息类型划分，Client接收的消息是BOOTREPLY类型的，包括DHCPOFFER、DHCPACK等；Server接收的消息是BOOTREQUEST类型的，包括DHCPDISCOVER、DHCPREQUEST等。</p>
 <p>下面结合dhcrelay.c中的代码分析一下BOOTP relay agent具体做了什么<br>
-(为了便于分析和显示，都代码进行了精简，只保留了主要的代码段，源码下载：<a href="http://www.isc.org/software/dhcp" target="_blank" rel="noopener">http://www.isc.org/software/dhcp</a>)</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(argc, argv, envp)</span></span></span><br><span class="line"><span class="function">	<span class="keyword">int</span> argc</span>;</span><br><span class="line">	<span class="keyword">char</span> **argv, **envp;</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* parameters definition */</span></span><br><span class="line">	<span class="comment">/* Make sure we have stdin, stdout and stderr. */</span></span><br><span class="line">	<span class="comment">/* Set up the OMAPI. */</span></span><br><span class="line">	status = omapi_init ();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the OMAPI wrappers for the interface object. */</span></span><br><span class="line">	interface_setup ();</span><br><span class="line">	<span class="comment">/* usage like shell */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Default to the DHCP/BOOTP port. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the server sockaddrs. */</span></span><br><span class="line">	<span class="keyword">for</span> (sp = servers; sp; sp = sp -&gt; next) &#123;</span><br><span class="line">		sp -&gt; to.sin_port = local_port;</span><br><span class="line">		sp -&gt; to.sin_family = AF_INET;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_SA_LEN</span></span><br><span class="line">		sp -&gt; to.sin_len = <span class="keyword">sizeof</span> sp -&gt; to;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Get the current time... */</span></span><br><span class="line">	GET_TIME (&amp;cur_time);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Discover all the network interfaces. */</span></span><br><span class="line">	discover_interfaces (DISCOVER_RELAY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the bootp packet handler... */</span></span><br><span class="line">	bootp_packet_handler = relay;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Become a daemon... */</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* Start dispatching packets and timeouts... */</span></span><br><span class="line">	dispatch ();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*NOTREACHED*/</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">relay</span> <span class="params">(ip, packet, length, from_port, from, hfrom)</span></span></span><br><span class="line"><span class="function">	struct interface_info *ip</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dhcp_packet</span> *<span class="title">packet</span>;</span></span><br><span class="line">	<span class="keyword">unsigned</span> length;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> from_port;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">iaddr</span> <span class="title">from</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hardware</span> *<span class="title">hfrom</span>;</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">server_list</span> *<span class="title">sp</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">to</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">interface_info</span> *<span class="title">out</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hardware</span> <span class="title">hto</span>, *<span class="title">htop</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; hlen &gt; <span class="keyword">sizeof</span> packet -&gt; chaddr) &#123;</span><br><span class="line">		log_info (<span class="string">"Discarding packet with invalid hlen."</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Find the interface that corresponds to the giaddr</span></span><br><span class="line"><span class="comment">	   in the packet. */</span></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; giaddr.s_addr) &#123;</span><br><span class="line">		<span class="keyword">for</span> (out = interfaces; out; out = out -&gt; next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!<span class="built_in">memcmp</span> (&amp;out -&gt; primary_address,</span><br><span class="line">				     &amp;packet -&gt; giaddr,</span><br><span class="line">				     <span class="keyword">sizeof</span> packet -&gt; giaddr))</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		out = (struct interface_info *)<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If it's a bootreply, forward it to the client. */</span></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; op == BOOTREPLY) &#123;</span><br><span class="line">		<span class="keyword">if</span> (!(packet -&gt; flags &amp; htons (BOOTP_BROADCAST)) &amp;&amp;</span><br><span class="line">			can_unicast_without_arp (out)) &#123;</span><br><span class="line">			to.sin_addr = packet -&gt; yiaddr;</span><br><span class="line">			to.sin_port = remote_port;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* and hardware address is not broadcast */</span></span><br><span class="line">			htop = &amp;hto;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			to.sin_addr.s_addr = htonl (INADDR_BROADCAST);</span><br><span class="line">			to.sin_port = remote_port;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* hardware address is broadcast */</span></span><br><span class="line">			htop = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		to.sin_family = AF_INET;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_SA_LEN</span></span><br><span class="line">		to.sin_len = <span class="keyword">sizeof</span> to;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">memcpy</span> (&amp;hto.hbuf [<span class="number">1</span>], packet -&gt; chaddr, packet -&gt; hlen);</span><br><span class="line">		hto.hbuf [<span class="number">0</span>] = packet -&gt; htype;</span><br><span class="line">		hto.hlen = packet -&gt; hlen + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* Wipe out the agent relay options and, if possible, figure</span></span><br><span class="line"><span class="comment">		   out which interface to use based on the contents of the</span></span><br><span class="line"><span class="comment">		   option that we put on the request to which the server is</span></span><br><span class="line"><span class="comment">		   replying. */</span></span><br><span class="line">		<span class="keyword">if</span> (!(length =</span><br><span class="line">		      strip_relay_agent_options (ip, &amp;out, packet, length)))</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!out) &#123;</span><br><span class="line">			log_error (<span class="string">"packet to bogus giaddr %s.n"</span>,</span><br><span class="line">			      inet_ntoa (packet -&gt; giaddr));</span><br><span class="line">			++bogus_giaddr_drops;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (send_packet (out,</span><br><span class="line">				 (struct packet *)<span class="number">0</span>,</span><br><span class="line">				 packet, length, out -&gt; primary_address,</span><br><span class="line">				 &amp;to, htop) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			++server_packet_errors;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log_debug (<span class="string">"forwarded BOOTREPLY for %s to %s"</span>,</span><br><span class="line">			       print_hw_addr (packet -&gt; htype, packet -&gt; hlen,</span><br><span class="line">					      packet -&gt; chaddr),</span><br><span class="line">			       inet_ntoa (to.sin_addr));</span><br><span class="line"></span><br><span class="line">			++server_packets_relayed;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If giaddr matches one of our addresses, ignore the packet -</span></span><br><span class="line"><span class="comment">	   we just sent it. */</span></span><br><span class="line">	<span class="keyword">if</span> (out)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Add relay agent options if indicated.   If something goes wrong,</span></span><br><span class="line"><span class="comment">	   drop the packet. */</span></span><br><span class="line">	<span class="keyword">if</span> (!(length = add_relay_agent_options (ip, packet, length,</span><br><span class="line">						ip -&gt; primary_address)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If giaddr is not already set, Set it so the server can</span></span><br><span class="line"><span class="comment">	   figure out what net it's from and so that we can later</span></span><br><span class="line"><span class="comment">	   forward the response to the correct net.    If it's already</span></span><br><span class="line"><span class="comment">	   set, the response will be sent directly to the relay agent</span></span><br><span class="line"><span class="comment">	   that set giaddr, so we won't see it. */</span></span><br><span class="line">	<span class="keyword">if</span> (!packet -&gt; giaddr.s_addr)</span><br><span class="line">		packet -&gt; giaddr = ip -&gt; primary_address;</span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; hops &lt; max_hop_count)</span><br><span class="line">		packet -&gt; hops = packet -&gt; hops + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Otherwise, it's a BOOTREQUEST, so forward it to all the</span></span><br><span class="line"><span class="comment">	   servers. */</span></span><br><span class="line">	<span class="keyword">for</span> (sp = servers; sp; sp = sp -&gt; next) &#123;</span><br><span class="line">		<span class="keyword">if</span> (send_packet ((fallback_interface</span><br><span class="line">				  ? fallback_interface : interfaces),</span><br><span class="line">				 (struct packet *)<span class="number">0</span>,</span><br><span class="line">				 packet, length, ip -&gt; primary_address,</span><br><span class="line">				 &amp;sp -&gt; to, (struct hardware *)<span class="number">0</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			++client_packet_errors;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log_debug (<span class="string">"forwarded BOOTREQUEST for %s to %s"</span>,</span><br><span class="line">			       print_hw_addr (packet -&gt; htype, packet -&gt; hlen,</span><br><span class="line">					      packet -&gt; chaddr),</span><br><span class="line">			       inet_ntoa (sp -&gt; to.sin_addr));</span><br><span class="line">			++client_packets_relayed;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">				 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+(为了便于分析和显示，都代码进行了精简，只保留了主要的代码段，源码下载：<a target="_blank" rel="noopener" href="http://www.isc.org/software/dhcp">http://www.isc.org/software/dhcp</a>)</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(argc, argv, envp)</span></span></span><br><span class="line"><span class="function">	<span class="keyword">int</span> argc</span>;</span><br><span class="line">	<span class="keyword">char</span> **argv, **envp;</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* parameters definition */</span></span><br><span class="line">	<span class="comment">/* Make sure we have stdin, stdout and stderr. */</span></span><br><span class="line">	<span class="comment">/* Set up the OMAPI. */</span></span><br><span class="line">	status = omapi_init ();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the OMAPI wrappers for the interface object. */</span></span><br><span class="line">	interface_setup ();</span><br><span class="line">	<span class="comment">/* usage like shell */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Default to the DHCP/BOOTP port. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the server sockaddrs. */</span></span><br><span class="line">	<span class="keyword">for</span> (sp = servers; sp; sp = sp -&gt; next) &#123;</span><br><span class="line">		sp -&gt; to.sin_port = local_port;</span><br><span class="line">		sp -&gt; to.sin_family = AF_INET;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_SA_LEN</span></span><br><span class="line">		sp -&gt; to.sin_len = <span class="keyword">sizeof</span> sp -&gt; to;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Get the current time... */</span></span><br><span class="line">	GET_TIME (&amp;cur_time);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Discover all the network interfaces. */</span></span><br><span class="line">	discover_interfaces (DISCOVER_RELAY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Set up the bootp packet handler... */</span></span><br><span class="line">	bootp_packet_handler = relay;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Become a daemon... */</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* Start dispatching packets and timeouts... */</span></span><br><span class="line">	dispatch ();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*NOTREACHED*/</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">relay</span> <span class="params">(ip, packet, length, from_port, from, hfrom)</span></span></span><br><span class="line"><span class="function">	struct interface_info *ip</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dhcp_packet</span> *<span class="title">packet</span>;</span></span><br><span class="line">	<span class="keyword">unsigned</span> length;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> from_port;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">iaddr</span> <span class="title">from</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hardware</span> *<span class="title">hfrom</span>;</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">server_list</span> *<span class="title">sp</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">to</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">interface_info</span> *<span class="title">out</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hardware</span> <span class="title">hto</span>, *<span class="title">htop</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; hlen &gt; <span class="keyword">sizeof</span> packet -&gt; chaddr) &#123;</span><br><span class="line">		log_info (<span class="string">&quot;Discarding packet with invalid hlen.&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Find the interface that corresponds to the giaddr</span></span><br><span class="line"><span class="comment">	   in the packet. */</span></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; giaddr.s_addr) &#123;</span><br><span class="line">		<span class="keyword">for</span> (out = interfaces; out; out = out -&gt; next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!<span class="built_in">memcmp</span> (&amp;out -&gt; primary_address,</span><br><span class="line">				     &amp;packet -&gt; giaddr,</span><br><span class="line">				     <span class="keyword">sizeof</span> packet -&gt; giaddr))</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		out = (struct interface_info *)<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If it&#x27;s a bootreply, forward it to the client. */</span></span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; op == BOOTREPLY) &#123;</span><br><span class="line">		<span class="keyword">if</span> (!(packet -&gt; flags &amp; htons (BOOTP_BROADCAST)) &amp;&amp;</span><br><span class="line">			can_unicast_without_arp (out)) &#123;</span><br><span class="line">			to.sin_addr = packet -&gt; yiaddr;</span><br><span class="line">			to.sin_port = remote_port;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* and hardware address is not broadcast */</span></span><br><span class="line">			htop = &amp;hto;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			to.sin_addr.s_addr = htonl (INADDR_BROADCAST);</span><br><span class="line">			to.sin_port = remote_port;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* hardware address is broadcast */</span></span><br><span class="line">			htop = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		to.sin_family = AF_INET;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_SA_LEN</span></span><br><span class="line">		to.sin_len = <span class="keyword">sizeof</span> to;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">memcpy</span> (&amp;hto.hbuf [<span class="number">1</span>], packet -&gt; chaddr, packet -&gt; hlen);</span><br><span class="line">		hto.hbuf [<span class="number">0</span>] = packet -&gt; htype;</span><br><span class="line">		hto.hlen = packet -&gt; hlen + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* Wipe out the agent relay options and, if possible, figure</span></span><br><span class="line"><span class="comment">		   out which interface to use based on the contents of the</span></span><br><span class="line"><span class="comment">		   option that we put on the request to which the server is</span></span><br><span class="line"><span class="comment">		   replying. */</span></span><br><span class="line">		<span class="keyword">if</span> (!(length =</span><br><span class="line">		      strip_relay_agent_options (ip, &amp;out, packet, length)))</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!out) &#123;</span><br><span class="line">			log_error (<span class="string">&quot;packet to bogus giaddr %s.n&quot;</span>,</span><br><span class="line">			      inet_ntoa (packet -&gt; giaddr));</span><br><span class="line">			++bogus_giaddr_drops;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (send_packet (out,</span><br><span class="line">				 (struct packet *)<span class="number">0</span>,</span><br><span class="line">				 packet, length, out -&gt; primary_address,</span><br><span class="line">				 &amp;to, htop) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			++server_packet_errors;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log_debug (<span class="string">&quot;forwarded BOOTREPLY for %s to %s&quot;</span>,</span><br><span class="line">			       print_hw_addr (packet -&gt; htype, packet -&gt; hlen,</span><br><span class="line">					      packet -&gt; chaddr),</span><br><span class="line">			       inet_ntoa (to.sin_addr));</span><br><span class="line"></span><br><span class="line">			++server_packets_relayed;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If giaddr matches one of our addresses, ignore the packet -</span></span><br><span class="line"><span class="comment">	   we just sent it. */</span></span><br><span class="line">	<span class="keyword">if</span> (out)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Add relay agent options if indicated.   If something goes wrong,</span></span><br><span class="line"><span class="comment">	   drop the packet. */</span></span><br><span class="line">	<span class="keyword">if</span> (!(length = add_relay_agent_options (ip, packet, length,</span><br><span class="line">						ip -&gt; primary_address)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* If giaddr is not already set, Set it so the server can</span></span><br><span class="line"><span class="comment">	   figure out what net it&#x27;s from and so that we can later</span></span><br><span class="line"><span class="comment">	   forward the response to the correct net.    If it&#x27;s already</span></span><br><span class="line"><span class="comment">	   set, the response will be sent directly to the relay agent</span></span><br><span class="line"><span class="comment">	   that set giaddr, so we won&#x27;t see it. */</span></span><br><span class="line">	<span class="keyword">if</span> (!packet -&gt; giaddr.s_addr)</span><br><span class="line">		packet -&gt; giaddr = ip -&gt; primary_address;</span><br><span class="line">	<span class="keyword">if</span> (packet -&gt; hops &lt; max_hop_count)</span><br><span class="line">		packet -&gt; hops = packet -&gt; hops + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Otherwise, it&#x27;s a BOOTREQUEST, so forward it to all the</span></span><br><span class="line"><span class="comment">	   servers. */</span></span><br><span class="line">	<span class="keyword">for</span> (sp = servers; sp; sp = sp -&gt; next) &#123;</span><br><span class="line">		<span class="keyword">if</span> (send_packet ((fallback_interface</span><br><span class="line">				  ? fallback_interface : interfaces),</span><br><span class="line">				 (struct packet *)<span class="number">0</span>,</span><br><span class="line">				 packet, length, ip -&gt; primary_address,</span><br><span class="line">				 &amp;sp -&gt; to, (struct hardware *)<span class="number">0</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			++client_packet_errors;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log_debug (<span class="string">&quot;forwarded BOOTREQUEST for %s to %s&quot;</span>,</span><br><span class="line">			       print_hw_addr (packet -&gt; htype, packet -&gt; hlen,</span><br><span class="line">					      packet -&gt; chaddr),</span><br><span class="line">			       inet_ntoa (sp -&gt; to.sin_addr));</span><br><span class="line">			++client_packets_relayed;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">				 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>main函数的主流程是这样的：OMPI初始化-&gt;设置Server的port-&gt;Server的socket address-&gt;discover_interfaces()找到该子网中所有的Client端口-&gt;实现relay()功能-&gt;包的分派。<br>
 其中relay()函数实现了BOOTP relay agent的主要功能，relay()功能分为两部分：1)对BOOTREPLY类型消息的操作；2)对BOOTREQUEST消息的操作。<br>
 主流程是：如果是BOOTREPLY消息-&gt;单一传播/广播-&gt;去掉relay agent option选项-&gt;send给Client，如果不是BOOTREPLY消息，那么就是BOOTREQUEST消息-&gt;添加relay agent option选项-&gt;若未设置giaddr，则将relay agent IP赋给giaddr-&gt;广播消息给所有Server。<br>
@@ -244,12 +256,14 @@ DHCP支持三种IP地址分配机制。<br>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/12/22/perl-predefined-special-variables/" data-toggle="tooltip" data-placement="top" title="Perl内置特殊变量(笔记)">&larr; Previous Post</a>
+                        <a href="/blog/2010/12/22/perl-predefined-special-variables/" data-toggle="tooltip" data-placement="top"
+                           title="Perl内置特殊变量(笔记)">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/11/16/thinkpad-win7-oem/" data-toggle="tooltip" data-placement="top" title="Thinkpad Win7之OEM">Next Post &rarr;</a>
+                        <a href="/blog/2010/11/16/thinkpad-win7-oem/" data-toggle="tooltip" data-placement="top"
+                           title="Thinkpad Win7之OEM">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -290,11 +304,14 @@ DHCP支持三种IP地址分配机制。<br>
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        <a class="tag" href="/tags/DHCP/"
+                           title="DHCP">DHCP</a>
                         
-                        <a class="tag" href="/tags/DHCP/" title="DHCP">DHCP</a>
+                        <a class="tag" href="/tags/relay/"
+                           title="relay">relay</a>
                         
-                        <a class="tag" href="/tags/relay/" title="relay">relay</a>
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
                     </div>
                 </section>
@@ -366,7 +383,7 @@ DHCP支持三种IP地址分配机制。<br>
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -377,7 +394,7 @@ DHCP支持三种IP地址分配机制。<br>
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -388,11 +405,11 @@ DHCP支持三种IP地址分配机制。<br>
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -401,13 +418,19 @@ DHCP支持三种IP地址分配机制。<br>
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -470,7 +493,7 @@ DHCP支持三种IP地址分配机制。<br>
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2012/04/16/fuck-bad-automation-script/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/automation/" title="automation">automation</a>
+                        <a class="tag" href="/tags/automation/"
+                           title="automation">automation</a>
                         
                     </div>
                 </div>
@@ -208,8 +219,8 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>每到周五delivery的时候，就是体现我是一个苦逼的IT民工的时候。如果幸得春哥曾哥庇佑，一切顺利的话，只需要跑跑自动化脚本就好了，这倒没有什么令人抓狂的，因为一切都是按照理想状态发展的。即便有时候被硬件平台block住，也是短暂时间可以解决的，即使查不到原因，重启一下平台也就搞定了。最苦逼的莫过于硬件平台莫名其妙的挂掉了，自动化脚本莫名其妙的终止了。不幸的是上周五就被我遇上了，幸运的是我该考虑改进这个“拿来即用”的脚本了…</p>
-<a id="more"></a>
-<p>一般周五中午我们team的rpm就发出来了，然后我要开始MT，理想状态下一个小时左右就搞定了。然后deliver给PF team，PF team开始做CD2-MXPF-<version>.iso文件，并进行Basic Test，这个过程大约需要三四个小时。我在MT的时候，硬件平台出现了问题，导致了多数test case无法通过，查看log发现线路丢包严重，分析是由一个模块从factory启动导致的，重启无法解决，重新升级改模块还是无法解决，最后插拔了一下解决了，花了接近一个小时，又重新MT了一下，结果就到下班时间了。因为我们MT的问题block了PF的deliver，所以PF的deliver就由我来做了。以上是背景。</version></p>
+<span id="more"></span>
+<p>一般周五中午我们team的rpm就发出来了，然后我要开始MT，理想状态下一个小时左右就搞定了。然后deliver给PF team，PF team开始做CD2-MXPF-<version>.iso文件，并进行Basic Test，这个过程大约需要三四个小时。我在MT的时候，硬件平台出现了问题，导致了多数test case无法通过，查看log发现线路丢包严重，分析是由一个模块从factory启动导致的，重启无法解决，重新升级改模块还是无法解决，最后插拔了一下解决了，花了接近一个小时，又重新MT了一下，结果就到下班时间了。因为我们MT的问题block了PF的deliver，所以PF的deliver就由我来做了。以上是背景。</p>
 <p>先说说PF team做iso和BT的自动化脚本，嗯，在理想状态下，那是很爽的，跑上脚本，然后等着邮件就可以了。以前我遇到的问题很容易就可以搞定：undo checkout然后重新跑一下，或者因为平台问题要手动跑一下BT。而周五遇到的问题让我严重怀疑这个脚本的鲁棒性。</p>
 <p>周五做完MT就下班回家了，到家后开始做delivery (我太敬业了~)。有句话怎么说来着：要么不发生，要么接踵而至。跑deliver脚本出现了ISO create failed，无法生成iso文件，从最近的log可以看出是ClearCase找不到要check out的文件，但是我查看一下这些文件是存在的，这不是直接问题。在往上查看log，发现某些在共用区域 (如/tmp/下) 创建的文件操作permission deny了，ps查看了一下进程，当前没有用户执行相同脚本。查看了一下我们普通用户创建的文件权限是644，也就是说无法修改他人创建的文件，ls发现这些文件是xq同学创建的，fuck，肯定是中途中断脚本导致文件没有自动删除，而后也没有手动清理掉。果断su到xq账户，删除这些tmp文件。</p>
 <p>又跑了一下脚本，发现还有一些/tmp/下的文件没有操作权限，该文件是bd同学创建的，最后修改于20分钟前，问bd同学，他说一直在玩游戏，没有做任何操作，fuck，这是哪位无良同学用别人账户玩，再次删除之。</p>
@@ -232,12 +243,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2012/04/19/disgusting-landlord/" data-toggle="tooltip" data-placement="top" title="后极品房东">&larr; Previous Post</a>
+                        <a href="/blog/2012/04/19/disgusting-landlord/" data-toggle="tooltip" data-placement="top"
+                           title="后极品房东">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2012/03/27/boring-renting/" data-toggle="tooltip" data-placement="top" title="租房很烦心">Next Post &rarr;</a>
+                        <a href="/blog/2012/03/27/boring-renting/" data-toggle="tooltip" data-placement="top"
+                           title="租房很烦心">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -278,9 +291,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/automation/" title="automation">automation</a>
+                        <a class="tag" href="/tags/automation/"
+                           title="automation">automation</a>
                         
                     </div>
                 </section>
@@ -352,7 +367,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -363,7 +378,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -374,11 +389,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -387,13 +402,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -456,7 +477,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

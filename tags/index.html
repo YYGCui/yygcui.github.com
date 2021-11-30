@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/tags/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="false" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -172,7 +179,7 @@
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <!-- 标签云 -->
-            <div id="tag_cloud" class="tags">
+            <div id='tag_cloud' class="tags">
                 
                 <a href="/tags/Linux/" title="Linux" rel="11">Linux</a>
                 
@@ -180,23 +187,25 @@
                 
                 <a href="/tags/upgrade/" title="upgrade" rel="1">upgrade</a>
                 
-                <a href="/tags/iPhone/" title="iPhone" rel="1">iPhone</a>
+                <a href="/tags/求职面试/" title="求职面试" rel="1">求职面试</a>
+                
+                <a href="/tags/BlackBerry/" title="BlackBerry" rel="2">BlackBerry</a>
                 
                 <a href="/tags/Mobile/" title="Mobile" rel="4">Mobile</a>
                 
-                <a href="/tags/debian/" title="debian" rel="2">debian</a>
-                
-                <a href="/tags/gcc/" title="gcc" rel="1">gcc</a>
-                
-                <a href="/tags/Android/" title="Android" rel="2">Android</a>
+                <a href="/tags/iPhone/" title="iPhone" rel="1">iPhone</a>
                 
                 <a href="/tags/MPI/" title="MPI" rel="1">MPI</a>
                 
                 <a href="/tags/Visual-Studio/" title="Visual Studio" rel="1">Visual Studio</a>
                 
-                <a href="/tags/求职面试/" title="求职面试" rel="1">求职面试</a>
+                <a href="/tags/DTG/" title="DTG" rel="1">DTG</a>
                 
-                <a href="/tags/metro/" title="metro" rel="1">metro</a>
+                <a href="/tags/Android/" title="Android" rel="2">Android</a>
+                
+                <a href="/tags/debian/" title="debian" rel="2">debian</a>
+                
+                <a href="/tags/gcc/" title="gcc" rel="1">gcc</a>
                 
                 <a href="/tags/twitter/" title="twitter" rel="1">twitter</a>
                 
@@ -204,19 +213,31 @@
                 
                 <a href="/tags/团购/" title="团购" rel="1">团购</a>
                 
+                <a href="/tags/intern/" title="intern" rel="1">intern</a>
+                
+                <a href="/tags/job/" title="job" rel="3">job</a>
+                
                 <a href="/tags/expo/" title="expo" rel="1">expo</a>
+                
+                <a href="/tags/metro/" title="metro" rel="1">metro</a>
                 
                 <a href="/tags/OEM/" title="OEM" rel="1">OEM</a>
                 
                 <a href="/tags/win7/" title="win7" rel="1">win7</a>
                 
-                <a href="/tags/job/" title="job" rel="3">job</a>
+                <a href="/tags/DHCP/" title="DHCP" rel="1">DHCP</a>
+                
+                <a href="/tags/relay/" title="relay" rel="1">relay</a>
+                
+                <a href="/tags/Programming/" title="Programming" rel="7">Programming</a>
                 
                 <a href="/tags/perl/" title="perl" rel="1">perl</a>
                 
                 <a href="/tags/variables/" title="variables" rel="1">variables</a>
                 
-                <a href="/tags/Programming/" title="Programming" rel="7">Programming</a>
+                <a href="/tags/pack/" title="pack" rel="1">pack</a>
+                
+                <a href="/tags/unpack/" title="unpack" rel="1">unpack</a>
                 
                 <a href="/tags/social-network/" title="social network" rel="1">social network</a>
                 
@@ -224,51 +245,17 @@
                 
                 <a href="/tags/研究生/" title="研究生" rel="1">研究生</a>
                 
-                <a href="/tags/C-C/" title="C/C++" rel="5">C/C++</a>
-                
-                <a href="/tags/endian/" title="endian" rel="1">endian</a>
-                
-                <a href="/tags/Open-Source/" title="Open Source" rel="1">Open Source</a>
-                
-                <a href="/tags/intern/" title="intern" rel="1">intern</a>
-                
-                <a href="/tags/Precompile/" title="Precompile" rel="1">Precompile</a>
-                
-                <a href="/tags/putty/" title="putty" rel="1">putty</a>
-                
-                <a href="/tags/gentoo/" title="gentoo" rel="1">gentoo</a>
-                
-                <a href="/tags/Macros/" title="Macros" rel="1">Macros</a>
-                
-                <a href="/tags/IT/" title="IT" rel="1">IT</a>
-                
-                <a href="/tags/MBR/" title="MBR" rel="1">MBR</a>
-                
-                <a href="/tags/winxp/" title="winxp" rel="1">winxp</a>
-                
-                <a href="/tags/B2C/" title="B2C" rel="1">B2C</a>
-                
-                <a href="/tags/总结/" title="总结" rel="4">总结</a>
-                
-                <a href="/tags/回家/" title="回家" rel="1">回家</a>
-                
-                <a href="/tags/租房/" title="租房" rel="1">租房</a>
-                
-                <a href="/tags/智齿/" title="智齿" rel="1">智齿</a>
-                
-                <a href="/tags/人生目标/" title="人生目标" rel="1">人生目标</a>
-                
-                <a href="/tags/KSD301/" title="KSD301" rel="1">KSD301</a>
-                
-                <a href="/tags/automation/" title="automation" rel="1">automation</a>
-                
                 <a href="/tags/BT/" title="BT" rel="1">BT</a>
                 
                 <a href="/tags/Wlan/" title="Wlan" rel="1">Wlan</a>
                 
-                <a href="/tags/DHCP/" title="DHCP" rel="1">DHCP</a>
+                <a href="/tags/Open-Source/" title="Open Source" rel="1">Open Source</a>
                 
-                <a href="/tags/relay/" title="relay" rel="1">relay</a>
+                <a href="/tags/C-C/" title="C/C++" rel="5">C/C++</a>
+                
+                <a href="/tags/Precompile/" title="Precompile" rel="1">Precompile</a>
+                
+                <a href="/tags/endian/" title="endian" rel="1">endian</a>
                 
                 <a href="/tags/nohup/" title="nohup" rel="1">nohup</a>
                 
@@ -276,17 +263,47 @@
                 
                 <a href="/tags/SSH/" title="SSH" rel="1">SSH</a>
                 
+                <a href="/tags/binutils/" title="binutils" rel="1">binutils</a>
+                
+                <a href="/tags/decompile/" title="decompile" rel="1">decompile</a>
+                
+                <a href="/tags/Macros/" title="Macros" rel="1">Macros</a>
+                
+                <a href="/tags/IT/" title="IT" rel="1">IT</a>
+                
+                <a href="/tags/putty/" title="putty" rel="1">putty</a>
+                
+                <a href="/tags/gentoo/" title="gentoo" rel="1">gentoo</a>
+                
+                <a href="/tags/MBR/" title="MBR" rel="1">MBR</a>
+                
+                <a href="/tags/winxp/" title="winxp" rel="1">winxp</a>
+                
+                <a href="/tags/总结/" title="总结" rel="4">总结</a>
+                
+                <a href="/tags/回家/" title="回家" rel="1">回家</a>
+                
+                <a href="/tags/智齿/" title="智齿" rel="1">智齿</a>
+                
+                <a href="/tags/B2C/" title="B2C" rel="1">B2C</a>
+                
+                <a href="/tags/租房/" title="租房" rel="1">租房</a>
+                
+                <a href="/tags/人生目标/" title="人生目标" rel="1">人生目标</a>
+                
+                <a href="/tags/automation/" title="automation" rel="1">automation</a>
+                
                 <a href="/tags/backtrace/" title="backtrace" rel="1">backtrace</a>
                 
                 <a href="/tags/core-dump/" title="core dump" rel="1">core dump</a>
                 
                 <a href="/tags/gdb/" title="gdb" rel="1">gdb</a>
                 
-                <a href="/tags/docker/" title="docker" rel="2">docker</a>
+                <a href="/tags/KSD301/" title="KSD301" rel="1">KSD301</a>
                 
-                <a href="/tags/compile/" title="compile" rel="1">compile</a>
+                <a href="/tags/极品房东/" title="极品房东" rel="1">极品房东</a>
                 
-                <a href="/tags/deploy/" title="deploy" rel="1">deploy</a>
+                <a href="/tags/Root/" title="Root" rel="1">Root</a>
                 
                 <a href="/tags/longtail/" title="longtail" rel="1">longtail</a>
                 
@@ -294,58 +311,50 @@
                 
                 <a href="/tags/读书笔记/" title="读书笔记" rel="1">读书笔记</a>
                 
-                <a href="/tags/technology/" title="technology" rel="1">technology</a>
-                
-                <a href="/tags/mysql/" title="mysql" rel="1">mysql</a>
-                
-                <a href="/tags/心智/" title="心智" rel="1">心智</a>
-                
-                <a href="/tags/众筹/" title="众筹" rel="1">众筹</a>
-                
-                <a href="/tags/营销/" title="营销" rel="1">营销</a>
-                
-                <a href="/tags/git/" title="git" rel="1">git</a>
-                
-                <a href="/tags/submodule/" title="submodule" rel="1">submodule</a>
-                
-                <a href="/tags/kubernetes/" title="kubernetes" rel="4">kubernetes</a>
-                
-                <a href="/tags/flannel/" title="flannel" rel="1">flannel</a>
-                
-                <a href="/tags/multi-networks/" title="multi-networks" rel="1">multi-networks</a>
-                
-                <a href="/tags/Node-js/" title="Node.js" rel="2">Node.js</a>
-                
                 <a href="/tags/Octopress/" title="Octopress" rel="1">Octopress</a>
-                
-                <a href="/tags/pack/" title="pack" rel="1">pack</a>
-                
-                <a href="/tags/unpack/" title="unpack" rel="1">unpack</a>
-                
-                <a href="/tags/binutils/" title="binutils" rel="1">binutils</a>
-                
-                <a href="/tags/decompile/" title="decompile" rel="1">decompile</a>
-                
-                <a href="/tags/Sails/" title="Sails" rel="1">Sails</a>
-                
-                <a href="/tags/MVC/" title="MVC" rel="1">MVC</a>
-                
-                <a href="/tags/BlackBerry/" title="BlackBerry" rel="2">BlackBerry</a>
-                
-                <a href="/tags/DTG/" title="DTG" rel="1">DTG</a>
-                
-                <a href="/tags/Root/" title="Root" rel="1">Root</a>
-                
-                <a href="/tags/极品房东/" title="极品房东" rel="1">极品房东</a>
                 
                 <a href="/tags/microservices/" title="microservices" rel="1">microservices</a>
                 
                 <a href="/tags/微服务/" title="微服务" rel="1">微服务</a>
                 
+                <a href="/tags/docker/" title="docker" rel="2">docker</a>
+                
+                <a href="/tags/compile/" title="compile" rel="1">compile</a>
+                
+                <a href="/tags/deploy/" title="deploy" rel="1">deploy</a>
+                
+                <a href="/tags/mysql/" title="mysql" rel="1">mysql</a>
+                
+                <a href="/tags/git/" title="git" rel="1">git</a>
+                
+                <a href="/tags/submodule/" title="submodule" rel="1">submodule</a>
+                
+                <a href="/tags/technology/" title="technology" rel="1">technology</a>
+                
+                <a href="/tags/众筹/" title="众筹" rel="1">众筹</a>
+                
+                <a href="/tags/营销/" title="营销" rel="1">营销</a>
+                
+                <a href="/tags/Node-js/" title="Node.js" rel="2">Node.js</a>
+                
+                <a href="/tags/心智/" title="心智" rel="1">心智</a>
+                
+                <a href="/tags/kubernetes/" title="kubernetes" rel="4">kubernetes</a>
+                
+                <a href="/tags/Sails/" title="Sails" rel="1">Sails</a>
+                
+                <a href="/tags/MVC/" title="MVC" rel="1">MVC</a>
+                
+                <a href="/tags/flannel/" title="flannel" rel="1">flannel</a>
+                
+                <a href="/tags/multi-networks/" title="multi-networks" rel="1">multi-networks</a>
+                
+                <a href="/tags/hexo/" title="hexo" rel="1">hexo</a>
+                
             </div>
         </div>
     </div>
-</div>
+
 <!-- Footer -->
 <!-- Footer -->
 <footer>
@@ -382,7 +391,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -393,7 +402,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -404,11 +413,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -417,13 +426,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -486,7 +501,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

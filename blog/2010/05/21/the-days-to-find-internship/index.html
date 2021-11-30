@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/05/21/the-days-to-find-internship/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/职场感悟/" title="职场感悟">职场感悟</a>
+                        <a class="tag" href="/categories/职场感悟/"
+                           title="职场感悟">职场感悟</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/求职面试/" title="求职面试">求职面试</a>
+                        <a class="tag" href="/tags/求职面试/"
+                           title="求职面试">求职面试</a>
                         
                     </div>
                 </div>
@@ -207,7 +217,20 @@
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>从09年到现在，海投了无数简历，也去笔试面试了一些，简单的用一句话来总结就是：面试一次，被鄙视一次。特此一篇记录那些笔试与被鄙视的日子。</p>
 <p>2009篇:</p>
-<p><a href="http://www.matrix-controls.com" target="_blank" rel="noopener">Matrix</a>: 第一次找实习，第一次海投简历，第一次去笔试、面试，这么多第一次都奉献给了Matrix，为了迎接这来之不易的第一次，把数据结构等好好的看了看，可惜时间有限没有仔细看。Matrix主要在做嵌入式方面，面试也比较随意，只有一道题：字符串查找。当时面试官出的题是有100个字符，从中查找3个字符的子串的位置。听到这道题目时就在心里偷偷笑，刚看过的KMP算法用上了，然后很快的做完这道题目。面试官没有细看我写的代码，只是让我描述一下算法，待我描述完KMP算法后，他让我再优化一下，当时就懵了，KMP不是传说中字符串查找最快的算法吗，怎么还能优化啊！想了半天没有想出来，这时他给出了一个优化方法：用hash表，每个字符作为一个hash value，三个字符一组，如果再优化一下的话可以用哈希的哈希。顿悟，用空间换取时间<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">感悟：书本上的知识仅仅是理论上的，你没有实际使用过不会有深入的理解的，学以致用才是王道。数据结构还是要好好学习的。</span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line">[Marvell](http://www.marvell.com/):正愁着暑假没事做的时候，接到了Marvell的面试通知，说实话，这个职位没什么技术含量，纯粹是去赚点小钱、积累点实习经验。面试的时候相当简单，基本上没怎么涉及到专业方面的知识，只问了点测试相关的问题，比如：给你一个程序，你首先应该怎么测试？你认为做测试最需要的素质是什么？忘了说了，这个测试是黑盒测试蓝光DVD播放器系统，简单说就是Marvell的蓝光DVD播放不同公司的蓝光DVD影片，看看系统是否完善。进去才知道，就我一个是计算机专业的，做过就会知道，怎一个无聊了得！编程涉及不到，电影又不能从头看到尾，每天不停地换影片测试，可以说是一个体力活，做了一周就没兴趣了，接下了偷懒上网玩，最终撑到一个月闪人。</span><br><span class="line">感悟：工作就是一份责任，你不能因为没有兴趣而不去做，既然当初选择了这份工作就要认真做下去，直到你离开。</span><br><span class="line"></span><br><span class="line">[Honeywell](http://www.honeywell.com/sites/chinacn/index.jsp): 在11月份去Honeywell面试了一次，到这时已经准备好久了，先做了C语言的笔试题，都是很基础的题，比如sizeof，volatile等，还有几道网络的TCP/IP，嵌入式的。总体来说不是太难。由于当时事情比较多，我只能去3天/周，而要求至少4天每周，时间上不合适，最终也没去成。</span><br><span class="line">感悟：做人不能太老实，即使你不能每周去4天，可以说能，进去以后再说。做人要学会变通，圆滑一点。</span><br><span class="line"></span><br><span class="line">2010篇：</span><br><span class="line"></span><br><span class="line">这一年步入研二了，一个尴尬的阶段，既要写论文，又要为工作准备，实习算是一个不可缺少的经验。</span><br><span class="line"></span><br><span class="line">[SAP](http://www.sap.com/china/index.epx): 电面时让英语自我介绍，当时还没有准备，直接挂掉了</span><br><span class="line"></span><br><span class="line">[Cisco](http://www.cisco.com/web/CN/index.html): 在饮水思源上看到Cisco实习网申信息，就申请了一下，然后google一下Cisco笔试经验，可以说是有所准备的，去笔试的时候才知道，临时抱佛脚是没有用的。说一下笔试试题吧，试题是全英文的，都是选择题，答对加分，答错扣分，分为五部分，1.Network, 主要是OSI七层模型相关的题目，不只是简单的问每层是什么，有什么作用，个人觉得很有难度，据说是CCNA的难度，还有路由协议，IP地址；2. Unix, 具体题目记不太清了，命令grep、awk等，不是一些基本命令；3.Java, 不会java，所以这部分也没怎么做，主要是exception相关的，还有面向对象方面的；4.Script, 这部分主要是Perl, TCL，还有几道SHELL；5. C, 这部分都是很基础的题目，可能有些概念用英文描述很难理解。自我感觉做的很差，大部分不会，笔试之后就没有消息了，也是意料之中的吧。</span><br><span class="line"></span><br><span class="line">[EMC](http://china.emc.com/): 在Cisco笔试的时候，接到EMC的电面，主要问了一下做过的项目，具体的描述了一下，电面之后就没有下文了。</span><br><span class="line"></span><br><span class="line">[ebay](http://www.ebay.cn/): 参加了ebay的宣讲会，宣讲会结束后就开始笔试。笔试试题全英文，可以分为三部分吧，1. Logic, 逻辑题也可以说是智力测试题，就像国内公务员考的行测一样，个人觉得很难，尤其还是英文描述的，难度更大；2. 专业知识方面的，虽然题目不多但是考的很杂，C/C++, Java, SQL等都有涉及到，3. 英语写作能力，给定一个题目，写一段短文。很不幸，笔试就直接被刷掉了。</span><br><span class="line"></span><br><span class="line">[Intel](http://www.intel.com/): 之前投过Intel的很多职位，也不知道这是哪个给的面试通知，直接杀过去了，去了才知道是DHG部门的，首先是笔试，试题是中文的，分为五部分，1. System, 主要是linux方面的，进程和线程的区别，linux默认内核配置文件是什么，查看PCI设备状态的命令是什么，如何远程调试程序，调用Linux Driver的方式是怎么样的，Linux系统中kmalloc和vmalloc的区别，消息传递的方式有哪些。2. C, c语言的题都是蛮基础的，还好；3. Video, 这部分没怎么看，都不会，涉及到一些video格式；4. Audio, 这部分也都不会，也是格式方面的；5. Embedded, 这部分也不会，IPC总线有哪些，什么是交叉编译，NOR flash和NAND flash区别，还有几道忘记了。然后是面试，主要也是Linux相关的，比如编译时如何开启宏，如何加入动态链接库，gdb调试。之后也没有下文了</span><br></pre></td></tr></table></figure></p>
+<p><a target="_blank" rel="noopener" href="http://www.matrix-controls.com">Matrix</a>: 第一次找实习，第一次海投简历，第一次去笔试、面试，这么多第一次都奉献给了Matrix，为了迎接这来之不易的第一次，把数据结构等好好的看了看，可惜时间有限没有仔细看。Matrix主要在做嵌入式方面，面试也比较随意，只有一道题：字符串查找。当时面试官出的题是有100个字符，从中查找3个字符的子串的位置。听到这道题目时就在心里偷偷笑，刚看过的KMP算法用上了，然后很快的做完这道题目。面试官没有细看我写的代码，只是让我描述一下算法，待我描述完KMP算法后，他让我再优化一下，当时就懵了，KMP不是传说中字符串查找最快的算法吗，怎么还能优化啊！想了半天没有想出来，这时他给出了一个优化方法：用hash表，每个字符作为一个hash value，三个字符一组，如果再优化一下的话可以用哈希的哈希。顿悟，用空间换取时间~~~又问hash查找的时间复杂度，这个没记住。结果可想而知，以失败告终。<br>
+感悟：书本上的知识仅仅是理论上的，你没有实际使用过不会有深入的理解的，学以致用才是王道。数据结构还是要好好学习的。</p>
+<span id="more"></span>
+<p><a target="_blank" rel="noopener" href="http://www.marvell.com/">Marvell</a>:正愁着暑假没事做的时候，接到了Marvell的面试通知，说实话，这个职位没什么技术含量，纯粹是去赚点小钱、积累点实习经验。面试的时候相当简单，基本上没怎么涉及到专业方面的知识，只问了点测试相关的问题，比如：给你一个程序，你首先应该怎么测试？你认为做测试最需要的素质是什么？忘了说了，这个测试是黑盒测试蓝光DVD播放器系统，简单说就是Marvell的蓝光DVD播放不同公司的蓝光DVD影片，看看系统是否完善。进去才知道，就我一个是计算机专业的，做过就会知道，怎一个无聊了得！编程涉及不到，电影又不能从头看到尾，每天不停地换影片测试，可以说是一个体力活，做了一周就没兴趣了，接下了偷懒上网玩，最终撑到一个月闪人。<br>
+感悟：工作就是一份责任，你不能因为没有兴趣而不去做，既然当初选择了这份工作就要认真做下去，直到你离开。</p>
+<p><a target="_blank" rel="noopener" href="http://www.honeywell.com/sites/chinacn/index.jsp">Honeywell</a>: 在11月份去Honeywell面试了一次，到这时已经准备好久了，先做了C语言的笔试题，都是很基础的题，比如sizeof，volatile等，还有几道网络的TCP/IP，嵌入式的。总体来说不是太难。由于当时事情比较多，我只能去3天/周，而要求至少4天每周，时间上不合适，最终也没去成。<br>
+感悟：做人不能太老实，即使你不能每周去4天，可以说能，进去以后再说。做人要学会变通，圆滑一点。</p>
+<p>2010篇：</p>
+<p>这一年步入研二了，一个尴尬的阶段，既要写论文，又要为工作准备，实习算是一个不可缺少的经验。</p>
+<p><a target="_blank" rel="noopener" href="http://www.sap.com/china/index.epx">SAP</a>: 电面时让英语自我介绍，当时还没有准备，直接挂掉了</p>
+<p><a target="_blank" rel="noopener" href="http://www.cisco.com/web/CN/index.html">Cisco</a>: 在饮水思源上看到Cisco实习网申信息，就申请了一下，然后google一下Cisco笔试经验，可以说是有所准备的，去笔试的时候才知道，临时抱佛脚是没有用的。说一下笔试试题吧，试题是全英文的，都是选择题，答对加分，答错扣分，分为五部分，1.Network, 主要是OSI七层模型相关的题目，不只是简单的问每层是什么，有什么作用，个人觉得很有难度，据说是CCNA的难度，还有路由协议，IP地址；2. Unix, 具体题目记不太清了，命令grep、awk等，不是一些基本命令；3.Java, 不会java，所以这部分也没怎么做，主要是exception相关的，还有面向对象方面的；4.Script, 这部分主要是Perl, TCL，还有几道SHELL；5. C, 这部分都是很基础的题目，可能有些概念用英文描述很难理解。自我感觉做的很差，大部分不会，笔试之后就没有消息了，也是意料之中的吧。</p>
+<p><a target="_blank" rel="noopener" href="http://china.emc.com/">EMC</a>: 在Cisco笔试的时候，接到EMC的电面，主要问了一下做过的项目，具体的描述了一下，电面之后就没有下文了。</p>
+<p><a target="_blank" rel="noopener" href="http://www.ebay.cn/">ebay</a>: 参加了ebay的宣讲会，宣讲会结束后就开始笔试。笔试试题全英文，可以分为三部分吧，1. Logic, 逻辑题也可以说是智力测试题，就像国内公务员考的行测一样，个人觉得很难，尤其还是英文描述的，难度更大；2. 专业知识方面的，虽然题目不多但是考的很杂，C/C++, Java, SQL等都有涉及到，3. 英语写作能力，给定一个题目，写一段短文。很不幸，笔试就直接被刷掉了。</p>
+<p><a target="_blank" rel="noopener" href="http://www.intel.com/">Intel</a>: 之前投过Intel的很多职位，也不知道这是哪个给的面试通知，直接杀过去了，去了才知道是DHG部门的，首先是笔试，试题是中文的，分为五部分，1. System, 主要是linux方面的，进程和线程的区别，linux默认内核配置文件是什么，查看PCI设备状态的命令是什么，如何远程调试程序，调用Linux Driver的方式是怎么样的，Linux系统中kmalloc和vmalloc的区别，消息传递的方式有哪些。2. C, c语言的题都是蛮基础的，还好；3. Video, 这部分没怎么看，都不会，涉及到一些video格式；4. Audio, 这部分也都不会，也是格式方面的；5. Embedded, 这部分也不会，IPC总线有哪些，什么是交叉编译，NOR flash和NAND flash区别，还有几道忘记了。然后是面试，主要也是Linux相关的，比如编译时如何开启宏，如何加入动态链接库，gdb调试。之后也没有下文了~~~</p>
 <p>以上是我笔试面试的分享，每笔试面试一次，都发现自己会的太少了，少也就罢了，还不精~<s>继续充电，继续找实习中</s>~</p>
 
                 <hr>
@@ -216,12 +239,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/06/06/blackberry-use-tips-and-apps/" data-toggle="tooltip" data-placement="top" title="BlackBerry使用小记及软件应用">&larr; Previous Post</a>
+                        <a href="/blog/2010/06/06/blackberry-use-tips-and-apps/" data-toggle="tooltip" data-placement="top"
+                           title="BlackBerry使用小记及软件应用">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/05/05/upgrade-ubuntu-to-1004lts/" data-toggle="tooltip" data-placement="top" title="升级Ubuntu到10.04 LTS">Next Post &rarr;</a>
+                        <a href="/blog/2010/05/05/upgrade-ubuntu-to-1004lts/" data-toggle="tooltip" data-placement="top"
+                           title="升级Ubuntu到10.04 LTS">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -262,7 +287,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/求职面试/" title="求职面试">求职面试</a>
+                        <a class="tag" href="/tags/求职面试/"
+                           title="求职面试">求职面试</a>
                         
                     </div>
                 </section>
@@ -334,7 +360,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -345,7 +371,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -356,11 +382,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -369,13 +395,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -438,7 +470,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

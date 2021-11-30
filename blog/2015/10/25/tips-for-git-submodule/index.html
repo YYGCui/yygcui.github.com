@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2015/10/25/tips-for-git-submodule/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/git/" title="git">git</a>
+                        <a class="tag" href="/tags/git/"
+                           title="git">git</a>
                         
-                        <a class="tag" href="/tags/submodule/" title="submodule">submodule</a>
+                        <a class="tag" href="/tags/submodule/"
+                           title="submodule">submodule</a>
                         
                     </div>
                 </div>
@@ -211,40 +222,42 @@
 <p>##为啥使用submodule</p>
 <p>Git官网如是说，简单的说，就是在引入第三方库时，或者一些公共模块的管理时，可以使用submodule，既单独管理更新，又能很方便的引入使用。</p>
 <blockquote><p>A submodule allows you to keep another Git repository in a subdirectory of your repository. The other repository has its own history, which does not interfere with the history of the current repository. This can be used to have external dependencies such as third party libraries for example.</p>
-<footer><strong>Git</strong><cite><a href="https://git-scm.com/docs/git-submodule" target="_blank" rel="noopener">git-submodule Document</a></cite></footer></blockquote>
-<a id="more"></a>
+<footer><strong>Git</strong><cite><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-submodule">git-submodule Document</a></cite></footer></blockquote>
+<span id="more"></span>
 <p>##Add submodule</p>
 <p>在一个repo中加入submodule的命令如下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git submodule [--quiet] add [-b &lt;branch&gt;] [-f|--force] [--name &lt;name&gt;]</span><br><span class="line">              [--reference &lt;repository&gt;] [--depth &lt;depth&gt;] [--] &lt;repository&gt; [&lt;path&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git submodule [--quiet] add [-b &lt;branch&gt;] [-f|--force] [--name &lt;name&gt;]</span><br><span class="line">              [--reference &lt;repository&gt;] [--depth &lt;depth&gt;] [--] &lt;repository&gt; [&lt;path&gt;]</span><br></pre></td></tr></table></figure>
 <p>在add一个submodule之后，在当前repo下便会生成一个<code>.gitmodules</code>文件，该文件记录submodule的相关信息，其内容如下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[submodule &quot;submodule-name&quot;]</span><br><span class="line">        path = path name</span><br><span class="line">        url = https://github.com/submodule-name.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[submodule &quot;submodule-name&quot;]</span><br><span class="line">        path = path name</span><br><span class="line">        url = https://github.com/submodule-name.git</span><br></pre></td></tr></table></figure>
 <p>##update submodule</p>
 <p>clone一个repo后，其submodule只会显示一个目录，其内容是空的，这时需要update各个submodule，其命令如下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git submodule [--quiet] init [--] [&lt;path&gt;…​]</span><br><span class="line">git submodule [--quiet] update [--init] [--remote] [-N|--no-fetch]</span><br><span class="line">              [-f|--force] [--rebase|--merge] [--reference &lt;repository&gt;]</span><br><span class="line">              [--depth &lt;depth&gt;] [--recursive] [--] [&lt;path&gt;…​]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git submodule [--quiet] init [--] [&lt;path&gt;…​]</span><br><span class="line">git submodule [--quiet] update [--init] [--remote] [-N|--no-fetch]</span><br><span class="line">              [-f|--force] [--rebase|--merge] [--reference &lt;repository&gt;]</span><br><span class="line">              [--depth &lt;depth&gt;] [--recursive] [--] [&lt;path&gt;…​]</span><br></pre></td></tr></table></figure>
 <p>更新操作需要先init以下，然后再update。该两个操作也可以合并为一个命令完成，就是在update时加入<code>--init</code>参数。</p>
 <p>如果需要从远程repo中update submodule，需要在update时加入<code>--remote</code>参数，这样会pull下来server上的最新版。</p>
 <p>##modify submodule repo</p>
 <p>更改submodule的repo地址，没有直接的命令可以完成，需要修改前面提到的<code>.gitmodules</code>文件，将<code>url</code>改成要更改成的repo地址。然后执行如下命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git submodule [--quiet] sync [--recursive] [--] [&lt;path&gt;…​]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git submodule [--quiet] sync [--recursive] [--] [&lt;path&gt;…​]</span><br></pre></td></tr></table></figure>
 <p>##remove submodule</p>
 <p>删除submodule的命令的过程比较繁多，需要多个命令才能完成，其命令如下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mv asubmodule asubmodule_tmp</span><br><span class="line">git submodule [--quiet] deinit [-f|--force] [--] &lt;path&gt;…​   </span><br><span class="line">git rm asubmodule</span><br><span class="line"># if you want to leave it in your working tree</span><br><span class="line">git rm --cached asubmodule</span><br><span class="line">mv asubmodule_tmp asubmodule</span><br><span class="line">rm -rf .git/modules/asubmodule</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv asubmodule asubmodule_tmp</span><br><span class="line">git submodule [--quiet] deinit [-f|--force] [--] &lt;path&gt;…​   </span><br><span class="line">git rm asubmodule</span><br><span class="line"># if you want to leave it in your working tree</span><br><span class="line">git rm --cached asubmodule</span><br><span class="line">mv asubmodule_tmp asubmodule</span><br><span class="line">rm -rf .git/modules/asubmodule</span><br></pre></td></tr></table></figure>
 <p>##modify submodule content</p>
 <p>update之后的submodule是不属于任何一个branch的，也就是无branch的。submodule的HEAD是处于<code>detached HEAD</code>状态的。这样，如果要更改submodule的内容，需要首先切换到要更新的branch，然后按正常的git流程add/commit/pull/push等操作。</p>
 <p>如果直接修改了submodule的内容，然后commit了该修改，那么在push时会出现up-to-update的情况。这时可以用如下命令挽救</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yygcui@ubuntu$ git checkout master</span><br><span class="line">Warning: you are leaving 1 commit behind, not connected to</span><br><span class="line">any of your branches:</span><br><span class="line"></span><br><span class="line">  &lt;commit id&gt; forget to check out master</span><br><span class="line"></span><br><span class="line">If you want to keep them by creating a new branch, this may be a good time</span><br><span class="line">to do so with:</span><br><span class="line"></span><br><span class="line"> git branch new_branch_name &lt;commit id&gt;</span><br><span class="line"></span><br><span class="line">Switched to branch &apos;master&apos;</span><br><span class="line">yygcui@ubuntu$ git cherry-pick &lt;commit id&gt;</span><br><span class="line">yygcui@ubuntu$ git push</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yygcui@ubuntu$ git checkout master</span><br><span class="line">Warning: you are leaving 1 commit behind, not connected to</span><br><span class="line">any of your branches:</span><br><span class="line"></span><br><span class="line">  &lt;commit id&gt; forget to check out master</span><br><span class="line"></span><br><span class="line">If you want to keep them by creating a new branch, this may be a good time</span><br><span class="line">to do so with:</span><br><span class="line"></span><br><span class="line"> git branch new_branch_name &lt;commit id&gt;</span><br><span class="line"></span><br><span class="line">Switched to branch &#x27;master&#x27;</span><br><span class="line">yygcui@ubuntu$ git cherry-pick &lt;commit id&gt;</span><br><span class="line">yygcui@ubuntu$ git push</span><br></pre></td></tr></table></figure>
                 <hr>
                 
 
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/12/06/thinking-about-technoloy-development/" data-toggle="tooltip" data-placement="top" title="技术开发的一些思考">&larr; Previous Post</a>
+                        <a href="/blog/2015/12/06/thinking-about-technoloy-development/" data-toggle="tooltip" data-placement="top"
+                           title="技术开发的一些思考">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/" data-toggle="tooltip" data-placement="top" title="mysql掉电后无法启动 InnoDB: is in the future!">Next Post &rarr;</a>
+                        <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/" data-toggle="tooltip" data-placement="top"
+                           title="mysql掉电后无法启动 InnoDB: is in the future!">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -285,9 +298,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/git/" title="git">git</a>
+                        <a class="tag" href="/tags/git/"
+                           title="git">git</a>
                         
-                        <a class="tag" href="/tags/submodule/" title="submodule">submodule</a>
+                        <a class="tag" href="/tags/submodule/"
+                           title="submodule">submodule</a>
                         
                     </div>
                 </section>
@@ -359,7 +374,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -370,7 +385,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -381,11 +396,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -394,13 +409,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -463,7 +484,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

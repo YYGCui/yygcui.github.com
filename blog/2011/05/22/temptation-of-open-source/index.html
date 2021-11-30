@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2011/05/22/temptation-of-open-source/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Open-Source/" title="Open Source">Open Source</a>
+                        <a class="tag" href="/tags/Open-Source/"
+                           title="Open Source">Open Source</a>
                         
                     </div>
                 </div>
@@ -208,22 +218,22 @@
                 <p>题记：这是一篇针对使用Windows的和不得不使用Windows的而又担心盗版或者藐视盗版的用户的日志。开源软件不仅仅是free的，它带来的是更专业的、更强大的功能，虽然UI可能相对于同样功能的商业软件不是那么友好。</p>
 <h2 id="工欲善其事必先利其器"><a class="header-anchor" href="#工欲善其事必先利其器"></a>工欲善其事必先利其器</h2>
 <p>上个月末入职，领了新电脑（hp的笔电伤不起啊），公司标配windows系统，而且还是xp（却用来开发Linux程序，更加伤不起啊），除了预装了一些office软件之外，没有任何其他其他正版软件的提供。大家都知道，为了避免不必要的法律纠纷，IT部门都禁止安装盗版软件的。在网络查找具有相同功能的免费替代品时，我发现一个有趣的现象：每一个耳熟能详的好用的共享软件（通常都是收费的），都有一个或小巧或更加强大的开源软件与之对应，而往往我们都忽视了开源。下面就从日常开发使用的一些工具为例对比聊一下。</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>1.File Archiver and Compression</p>
 <p>我想大多数的windows用户使用的是WinRAR，WinRAR是一个收费软件，虽然可以长期评估使用。长期以来，我们都习惯于WinRAR的rar压缩格式，习惯于压缩成rar格式，解压缩各种压缩格式。<br>
-岂不知，在开源的世界中，我们有更加强大的，遵循GNU LGPL授权协议的<a href="http://www.7-zip.org/" target="_blank" rel="noopener">7-Zip</a>，它可以压缩解压缩各种常见格式（7z, XZ, BZIP2, GZIP, TAR, ZIP, 因rar是属于WinRAR的专有商业格式，所以不能），以及解压各种不常见格式（ARJ, CAB, CHM, CPIO, CramFS, DEB, DMG, FAT, HFS, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, RAR, RPM, SquashFS, UDF, VHD, WIM, XAR and Z）。可以说，它除了不能压缩rar格式之外，在功能上堪称一款完美的压缩工具。</p>
+岂不知，在开源的世界中，我们有更加强大的，遵循GNU LGPL授权协议的<a target="_blank" rel="noopener" href="http://www.7-zip.org/">7-Zip</a>，它可以压缩解压缩各种常见格式（7z, XZ, BZIP2, GZIP, TAR, ZIP, 因rar是属于WinRAR的专有商业格式，所以不能），以及解压各种不常见格式（ARJ, CAB, CHM, CPIO, CramFS, DEB, DMG, FAT, HFS, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, RAR, RPM, SquashFS, UDF, VHD, WIM, XAR and Z）。可以说，它除了不能压缩rar格式之外，在功能上堪称一款完美的压缩工具。</p>
 <p>2.FTP Client</p>
-<p>号称“The best FTP client for Windows”的FlashFXP相信大多数人都用过，它的确是一款不错的FTP软件，但是它同样也是收费的。免费的FTP软件很多，如<a href="http://www.skycn.com/sort/sort2011100_freeware_DESC_1.html" target="_blank" rel="noopener">我在天空软件站搜索到110款</a>；但开源的甚少。<br>
-<a href="http://filezilla-project.org/" target="_blank" rel="noopener">FileZilla</a>无疑是最好的开源FTP Client，FileZilla的强大谁用谁知道，而且这也是我使用过的UI做的比较好的开源软件之一，甚至它还提供了windows下FTP Server版本。当然它也有明显的不足：密码明文保存，不保存队列。</p>
+<p>号称“The best FTP client for Windows”的FlashFXP相信大多数人都用过，它的确是一款不错的FTP软件，但是它同样也是收费的。免费的FTP软件很多，如<a target="_blank" rel="noopener" href="http://www.skycn.com/sort/sort2011100_freeware_DESC_1.html">我在天空软件站搜索到110款</a>；但开源的甚少。<br>
+<a target="_blank" rel="noopener" href="http://filezilla-project.org/">FileZilla</a>无疑是最好的开源FTP Client，FileZilla的强大谁用谁知道，而且这也是我使用过的UI做的比较好的开源软件之一，甚至它还提供了windows下FTP Server版本。当然它也有明显的不足：密码明文保存，不保存队列。</p>
 <p>3.SSH Client</p>
 <p>在各种SSH客户端共享软件中，SecureCRT当之无愧是功能最强大的，最好用的SSH客户端。在具备其他SSH客户端所具有的功能的同时，其最便利的功能就是标签化，方便易用，这是很多SSH所不具有的功能。<br>
-开源软件中，<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" target="_blank" rel="noopener">PUTTY</a>是被大家广泛使用的SSH客户端，但至今仍处于Beta阶段，最后更新在2007年。它最大的特点就是小巧，开源。 当然也有一些不足：不能记住密码，没有标签功能。虽然也有些爱好者做了PUTTY的标签功能，但是效果不是很理想。</p>
+开源软件中，<a target="_blank" rel="noopener" href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">PUTTY</a>是被大家广泛使用的SSH客户端，但至今仍处于Beta阶段，最后更新在2007年。它最大的特点就是小巧，开源。 当然也有一些不足：不能记住密码，没有标签功能。虽然也有些爱好者做了PUTTY的标签功能，但是效果不是很理想。</p>
 <p>4.Editor for Programming</p>
-<p>这个怎么说，怪只能怪Windows自带的editor功能太少了，只能实现简单的文本功能。编辑器共享软件中，UltraEdit算是功能强大，界面友好的文本编辑器，程序编辑器和十六进制编辑器。官方网站上提供了更详细的<a href="http://www.ultraedit.cn/products/ultraedit/ultraedit_features.html" target="_blank" rel="noopener">功能列表</a>。<br>
-开源软件中，自然不用说编辑器界的两大神器：Emacs和Vim。在Windows下界面友好的程序编辑器，个人认为<a href="http://notepad-plus-plus.org/" target="_blank" rel="noopener">Notepad++</a>是最好用，功能更强大的，可扩展的程序编辑器。如通过compare插件就可以实现UltraCompare的文本比较功能。</p>
+<p>这个怎么说，怪只能怪Windows自带的editor功能太少了，只能实现简单的文本功能。编辑器共享软件中，UltraEdit算是功能强大，界面友好的文本编辑器，程序编辑器和十六进制编辑器。官方网站上提供了更详细的<a target="_blank" rel="noopener" href="http://www.ultraedit.cn/products/ultraedit/ultraedit_features.html">功能列表</a>。<br>
+开源软件中，自然不用说编辑器界的两大神器：Emacs和Vim。在Windows下界面友好的程序编辑器，个人认为<a target="_blank" rel="noopener" href="http://notepad-plus-plus.org/">Notepad++</a>是最好用，功能更强大的，可扩展的程序编辑器。如通过compare插件就可以实现UltraCompare的文本比较功能。</p>
 <p>5.Source Code Review</p>
 <p>代码编辑器和浏览器，也真是没什么好说的，在共享软件中貌似只有Source Insight，SI的简单好用真是没话说，其界面友好性，及其布局设计让人使用起来很方便。<br>
-开源软件中，貌似也只有<a href="http://sourcenav.berlios.de/" target="_blank" rel="noopener">Source-Navigator</a>了 ，sourcenav除了基本的代码编辑和浏览之外，还可以编译程序以及提供版本控制功能。唯一的不足可能就是UI的布局不够友好。</p>
+开源软件中，貌似也只有<a target="_blank" rel="noopener" href="http://sourcenav.berlios.de/">Source-Navigator</a>了 ，sourcenav除了基本的代码编辑和浏览之外，还可以编译程序以及提供版本控制功能。唯一的不足可能就是UI的布局不够友好。</p>
 <p>从上面的几个例子可以看出，开源软件相对于共享软件存在一些不足，但是这些不足都是体现在软件使用的友好性上，并不影响软件所提供的基本功能，甚至有些开源软件在功能上更强于共享软件。那么，没有价格优势的共享软件为什么还是比开源软件流行呢？</p>
 <h2 id="习惯抵挡住了诱惑"><a class="header-anchor" href="#习惯抵挡住了诱惑"></a>习惯抵挡住了诱惑</h2>
 <p>先入为主或者说习惯，是阻止拥抱开源的直接原因。共享软件的出现往往先于类似功能的开源软件，再加上缺少正版化意识，造成了这些共享软件的流行。在我们习惯了这些软件提供的基本功能以及一些可有可无的功能，习惯了UI的设计布局之后，在没有外界的压力下（比如软件版权），很难摒弃这种习惯，由共享软件转变到开源软件（当然，购买正版软件的除外）。<br>
@@ -238,12 +248,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/05/29/conditional-compilation/" data-toggle="tooltip" data-placement="top" title="条件编译">&larr; Previous Post</a>
+                        <a href="/blog/2011/05/29/conditional-compilation/" data-toggle="tooltip" data-placement="top"
+                           title="条件编译">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/05/02/back-track-linux-and-wlan-security/" data-toggle="tooltip" data-placement="top" title="Back Track Linux与无线安全">Next Post &rarr;</a>
+                        <a href="/blog/2011/05/02/back-track-linux-and-wlan-security/" data-toggle="tooltip" data-placement="top"
+                           title="Back Track Linux与无线安全">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -262,7 +274,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#工欲善其事必先利其器"><span class="toc-text">工欲善其事必先利其器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#习惯抵挡住了诱惑"><span class="toc-text">习惯抵挡住了诱惑</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8"><span class="toc-text">工欲善其事必先利其器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E6%83%AF%E6%8A%B5%E6%8C%A1%E4%BD%8F%E4%BA%86%E8%AF%B1%E6%83%91"><span class="toc-text">习惯抵挡住了诱惑</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -284,7 +296,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Open-Source/" title="Open Source">Open Source</a>
+                        <a class="tag" href="/tags/Open-Source/"
+                           title="Open Source">Open Source</a>
                         
                     </div>
                 </section>
@@ -356,7 +369,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -367,7 +380,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -378,11 +391,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -391,13 +404,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -460,7 +479,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

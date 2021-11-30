@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/docker/" title="docker">docker</a>
+                        <a class="tag" href="/tags/docker/"
+                           title="docker">docker</a>
                         
-                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        <a class="tag" href="/tags/kubernetes/"
+                           title="kubernetes">kubernetes</a>
                         
                     </div>
                 </div>
@@ -215,30 +226,30 @@
 <p><code>Deployment</code>为<code>Pods</code>和<code>Replica sets</code>提供了声明更新，也就是说该控制器用来保证达到你描述的期望状态。使用该控制器可以方便的更新<code>Pods</code>(滚动升级)，如更新了容器镜像；可以方面的回滚到之前的部署版本；可以随时暂停和启动部署。</p>
 <p><code>Service</code>有时也被称为微服务，是一个抽象的概念，它定义了一组<code>Pods</code>以及访问它们的策略。<code>Pods</code>是通过标签选择器<code>Label Selector</code>被集合在一起的。该抽象层屏蔽了后端的<code>Pods</code>副本，对外呈现一个访问入口。这样即使后端被替换，对外也是不感知的。所以，不管是对内还是对外提供的功能，都以<code>Service</code>作为服务入口是合理的做法。</p>
 <p><code>Service</code>和<code>Deployment</code>可以看作是同一级的概念，<code>Service</code>用于<code>Pods</code>对外提供服务的管理，<code>Deployment</code>用于<code>Pods</code>本身的管理。以上各个概念之间的关系如下图：</p>
-<img src="/images/k8s-concepts.png" title="Kubernetes概念关系图">
+<img src="/images/k8s-concepts.png" class="" title="Kubernetes概念关系图">
 <p><code>Nodes</code>是指<code>kubernetes</code>集群的节点，提供能力的机器，如虚拟机等，这里列举一下便于下面的网络讨论。</p>
 <h2 id="网络方案"><a class="header-anchor" href="#网络方案"></a>网络方案</h2>
-<p>基于以上的概念，可以看到涉及到的网络通信有容器间的通信，<code>Pod</code>间的通信，服务间的通信，跨节点的通信，以及延伸一下跨集群的通信。那么这些网络通信在<code>kubernetes</code>里都是如何实施的呢？<code>kubernetes</code>官方给出了一个使用<code>OpenVSwitch</code>的<a href="https://kubernetes.io/docs/admin/ovs-networking/" target="_blank" rel="noopener">网络方案</a>。这里基于这个网络方案图扩展一下，试图涵盖所有的网络连接类型。如下图所示，针对每种网络连接类型，后面会详细讨论。</p>
-<img src="/images/k8s-network.png" title="Kubernetes网络方案图">
-<h3 id="container-to-container"><a class="header-anchor" href="#container-to-container"></a>Container-to-Container</h3>
+<p>基于以上的概念，可以看到涉及到的网络通信有容器间的通信，<code>Pod</code>间的通信，服务间的通信，跨节点的通信，以及延伸一下跨集群的通信。那么这些网络通信在<code>kubernetes</code>里都是如何实施的呢？<code>kubernetes</code>官方给出了一个使用<code>OpenVSwitch</code>的<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/admin/ovs-networking/">网络方案</a>。这里基于这个网络方案图扩展一下，试图涵盖所有的网络连接类型。如下图所示，针对每种网络连接类型，后面会详细讨论。</p>
+<img src="/images/k8s-network.png" class="" title="Kubernetes网络方案图">
+<h3 id="Container-to-Container"><a class="header-anchor" href="#Container-to-Container"></a>Container-to-Container</h3>
 <p>上面我们已经提到，<code>kubernetes</code>不会直接操作容器本身，对外呈现的最小操作单位是<code>Pod</code>，这里容器之间的通信是指一个<code>Pod</code>内的容器之间如何通信。我们观察一个<code>Pod</code>里的资源时，会发现有一个自己启动的<code>pause</code>容器，这个容器的作用是为<code>Pod</code>提供网络，所有其他的容器(也就是我们通过模板启动的容器)，都是共享<code>pause</code>容器网络的。在实现上，如<code>Docker</code>提供了<code>--net=container:ID</code>这样的选项。</p>
 <p>每个<code>pod</code>对外呈现一个唯一的IP，<code>Pod</code>内的各容器共享这个IP，也就是说各容器处于同一网络空间中，可直接使用<code>localhost</code>互相访问，需要注意的是各容器使用的端口不能冲突，可以认为<code>IP:Port</code>能够唯一确定一个容器。类比一个系统内的多个网络进程。</p>
-<h3 id="pod-to-pod"><a class="header-anchor" href="#pod-to-pod"></a>Pod-to-Pod</h3>
+<h3 id="Pod-to-Pod"><a class="header-anchor" href="#Pod-to-Pod"></a>Pod-to-Pod</h3>
 <p><code>kubernetes</code>网络实现基于以下三个原则：</p>
 <ul>
 <li>所有容器和其他容器的通信不需要NAT</li>
 <li>所有<code>node</code>和容器间的通信不需要NAT</li>
 <li>容器自己看到的IP就是对外呈现的IP</li>
 </ul>
-<p>那么，这是如何做到的呢？在同一<code>node</code>时，是通过容器网桥实现的，如<code>Docker</code>默认使用的网桥<code>Docker0</code>；在跨<code>node</code>通信时，是通过<code>node</code>间的<code>overlay network</code>实现互联的，如<code>flannel</code>, <code>OpenVSwitch</code>提供的<code>VxLAN tunnel</code>。官方列举了更多的<code>overlay network</code>实现，<a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/" target="_blank" rel="noopener">参考链接</a>。</p>
-<h3 id="pod-to-service"><a class="header-anchor" href="#pod-to-service"></a>Pod-to-Service</h3>
+<p>那么，这是如何做到的呢？在同一<code>node</code>时，是通过容器网桥实现的，如<code>Docker</code>默认使用的网桥<code>Docker0</code>；在跨<code>node</code>通信时，是通过<code>node</code>间的<code>overlay network</code>实现互联的，如<code>flannel</code>, <code>OpenVSwitch</code>提供的<code>VxLAN tunnel</code>。官方列举了更多的<code>overlay network</code>实现，<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/cluster-administration/networking/">参考链接</a>。</p>
+<h3 id="Pod-to-Service"><a class="header-anchor" href="#Pod-to-Service"></a>Pod-to-Service</h3>
 <p>作为前端的<code>Service</code>与作为后端的<code>Pods</code>之间是通过<code>kubernetes</code>的组件<code>kube-proxy</code>实现通信的。<code>kube-proxy</code>为<code>Service</code>实现了虚拟IP的形式，即<code>ClusterIP</code>。有两种代理模式，<code>userspace</code>和<code>iptables</code>。</p>
 <ul>
 <li><code>userspace</code>模式下，需要在本<code>node</code>上分配<code>proxy port</code>，该port被代理到后端的<code>Pods</code>，这样来自<code>ClusterIP:Port</code>的信息被重定向到<code>proxy port</code>，然后代理到后端的<code>Pods</code>。</li>
 <li><code>iptables</code>模式下，<code>kube-proxy</code>通过直接增删<code>iptables</code>规则实现重定向转发。它比<code>userspace</code>模式更快更可靠，缺点是当前<code>Pod</code>无响应时，它无法自动重试其他<code>Pod</code>，需要借助<code>readiness probes</code>实现。</li>
 </ul>
-<p>关于两种模式更详细的描述参考<a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener">官网文档</a></p>
-<h3 id="service-to-external"><a class="header-anchor" href="#service-to-external"></a>Service-to-External</h3>
+<p>关于两种模式更详细的描述参考<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/service/">官网文档</a></p>
+<h3 id="Service-to-External"><a class="header-anchor" href="#Service-to-External"></a>Service-to-External</h3>
 <p><code>Service</code>是以<code>ClusterIP</code>的形式对外提供服务的，但<code>ClusterIP</code>是集群内的虚拟IP网络。那么和集群外是如何通信的呢？可以通过以下方式实现：</p>
 <ul>
 <li>
@@ -253,7 +264,7 @@
 </ul>
 <p>从上面可以看出，<code>ClusterIP</code>, <code>NodePort</code>, <code>LoadBalancer</code>这三种类型是层层嵌套实现的。但对云提供商没有严格要求这样做，只是目前的API是这样的。</p>
 <p>除了这几种服务类型之外，还可以使用<code>ExternalIPs</code>实现集群内外的互通，所谓的<code>ExternalIP</code>是指能够被路由到<code>kubernetes</code>节点的IP的，在公有云上，也就是我们所说的公网IP。<code>ExternelIPs</code>可以和任一类型的<code>Service</code>一起使用。</p>
-<p>具体配置模板可参考<a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener">官网文档</a></p>
+<p>具体配置模板可参考<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/service/">官网文档</a></p>
 <h2 id="总结"><a class="header-anchor" href="#总结"></a>总结</h2>
 <p>至此，已涵盖网络方案图里的所有通信类型。在使用上做几点总结：</p>
 <ul>
@@ -277,12 +288,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2017/05/14/kubernetes-multi-networks/" data-toggle="tooltip" data-placement="top" title="kubernetes之多网络支持">&larr; Previous Post</a>
+                        <a href="/blog/2017/05/14/kubernetes-multi-networks/" data-toggle="tooltip" data-placement="top"
+                           title="kubernetes之多网络支持">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2017/04/09/Sails-MVC-framework-for-Node-js/" data-toggle="tooltip" data-placement="top" title="Sails:Node.js的MVC框架">Next Post &rarr;</a>
+                        <a href="/blog/2017/04/09/Sails-MVC-framework-for-Node-js/" data-toggle="tooltip" data-placement="top"
+                           title="Sails:Node.js的MVC框架">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -301,7 +314,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络方案"><span class="toc-text">网络方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#container-to-container"><span class="toc-text">Container-to-Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pod-to-pod"><span class="toc-text">Pod-to-Pod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pod-to-service"><span class="toc-text">Pod-to-Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#service-to-external"><span class="toc-text">Service-to-External</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%96%B9%E6%A1%88"><span class="toc-text">网络方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Container-to-Container"><span class="toc-text">Container-to-Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod-to-Pod"><span class="toc-text">Pod-to-Pod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod-to-Service"><span class="toc-text">Pod-to-Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service-to-External"><span class="toc-text">Service-to-External</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -323,9 +336,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/docker/" title="docker">docker</a>
+                        <a class="tag" href="/tags/docker/"
+                           title="docker">docker</a>
                         
-                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        <a class="tag" href="/tags/kubernetes/"
+                           title="kubernetes">kubernetes</a>
                         
                     </div>
                 </section>
@@ -397,7 +412,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -408,7 +423,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -419,11 +434,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -432,13 +447,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -501,7 +522,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

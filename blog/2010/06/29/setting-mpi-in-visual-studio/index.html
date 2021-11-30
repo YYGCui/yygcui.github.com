@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/06/29/setting-mpi-in-visual-studio/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,13 +189,16 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/MPI/" title="MPI">MPI</a>
+                        <a class="tag" href="/tags/MPI/"
+                           title="MPI">MPI</a>
                         
-                        <a class="tag" href="/tags/Visual-Studio/" title="Visual Studio">Visual Studio</a>
+                        <a class="tag" href="/tags/Visual-Studio/"
+                           title="Visual Studio">Visual Studio</a>
                         
                     </div>
                 </div>
@@ -208,7 +219,7 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>之前一直用VC 6.0，其项目属性一目了然，配置起来很省事，后来与时俱进，先后用了Visual Studio 2003，2005一直到现在的2008，从2003开始，VS的界面发生了很大的变化，以下的配置过程是在VS 2008下配置的，理论上适用于所有VS版本。在进行以下配置时，确保已经在IDE中设置了mpi头文件和库的引用。菜单栏[Tools]–&gt;[Options]中，选择Projects and Solutions项目下的VC++ Directories，设置如下图所示</p>
-<a id="more"></a>
+<span id="more"></span>
 <p><img src="http://farm5.static.flickr.com/4097/4748892560_ce609332b2_b.jpg" alt="MPI"></p>
 <p>环境介绍：<br>
 OS: WIN7 32位<br>
@@ -220,13 +231,13 @@ MPI: MPICH2 1.2</p>
 (2)MPIRun Command中输入<code>mpiexec</code>，如图中标号③所示。另外：在WinXP下可以直接使用MPICH2自带的wmpiexec来运行编译好的程序，但在Win7下找不到工作目录。<br>
 (3)MPIRun Arguments中输入要使用的进程数、程序的绝对路径以及程序的参数。如图中标号④所示。具体示例如：<code>-n 4 $(TargetPath) 4</code>。<code>$(TargetPath)</code>表示欲debug的程序完整路径，如<code>f:\hellohello.exe</code>，该示例表示使用4个进程(结点)运行hello.exe，hello.exe接受参数4。<br>
 (4)MPIRun Working Directory设置mpi的工作目录，也就是程序所在的目录，如图中标号⑤所示。这个必须要设置，特别是在程序要读取文件时，如果不设置的话，程序找不到所要读取的文件。<code>$(TargetDir)</code>表示欲debug程序的目录，如同(3)中示例，这时<code>$(TargetDir)</code>表示工作目录为<code>f:\hello</code></p>
-<p><img src="http://farm5.static.flickr.com/4102/4748892204_3434610c0d_b.jpg" alt></p>
+<p><img src="http://farm5.static.flickr.com/4102/4748892204_3434610c0d_b.jpg" alt=""></p>
 <p>2.在使用C<ins>编程时，需要设置这一项，[C/C</ins>]栏下的[Preprocessor]在Preprocessor Definitions中添加宏定义<code>MPICH_SKIP_MPICXX</code>，当然该宏定义也可以直接在程序中#define. 如下图所示</p>
-<p><img src="http://farm5.static.flickr.com/4096/4748251025_494bbf2c95_b.jpg" alt></p>
+<p><img src="http://farm5.static.flickr.com/4096/4748251025_494bbf2c95_b.jpg" alt=""></p>
 <p>3.[C/C++]栏下的[Code Genneration]设置，在Runtime Library中选择Multi-threaded Debug(/MTd)，该项表示用多进程环境调试程序，也就是用单机上的多进程模拟集群环境下的多结点(多处理器核)。</p>
-<p><img src="http://farm5.static.flickr.com/4118/4748892310_68f68ab30f_b.jpg" alt></p>
+<p><img src="http://farm5.static.flickr.com/4118/4748892310_68f68ab30f_b.jpg" alt=""></p>
 <p>4.[linker]属性设置，选择其下的[input]项，在Additional Dependencies中添加mpi.lib库。</p>
-<p><img src="http://farm5.static.flickr.com/4116/4748250923_14e05aeea1_b.jpg" alt></p>
+<p><img src="http://farm5.static.flickr.com/4116/4748250923_14e05aeea1_b.jpg" alt=""></p>
 <p>经过以上四个步骤的设置，现在可以体验一下并行编程了～～～</p>
 
                 <hr>
@@ -235,12 +246,14 @@ MPI: MPICH2 1.2</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/08/02/documents-to-go-downsize/" data-toggle="tooltip" data-placement="top" title="Documents To Go 2.0004.018精简">&larr; Previous Post</a>
+                        <a href="/blog/2010/08/02/documents-to-go-downsize/" data-toggle="tooltip" data-placement="top"
+                           title="Documents To Go 2.0004.018精简">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/06/24/write-when-iphone4-is-selling/" data-toggle="tooltip" data-placement="top" title="写在iPhone 4正式发售之时">Next Post &rarr;</a>
+                        <a href="/blog/2010/06/24/write-when-iphone4-is-selling/" data-toggle="tooltip" data-placement="top"
+                           title="写在iPhone 4正式发售之时">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -281,9 +294,11 @@ MPI: MPICH2 1.2</p>
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/MPI/" title="MPI">MPI</a>
+                        <a class="tag" href="/tags/MPI/"
+                           title="MPI">MPI</a>
                         
-                        <a class="tag" href="/tags/Visual-Studio/" title="Visual Studio">Visual Studio</a>
+                        <a class="tag" href="/tags/Visual-Studio/"
+                           title="Visual Studio">Visual Studio</a>
                         
                     </div>
                 </section>
@@ -355,7 +370,7 @@ MPI: MPICH2 1.2</p>
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -366,7 +381,7 @@ MPI: MPICH2 1.2</p>
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -377,11 +392,11 @@ MPI: MPICH2 1.2</p>
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -390,13 +405,19 @@ MPI: MPICH2 1.2</p>
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -459,7 +480,7 @@ MPI: MPICH2 1.2</p>
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

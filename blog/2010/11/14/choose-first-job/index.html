@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/11/14/choose-first-job/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/职场感悟/" title="职场感悟">职场感悟</a>
+                        <a class="tag" href="/categories/职场感悟/"
+                           title="职场感悟">职场感悟</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/job/" title="job">job</a>
+                        <a class="tag" href="/tags/job/"
+                           title="job">job</a>
                         
                     </div>
                 </div>
@@ -206,7 +216,7 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>即将结束美好的象牙塔生活，进入社会这所更像大学的大学。万事开头难，在找工作中充分体会到了，第一次，要面临许多彷徨，许多抉择。找工作，你最看重的是什么？不同的人有不同的回答，工资待遇？兴趣爱好？专业对口？发展前景？工作地点？与很多同学关于工作方面的聊天以及身边同学找工作的标准给了我很多感触。声明:只能从我的专业–IT行业来感触一下了。</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>学校教育的强理论性以及生活中飞涨的物价促生了两种现象的产生：<br>
 1.不知道自己到底想做什么，比如有些人说想做软件开发，这个范围比较广，web开发，应用开发，windows开发，linux开发等等，未必都是自己感兴趣的，那么到底想做哪方面的开发？很多人想当然地说嵌入式，那么首先你接触过嵌入式吗，最起码要有一个基本的了解吧，不然怎么知道是自己感兴趣的呢，毛主席他老人家说的对，没有实践就没有发言权！举个例子，我在找工作的时候就想找个Linux下C开发，可是当你真在做这方面的工作时，又会发现和想象的不一样，不仅仅是有太多的专业知识没有涉入，太多的其他专业知识不懂，重新审视一下自己，会发现又彷徨起来，这是不是自己想做的？我要不要尝试一下其他方面？会产生这样的想法，只能说明还是没有明确自己到底想做什么！<br>
 2.工资才是第一参考参数，虽然大家都在说，不应该只看工资的，还要看职业发展前景什么什么的，但是多数人在找工作时工资往往成了选择工作的标准，原因我觉得有两方面吧，一个已在现象(1)中陈述，不知道自己到底想做什么，只知道想做开发，或者做技术销售，至于具体做什么无所谓，只要工资给的够高就行，为什么是够高而不是心理价位，别忘了人的欲望是无穷的…所以不管是Google、百度、腾讯等互联网公司，还是IBM、SAP、EMC等软件公司，还是阿朗、华为、中兴等通讯公司，只要工资高，能进去就进去。</p>
@@ -230,12 +240,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/11/16/thinkpad-win7-oem/" data-toggle="tooltip" data-placement="top" title="Thinkpad Win7之OEM">&larr; Previous Post</a>
+                        <a href="/blog/2010/11/16/thinkpad-win7-oem/" data-toggle="tooltip" data-placement="top"
+                           title="Thinkpad Win7之OEM">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/11/01/emotion-of-view-expo-2010/" data-toggle="tooltip" data-placement="top" title="走，排队，看电影">Next Post &rarr;</a>
+                        <a href="/blog/2010/11/01/emotion-of-view-expo-2010/" data-toggle="tooltip" data-placement="top"
+                           title="走，排队，看电影">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -276,7 +288,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/job/" title="job">job</a>
+                        <a class="tag" href="/tags/job/"
+                           title="job">job</a>
                         
                     </div>
                 </section>
@@ -348,7 +361,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -359,7 +372,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -370,11 +383,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -383,13 +396,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -452,7 +471,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

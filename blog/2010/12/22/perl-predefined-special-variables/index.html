@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/12/22/perl-predefined-special-variables/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/perl/" title="perl">perl</a>
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
-                        <a class="tag" href="/tags/variables/" title="variables">variables</a>
+                        <a class="tag" href="/tags/perl/"
+                           title="perl">perl</a>
                         
-                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        <a class="tag" href="/tags/variables/"
+                           title="variables">variables</a>
                         
                     </div>
                 </div>
@@ -212,13 +224,13 @@
                 <p>首先，这仅仅是一篇关于Perl内置特殊变量的笔记，为了便于自我查找学习~~~<br>
 其次，Google, Baidu, Bing等现有搜索引擎在符号搜索上还是不给力啊，是符号没有具体意义导致的吗？限定了条件也不行，如Google &quot;Perl $|&quot;也找不到关于$|的解释…<br>
 最后，之所以涉及到Perl的这个特殊变量，是因为在脚本中出现了这么个语句$|=2，之前没有接触过Perl，仅仅想知道这个语句的含义而已，所以就有了痛苦的上网的查找过程…</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>首先找到的是这么个列表，对每个特殊变量都有简要的解释…</p>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">   $-      当前页可打印的行数,属于Perl格式系统的一部分</span><br><span class="line">   $!      根据上下文内容返回错误号或者错误串</span><br><span class="line">   $”      列表分隔符</span><br><span class="line">   $#     打印数字时默认的数字输出格式</span><br><span class="line">   $$      Perl解释器的进程ID</span><br><span class="line">   $%     当前输出通道的当前页号</span><br><span class="line">   $&amp;amp;      与上个格式匹配的字符串</span><br><span class="line">   $(       当前进程的组ID</span><br><span class="line">   $)       当前进程的有效组ID</span><br><span class="line">   $*      设置<span class="number">1</span>表示处理多行格式.现在多以/<span class="keyword">s</span>和/<span class="keyword">m</span>修饰符取代之.</span><br><span class="line">   $,      当前输出字段分隔符</span><br><span class="line">   $.      上次阅读的文件的当前输入行号</span><br><span class="line">   $/      当前输入记录分隔符,默认情况是新行</span><br><span class="line">$:      字符设置,此后的字符串将被分开,以填充连续的字段.</span><br><span class="line">$;      在仿真多维数组时使用的分隔符.</span><br><span class="line">$?      返回上一个外部命令的状态</span><br><span class="line">$@     Perl解释器从<span class="keyword">eval</span>语句返回的错误消息</span><br><span class="line">$[      数组中第一个元素的索引号</span><br><span class="line">$      当前输出记录的分隔符</span><br><span class="line">$]      Perl解释器的子版本号</span><br><span class="line">$^     当前通道最上面的页面输出格式名字</span><br><span class="line">$^A   打印前用于保存格式化数据的变量</span><br><span class="line">$^D   调试标志的值</span><br><span class="line">$^E   在非UNIX环境中的操作系统扩展错误信息</span><br><span class="line">$^F   最大的文件捆述符数值</span><br><span class="line">$^H   由编译器激活的语法检查状态</span><br><span class="line">$^I   内置控制编辑器的值</span><br><span class="line">$^L   发送到输出通道的走纸换页符</span><br><span class="line">$^M   备用内存池的大小</span><br><span class="line">$^O   操作系统名</span><br><span class="line">$^P   指定当前调试值的内部变量</span><br><span class="line">$^R   正则表达式块的上次求值结果</span><br><span class="line">$^S   当前解释器状态</span><br><span class="line">$^T   从新世纪开始算起,脚步本以秒计算的开始运行的时间</span><br><span class="line">$^W   警告开关的当前值</span><br><span class="line">$^X   Perl二进制可执行代码的名字</span><br><span class="line">$_      默认的输入/输出和格式匹配空间</span><br><span class="line">$|      控制对当前选择的输出文件句柄的缓冲</span><br><span class="line">$~     当前报告格式的名字</span><br><span class="line">$`     在上个格式匹配信息前的字符串</span><br><span class="line">$’      在上个格式匹配信息后的字符串</span><br><span class="line">$+     与上个正则表达式搜索格式匹配的最后一个括号</span><br><span class="line">$&amp;<span class="keyword">lt</span>;;     当前执行解释器的用户的真实ID </span><br><span class="line">$&amp;<span class="keyword">lt</span>;digits&amp;<span class="keyword">gt</span>;      含有与上个匹配正则表达式对应括号结果 </span><br><span class="line">$=     当前页面可打印行的数目 </span><br><span class="line">$&amp;<span class="keyword">gt</span>;;     当前进程的有效用户ID</span><br><span class="line">$0     包含正在执行的脚本的文件名</span><br><span class="line">$ARGV 从默认的文件句柄中读取时的当前文件名</span><br><span class="line">%ENV 环境变量列表</span><br><span class="line">%INC 通过<span class="keyword">do</span>或<span class="keyword">require</span>包含的文件列表</span><br><span class="line">%SIG 信号列表及其处理方式</span><br><span class="line">@_ 传给子程序的参数列表</span><br><span class="line">@ARGV 传给脚本的命令行参数列表</span><br><span class="line">@INC 在导入模块时需要搜索的目录列表</span><br><span class="line">$-[<span class="number">0</span>]和$+[<span class="number">0</span>] 代表当前匹配的正则表达式在被匹配的字符串中的起始和终止的位置</span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">   $-      当前页可打印的行数,属于Perl格式系统的一部分</span><br><span class="line">   $!      根据上下文内容返回错误号或者错误串</span><br><span class="line">   $”      列表分隔符</span><br><span class="line">   $#     打印数字时默认的数字输出格式</span><br><span class="line">   $$      Perl解释器的进程ID</span><br><span class="line">   $%     当前输出通道的当前页号</span><br><span class="line">   $&amp;amp;      与上个格式匹配的字符串</span><br><span class="line">   $(       当前进程的组ID</span><br><span class="line">   $)       当前进程的有效组ID</span><br><span class="line">   $*      设置<span class="number">1</span>表示处理多行格式.现在多以/s和/m修饰符取代之.</span><br><span class="line">   $,      当前输出字段分隔符</span><br><span class="line">   $.      上次阅读的文件的当前输入行号</span><br><span class="line">   $/      当前输入记录分隔符,默认情况是新行</span><br><span class="line">$:      字符设置,此后的字符串将被分开,以填充连续的字段.</span><br><span class="line">$;      在仿真多维数组时使用的分隔符.</span><br><span class="line">$?      返回上一个外部命令的状态</span><br><span class="line">$@     Perl解释器从<span class="keyword">eval</span>语句返回的错误消息</span><br><span class="line">$[      数组中第一个元素的索引号</span><br><span class="line">$      当前输出记录的分隔符</span><br><span class="line">$]      Perl解释器的子版本号</span><br><span class="line">$^     当前通道最上面的页面输出格式名字</span><br><span class="line">$^A   打印前用于保存格式化数据的变量</span><br><span class="line">$^D   调试标志的值</span><br><span class="line">$^E   在非UNIX环境中的操作系统扩展错误信息</span><br><span class="line">$^F   最大的文件捆述符数值</span><br><span class="line">$^H   由编译器激活的语法检查状态</span><br><span class="line">$^I   内置控制编辑器的值</span><br><span class="line">$^L   发送到输出通道的走纸换页符</span><br><span class="line">$^M   备用内存池的大小</span><br><span class="line">$^O   操作系统名</span><br><span class="line">$^P   指定当前调试值的内部变量</span><br><span class="line">$^R   正则表达式块的上次求值结果</span><br><span class="line">$^S   当前解释器状态</span><br><span class="line">$^T   从新世纪开始算起,脚步本以秒计算的开始运行的时间</span><br><span class="line">$^W   警告开关的当前值</span><br><span class="line">$^X   Perl二进制可执行代码的名字</span><br><span class="line">$_      默认的输入/输出和格式匹配空间</span><br><span class="line">$|      控制对当前选择的输出文件句柄的缓冲</span><br><span class="line">$~     当前报告格式的名字</span><br><span class="line">$`     在上个格式匹配信息前的字符串</span><br><span class="line">$’      在上个格式匹配信息后的字符串</span><br><span class="line">$+     与上个正则表达式搜索格式匹配的最后一个括号</span><br><span class="line">$&amp;<span class="keyword">lt</span>;;     当前执行解释器的用户的真实ID </span><br><span class="line">$&amp;<span class="keyword">lt</span>;digits&amp;<span class="keyword">gt</span>;      含有与上个匹配正则表达式对应括号结果 </span><br><span class="line">$=     当前页面可打印行的数目 </span><br><span class="line">$&amp;<span class="keyword">gt</span>;;     当前进程的有效用户ID</span><br><span class="line">$0     包含正在执行的脚本的文件名</span><br><span class="line">$ARGV 从默认的文件句柄中读取时的当前文件名</span><br><span class="line">%ENV 环境变量列表</span><br><span class="line">%INC 通过<span class="keyword">do</span>或<span class="keyword">require</span>包含的文件列表</span><br><span class="line">%SIG 信号列表及其处理方式</span><br><span class="line">@_ 传给子程序的参数列表</span><br><span class="line">@ARGV 传给脚本的命令行参数列表</span><br><span class="line">@INC 在导入模块时需要搜索的目录列表</span><br><span class="line">$-[<span class="number">0</span>]和$+[<span class="number">0</span>] 代表当前匹配的正则表达式在被匹配的字符串中的起始和终止的位置</span><br></pre></td></tr></table></figure>
 <p>这个列表列举了可能是所有的特殊符号变量吧，但是一句话的解释，我看了还是不明就里。于是就找到了官方的详细解释(英文版)，篇幅很长，就不贴在这里了，网址如下：</p>
-<p>HTML格式：<a href="http://perldoc.perl.org/perlvar.html" target="_blank" rel="noopener">perlvar - Perl predefined variables </a><br>
-PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" rel="noopener">perlvar.pdf</a></p>
-<p>另外，在CU上找到了<a href="http://bbs.chinaunix.net/viewthread.php?tid=769567" target="_blank" rel="noopener">CU网友flw和chaoslawful翻译的中文版</a>，这应该是最原始的出处了吧。</p>
+<p>HTML格式：<a target="_blank" rel="noopener" href="http://perldoc.perl.org/perlvar.html">perlvar - Perl predefined variables </a><br>
+PDF格式下载：<a target="_blank" rel="noopener" href="http://perldoc.perl.org/perlvar.pdf">perlvar.pdf</a></p>
+<p>另外，在CU上找到了<a target="_blank" rel="noopener" href="http://bbs.chinaunix.net/viewthread.php?tid=769567">CU网友flw和chaoslawful翻译的中文版</a>，这应该是最原始的出处了吧。</p>
 
                 <hr>
                 
@@ -226,12 +238,14 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/01/13/pack-unpack-in-linux/" data-toggle="tooltip" data-placement="top" title="Linux下打包解包">&larr; Previous Post</a>
+                        <a href="/blog/2011/01/13/pack-unpack-in-linux/" data-toggle="tooltip" data-placement="top"
+                           title="Linux下打包解包">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/11/20/dhcp-relay-analysis/" data-toggle="tooltip" data-placement="top" title="DHCP Relay实现分析">Next Post &rarr;</a>
+                        <a href="/blog/2010/11/20/dhcp-relay-analysis/" data-toggle="tooltip" data-placement="top"
+                           title="DHCP Relay实现分析">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -272,11 +286,14 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/perl/" title="perl">perl</a>
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
-                        <a class="tag" href="/tags/variables/" title="variables">variables</a>
+                        <a class="tag" href="/tags/perl/"
+                           title="perl">perl</a>
                         
-                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        <a class="tag" href="/tags/variables/"
+                           title="variables">variables</a>
                         
                     </div>
                 </section>
@@ -348,7 +365,7 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -359,7 +376,7 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -370,11 +387,11 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -383,13 +400,19 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -452,7 +475,7 @@ PDF格式下载：<a href="http://perldoc.perl.org/perlvar.pdf" target="_blank" 
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

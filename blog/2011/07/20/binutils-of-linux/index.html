@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2011/07/20/binutils-of-linux/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/binutils/" title="binutils">binutils</a>
+                        <a class="tag" href="/tags/binutils/"
+                           title="binutils">binutils</a>
                         
-                        <a class="tag" href="/tags/decompile/" title="decompile">decompile</a>
+                        <a class="tag" href="/tags/decompile/"
+                           title="decompile">decompile</a>
                         
                     </div>
                 </div>
@@ -209,7 +221,7 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>The <a href="http://www.gnu.org/s/binutils/" target="_blank" rel="noopener">GNU Binutils</a> are a collection of binary tools. The main ones are:</p>
+                <p>The <a target="_blank" rel="noopener" href="http://www.gnu.org/s/binutils/">GNU Binutils</a> are a collection of binary tools. The main ones are:</p>
 <ul>
 <li><strong>ld</strong> - the GNU linker.</li>
 <li><strong>as</strong> - the GNU assembler.</li>
@@ -234,17 +246,17 @@
 <li><strong>windmc</strong> - A Windows compatible message compiler.</li>
 <li><strong>windres</strong> - A compiler for Windows resource files.</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 <p>Most of these programs use <strong>BFD</strong>, the Binary File Descriptor library, to do low-level manipulation. Many of them also use the <strong>opcodes</strong> library to assemble and disassemble machine instructions.</p>
-<p>The binutils have been ported to most major Unix variants as well as Wintel systems, and their main reason for existence is to give the <a href="http://www.gnu.org/gnu/gnu-history.html" target="_blank" rel="noopener">GNU system</a> (and <a href="http://www.gnu.org/gnu/linux-and-gnu.html" target="_blank" rel="noopener">GNU/Linux</a>) the facility to compile and link programs.</p>
-<p>The detail introduction and use guide is <a href="http://sourceware.org/binutils/docs-2.21" target="_blank" rel="noopener">documentation for binutils 2.21</a>.</p>
+<p>The binutils have been ported to most major Unix variants as well as Wintel systems, and their main reason for existence is to give the <a target="_blank" rel="noopener" href="http://www.gnu.org/gnu/gnu-history.html">GNU system</a> (and <a target="_blank" rel="noopener" href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a>) the facility to compile and link programs.</p>
+<p>The detail introduction and use guide is <a target="_blank" rel="noopener" href="http://sourceware.org/binutils/docs-2.21">documentation for binutils 2.21</a>.</p>
 <p>在Linux下，可执行文件即是目标文件，一般情况下可通过以下三个命令查看反汇编信息：</p>
 <p>nm命令列出目标文件的所有符号，如：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$nm</span> a.out | more</span><br></pre></td></tr></table></figure>
 <p>objdump命令列出目标文件的详细汇编信息</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$objdump</span> -S a.out | more</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$objdump</span> -S a.out | more </span><br></pre></td></tr></table></figure>
 <p>readelf 是列出文件的ELF格式的内容</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$readelf</span> --debug-dump a.out | more</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$readelf</span> --debug-dump a.out | more </span><br></pre></td></tr></table></figure>
 <p>关于这三个命令的详细参数，以及其他命令的使用可以参看上面的文档binutils 2.21。反汇编文件这里没有列出，主要是个人觉得分析起来有点难。反汇编的信息对于了解程序的架构很有帮助，但是很难得到具体的程序信息，我本想查看程序返回值，看了半天没有结论。。。</p>
 
                 <hr>
@@ -253,12 +265,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/07/27/standard-predefined-macros-of-c/" data-toggle="tooltip" data-placement="top" title="C标准预定义宏">&larr; Previous Post</a>
+                        <a href="/blog/2011/07/27/standard-predefined-macros-of-c/" data-toggle="tooltip" data-placement="top"
+                           title="C标准预定义宏">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/07/09/ssh-nohup-screen/" data-toggle="tooltip" data-placement="top" title="远程会话管理: ssh, nohup, screen">Next Post &rarr;</a>
+                        <a href="/blog/2011/07/09/ssh-nohup-screen/" data-toggle="tooltip" data-placement="top"
+                           title="远程会话管理: ssh, nohup, screen">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -299,11 +313,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/binutils/" title="binutils">binutils</a>
+                        <a class="tag" href="/tags/binutils/"
+                           title="binutils">binutils</a>
                         
-                        <a class="tag" href="/tags/decompile/" title="decompile">decompile</a>
+                        <a class="tag" href="/tags/decompile/"
+                           title="decompile">decompile</a>
                         
                     </div>
                 </section>
@@ -375,7 +392,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -386,7 +403,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -397,11 +414,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -410,13 +427,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -479,7 +502,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

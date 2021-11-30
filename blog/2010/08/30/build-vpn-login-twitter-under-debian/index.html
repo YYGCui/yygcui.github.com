@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2010/08/30/build-vpn-login-twitter-under-debian/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,17 +189,22 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/debian/" title="debian">debian</a>
+                        <a class="tag" href="/tags/debian/"
+                           title="debian">debian</a>
                         
-                        <a class="tag" href="/tags/twitter/" title="twitter">twitter</a>
+                        <a class="tag" href="/tags/twitter/"
+                           title="twitter">twitter</a>
                         
-                        <a class="tag" href="/tags/vpn/" title="vpn">vpn</a>
+                        <a class="tag" href="/tags/vpn/"
+                           title="vpn">vpn</a>
                         
                     </div>
                 </div>
@@ -215,8 +228,8 @@
 <p>如何登录到twitter？</p>
 <p>1.如果你在墙外，那么恭喜你，精神与肉体都穿越了，你可以直接登录到twitter。<br>
 2.如果你在墙内，那么同样恭喜你，伟大的GFW保护你免受外界的侵害，同时也加强了你的网络知识，科研能力，动手能力…于是各种登录到twitter方法出现了…</p>
-<a id="more"></a>
-<p>如果你想直接登录，VPN, SSH等proxy给你强力保障，哦，还有一个tor。SSH Tunneling proxy没有用过，可以参考<a href="http://wiki.wowubuntu.com/blog/ubuntu_ssh_tunneling" target="_blank" rel="noopener">《Ubuntu 下如何使用 SSH Tunneling Proxy ?》</a>，如果你觉得还是不给力的，可以Google一下ssh proxy，网上资料很多；其实之前在windows下也不用VPN的，一般用freedoor (需穿越下载)，因为当开启VPN时，原来登录的IM像fetion, QQ等都会掉线，而这些在日常交流中使用还是满多的，极不方便～～～</p>
+<span id="more"></span>
+<p>如果你想直接登录，VPN, SSH等proxy给你强力保障，哦，还有一个tor。SSH Tunneling proxy没有用过，可以参考<a target="_blank" rel="noopener" href="http://wiki.wowubuntu.com/blog/ubuntu_ssh_tunneling">《Ubuntu 下如何使用 SSH Tunneling Proxy ?》</a>，如果你觉得还是不给力的，可以Google一下ssh proxy，网上资料很多；其实之前在windows下也不用VPN的，一般用freedoor (需穿越下载)，因为当开启VPN时，原来登录的IM像fetion, QQ等都会掉线，而这些在日常交流中使用还是满多的，极不方便～～～</p>
 <p>debian下如何建立一个VPN连接呢，其实也很简单，有两种软件程序可以使用吧，一是openVPN，这个貌似使用配置没那么人性化，没有研究过；一是pptp-linux，pptp是VPN的一种连接方式，pptp-linux是客户端程序，安装方法如下：</p>
 <p>1)直接在Synaptic Package Manager中Search pptp，选择network-manager-pptp, network-manager-pptp-gnome, pptp-linux这三个软件包安装。</p>
 <p><img src="http://farm5.static.flickr.com/4121/4937917136_ceb6c16aee.jpg" alt="VPN"></p>
@@ -224,39 +237,39 @@
 [bash]$sudo apt-get install network-manager-pptp network-manager-pptp-gnome pptp-linux[/bash]<br>
 接下来的配置就比较简单了，点击右上角的网络图标，里面有个VPN Connections选项，然后里面有个子选项Configure VPN…，第一次建立的话，直接弹出create向导，根据向导很简单的就可以建立了，如下图</p>
 <p><img src="http://farm5.static.flickr.com/4114/4941444276_fb438ba419.jpg" alt="VPN"></p>
-<p>VPN帐号你可以买一个，也可以使用免费的，花钱的有速度保障，一般流量较大，免费的流量比较少，速度还可以吧。我使用的是<a href="http://macrovpn.com/" target="_blank" rel="noopener">Macrovpn</a>的免费版，每月2GB的流量。<br>
+<p>VPN帐号你可以买一个，也可以使用免费的，花钱的有速度保障，一般流量较大，免费的流量比较少，速度还可以吧。我使用的是<a target="_blank" rel="noopener" href="http://macrovpn.com/">Macrovpn</a>的免费版，每月2GB的流量。<br>
 建立好VPN连接，就可以直接访问twitter了。</p>
-<p><strong>免费VPN列表</strong> (来自<a href="http://www.avinashtech.com/internet/15-best-free-vpn-for-secure-anonymous-surfing/" target="_blank" rel="noopener">这里</a>和<a href="http://techpp.com/2009/07/09/top-5-free-vpn-clients/" target="_blank" rel="noopener">这里</a>)</p>
+<p><strong>免费VPN列表</strong> (来自<a target="_blank" rel="noopener" href="http://www.avinashtech.com/internet/15-best-free-vpn-for-secure-anonymous-surfing/">这里</a>和<a target="_blank" rel="noopener" href="http://techpp.com/2009/07/09/top-5-free-vpn-clients/">这里</a>)</p>
 <p>1.客户端 (使用专用客户端登录，大多数仅支持windows)</p>
-<p>(1)<a href="https://secure.logmein.com/US/products/hamachi2/default.aspx" target="_blank" rel="noopener">LOGMEIN HAMACHI</a>: 对于非商业用户和个人用户完全免费，提供SSL链接<br>
-(2)<a href="https://www.ultravpn.fr/" target="_blank" rel="noopener">ULTRAVPN</a>: 基于OpenVPN的C/S架构的SSL VPN，悲剧的是访问网站需穿越<br>
-(3)<a href="http://alonweb.com/" target="_blank" rel="noopener">ALONWEB</a>: 提供荷兰和巴拿马的VPN服务器，1GB/月，最快2Mb/s，悲剧同上<br>
-(4)<a href="http://www.packetix.net/en/" target="_blank" rel="noopener">PACKETIX.NET</a>: 日本提供的VPN服务，其online test服务也就是免费VPN<br>
-(5)<a href="http://www.cyberghostvpn.com/files/download.php" target="_blank" rel="noopener">CYBERGHOST</a>: 德国提供的VPN，免费版10GB/月，可惜只有window客户端。<br>
-(6)<a href="http://gpass1.com/gpass/" target="_blank" rel="noopener">GPASS</a>: offers Internet solutions for information freedom in China and other regions.悲剧网站被墙(也许服务可用，没有测试)<br>
-(7)<a href="http://www.hotspotshield.com/" target="_blank" rel="noopener">ANCHORFREE HOTSPOT SHIELD</a>: 悲剧同上(也许服务可用，没有测试)<br>
-(8)<a href="http://www.projectloki.com/" target="_blank" rel="noopener">LOKI NETWORK PROJECT FREE VPN SERVICE</a>: 悲剧同上(也许服务可用，没有测试)<br>
-(9)<a href="http://thefreevpn.com/" target="_blank" rel="noopener">FREEVPN BY WSC</a>: 无限制，支持windows2000–7以及iphone&amp;ipad<br>
-(10)<a href="http://www.acevpn.com/" target="_blank" rel="noopener">ACEVPN</a>: 免费服务采用邀请制，具体见官网，客户端涵盖Windows, Mac, Linux, iphone/ipad, routers等几乎所有系统</p>
+<p>(1)<a target="_blank" rel="noopener" href="https://secure.logmein.com/US/products/hamachi2/default.aspx">LOGMEIN HAMACHI</a>: 对于非商业用户和个人用户完全免费，提供SSL链接<br>
+(2)<a target="_blank" rel="noopener" href="https://www.ultravpn.fr/">ULTRAVPN</a>: 基于OpenVPN的C/S架构的SSL VPN，悲剧的是访问网站需穿越<br>
+(3)<a target="_blank" rel="noopener" href="http://alonweb.com/">ALONWEB</a>: 提供荷兰和巴拿马的VPN服务器，1GB/月，最快2Mb/s，悲剧同上<br>
+(4)<a target="_blank" rel="noopener" href="http://www.packetix.net/en/">PACKETIX.NET</a>: 日本提供的VPN服务，其online test服务也就是免费VPN<br>
+(5)<a target="_blank" rel="noopener" href="http://www.cyberghostvpn.com/files/download.php">CYBERGHOST</a>: 德国提供的VPN，免费版10GB/月，可惜只有window客户端。<br>
+(6)<a target="_blank" rel="noopener" href="http://gpass1.com/gpass/">GPASS</a>: offers Internet solutions for information freedom in China and other regions.悲剧网站被墙(也许服务可用，没有测试)<br>
+(7)<a target="_blank" rel="noopener" href="http://www.hotspotshield.com/">ANCHORFREE HOTSPOT SHIELD</a>: 悲剧同上(也许服务可用，没有测试)<br>
+(8)<a target="_blank" rel="noopener" href="http://www.projectloki.com/">LOKI NETWORK PROJECT FREE VPN SERVICE</a>: 悲剧同上(也许服务可用，没有测试)<br>
+(9)<a target="_blank" rel="noopener" href="http://thefreevpn.com/">FREEVPN BY WSC</a>: 无限制，支持windows2000–7以及iphone&amp;ipad<br>
+(10)<a target="_blank" rel="noopener" href="http://www.acevpn.com/">ACEVPN</a>: 免费服务采用邀请制，具体见官网，客户端涵盖Windows, Mac, Linux, iphone/ipad, routers等几乎所有系统</p>
 <ol start="2">
 <li>无客户端 (可使用系统自建客户端)</li>
 </ol>
-<p>(1)<a href="http://www.macrovpn.com" target="_blank" rel="noopener">MacroVPN</a>: 免费版2G/月，提供美国，法国，意大利等地VPN。亲测可用<br>
-(2)<a href="http://itshidden.com/" target="_blank" rel="noopener">ITSHIDDEN</a>: 无流量限制，但是我测试连接不上<br>
-(3)<a href="https://www.vpnreactor.com/" target="_blank" rel="noopener">VPNREACTOR</a>: 30分钟断线限制，也就是30分钟要重连一次，但是我测试连不上。</p>
+<p>(1)<a target="_blank" rel="noopener" href="http://www.macrovpn.com">MacroVPN</a>: 免费版2G/月，提供美国，法国，意大利等地VPN。亲测可用<br>
+(2)<a target="_blank" rel="noopener" href="http://itshidden.com/">ITSHIDDEN</a>: 无流量限制，但是我测试连接不上<br>
+(3)<a target="_blank" rel="noopener" href="https://www.vpnreactor.com/">VPNREACTOR</a>: 30分钟断线限制，也就是30分钟要重连一次，但是我测试连不上。</p>
 <p>当然也有很多优秀的客户端可以使用，如</p>
 <p>firefox下的Echofon (前身是twitterfox), Yoono(这个是Twitter, Facebook, Linkedin, Youtube等等的整合软件)。<br>
 chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
 <p>还有一些优秀的web应用，如Dabr, Netputer，可直接架设web客户端。</p>
 <p>移动客户端，如BlackBerry上的Ubertwitter，S60上的Gravity，还有大多数手机通用的可直接穿越的神器－－Snaptu。</p>
 <p><strong>9月1号</strong>，twitter彻底关闭了basic auth验证，全面启用Oauth验证，现给出一些可Oauth验证的api proxy搭建方法/客户端：</p>
-<p>(1)<a href="http://code.google.com/p/gtap/" target="_blank" rel="noopener">GTAP</a>+GAE: 只是搭建了一个Oauth验证proxy，需要配合客户端使用，如<a href="http://www.mixero.com/" target="_blank" rel="noopener">Mixero</a>，不支持自带Oauth验证的客户端，如chromed bird。一些问题讨论见<a href="http://code.google.com/p/gtap/issues/list" target="_blank" rel="noopener">这里</a>。<br>
-(2)<a href="http://code.google.com/p/twip/" target="_blank" rel="noopener">Twip</a>+PHP: Twip是可搭建于PHP空间上的oauth代理，具体搭建方法Google之。<br>
-(3)<a href="http://code.google.com/p/twitter-oauth-login-proxy/" target="_blank" rel="noopener">twitter-oauth-login-proxy</a>: GAE+JAVA或者PHP两个版本，<a href="http://twitterlab.info/t/login.php" target="_blank" rel="noopener">web客户端</a>。<br>
-(4)<a href="http://code.google.com/p/dabr/" target="_blank" rel="noopener">Dabr</a>+PHP: 可直接搭建客户端，<a href="http://dabr.co.uk/" target="_blank" rel="noopener">Dabr主页</a>，可使用<a href="http://twitter.com/showfom" target="_blank" rel="noopener">@showfom</a>搭建的<a href="http://dabr.in/" target="_blank" rel="noopener">手机web客户端</a><br>
-(5)<a href="http://code.google.com/p/netputweets/" target="_blank" rel="noopener">奶瓶腿</a>+PHP: 类Dabr支持Oauth验证，可自架设客户端，作者<a href="http://orzdream.com/" target="_blank" rel="noopener">博客</a>，<a href="https://t.orzdream.com/" target="_blank" rel="noopener">web客户端</a>，手机客户端：一键奶瓶腿的<a href="http://www.berryon.com/blackberry/972.htm" target="_blank" rel="noopener">黑莓版</a>和<a href="http://dang.yo2.cn/archives/639808" target="_blank" rel="noopener">S60 V3版</a>，详细参看<a href="http://orzdream.com/2009/08/netputweets-source/" target="_blank" rel="noopener">这里</a>。<br>
-(6)<a href="http://itweet.net/" target="_blank" rel="noopener">itweet</a>:&quot;the best interface for using Twitter on the iPhone or the Web! &quot;<br>
-(7)<a href="https://tuite.im/" target="_blank" rel="noopener">敏感词</a>: 一个很流行的web客户端。</p>
+<p>(1)<a target="_blank" rel="noopener" href="http://code.google.com/p/gtap/">GTAP</a>+GAE: 只是搭建了一个Oauth验证proxy，需要配合客户端使用，如<a target="_blank" rel="noopener" href="http://www.mixero.com/">Mixero</a>，不支持自带Oauth验证的客户端，如chromed bird。一些问题讨论见<a target="_blank" rel="noopener" href="http://code.google.com/p/gtap/issues/list">这里</a>。<br>
+(2)<a target="_blank" rel="noopener" href="http://code.google.com/p/twip/">Twip</a>+PHP: Twip是可搭建于PHP空间上的oauth代理，具体搭建方法Google之。<br>
+(3)<a target="_blank" rel="noopener" href="http://code.google.com/p/twitter-oauth-login-proxy/">twitter-oauth-login-proxy</a>: GAE+JAVA或者PHP两个版本，<a target="_blank" rel="noopener" href="http://twitterlab.info/t/login.php">web客户端</a>。<br>
+(4)<a target="_blank" rel="noopener" href="http://code.google.com/p/dabr/">Dabr</a>+PHP: 可直接搭建客户端，<a target="_blank" rel="noopener" href="http://dabr.co.uk/">Dabr主页</a>，可使用<a target="_blank" rel="noopener" href="http://twitter.com/showfom">@showfom</a>搭建的<a target="_blank" rel="noopener" href="http://dabr.in/">手机web客户端</a><br>
+(5)<a target="_blank" rel="noopener" href="http://code.google.com/p/netputweets/">奶瓶腿</a>+PHP: 类Dabr支持Oauth验证，可自架设客户端，作者<a target="_blank" rel="noopener" href="http://orzdream.com/">博客</a>，<a target="_blank" rel="noopener" href="https://t.orzdream.com/">web客户端</a>，手机客户端：一键奶瓶腿的<a target="_blank" rel="noopener" href="http://www.berryon.com/blackberry/972.htm">黑莓版</a>和<a target="_blank" rel="noopener" href="http://dang.yo2.cn/archives/639808">S60 V3版</a>，详细参看<a target="_blank" rel="noopener" href="http://orzdream.com/2009/08/netputweets-source/">这里</a>。<br>
+(6)<a target="_blank" rel="noopener" href="http://itweet.net/">itweet</a>:&quot;the best interface for using Twitter on the iPhone or the Web! &quot;<br>
+(7)<a target="_blank" rel="noopener" href="https://tuite.im/">敏感词</a>: 一个很流行的web客户端。</p>
 <p>以上5种搭建方法，可以自架设 (安全性考虑)，也可以使用别人已架设好的，尤其是Dabr和奶瓶腿，如果信得过的话，完全可以使用已架设好的客户端。关于如何架设，如何使用以及如何找到已架设好的，请使用伟大的Google之。</p>
 
                 <hr>
@@ -265,12 +278,14 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/09/12/job-foreign-state-private/" data-toggle="tooltip" data-placement="top" title="实习与就业：外企？国企？私企？">&larr; Previous Post</a>
+                        <a href="/blog/2010/09/12/job-foreign-state-private/" data-toggle="tooltip" data-placement="top"
+                           title="实习与就业：外企？国企？私企？">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/08/22/install-gcc-4-5-1-in-debian-lenny/" data-toggle="tooltip" data-placement="top" title="debian lenny编译安装GCC 4.5.1">Next Post &rarr;</a>
+                        <a href="/blog/2010/08/22/install-gcc-4-5-1-in-debian-lenny/" data-toggle="tooltip" data-placement="top"
+                           title="debian lenny编译安装GCC 4.5.1">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -311,13 +326,17 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Linux/" title="Linux">Linux</a>
+                        <a class="tag" href="/tags/Linux/"
+                           title="Linux">Linux</a>
                         
-                        <a class="tag" href="/tags/debian/" title="debian">debian</a>
+                        <a class="tag" href="/tags/debian/"
+                           title="debian">debian</a>
                         
-                        <a class="tag" href="/tags/twitter/" title="twitter">twitter</a>
+                        <a class="tag" href="/tags/twitter/"
+                           title="twitter">twitter</a>
                         
-                        <a class="tag" href="/tags/vpn/" title="vpn">vpn</a>
+                        <a class="tag" href="/tags/vpn/"
+                           title="vpn">vpn</a>
                         
                     </div>
                 </section>
@@ -389,7 +408,7 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -400,7 +419,7 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -411,11 +430,11 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -424,13 +443,19 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -493,7 +518,7 @@ chrome下的Chromed Bird, Chrowety, Metrist, Yoono。</p>
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

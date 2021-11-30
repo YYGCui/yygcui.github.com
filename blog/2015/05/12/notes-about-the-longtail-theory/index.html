@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2015/05/12/notes-about-the-longtail-theory/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/读书笔记/" title="读书笔记">读书笔记</a>
+                        <a class="tag" href="/categories/读书笔记/"
+                           title="读书笔记">读书笔记</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/longtail/" title="longtail">longtail</a>
+                        <a class="tag" href="/tags/longtail/"
+                           title="longtail">longtail</a>
                         
-                        <a class="tag" href="/tags/长尾理论/" title="长尾理论">长尾理论</a>
+                        <a class="tag" href="/tags/长尾理论/"
+                           title="长尾理论">长尾理论</a>
                         
-                        <a class="tag" href="/tags/读书笔记/" title="读书笔记">读书笔记</a>
+                        <a class="tag" href="/tags/读书笔记/"
+                           title="读书笔记">读书笔记</a>
                         
                     </div>
                 </div>
@@ -212,11 +224,11 @@
                 <h2 id="80-20法则"><a class="header-anchor" href="#80-20法则"></a>80/20法则</h2>
 <p>传统经济中，经济行为通常满足80/20法则，例如20%的产品创造了80%的销售额。这20%也就是所谓的热门产品。</p>
 <blockquote>
-<p><a href="http://book.douban.com/subject/3038761/" title="《80/20法则》" target="_blank" rel="noopener">《80/20法则》</a>认为，少量的原因、投入和付出将获得大量的结果、产出和回报。<br>
+<p><a target="_blank" rel="noopener" href="http://book.douban.com/subject/3038761/" title="《80/20法则》">《80/20法则》</a>认为，少量的原因、投入和付出将获得大量的结果、产出和回报。<br>
 从该法则可以看出，在原因与结果、投入与产出、付出与回报之间存在着一种内在的失衡。</p>
 </blockquote>
-<a id="more"></a>
-<h2 id="热门经济学"><a class="header-anchor" href="#热门经济学"></a>热门经济学</h2>
+<h2 id="more-热门经济学"><a class="header-anchor" href="#more-热门经济学"></a><span id="more"></span><br>
+热门经济学</h2>
 <p>热门之所以存在，是因为供给匮乏，我们没有足够的空间为每一个人提供每一样东西。如果只有那么几个货架、几个波段，唯一明智的做法就是把它们留给最热门的东西。</p>
 <h2 id="地理和物理的限制"><a class="header-anchor" href="#地理和物理的限制"></a>地理和物理的限制</h2>
 <p>热门是怎么产生的呢，热门产品是被大众普遍喜爱的产品。大众之所以体现出一定共性，是因为选择比较少。与其说是大众热门，不如说大众被热门。</p>
@@ -238,7 +250,7 @@
 产品应有尽有，消费者如何快速找到想要的小众产品，离不开搜索引擎的帮助。</p>
 <h2 id="利基市场"><a class="header-anchor" href="#利基市场"></a>利基市场</h2>
 <blockquote><p>是指由已有市场绝对优势的企业所忽略的某些细分市场并且在此市场尚未有完善的供应服务。一般由较小的产品市场并具有持续发展的潜力中一些需要且尚未被满足的族群消费者所组成为了满足特定的市场需求，价格区间，产品质量，针对细分后的产品进入这个小型市场且有盈利的基础。经由专业化的经营将品牌意识灌输到该特定消费者族群中逐渐形成该族群的领导品牌。</p>
-<footer><strong>利基市场</strong><cite><a href="http://zh.wikipedia.org/wiki/%E5%88%A9%E5%9F%BA%E5%B8%82%E5%9C%BA" target="_blank" rel="noopener">维基百科</a></cite></footer></blockquote>
+<footer><strong>利基市场</strong><cite><a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/%E5%88%A9%E5%9F%BA%E5%B8%82%E5%9C%BA">维基百科</a></cite></footer></blockquote>
 <p>利基市场，从维基百科定义来看，也即长尾经济，通过发掘或扩展已有市场的长尾市场，获取特定群体的青睐。</p>
 <p>例如豆瓣，面向文艺青年的社区</p>
 <p>例如途牛，在携程大旅游平台下发展在线旅游。</p>
@@ -252,12 +264,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/07/22/microservices/" data-toggle="tooltip" data-placement="top" title="微服务">&larr; Previous Post</a>
+                        <a href="/blog/2015/07/22/microservices/" data-toggle="tooltip" data-placement="top"
+                           title="微服务">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2013/12/01/tips-for-octopress/" data-toggle="tooltip" data-placement="top" title="tips for octopress">Next Post &rarr;</a>
+                        <a href="/blog/2013/12/01/tips-for-octopress/" data-toggle="tooltip" data-placement="top"
+                           title="tips for octopress">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -276,7 +290,9 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#80-20法则"><span class="toc-text">80/20法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#热门经济学"><span class="toc-text">热门经济学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#地理和物理的限制"><span class="toc-text">地理和物理的限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#丰饶经济学"><span class="toc-text">丰饶经济学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#长尾无处不在"><span class="toc-text">长尾无处不在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利基市场"><span class="toc-text">利基市场</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#80-20%E6%B3%95%E5%88%99"><span class="toc-text">80&#x2F;20法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#more-%E7%83%AD%E9%97%A8%E7%BB%8F%E6%B5%8E%E5%AD%A6"><span class="toc-text">
+
+热门经济学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E7%90%86%E5%92%8C%E7%89%A9%E7%90%86%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-text">地理和物理的限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B0%E9%A5%B6%E7%BB%8F%E6%B5%8E%E5%AD%A6"><span class="toc-text">丰饶经济学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E5%B0%BE%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8"><span class="toc-text">长尾无处不在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E5%9F%BA%E5%B8%82%E5%9C%BA"><span class="toc-text">利基市场</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -298,11 +314,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/longtail/" title="longtail">longtail</a>
+                        <a class="tag" href="/tags/longtail/"
+                           title="longtail">longtail</a>
                         
-                        <a class="tag" href="/tags/长尾理论/" title="长尾理论">长尾理论</a>
+                        <a class="tag" href="/tags/长尾理论/"
+                           title="长尾理论">长尾理论</a>
                         
-                        <a class="tag" href="/tags/读书笔记/" title="读书笔记">读书笔记</a>
+                        <a class="tag" href="/tags/读书笔记/"
+                           title="读书笔记">读书笔记</a>
                         
                     </div>
                 </section>
@@ -374,7 +393,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -385,7 +404,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -396,11 +415,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -409,13 +428,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -478,7 +503,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

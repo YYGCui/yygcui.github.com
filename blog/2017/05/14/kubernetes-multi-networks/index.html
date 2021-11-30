@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2017/05/14/kubernetes-multi-networks/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        <a class="tag" href="/tags/kubernetes/"
+                           title="kubernetes">kubernetes</a>
                         
-                        <a class="tag" href="/tags/flannel/" title="flannel">flannel</a>
+                        <a class="tag" href="/tags/flannel/"
+                           title="flannel">flannel</a>
                         
-                        <a class="tag" href="/tags/multi-networks/" title="multi-networks">multi-networks</a>
+                        <a class="tag" href="/tags/multi-networks/"
+                           title="multi-networks">multi-networks</a>
                         
                     </div>
                 </div>
@@ -212,10 +224,10 @@
                 <p>某些场景下，我们需要多网络的支持，如<code>eth0</code>用于业务功能，<code>eth1</code>用于配置管理功能，那么<code>kubernetes</code>下该如何实现呢？</p>
 <a href="/blog/2017/04/30/kubernetes-network/" title="上一篇">上一篇</a> 我们着重分析了各层级之间网络通信的方式，以及内外网之间的网络通信，这些通信方式的探讨都是基于单一网络的。
 <p><code>kubernetes</code>网络默认只支持单一网络，使用<code>noop</code>网络插件。<code>kubernetes</code>网络是以<code>Plugin</code>的方式实现的，它支持符合<code>CNI</code>规范的插件，通过<code>--network-plugin=</code>来指定，这就意味着我们可以定制网络方案。</p>
-<p>关于<code>kubernets</code>网络插件，<a href="https://kubernetes.io/docs/concepts/cluster-administration/network-plugins/" target="_blank" rel="noopener">官方文档</a>有详细的描述，这里简单介绍一下:</p>
+<p>关于<code>kubernets</code>网络插件，<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/cluster-administration/network-plugins/">官方文档</a>有详细的描述，这里简单介绍一下:</p>
 <p>网络插件还处于<code>alpha</code>阶段，其内容会经常发生变化。目前支持两种网络插件</p>
 <ul>
-<li>CNI plugin: 符合<code>CNI</code>规范的插件，其规范请参看<a href="https://github.com/containernetworking/cni/blob/master/SPEC.md" target="_blank" rel="noopener">官方文档</a>。</li>
+<li>CNI plugin: 符合<code>CNI</code>规范的插件，其规范请参看<a target="_blank" rel="noopener" href="https://github.com/containernetworking/cni/blob/master/SPEC.md">官方文档</a>。</li>
 <li>kubenet plugin：这个可看作是<code>kubernentes</code>官方提供的符合CNI规范的插件，基于<code>cbr0</code>，使用<code>CNI</code>的<code>bridge</code>和<code>local-host</code>插件。</li>
 </ul>
 <p>那么，要实现定制化的网络，只需按<code>CNI</code>规范实现<code>Add</code>和<code>Remove</code>接口即可。<code>kubernetes</code>多网络方案就是以<code>CNI</code>插件的方式实现的。以下操作基于<code>Ubuntu 14.04</code>，除<code>etcd</code>操作外，其他操作所有节点都要执行。</p>
@@ -224,11 +236,11 @@
 <li>已部署多节点<code>kubernetes</code>集群，<code>overlay</code>网络使用<code>flannel</code></li>
 <li>已安装<code>golang</code>编译环境</li>
 <li>部署节点上已安装<code>bridge-utils</code>, <code>conntrack</code>和<code>nsenter</code></li>
-<li>从<code>github</code>上下载<a href="https://github.com/Intel-Corp/multus-cni" target="_blank" rel="noopener">multus-cni</a>，该插件实现多网络功能，具体网络功能由以下插件实现</li>
-<li>[可选]从<code>github</code>上下载<a href="https://github.com/Intel-Corp/sriov-cni" target="_blank" rel="noopener">sriov-cni</a>，该插件实现SR-IOV功能</li>
-<li>从<code>github</code>上下载<a href="https://github.com/containernetworking/cni" target="_blank" rel="noopener">cni</a>，基础插件库，包含<code>bridge</code>, <code>flannel</code>, <code>ipam</code>等</li>
+<li>从<code>github</code>上下载<a target="_blank" rel="noopener" href="https://github.com/Intel-Corp/multus-cni">multus-cni</a>，该插件实现多网络功能，具体网络功能由以下插件实现</li>
+<li>[可选]从<code>github</code>上下载<a target="_blank" rel="noopener" href="https://github.com/Intel-Corp/sriov-cni">sriov-cni</a>，该插件实现SR-IOV功能</li>
+<li>从<code>github</code>上下载<a target="_blank" rel="noopener" href="https://github.com/containernetworking/cni">cni</a>，基础插件库，包含<code>bridge</code>, <code>flannel</code>, <code>ipam</code>等</li>
 </ul>
-<h2 id="cni插件"><a class="header-anchor" href="#cni插件"></a>CNI插件</h2>
+<h2 id="CNI插件"><a class="header-anchor" href="#CNI插件"></a>CNI插件</h2>
 <p>将<code>multus-cni</code>, <code>sriov-cni</code>, <code>cni</code>放在<code>go</code>编译目录下，如<code>~/go/src/</code>下，分别编译三个插件，在各自目录下执行<code>./build.sh</code>。编译成功后，生成的二进制文件位于<code>./bin</code>下。</p>
 <p>创建目录<code>/opt/cni/bin</code>，将编译好的二进制文件拷贝到该目录下。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p /opt/cni/bin</span><br><span class="line"><span class="built_in">cd</span> ~/go/src/multus-cni/ &amp;&amp; ./build.sh</span><br><span class="line">cp ./bin/* /opt/cni/bin/</span><br><span class="line"><span class="built_in">cd</span> ~/go/src/sriov-cni/ &amp;&amp; ./build.sh</span><br><span class="line">cp ./bin/* /opt/cni/bin/</span><br><span class="line"><span class="built_in">cd</span> ~/go/src/cni/ &amp;&amp; ./build.sh</span><br><span class="line">cp ./bin/* /opt/cni/bin/</span><br></pre></td></tr></table></figure>
@@ -249,24 +261,24 @@
 <ol start="4">
 <li>将该网络段注册到<code>etcd</code>，注意使用不同的前缀，如原网络使用的是<code>/coreos.com/network/</code>，这里使用<code>/k8s/network2/</code>。再者默认的<code>vlan index</code>是1，所以这里<code>VNI</code>为2</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/opt/bin/etcdctl <span class="built_in">set</span> /k8s/network2/config <span class="string">'&#123; "Network": "173.17.0.0/16", "Backend": &#123; "Type": "vxlan", "VNI": 2 &#125; &#125;'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/opt/bin/etcdctl <span class="built_in">set</span> /k8s/network2/config <span class="string">&#x27;&#123; &quot;Network&quot;: &quot;173.17.0.0/16&quot;, &quot;Backend&quot;: &#123; &quot;Type&quot;: &quot;vxlan&quot;, &quot;VNI&quot;: 2 &#125; &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 <ol start="5">
-<li>使用上述配置启动新的<code>flannel daemon</code>，<a href="https://github.com/coreos/flannel/blob/master/Documentation/running.md#multiple-networks" target="_blank" rel="noopener">参考文档</a>，其中<code>--etcd-endpoints=http://127.0.0.1:4001 --ip-masq --iface=172.16.1.171</code>来自于<code>/etc/default/flannel</code>文件</li>
+<li>使用上述配置启动新的<code>flannel daemon</code>，<a target="_blank" rel="noopener" href="https://github.com/coreos/flannel/blob/master/Documentation/running.md#multiple-networks">参考文档</a>，其中<code>--etcd-endpoints=http://127.0.0.1:4001 --ip-masq --iface=172.16.1.171</code>来自于<code>/etc/default/flannel</code>文件</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/opt/bin/flanneld -subnet-file /run/flannel/networks/subnets2.env -etcd-prefix=/k8s/network2 --etcd-endpoints=http://127.0.0.1:4001 --ip-masq --iface=172.16.1.171 &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/opt/bin/flanneld -subnet-file /run/flannel/networks/subnets2.env -etcd-prefix=/k8s/network2 --etcd-endpoints=http://127.0.0.1:4001 --ip-masq --iface=172.16.1.171 &amp;</span><br></pre></td></tr></table></figure>
 <ol start="6">
 <li>创建<code>flannel</code>数据存储目录，存储<code>subnets2.env</code>网络相关的数据</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p /var/lib/cni/flannel/2</span><br></pre></td></tr></table></figure>
 <h2 id="配置multus-cni"><a class="header-anchor" href="#配置multus-cni"></a>配置multus-cni</h2>
 <p>在<code>cni-conf-dir</code>(默认为<code>/etc/cni/net.d/</code>)下创建配置文件<code>test.conf</code>，其内容如下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"multus-demo-network"</span>,</span><br><span class="line">    <span class="string">"type"</span>: <span class="string">"multus"</span>,</span><br><span class="line">    <span class="string">"delegates"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"flannel"</span>,</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"flannel.2"</span>,</span><br><span class="line">                <span class="string">"subnetFile"</span>: <span class="string">"/run/flannel/networks/subnets2.env"</span>,</span><br><span class="line">                <span class="string">"dataDir"</span>: <span class="string">"/var/lib/cni/flannel/2"</span>,</span><br><span class="line">                <span class="string">"delegate"</span>: &#123;</span><br><span class="line">                        <span class="string">"bridge"</span>: <span class="string">"kbr1"</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"flannel"</span>,</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"flannel.1"</span>,</span><br><span class="line">                <span class="string">"subnetFile"</span>: <span class="string">"/run/flannel/subnet.env"</span>,</span><br><span class="line">                <span class="string">"dataDir"</span>: <span class="string">"/var/lib/cni/flannel"</span>,</span><br><span class="line">                <span class="string">"masterplugin"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"delegate"</span>: &#123;</span><br><span class="line">                        <span class="string">"bridge"</span>: <span class="string">"docker0"</span>,</span><br><span class="line">                        <span class="string">"isDefaultGateway"</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;multus-demo-network&quot;</span>,</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;multus&quot;</span>,</span><br><span class="line">    <span class="string">&quot;delegates&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;flannel&quot;</span>,</span><br><span class="line">                <span class="string">&quot;name&quot;</span>: <span class="string">&quot;flannel.2&quot;</span>,</span><br><span class="line">                <span class="string">&quot;subnetFile&quot;</span>: <span class="string">&quot;/run/flannel/networks/subnets2.env&quot;</span>,</span><br><span class="line">                <span class="string">&quot;dataDir&quot;</span>: <span class="string">&quot;/var/lib/cni/flannel/2&quot;</span>,</span><br><span class="line">                <span class="string">&quot;delegate&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;bridge&quot;</span>: <span class="string">&quot;kbr1&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;flannel&quot;</span>,</span><br><span class="line">                <span class="string">&quot;name&quot;</span>: <span class="string">&quot;flannel.1&quot;</span>,</span><br><span class="line">                <span class="string">&quot;subnetFile&quot;</span>: <span class="string">&quot;/run/flannel/subnet.env&quot;</span>,</span><br><span class="line">                <span class="string">&quot;dataDir&quot;</span>: <span class="string">&quot;/var/lib/cni/flannel&quot;</span>,</span><br><span class="line">                <span class="string">&quot;masterplugin&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">&quot;delegate&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;bridge&quot;</span>: <span class="string">&quot;docker0&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;isDefaultGateway&quot;</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>该文件的作用是，配置两个<code>flannel</code>网络，指定了各自的<code>subnet</code>配置文件，数据存储位置<code>dataDir</code>，使用的网桥。其中<code>flannel.1</code>有<code>masterplugin</code>属性，其意为该网络会上报给<code>kubelet</code>。</p>
 <h2 id="配置kubelet"><a class="header-anchor" href="#配置kubelet"></a>配置kubelet</h2>
 <p><code>kubelet</code>的配置文件为<code>/etc/default/kubelet</code>, 在其行尾加上<code>--network-plugin=cni</code>。 如果上述的<code>cni bin</code>和<code>cni conf</code>不想放在默认目录下，这里可以使用<code>--cni-bin-dir</code>和<code>--cni-conf-dir</code>指定目录。</p>
 <p>然后重启<code>kubelet</code>进程</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service kubelet restart</span><br><span class="line">service kubelet status</span><br></pre></td></tr></table></figure>
-<h2 id="enjoy-it"><a class="header-anchor" href="#enjoy-it"></a>Enjoy it</h2>
+<h2 id="Enjoy-it"><a class="header-anchor" href="#Enjoy-it"></a>Enjoy it</h2>
 <p>现在，启动的<code>pod</code>都具有两个网络<code>eth0</code>和<code>net0</code>(<code>multus-cni</code>多网络是以<code>net0</code>, <code>net1</code> … <code>netn</code>命名的)。每个网络使用不同的<code>flannel</code>网络，网络间是隔离的，<code>vlan index</code>不同。如果需要更多的网络，只需增加配置即可。</p>
 <p>该方案的缺点是配置是固定的，不能动态增删，需要重启<code>kubelet</code>。对每个<code>pod</code>而言，网络个数不能动态配置，依赖于整体方案。</p>
 
@@ -276,12 +288,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2017/07/23/kubernetes-probe/" data-toggle="tooltip" data-placement="top" title="kubernetes之探针">&larr; Previous Post</a>
+                        <a href="/blog/2017/07/23/kubernetes-probe/" data-toggle="tooltip" data-placement="top"
+                           title="kubernetes之探针">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2017/04/30/kubernetes-network/" data-toggle="tooltip" data-placement="top" title="kubernetes之网络分析">Next Post &rarr;</a>
+                        <a href="/blog/2017/04/30/kubernetes-network/" data-toggle="tooltip" data-placement="top"
+                           title="kubernetes之网络分析">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -300,7 +314,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cni插件"><span class="toc-text">CNI插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置flannel网络"><span class="toc-text">配置flannel网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置multus-cni"><span class="toc-text">配置multus-cni</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置kubelet"><span class="toc-text">配置kubelet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enjoy-it"><span class="toc-text">Enjoy it</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CNI%E6%8F%92%E4%BB%B6"><span class="toc-text">CNI插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEflannel%E7%BD%91%E7%BB%9C"><span class="toc-text">配置flannel网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEmultus-cni"><span class="toc-text">配置multus-cni</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEkubelet"><span class="toc-text">配置kubelet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enjoy-it"><span class="toc-text">Enjoy it</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -322,11 +336,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/kubernetes/" title="kubernetes">kubernetes</a>
+                        <a class="tag" href="/tags/kubernetes/"
+                           title="kubernetes">kubernetes</a>
                         
-                        <a class="tag" href="/tags/flannel/" title="flannel">flannel</a>
+                        <a class="tag" href="/tags/flannel/"
+                           title="flannel">flannel</a>
                         
-                        <a class="tag" href="/tags/multi-networks/" title="multi-networks">multi-networks</a>
+                        <a class="tag" href="/tags/multi-networks/"
+                           title="multi-networks">multi-networks</a>
                         
                     </div>
                 </section>
@@ -398,7 +415,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -409,7 +426,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -420,11 +437,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -433,13 +450,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -502,7 +525,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

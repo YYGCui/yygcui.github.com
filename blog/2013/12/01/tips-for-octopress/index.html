@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2013/12/01/tips-for-octopress/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,11 +189,13 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Octopress/" title="Octopress">Octopress</a>
+                        <a class="tag" href="/tags/Octopress/"
+                           title="Octopress">Octopress</a>
                         
                     </div>
                 </div>
@@ -205,24 +215,24 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>周末，把之前建立的Octopress blog在新机器上重新配置了下，顺便整理一下配置过程，以备查询。从头配置一个Octopress blog，可以直接参照<a href="http://octopress.org/docs/setup/" target="_blank" rel="noopener">官方文档</a>，步骤很清晰，没有什么难度。这篇文档主要整理如何在windows上重新部署Octopress。</p>
-<a id="more"></a>
+                <p>周末，把之前建立的Octopress blog在新机器上重新配置了下，顺便整理一下配置过程，以备查询。从头配置一个Octopress blog，可以直接参照<a target="_blank" rel="noopener" href="http://octopress.org/docs/setup/">官方文档</a>，步骤很清晰，没有什么难度。这篇文档主要整理如何在windows上重新部署Octopress。</p>
+<span id="more"></span>
 <h2 id="环境配置"><a class="header-anchor" href="#环境配置"></a>环境配置</h2>
 <ol>
 <li>安装<a href="DefaultConfig.bin">Git for windows</a>。</li>
-<li>安装<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="noopener">Ruby for windows</a>，建议使用1.9.3版本。安装完成后将个人环境变量中<code>Path</code>的值添加到系统环境变量<code>Path</code>中。</li>
-<li>安装<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="noopener">Ruby Develop Kit</a>，该安装包是一压缩文件，安装就是解压到某一目录，如<code>D:/RubyDevKit</code>。然后打开<code>Git Bash</code>运行如下命令：</li>
+<li>安装<a target="_blank" rel="noopener" href="http://rubyinstaller.org/downloads/">Ruby for windows</a>，建议使用1.9.3版本。安装完成后将个人环境变量中<code>Path</code>的值添加到系统环境变量<code>Path</code>中。</li>
+<li>安装<a target="_blank" rel="noopener" href="http://rubyinstaller.org/downloads/">Ruby Develop Kit</a>，该安装包是一压缩文件，安装就是解压到某一目录，如<code>D:/RubyDevKit</code>。然后打开<code>Git Bash</code>运行如下命令：</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:/RubyDevKit</span><br><span class="line">ruby dk.rb init</span><br><span class="line">ruby dk.rb install</span><br></pre></td></tr></table></figure>
 <ol start="4">
-<li>安装<a href="http://www.activestate.com/activepython/downloads" target="_blank" rel="noopener">Python for windows</a>，安装<code>x86</code>版本，即使在<code>x64</code>系统上。然后安装octopress使用的代码高亮系统<code>pygments</code>。</li>
+<li>安装<a target="_blank" rel="noopener" href="http://www.activestate.com/activepython/downloads">Python for windows</a>，安装<code>x86</code>版本，即使在<code>x64</code>系统上。然后安装octopress使用的代码高亮系统<code>pygments</code>。</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">easy_install pygments</span><br></pre></td></tr></table></figure>
 <ol start="5">
 <li>配置<code>Bash</code>环境变量，由于<code>Windows</code>使用的<code>GBK</code>字符编码，<code>Octopress</code>使用的<code>UTF-8</code>字符编码，所以要把<code>Bash</code>的环境设置成<code>UTF-8</code>，设置完成后重启<code>Git Bash</code>生效。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"export LC_ALL=zh_CN.UTF-8"</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"export LANG=zh_CN.UTF-8"</span> &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
-<h2 id="安装octopress"><a class="header-anchor" href="#安装octopress"></a>安装Octopress</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export LC_ALL=zh_CN.UTF-8&quot;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export LANG=zh_CN.UTF-8&quot;</span> &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<h2 id="安装Octopress"><a class="header-anchor" href="#安装Octopress"></a>安装Octopress</h2>
 <ol>
 <li>以部署在<code>Github</code>上的blog为例，因为之前部署过，所以需要<code>clone</code>自己的Octopress。</li>
 </ol>
@@ -236,16 +246,16 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rake generate</span><br><span class="line">rake preview</span><br></pre></td></tr></table></figure>
 <p>预览的页面和你的github page<code>username.github.com</code>一致就部署成功了，Enjoy it！</p>
-<h2 id="更新octopress"><a class="header-anchor" href="#更新octopress"></a>更新Octopress</h2>
+<h2 id="更新Octopress"><a class="header-anchor" href="#更新Octopress"></a>更新Octopress</h2>
 <ol>
 <li>查看是否添加了Octopress的remote源，在Git Bash中执行<code>git remote</code>，如果有<code>source</code>和<code>octopress</code>，则说明已添加。</li>
 <li>在clone自己的remote repository之后，需要先添加一下：</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add octopress git://github.com/imathis/octopress.git</span><br></pre></td></tr></table></figure>
 <ol start="3">
-<li>更新方法同<a href="http://octopress.org/docs/updating/" target="_blank" rel="noopener">官方文档</a>，命令如下：</li>
+<li>更新方法同<a target="_blank" rel="noopener" href="http://octopress.org/docs/updating/">官方文档</a>，命令如下：</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git pull octopress master     <span class="comment"># Get the latest Octopress</span></span><br><span class="line">bundle install                <span class="comment"># Keep gems updated</span></span><br><span class="line">rake update_source            <span class="comment"># update the template's source</span></span><br><span class="line">rake update_style             <span class="comment"># update the template's style</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git pull octopress master     <span class="comment"># Get the latest Octopress</span></span><br><span class="line">bundle install                <span class="comment"># Keep gems updated</span></span><br><span class="line">rake update_source            <span class="comment"># update the template&#x27;s source</span></span><br><span class="line">rake update_style             <span class="comment"># update the template&#x27;s style</span></span><br></pre></td></tr></table></figure>
 <p>*<em>本文方法都引自<code>google windows octopress</code></em></p>
 
                 <hr>
@@ -254,12 +264,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/05/12/notes-about-the-longtail-theory/" data-toggle="tooltip" data-placement="top" title="无处不在的长尾">&larr; Previous Post</a>
+                        <a href="/blog/2015/05/12/notes-about-the-longtail-theory/" data-toggle="tooltip" data-placement="top"
+                           title="无处不在的长尾">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2013/10/11/Root-Galaxy-Nexus/" data-toggle="tooltip" data-placement="top" title="Root Galaxy Nexus">Next Post &rarr;</a>
+                        <a href="/blog/2013/10/11/Root-Galaxy-Nexus/" data-toggle="tooltip" data-placement="top"
+                           title="Root Galaxy Nexus">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -278,7 +290,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境配置"><span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装octopress"><span class="toc-text">安装Octopress</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新octopress"><span class="toc-text">更新Octopress</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Octopress"><span class="toc-text">安装Octopress</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0Octopress"><span class="toc-text">更新Octopress</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -300,7 +312,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Octopress/" title="Octopress">Octopress</a>
+                        <a class="tag" href="/tags/Octopress/"
+                           title="Octopress">Octopress</a>
                         
                     </div>
                 </section>
@@ -372,7 +385,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -383,7 +396,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -394,11 +407,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -407,13 +420,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -476,7 +495,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

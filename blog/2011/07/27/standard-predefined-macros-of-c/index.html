@@ -2,12 +2,12 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="keyword" content="">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,14 +25,20 @@
     <link rel="canonical" href="http://blog.cuicc.com/blog/2011/07/27/standard-predefined-macros-of-c/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <style>
 
@@ -43,8 +49,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -127,6 +133,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -153,7 +160,8 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/blog-bg-black-run.jpg">
+<img class="wechat-title-img"
+     src="/images/blog-bg-black-run.jpg">
 
 
 <style>
@@ -181,15 +189,19 @@
                     <div class="tags text-center">
                         <span>Categories:</span>
                         
-                        <a class="tag" href="/categories/技术积累/" title="技术积累">技术积累</a>
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
-                        <a class="tag" href="/tags/C-C/" title="C/C++">C/C++</a>
+                        <a class="tag" href="/tags/C-C/"
+                           title="C/C++">C/C++</a>
                         
-                        <a class="tag" href="/tags/Macros/" title="Macros">Macros</a>
+                        <a class="tag" href="/tags/Macros/"
+                           title="Macros">Macros</a>
                         
                     </div>
                 </div>
@@ -209,8 +221,8 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>C语言标准(<a href="http://c-faq.com/ansi/index.html" target="_blank" rel="noopener">ANSI/ISO Standard C</a>)中定义一些了宏命令，称为标准预定义宏(Standard Predefined Macros)。以GCC 4.6.1的文档<a href="http://gcc.gnu.org/onlinedocs/gcc-4.6.1/cpp/Standard-Predefined-Macros.html" target="_blank" rel="noopener">The C  Preprocess</a>中介绍为例。因为这些宏是在C标准中定义的，所以基本上所有的编译器都支持（特别老的编译器除外），可以肯定的是，C99标准支持所有的这些标准预定义宏。这些宏都是以双下划线__开始的。</p>
-<a id="more"></a>
+                <p>C语言标准(<a target="_blank" rel="noopener" href="http://c-faq.com/ansi/index.html">ANSI/ISO Standard C</a>)中定义一些了宏命令，称为标准预定义宏(Standard Predefined Macros)。以GCC 4.6.1的文档<a target="_blank" rel="noopener" href="http://gcc.gnu.org/onlinedocs/gcc-4.6.1/cpp/Standard-Predefined-Macros.html">The C  Preprocess</a>中介绍为例。因为这些宏是在C标准中定义的，所以基本上所有的编译器都支持（特别老的编译器除外），可以肯定的是，C99标准支持所有的这些标准预定义宏。这些宏都是以双下划线__开始的。</p>
+<span id="more"></span>
 <p>__FILE__<br>
 这个宏表示当前文件的文件名，其类型是字符串。它表示预处理器打开这个文件的路径，并不是像#include指令包含的short name，或者文件名参数。这个路径是以该程序所在目录为基点的相对路径，比如当前目录下，该宏的值可能是myheader.h；引用标准头文件时，该宏的值可能是/usr/local/include/myheader.h 。</p>
 <p>__LINE__<br>
@@ -246,7 +258,7 @@
     void showtrace(char *file, long line, const char *func);
     
     int main()
-    {
+    &#123;
         printf(&quot;The source file name is %s.\n&quot;,__FILE__);
         printf(&quot;The current line number is %d.\n&quot;,__LINE__);
         printf(&quot;The compile date is %s.\n&quot;,__DATE__);
@@ -274,13 +286,13 @@
 
         showtrace(__FILE__, __LINE__, __func__);
         return 0;
-    }
+    &#125;
 
     void showtrace(char *file, long line, const char* func)
-    {
+    &#123;
         fprintf(stderr,&quot;%s: In function '%s':\n&quot;, file, func);
         fprintf(stderr,&quot;%s:%d: simulate the compiler standard error output.\n&quot;, file, line);
-    }
+    &#125;
 </code></pre>
 
                 <hr>
@@ -289,12 +301,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/08/23/putty-with-auto-login-password/" data-toggle="tooltip" data-placement="top" title="修改PuTTY实现保存密码自动登录">&larr; Previous Post</a>
+                        <a href="/blog/2011/08/23/putty-with-auto-login-password/" data-toggle="tooltip" data-placement="top"
+                           title="修改PuTTY实现保存密码自动登录">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/07/20/binutils-of-linux/" data-toggle="tooltip" data-placement="top" title="Linux下的二进制工具(反编译工具)">Next Post &rarr;</a>
+                        <a href="/blog/2011/07/20/binutils-of-linux/" data-toggle="tooltip" data-placement="top"
+                           title="Linux下的二进制工具(反编译工具)">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -335,11 +349,14 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Programming/" title="Programming">Programming</a>
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
-                        <a class="tag" href="/tags/C-C/" title="C/C++">C/C++</a>
+                        <a class="tag" href="/tags/C-C/"
+                           title="C/C++">C/C++</a>
                         
-                        <a class="tag" href="/tags/Macros/" title="Macros">Macros</a>
+                        <a class="tag" href="/tags/Macros/"
+                           title="Macros">Macros</a>
                         
                     </div>
                 </section>
@@ -411,7 +428,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://github.com/YYGCui">
+                        <a target="_blank"  href="https://github.com/YYGCui">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -422,7 +439,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/yanbaoc">
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -433,11 +450,11 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2019
+                    Copyright &copy; YYGCui 2021
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
                 </p>
 
             </div>
@@ -446,13 +463,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/blog.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -515,7 +538,7 @@
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','null','2.0.0');
+  _st('install','','2.0.0');
 </script>
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
