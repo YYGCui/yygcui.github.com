@@ -6,7 +6,7 @@
   <link href="http://blog.cuicc.com/atom.xml" rel="self"/>
   
   <link href="http://blog.cuicc.com/"/>
-  <updated>2021-12-01T13:50:32.111Z</updated>
+  <updated>2021-12-04T15:00:01.904Z</updated>
   <id>http://blog.cuicc.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>线程池并行化重构</title>
+    <link href="http://blog.cuicc.com/blog/2021/12/03/refactor-in-parallel-with-multi-threads/"/>
+    <id>http://blog.cuicc.com/blog/2021/12/03/refactor-in-parallel-with-multi-threads/</id>
+    <published>2021-12-03T14:24:56.000Z</published>
+    <updated>2021-12-04T15:00:01.904Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近业务新特性开发，由原来的单个action变成了多个action，最后取一个最优action。由于action变多，运行时间也相应多了几倍，action之间是相互独立，互不影响的，那么就想通过并行化的方法提升下性能，这个时候自然而然就想到了线程池。本文记录一下此次并行化重构业务代码时遇到的一些有意思的点。</p><h2 id="线程池"><a class="header-anchor" href="#线程池"></a>线程池</h2><p>模块中本来就包含线程框架，可以适当修改支持线程池，这里没啥大问题。业务代码action处理函数的改造主要在于函数输出，由原来的串行执行使用的成员变量改为变量数组，对应于线程池的个数。原有的依次比较改成最后遍历数组比较取最优。这块重构问题主要是内存问题，有些输出变量是对输入变量的局部更新，但是该变量是很大的数据结构，直接变成数组，造成内存使用增加很多，当前通过增加输出数据结构解决，这里的坑和多线程无关，另外单独介绍。</p><h2 id="单例"><a class="header-anchor" href="#单例"></a>单例</h2><p>这块业务代码有一个特色，就是单例使用特别多，且单例不仅仅是状态资源管理类，同时还是业务功能类。这里单例使用的是否合理，软件架构设计的是否合理不做深入讨论。当前只讨论怎么重构支持多线程。</p><h3 id="重构为类成员变量"><a class="header-anchor" href="#重构为类成员变量"></a>重构为类成员变量</h3><p>首先想到的方法是，既然不是全局的状态资源管理类，那么改成类成员比较合理，这样多线程处理时可以像上面的函数输出，改成数组就能满足需求。但通过阅读代码发现单例互相调用，随处调用等等，这种方法难以实现。</p><h3 id="重构为多单例"><a class="header-anchor" href="#重构为多单例"></a>重构为多单例</h3><p>这种方法比较省事，把原来的静态实例变成静态实例数组，获取单例接口通过增加参数来区分获取的是哪一个实例，从而和线程对应起来。代码如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">static const MyClass&amp; GetInstance(uint8_t threadIndex) &#123;</span><br><span class="line">    static MyClass instance[THREAD_POOL_SIZE];</span><br><span class="line">    return instance[threadIndex];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>多线程处理没有问题了，现在的问题变成如何获取<code>threadIndex</code>。</p><p>一个方法是给线程池的各线程命名，建立线程名称与<code>threadIndex</code>的map关系，这样在线程内可以通过系统接口获取线程名称，再通过map得到<code>threadIndex</code>。这种方法使用起来比较方便，但是有一个问题，单例特别多且高频调用，频繁调用系统接口比较影响性能。</p><p>另一种方法是通过参数传递进去，根据业务代码特点，每个类都有一个初始化配置接口<code>InitConfig</code>，这个接口在系统启动时执行一次。那么可以给每个类增加一个成员变量<code>threadIndex_</code>，在线程入口函数类的初始化时，遍历入口多单例并把<code>index</code>传入。在把action处理函数提交给线程池处理时，增加<code>index</code>参数，这样每个类在调用单例时都是通过传入的<code>index</code>调用的。代码如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MyClass::InitConfig(uint8_t index) &#123;</span><br><span class="line">    threadIndex_ = index;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 入口初始化时对多单例的初始化</span><br><span class="line">for (uint8_t i = 0; i &lt; THREAD_POOL_SIZE) &#123;</span><br><span class="line">    MyClass::GetInstance(i).InitConfig(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># MyClass类中调用其他单例时</span><br><span class="line">OtherClass::GetInstance(threadIndex_).HandleFunc(...)</span><br></pre></td></tr></table></figure><p>这种方法相对比较可行，就是修改非常多，每一个调用单例且会更新的类都要修改。</p><p>单例修改完成后，使用线程池调式时发现还是会coredump，不用想肯定是多线程同时读写同一份数据造成的。通过调用栈看到的函数调用关系，看不出来具体问题点在哪里，虽然每次调用栈都不太一样，但是出问题的类及函数是相同的，且看到是同一个结构里的容器拷贝出了问题。通过增加打印及阅读代码，发现了另一个坑…</p><h2 id="static变量"><a class="header-anchor" href="#static变量"></a>static变量</h2><p>某些类成员函数中，局部变量定义时使用了static，但是没有使用历史值，猜测是想为了避免频繁构造析构该变量。但是C++中类中出现的static变量，不管是类成员变量还是函数局部变量，是独立于类实例的，所有该类的实例共享一份static变量。这就很清楚了，多线程调用时，这些线程共享了这一个变量，同时读写时出现踩内存问题。</p><p>回到局部变量使用static上，在面向过程实现中，staitc局部变量可以保证该变量的作用域只在函数内，避免使用全局变量造成全局可见，起到很好的封装作用。但是在面向对象实现中，这种隐藏在层层逻辑下的static局部变量是有很大的隐患的，因为它不是类的成员变量，却又所有实例共享一份。定义成普通类成员变量一样可以避免频繁构造析构，且重用该变量的值。</p><p>通过以上修改，终于调通了并行化~</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;最近业务新特性开发，由原来的单个action变成了多个action，最后取一个最优action。由于action变多，运行时间也相应多了几倍，action之间是相互独立，互不影响的，那么就想通过并行化的方法提升下性能，这个时候自然而然就想到了线程池。本文记录一下此次并行化重</summary>
+      
+    
+    
+    
+    <category term="技术积累" scheme="http://blog.cuicc.com/categories/%E6%8A%80%E6%9C%AF%E7%A7%AF%E7%B4%AF/"/>
+    
+    
+    <category term="C/C++" scheme="http://blog.cuicc.com/tags/C-C/"/>
+    
+  </entry>
   
   <entry>
     <title>恢复Hexo博客环境</title>
@@ -501,31 +525,6 @@
     
     
     <category term="Octopress" scheme="http://blog.cuicc.com/tags/Octopress/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Root Galaxy Nexus</title>
-    <link href="http://blog.cuicc.com/blog/2013/10/11/Root-Galaxy-Nexus/"/>
-    <id>http://blog.cuicc.com/blog/2013/10/11/Root-Galaxy-Nexus/</id>
-    <published>2013-10-11T06:52:00.000Z</published>
-    <updated>2019-04-01T13:24:17.293Z</updated>
-    
-    <content type="html"><![CDATA[<p>为了用一些应用，必须要取得root权限，Google了一下，发现了这个神奇<a href="http://forum.xda-developers.com/showthread.php?t=1614827">GNEX TOOLKIT</a>，简单易用，功能强大。它不仅可以root，还可以刷入google官方的image，刷入recovery，解锁bootloader。但是，有一点比较不爽的是，它更新的没有那么及时，或许donate版比较及时吧，这个就不知道了。</p><p>这个工具相当于把以下步骤和工具封装了一下，简单选几个选项就ok了。同样只要有相应的工具，手动做也不是什么难事。</p><h2 id="more-准备工作："><a class="header-anchor" href="#more-准备工作："></a><span id="more"></span><br>准备工作：</h2><ol><li>在开发者选项里打开“USB调试”模式。</li><li>确保手机已经解锁bootloader</li><li>安装android SDK，其中包含了fastboot</li><li>下载<a href="http://www.chainfire.eu/">superSU最新版</a>，并将该zip文件放在手机存储的根目录下</li><li>下载与手机相适应的<a href="http://www.clockworkmod.com/rommanager">recovery CWM img</a>，请根据手机型号及系统版本下载。</li></ol><h2 id="root步骤："><a class="header-anchor" href="#root步骤："></a>root步骤：</h2><ol><li><p>关机状态下同时按住开机键和音量上下键启动手机进入fastboot模式</p></li><li><p>使用fastboot刷入recovery, 命令行如下：</p><pre><code> fastboot flash recovery recovery-clockwork-....img #注意：由于android的保护机制，在重启之后该recovery将被重置掉，对root没有影响 #该recovery主要用来从SD加载superSU zip文件来实现root。</code></pre></li><li><p>刷入recovery之后，就可以找到从SD载入zip文件，选定该选项，然后在SD目录下找到superSU zip文件载入。</p></li><li><p>superSU 载入后，++++Go Back 回到上一层，选定reboot重启。第一次启动的时间可能有点长，启动后可以打开superSU app来更新二进制文件。</p></li></ol>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;为了用一些应用，必须要取得root权限，Google了一下，发现了这个神奇&lt;a href=&quot;http://forum.xda-developers.com/showthread.php?t=1614827&quot;&gt;GNEX TOOLKIT&lt;/a&gt;，简单易用，功能强大。它不仅可以root，还可以刷入google官方的image，刷入recovery，解锁bootloader。但是，有一点比较不爽的是，它更新的没有那么及时，或许donate版比较及时吧，这个就不知道了。&lt;/p&gt;
-&lt;p&gt;这个工具相当于把以下步骤和工具封装了一下，简单选几个选项就ok了。同样只要有相应的工具，手动做也不是什么难事。&lt;/p&gt;
-&lt;h2 id=&quot;more-准备工作：&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#more-准备工作：&quot;&gt;&lt;/a&gt;</summary>
-    
-    
-    
-    <category term="技术积累" scheme="http://blog.cuicc.com/categories/%E6%8A%80%E6%9C%AF%E7%A7%AF%E7%B4%AF/"/>
-    
-    
-    <category term="Android" scheme="http://blog.cuicc.com/tags/Android/"/>
-    
-    <category term="Root" scheme="http://blog.cuicc.com/tags/Root/"/>
     
   </entry>
   
