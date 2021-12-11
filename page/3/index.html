@@ -309,6 +309,30 @@
 
 <div class="post-preview "
      style="background-image: url('/images/blog-bg-black-run.jpg')">
+    <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/">
+        <h2 class="post-title">
+            mysql掉电后无法启动 InnoDB: is in the future!
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-10-12
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                公司在节假日会断电，十一忘记了关掉服务器，openstack在系统非正常关机后，无法启动。看了下日志，发现是其使用的mysql起不来。该数据库存储了所有的虚拟机相关信息，若是修复不好，损失惨重啊(别问我为什么没备份，我也不知道…)
+分析mysql启动失败的原因，只能从log入手了，打开log发现..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/blog-bg-black-run.jpg')">
     <a href="/blog/2015/09/20/compile-and-deploy-using-docker/">
         <h2 class="post-title">
             容器化编译和部署
@@ -472,29 +496,6 @@
         <div class="post-content-preview">
             <p>
                 这个题目从六月份就一直存在草稿箱里，还记得当时去参加同学的婚礼，和几个同学聊了一下近况，当时的我们还很年轻，还带着刚走出校园的一股冲劲。总觉得当前的工作不是自己想要的或者不能满足各种需求，企图用单干（这事还不能叫创业吧）来弥补，用自己的激情去干一份事业。晚上回来兴致勃勃地写下了这个题目《时间是静..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/blog-bg-black-run.jpg')">
-    <a href="/blog/2012/09/17/core-dump-and-backtrace/">
-        <h2 class="post-title">
-            Core dump与backtrace
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2012-09-17
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                项目中使用Core dump来Debug程序崩溃问题，在无盘环境下，往往无法在规定时间内及时传输出形成的大的Core file，在刘博的指导下，希望同时通过backtrace来记录系统崩溃时的log，这样在没有Core file的情况下，也可以大致上分析产生问题的地方。我也趁此机会好好学习了一下..
             </p>
         </div>
     </a>
@@ -695,7 +696,7 @@
                     
                     
                     <a href="/tags/C-C/" title="C/C++"
-                       rel="6">C/C++</a>
+                       rel="7">C/C++</a>
                     
                     
                     

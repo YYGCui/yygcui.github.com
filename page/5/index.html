@@ -309,6 +309,29 @@
 
 <div class="post-preview "
      style="background-image: url('/images/blog-bg-black-run.jpg')">
+    <a href="/blog/2011/11/15/mbr-and-boot-loader/">
+        <h2 class="post-title">
+            MBR与系统引导
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2011-11-15
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                周末不小心把Linux的boot分区由主分区改成了逻辑分区，导致用GRUB引导程序无法正常加载，后果是直接无法进入Windows和Linux系统，GRUB出现的错误如下图所示。虽然我知道进入DOS用命令fdisk /mbr重写一下MBR可以修复引导分区进入Windows，或者用Linux liv..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/blog-bg-black-run.jpg')">
     <a href="/blog/2011/11/10/gentoo-hard-disk-install/">
         <h2 class="post-title">
             Gentoo 硬盘安装
@@ -473,29 +496,6 @@ addr2li..
         <div class="post-content-preview">
             <p>
                 使用ssh连接远程主机时，最常遇到的两个情况：一是当一段时间没有交互时ssh会自动断开连接，这时你通过ssh登录终端运行的程序也将会随之被终止。另一个是当你想通过ssh登录终端提交一个程序，并想让它在断开ssh连接后依然运行；或者让它在后台运行，但依然可以随时调入前台进行交互操作。如果你也遇到了..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/blog-bg-black-run.jpg')">
-    <a href="/blog/2011/06/11/host-endian-and-net-endian/">
-        <h2 class="post-title">
-            主机字节序和网路字节序
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2011-06-11
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                字节序(endian)是指存放多个字节的顺序，典型的字节序分类为主机字节序和网络字节序。主机字节序(host endian)是指整数在内存中存放的顺序，有大端字节序(big-endian)和小端字节序(little-endian)两种。网络字节序(net endian)是指TCP/IP中规定的数..
             </p>
         </div>
     </a>
@@ -696,7 +696,7 @@ addr2li..
                     
                     
                     <a href="/tags/C-C/" title="C/C++"
-                       rel="6">C/C++</a>
+                       rel="7">C/C++</a>
                     
                     
                     

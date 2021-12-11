@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        线程池并行化重构｜YYGCui&#39;s blog
+        记一次内存泄漏定位｜YYGCui&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://blog.cuicc.com/blog/2021/12/03/refactor-in-parallel-with-multi-threads/">
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -178,12 +178,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>线程池并行化重构</h1>
+                    <h1>记一次内存泄漏定位</h1>
                     
                     <span class="meta">
                          作者 YYGCui
                         <span>
-                          日期 2021-12-03
+                          日期 2021-12-10
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -204,7 +204,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            线程池并行化重构
+            记一次内存泄漏定位
         </span>
     </div>
 </header>
@@ -215,41 +215,51 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>最近业务新特性开发，由原来的单个action变成了多个action，最后取一个最优action。由于action变多，运行时间也相应多了几倍，action之间是相互独立，互不影响的，那么就想通过并行化的方法提升下性能，这个时候自然而然就想到了线程池。本文记录一下此次并行化重构业务代码时遇到的一些有意思的点。</p>
-<h2 id="线程池"><a class="header-anchor" href="#线程池"></a>线程池</h2>
-<p>模块中本来就包含线程框架，可以适当修改支持线程池，这里没啥大问题。业务代码action处理函数的改造主要在于函数输出，由原来的串行执行使用的成员变量改为变量数组，对应于线程池的个数。原有的依次比较改成最后遍历数组比较取最优。这块重构问题主要是内存问题，有些输出变量是对输入变量的局部更新，但是该变量是很大的数据结构，直接变成数组，造成内存使用增加很多，当前通过增加输出数据结构解决，这里的坑和多线程无关，另外单独介绍。</p>
-<h2 id="单例"><a class="header-anchor" href="#单例"></a>单例</h2>
-<p>这块业务代码有一个特色，就是单例使用特别多，且单例不仅仅是状态资源管理类，同时还是业务功能类。这里单例使用的是否合理，软件架构设计的是否合理不做深入讨论。当前只讨论怎么重构支持多线程。</p>
-<h3 id="重构为类成员变量"><a class="header-anchor" href="#重构为类成员变量"></a>重构为类成员变量</h3>
-<p>首先想到的方法是，既然不是全局的状态资源管理类，那么改成类成员比较合理，这样多线程处理时可以像上面的函数输出，改成数组就能满足需求。但通过阅读代码发现单例互相调用，随处调用等等，这种方法难以实现。</p>
-<h3 id="重构为多单例"><a class="header-anchor" href="#重构为多单例"></a>重构为多单例</h3>
-<p>这种方法比较省事，把原来的静态实例变成静态实例数组，获取单例接口通过增加参数来区分获取的是哪一个实例，从而和线程对应起来。代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">static const MyClass&amp; GetInstance(uint8_t threadIndex) &#123;</span><br><span class="line">    static MyClass instance[THREAD_POOL_SIZE];</span><br><span class="line">    return instance[threadIndex];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>多线程处理没有问题了，现在的问题变成如何获取<code>threadIndex</code>。</p>
-<p>一个方法是给线程池的各线程命名，建立线程名称与<code>threadIndex</code>的map关系，这样在线程内可以通过系统接口获取线程名称，再通过map得到<code>threadIndex</code>。这种方法使用起来比较方便，但是有一个问题，单例特别多且高频调用，频繁调用系统接口比较影响性能。</p>
-<p>另一种方法是通过参数传递进去，根据业务代码特点，每个类都有一个初始化配置接口<code>InitConfig</code>，这个接口在系统启动时执行一次。那么可以给每个类增加一个成员变量<code>threadIndex_</code>，在线程入口函数类的初始化时，遍历入口多单例并把<code>index</code>传入。在把action处理函数提交给线程池处理时，增加<code>index</code>参数，这样每个类在调用单例时都是通过传入的<code>index</code>调用的。代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MyClass::InitConfig(uint8_t index) &#123;</span><br><span class="line">    threadIndex_ = index;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 入口初始化时对多单例的初始化</span><br><span class="line">for (uint8_t i = 0; i &lt; THREAD_POOL_SIZE) &#123;</span><br><span class="line">    MyClass::GetInstance(i).InitConfig(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># MyClass类中调用其他单例时</span><br><span class="line">OtherClass::GetInstance(threadIndex_).HandleFunc(...)</span><br></pre></td></tr></table></figure>
-<p>这种方法相对比较可行，就是修改非常多，每一个调用单例且会更新的类都要修改。</p>
-<p>单例修改完成后，使用线程池调式时发现还是会coredump，不用想肯定是多线程同时读写同一份数据造成的。通过调用栈看到的函数调用关系，看不出来具体问题点在哪里，虽然每次调用栈都不太一样，但是出问题的类及函数是相同的，且看到是同一个结构里的容器拷贝出了问题。通过增加打印及阅读代码，发现了另一个坑…</p>
-<h2 id="static变量"><a class="header-anchor" href="#static变量"></a>static变量</h2>
-<p>某些类成员函数中，局部变量定义时使用了static，但是没有使用历史值，猜测是想为了避免频繁构造析构该变量。但是C++中类中出现的static变量，不管是类成员变量还是函数局部变量，是独立于类实例的，所有该类的实例共享一份static变量。这就很清楚了，多线程调用时，这些线程共享了这一个变量，同时读写时出现踩内存问题。</p>
-<p>回到局部变量使用static上，在面向过程实现中，staitc局部变量可以保证该变量的作用域只在函数内，避免使用全局变量造成全局可见，起到很好的封装作用。但是在面向对象实现中，这种隐藏在层层逻辑下的static局部变量是有很大的隐患的，因为它不是类的成员变量，却又所有实例共享一份。定义成普通类成员变量一样可以避免频繁构造析构，且重用该变量的值。</p>
-<p>通过以上修改，终于调通了并行化~</p>
+                <p>最近测试时发现，运行相对较长一段时间后进程因内存使用超过配额上限而被杀掉，这应该是内存缓慢增长导致的，也就是说出现了内存泄漏。这个进程代码是用C++实现的，且基本没有使用<code>malloc/free</code>, <code>new/delete</code>等显式的内存申请释放，但代码中大量使用了标准库的容器类。这种因为业务逻辑导致容器没有清除导致的内存泄露，之前一直没有找到很好的定位手段，已知的工具<code>valgrind</code>貌似不能用来定位这种方式的泄露。</p>
+<p>通过内外网搜索，找到了一些基于内存采样的分析工具，如<code>google-perftools</code>里的<code>tcmalloc</code>，及<code>bytehound</code>，本文主要记录下使用<code>tcmalloc</code>定位内存泄漏的方法。</p>
+<h2 id="google-perftools"><a class="header-anchor" href="#google-perftools"></a>google-perftools</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools">google-perftools</a>是Google开源的一个高性能的多线程的<code>malloc</code>实现集，号称当前最快的<code>malloc</code>，使用它可以提高内存访问性能，在我们的测试中，有大约单核10%的CPU性能提升。同时，它还集成了<code>heap-checker</code>，<code>heap-profiler</code>，<code>cpu-profiler</code>等内存和cpu检查<a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools/wiki">分析工具</a>。这里主要使用<code>heap-profiler</code>来定位内存泄漏问题。</p>
+<h3 id="tcmalloc库"><a class="header-anchor" href="#tcmalloc库"></a>tcmalloc库</h3>
+<p>ubuntu上可以直接通过<code>apt</code>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install -y google-perftools</span><br><span class="line"></span><br><span class="line"># 相关路径如下</span><br><span class="line"># /usr/bin/google-pprof</span><br><span class="line"># /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4</span><br></pre></td></tr></table></figure>
+<p>有两种方式来使用tcmalloc库，一种是在编译时链接，然后运行时通过环境变量启用不同的工具，官方wiki看起来是推荐这种方式的。命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gcc [...] -o myprogram -ltcmalloc</span><br><span class="line"># HEAPPROFILE设置输出分析文件的前缀</span><br><span class="line">HEAPPROFILE=/tmp/myprogram ./myprogram</span><br></pre></td></tr></table></figure>
+<p>另一种方式是通过<code>PRELOAD</code>的方式优先加载该动态链接库，好处是它不用重新编译代码，且可以覆盖该程序及其他在此之后链接库里的相同函数实现，实现全局使用的目的。命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">env LD_PRELOAD=&quot;/usr/lib/libtcmalloc.so&quot; HEAPPROFILE=/tmp/myprogram ./myprogram</span><br></pre></td></tr></table></figure>
+<h3 id="内存分析"><a class="header-anchor" href="#内存分析"></a>内存分析</h3>
+<p>通过上述启动程序后，每隔10s钟会在指定的输出路径输出内存采样文件，如<code>/tmp/myprogram.0001.heap</code>。通过一个简单的示例程序看下其过程。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># test.cpp</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;cstdlib&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void test() &#123;</span><br><span class="line">    vector&lt;int&gt; testv;</span><br><span class="line">    for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">        testv.push_back(i);</span><br><span class="line">    &#125;</span><br><span class="line">    # 退出不释放内存</span><br><span class="line">    exit(1);</span><br><span class="line">&#125;</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    test();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该示例通过<code>vector</code>申请了<code>10000*sizeof(int)</code>大小左右的内存，然后没有释放。编译并预加载<code>tcmalloc</code>执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">g++ test.cpp -o test</span><br><span class="line">env LD_PRELOAD=&quot;/usr/lib/x86_64-linux-gnu/libtcmalloc.so.4&quot; HEAPPROFILE=/tmp/test ./test</span><br><span class="line"># 执行完成后看到以下文件</span><br><span class="line">/tmp/test.0001.heap</span><br></pre></td></tr></table></figure>
+<p>使用<code>google-pprof</code>查看可以该文件，通过不同的参数可以指定显示方式，甚至web显示也可以。比如用<code>--test</code>参数显示成文本，用<code>--gv</code>或者<code>--pdf</code>可以图形化显示，如这里存到pdf文件中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ google-pprof --pdf test /tmp/test.0001.heap &gt; test.0001.heap.pdf</span><br></pre></td></tr></table></figure>
+<p>通过下图可以直观的看到<code>test</code>函数<code>alloc</code>了内存，没有<code>dealloc</code>过。</p>
+<p><img src="/images/test-0001-heap-pdf.png" alt=""></p>
+<h3 id="内存泄漏定位"><a class="header-anchor" href="#内存泄漏定位"></a>内存泄漏定位</h3>
+<p>那么，在复杂的程序中，既有申请又有释放，内存一直缓慢增长该怎么取分析定位呢？如果直接查看单个文件，并无法说明内存只有申请没有释放。这里会用到<code>pprof</code>比较两个heap文件查看差异的方法。比如运行相对较长时间程序，获得了<code>myprogram.0001.heap ... myprogram.0234.heap</code> 这些采样数据，同时通过观察进程内存在这段时间内明显增长。可以通过以下命令对比两个文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ google-pprof --pdf --base /tmp/test.0010.heap test /tmp/test.0234.heap &gt; test.compare.pdf</span><br></pre></td></tr></table></figure>
+<p>生成的pdf和上图类似，不同点在于该pdf中显示的相对值，就是0234申请的内存减去0010申请的值。可以直观的看到哪些函数相对申请了占比大的内存，大大缩小了排查范围，然后通过阅读这些函数就可以找到具体哪些容器存在未清除的问题，比如没有<code>clear</code>或<code>erase</code>。</p>
+<p>这里取第0010个heap文件是因为程序前期初始化等申请一些内存，这部分先排除在外，避免大量定位。这里可以灵活运用，比如可以先看单个文件哪些申请了大量内存再做比较。</p>
+<h2 id="bytehound"><a class="header-anchor" href="#bytehound"></a>bytehound</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/koute/bytehound">bytehound</a>是一款<code>Linux</code>平台的内存分析工具，具有丰富的前端界面，可以看趋势图、火焰图、内存申请调用栈等等。与上面不同的是它通过续写的方式生成一个<code>.dat</code>文件。</p>
+<p>它的缺点是生成的文件非常大，从笔者的测试看，该文件一分钟增加2G左右，对于缓慢增长来说，运行几个小时文件大小吃不消。再者，虽然火焰图比较直观可以看出内存热点(类似cpu性能热点分析)，但是没有内存申请比较，不太容易缩小排查范围。</p>
+<p>因为生成文件太大的问题，没有详细使用该工具，如有兴趣，可以参考他的<a target="_blank" rel="noopener" href="https://koute.github.io/bytehound/">详细文档</a></p>
+<h2 id="扩展资料"><a class="header-anchor" href="#扩展资料"></a>扩展资料</h2>
+<p>在查找资料是发现了几篇比较好的文档，这里作为扩展资料列出来，对于上述工具，最好的文档还是参看官方文档。</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools/wiki">google-perftools官方wiki</a> - 官方wiki对该工具各方面都有详尽的说明，想了解其他功能细节可以参看</li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040982400">内存泄漏的定位与排查：Heap Profiling 原理解析</a> - 该文章详细介绍了<code>heap profile</code>的原理，主流工具<code>profile</code>的实现细节等，该文中还提到了<code> gprof, Valgrind and gperftools</code>等工具评估链接，对于想了解原理的同学建议阅读。</li>
+</ol>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/blog/2021/12/10/checking-for-mem-leaks/" data-toggle="tooltip" data-placement="top"
-                           title="记一次内存泄漏定位">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/blog/2021/11/30/recover-environment-for-writing/" data-toggle="tooltip" data-placement="top"
-                           title="恢复Hexo博客环境">Next Post &rarr;</a>
+                        <a href="/blog/2021/12/03/refactor-in-parallel-with-multi-threads/" data-toggle="tooltip" data-placement="top"
+                           title="线程池并行化重构">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -268,7 +278,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B"><span class="toc-text">单例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%9E%84%E4%B8%BA%E7%B1%BB%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="toc-text">重构为类成员变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%9E%84%E4%B8%BA%E5%A4%9A%E5%8D%95%E4%BE%8B"><span class="toc-text">重构为多单例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static%E5%8F%98%E9%87%8F"><span class="toc-text">static变量</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#google-perftools"><span class="toc-text">google-perftools</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tcmalloc%E5%BA%93"><span class="toc-text">tcmalloc库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="toc-text">内存分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%AE%9A%E4%BD%8D"><span class="toc-text">内存泄漏定位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bytehound"><span class="toc-text">bytehound</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%B5%84%E6%96%99"><span class="toc-text">扩展资料</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -311,8 +321,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "yygcui";
-    var disqus_identifier = "http://blog.cuicc.com/blog/2021/12/03/refactor-in-parallel-with-multi-threads/";
-    var disqus_url = "http://blog.cuicc.com/blog/2021/12/03/refactor-in-parallel-with-multi-threads/";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/";
+    var disqus_url = "http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/";
 
     (function () {
         var dsq = document.createElement('script');
