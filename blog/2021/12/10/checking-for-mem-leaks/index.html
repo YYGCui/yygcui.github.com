@@ -245,7 +245,6 @@
 <p>它的缺点是生成的文件非常大，从笔者的测试看，该文件一分钟增加2G左右，对于缓慢增长来说，运行几个小时文件大小吃不消。再者，虽然火焰图比较直观可以看出内存热点(类似cpu性能热点分析)，但是没有内存申请比较，不太容易缩小排查范围。</p>
 <p>因为生成文件太大的问题，没有详细使用该工具，如有兴趣，可以参考他的<a target="_blank" rel="noopener" href="https://koute.github.io/bytehound/">详细文档</a></p>
 <h2 id="扩展资料"><a class="header-anchor" href="#扩展资料"></a>扩展资料</h2>
-<p>在查找资料是发现了几篇比较好的文档，这里作为扩展资料列出来，对于上述工具，最好的文档还是参看官方文档。</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools/wiki">google-perftools官方wiki</a> - 官方wiki对该工具各方面都有详尽的说明，想了解其他功能细节可以参看</li>
 <li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040982400">内存泄漏的定位与排查：Heap Profiling 原理解析</a> - 该文章详细介绍了<code>heap profile</code>的原理，主流工具<code>profile</code>的实现细节等，该文中还提到了<code> gprof, Valgrind and gperftools</code>等工具评估链接，对于想了解原理的同学建议阅读。</li>
