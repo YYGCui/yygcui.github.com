@@ -6,7 +6,7 @@
   <link href="http://blog.cuicc.com/atom.xml" rel="self"/>
   
   <link href="http://blog.cuicc.com/"/>
-  <updated>2021-12-11T15:07:34.559Z</updated>
+  <updated>2021-12-26T14:27:57.304Z</updated>
   <id>http://blog.cuicc.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用C++模板的一些技巧</title>
+    <link href="http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/"/>
+    <id>http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/</id>
+    <published>2021-12-25T13:45:06.000Z</published>
+    <updated>2021-12-26T14:27:57.304Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="模板是什么"><a class="header-anchor" href="#模板是什么"></a>模板是什么</h2><blockquote><p>模板（Template）在C++ 程序设计语言中，是指函数模板与类模板[1]，是一种参数化类型机制。Java和C＃中的泛型与C++ 的模板大体对应，但也有一些功能上的显著差异（C++ 模板支持两者没有明确对应的模板模板参数和模板非类型参数，但不支持Java的通配符以及C#的泛型类型约束）。模板是C++ 的泛型编程中不可缺少的一部分。</p><footer><strong>https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF_(C%2B%2B)</strong></footer></blockquote><p>简单说，模板的基本用法是可以简化参数类型不同但逻辑相同的代码，特别是不同参数类型的重载函数。</p><h2 id="遇到的问题"><a class="header-anchor" href="#遇到的问题"></a>遇到的问题</h2><p>最近有一个特性遇到了一些问题，帮他们优化，顺便整理一下。这个特性由原来的单个action变成了多个action，这里遇到一个问题，就是有一个入参对象需要和对应的action做关联更新，只存一份这个对象无法满足需求，而对象又比较大，拷贝多份的话，浪费了大量内存。最后的方案是把会更新的部分单独拿出来做了多份，只读的部分还是共用原来这个对象，最后把更新的部分整合回去给下游用。简单用伪码表示如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 原对象结构</span><br><span class="line">struct Example1 &#123;</span><br><span class="line">    type var1; // 更新</span><br><span class="line">    type var2; // 更新</span><br><span class="line">    ...</span><br><span class="line">    type varn; // 只读</span><br><span class="line">&#125;;</span><br><span class="line"># 多份对象结构</span><br><span class="line">struct NewExample1 &#123;</span><br><span class="line">    type var1;</span><br><span class="line">    type var2;</span><br><span class="line">    ...</span><br><span class="line">    Example1* e1; // 只读</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>为了不影响原有的功能，特性算法开发直接把相关函数拷贝出来一份，使用新对象作为参数，拷贝一份是因为类型不一样了，且读取数据的方式也不同。这样带来一个问题，每次特性分支同步主干时，这部分拷贝出来的代码都不会被更新，需要人工和原函数校对修改，同时大量的重复代码也给维护代码带来了很大的成本。</p><p>实际上，这两种类型的处理逻辑是一样的，只是类型不同且访问的数据源形式不太一样，比如使用<code>NewExample1</code>类型时，其数据源有本身可能更新的<code>var1</code>, 也有不变的部分比如<code>e1-&gt;varn</code>。这正是泛型编程可以发挥的场景，使用模板可以去掉大量的重复逻辑。</p><h2 id="泛型编程"><a class="header-anchor" href="#泛型编程"></a>泛型编程</h2><p>泛型编程是指使用一种独立于任何具体类型的方式进行编码，模板是泛型编程的基础。使用模板前需要搞清楚的是，模板的推导是编译期完成的，编译完成后就生成了对应类型的特化实现，并不是运行期动态特化。</p><p>所以模板函数实现一般放在头文件中，编译器在类型检查时，只有看到函数实现才能特化出具体类型的函数。如果模板函数声明和实现分开，会导致链接时找不到函数实现。</p><p>从上面的特性开发得知，特性分支需要同步主干代码，那么如果在特性分支上把模板函数实现都移入头文件，也会给同步造成很大的问题，也需要人工校对头文件的模板函数和cpp里的函数，最好的方式就是就地(cpp中)模板化。</p><h3 id="在cpp中模板化"><a class="header-anchor" href="#在cpp中模板化"></a>在cpp中模板化</h3><p>如何实现模板声明和实现的分离，在cpp文件中实现函数。检索通过<code>stackoverflow</code>找个了方案：在cpp中实现时，需要声明要特化的类型，这样在编译时就能根据特化声明来特化函数实现。当然这样就不是广义的泛型了，只支持声明特化的几种类型，详细内容看<code>stackoverflow</code>及其最佳答案里的链接。在这个特性中，这种方式满足当前的使用。示例如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># .h</span><br><span class="line"># 模板类</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">class Example &#123;</span><br><span class="line">    void Func1(T&amp; t);</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"># 模板函数</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void ExampleFunc(T&amp; t);</span><br><span class="line"></span><br><span class="line"># .cpp</span><br><span class="line"># 模板类实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void Example&lt;T&gt;::Func1(T&amp; t) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 明确类特化</span><br><span class="line">template class Example&lt;Example1&gt;;</span><br><span class="line">template class Example&lt;NewExample1&gt;;</span><br><span class="line"></span><br><span class="line"># 模板函数实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void ExampleFunc(T&amp; t) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 明确函数特化</span><br><span class="line">template void ExampleFunc&lt;Example1&gt;(T&amp; t);</span><br><span class="line">template void ExampleFunc&lt;NewExample1&gt;(T&amp; t);</span><br></pre></td></tr></table></figure><p>结合上述类型，我们特化了<code>Example1</code>和<code>NewExample1</code>两种实现，满足我们当前的使用需求。这样能消除大部分的重复逻辑，仅仅增加了两种特化声明。</p><h3 id="类型差异处理"><a class="header-anchor" href="#类型差异处理"></a>类型差异处理</h3><p>前文提到，因为我们两种类型仅仅是为了避免大量冗余只读的部分，我们有些逻辑获取数据源是和类型强关联的，直接上例子更直观：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Example1类型处理</span><br><span class="line">void Example::Func1(Example1&amp; t) &#123;</span><br><span class="line">    return t.var1 + t.varn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># NewExample1类型处理, 只读部分通过指针访问Example1</span><br><span class="line">void Example::Func1(NewExample1&amp; t) &#123;</span><br><span class="line">    return t.var1 + t.e1-&gt;varn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可以看到，对于读写部分，两种类型的读取代码一摸一样，对于只读部分，就出现了差异。在不考虑复杂模板的情况下，想到的一种折中方法如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 模板函数实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void Example&lt;T&gt;::Func1(const Example1&amp; t1, T&amp; t2) &#123;</span><br><span class="line">    return t2.var1 + t1.varn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 全特化两种类型的实现，封装具体差异部分</span><br><span class="line">template &lt;&gt;</span><br><span class="line">void Example&lt;Example1&gt;::Func1(Example1&amp; t) &#123;</span><br><span class="line">    return Func1(t, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;&gt;</span><br><span class="line">void Example&lt;NewExample1&gt;::Func1(NewExample1&amp; t) &#123;</span><br><span class="line">    return Func1(*t.e1, t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>只增加了函数调用的封装，屏蔽类型引起的差异。在消除重复代码的情况下，增加了一点函数封装的代码，当前也还可以接受。当然，这种方法，只适用于明确知道几种类型的情况下，如果泛化的类型比较多，就不是一种很好的方法了。</p><h3 id="更好的方法？"><a class="header-anchor" href="#更好的方法？"></a>更好的方法？</h3><p>那么，有没有更好的方法，可以直接在模板中处理类型带来的逻辑差异呢。通过<code>typeid</code>区分不同的类型是否可行？还在研究中。。。</p><h2 id="参考链接"><a class="header-anchor" href="#参考链接"></a>参考链接</h2><p><a href="https://en.cppreference.com/w/cpp/language/templates">Templates - cppreference.com</a></p><p><a href="https://stackoverflow.com/questions/115703/storing-c-template-function-definitions-in-a-cpp-file">Storing C++ template function definitions in a .CPP file</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;模板是什么&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#模板是什么&quot;&gt;&lt;/a&gt;模板是什么&lt;/h2&gt;
+&lt;blockquote&gt;&lt;p&gt;模板（Template）在C++ 程序设计语言中，是指函数模板与类模板[1]，是一种参数化类型机制。Java和C</summary>
+      
+    
+    
+    
+    <category term="技术积累" scheme="http://blog.cuicc.com/categories/%E6%8A%80%E6%9C%AF%E7%A7%AF%E7%B4%AF/"/>
+    
+    
+    <category term="C/C++" scheme="http://blog.cuicc.com/tags/C-C/"/>
+    
+  </entry>
   
   <entry>
     <title>记一次内存泄漏定位</title>
@@ -497,37 +522,6 @@
     <category term="microservices" scheme="http://blog.cuicc.com/tags/microservices/"/>
     
     <category term="微服务" scheme="http://blog.cuicc.com/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>无处不在的长尾</title>
-    <link href="http://blog.cuicc.com/blog/2015/05/12/notes-about-the-longtail-theory/"/>
-    <id>http://blog.cuicc.com/blog/2015/05/12/notes-about-the-longtail-theory/</id>
-    <published>2015-05-12T12:24:28.000Z</published>
-    <updated>2019-04-01T13:24:17.312Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="80-20法则"><a class="header-anchor" href="#80-20法则"></a>80/20法则</h2><p>传统经济中，经济行为通常满足80/20法则，例如20%的产品创造了80%的销售额。这20%也就是所谓的热门产品。</p><blockquote><p><a href="http://book.douban.com/subject/3038761/" title="《80/20法则》">《80/20法则》</a>认为，少量的原因、投入和付出将获得大量的结果、产出和回报。<br>从该法则可以看出，在原因与结果、投入与产出、付出与回报之间存在着一种内在的失衡。</p></blockquote><h2 id="more-热门经济学"><a class="header-anchor" href="#more-热门经济学"></a><span id="more"></span><br>热门经济学</h2><p>热门之所以存在，是因为供给匮乏，我们没有足够的空间为每一个人提供每一样东西。如果只有那么几个货架、几个波段，唯一明智的做法就是把它们留给最热门的东西。</p><h2 id="地理和物理的限制"><a class="header-anchor" href="#地理和物理的限制"></a>地理和物理的限制</h2><p>热门是怎么产生的呢，热门产品是被大众普遍喜爱的产品。大众之所以体现出一定共性，是因为选择比较少。与其说是大众热门，不如说大众被热门。</p><p>例如电视节目，在有限的时间、有限的频段下，电视台只能靠黄金时间，打造热门节目。<br>例如企业制造，只能主力制造本地所需的产品，削减不需要产品种类。</p><h2 id="丰饶经济学"><a class="header-anchor" href="#丰饶经济学"></a>丰饶经济学</h2><p>当我们文化中的供需瓶颈开始消失，所有产品都能被人取得的时候，长尾便会自然发生。</p><p>那么地理和物理的限制不存在了吗？</p><p>限制仍旧存在，只不过技术发展、运输网络完善使这些限制的影响变的微不足道，特别是互联网的发展。试想一下，在一个没有货架空间限制(网上商城可以展示所有商品)和其他供应瓶颈的时代，任何产品都可以被方便的发现，面向特定小众群体的产品将和人们产品有同样的吸引力。</p><h2 id="长尾无处不在"><a class="header-anchor" href="#长尾无处不在"></a>长尾无处不在</h2><p>那么什么是长尾，长尾是相对于热门而言的，处于热门之外的产品种类。如果将长尾上的小批量多品种生意集合成一个生意，这个生意可以同大热门生意分享同样的利润。</p><p>这打破了传统经济中的80/20法则。例如亚马逊热门图书和长尾图书，在线音乐网站的热门音乐和长尾音乐。</p><p>长尾之所以无处不在，是因为</p><p>###生产工具的普及<br>业余爱好者利用先进的工具能做大以前只有专业人士才能做得事。这大大丰富了产品多样性。<br>###网络是最好的口碑放大器<br>产品再多，如果无人欣赏，一切便毫无意义。互联网的出现，大大降低了接触消费者的成本。消费者在网店上可以接触到应有尽有的商品市场。<br>###过滤让人们能找到任何东西<br>产品应有尽有，消费者如何快速找到想要的小众产品，离不开搜索引擎的帮助。</p><h2 id="利基市场"><a class="header-anchor" href="#利基市场"></a>利基市场</h2><blockquote><p>是指由已有市场绝对优势的企业所忽略的某些细分市场并且在此市场尚未有完善的供应服务。一般由较小的产品市场并具有持续发展的潜力中一些需要且尚未被满足的族群消费者所组成为了满足特定的市场需求，价格区间，产品质量，针对细分后的产品进入这个小型市场且有盈利的基础。经由专业化的经营将品牌意识灌输到该特定消费者族群中逐渐形成该族群的领导品牌。</p><footer><strong>利基市场</strong><cite><a href="http://zh.wikipedia.org/wiki/%E5%88%A9%E5%9F%BA%E5%B8%82%E5%9C%BA">维基百科</a></cite></footer></blockquote><p>利基市场，从维基百科定义来看，也即长尾经济，通过发掘或扩展已有市场的长尾市场，获取特定群体的青睐。</p><p>例如豆瓣，面向文艺青年的社区</p><p>例如途牛，在携程大旅游平台下发展在线旅游。</p><p>例如陌陌，在微信一统移动IM下在陌生人社交中独占一隅。</p><p>例如YY，在QQ雄霸IM市场下在团队语音市场越战越勇。</p><p>在你想做的领域，你想到了什么？</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;80-20法则&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#80-20法则&quot;&gt;&lt;/a&gt;80/20法则&lt;/h2&gt;
-&lt;p&gt;传统经济中，经济行为通常满足80/20法则，例如20%的产品创造了80%的销售额。这20%也就是所谓的热门产品。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;http://book.douban.com/subject/3038761/&quot; title=&quot;《80/20法则》&quot;&gt;《80/20法则》&lt;/a&gt;认为，少量的原因、投入和付出将获得大量的结果、产出和回报。&lt;br&gt;
-从该法则可以看出，在原因与结果、投入与产出、付出与回报之间存在着一种内在的失衡。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;more-热门经济学&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#more-热门经济学&quot;&gt;&lt;/a&gt;</summary>
-    
-    
-    
-    <category term="读书笔记" scheme="http://blog.cuicc.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="longtail" scheme="http://blog.cuicc.com/tags/longtail/"/>
-    
-    <category term="长尾理论" scheme="http://blog.cuicc.com/tags/%E9%95%BF%E5%B0%BE%E7%90%86%E8%AE%BA/"/>
-    
-    <category term="读书笔记" scheme="http://blog.cuicc.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   

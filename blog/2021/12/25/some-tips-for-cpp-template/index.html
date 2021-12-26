@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        记一次内存泄漏定位｜YYGCui&#39;s blog
+        使用C++模板的一些技巧｜YYGCui&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/">
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -178,12 +178,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>记一次内存泄漏定位</h1>
+                    <h1>使用C++模板的一些技巧</h1>
                     
                     <span class="meta">
                          作者 YYGCui
                         <span>
-                          日期 2021-12-10
+                          日期 2021-12-25
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -204,7 +204,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            记一次内存泄漏定位
+            使用C++模板的一些技巧
         </span>
     </div>
 </header>
@@ -215,55 +215,44 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>最近测试时发现，运行相对较长一段时间后进程因内存使用超过配额上限而被杀掉，这应该是内存缓慢增长导致的，也就是说出现了内存泄漏。这个进程代码是用C++实现的，且基本没有使用<code>malloc/free</code>, <code>new/delete</code>等显式的内存申请释放，但代码中大量使用了标准库的容器类。这种因为业务逻辑导致容器没有清除导致的内存泄露，之前一直没有找到很好的定位手段，已知的工具<code>valgrind</code>貌似不能用来定位这种方式的泄露。</p>
-<p>通过内外网搜索，找到了一些基于内存采样的分析工具，如<code>google-perftools</code>里的<code>tcmalloc</code>，及<code>bytehound</code>，本文主要记录下使用<code>tcmalloc</code>定位内存泄漏的方法。</p>
-<h2 id="google-perftools"><a class="header-anchor" href="#google-perftools"></a>google-perftools</h2>
-<p><a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools">google-perftools</a>是Google开源的一个高性能的多线程的<code>malloc</code>实现集，号称当前最快的<code>malloc</code>，使用它可以提高内存访问性能，在我们的测试中，有大约单核10%的CPU性能提升。同时，它还集成了<code>heap-checker</code>，<code>heap-profiler</code>，<code>cpu-profiler</code>等内存和cpu检查<a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools/wiki">分析工具</a>。这里主要使用<code>heap-profiler</code>来定位内存泄漏问题。</p>
-<h3 id="tcmalloc库"><a class="header-anchor" href="#tcmalloc库"></a>tcmalloc库</h3>
-<p>ubuntu上可以直接通过<code>apt</code>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install -y google-perftools</span><br><span class="line"></span><br><span class="line"># 相关路径如下</span><br><span class="line"># /usr/bin/google-pprof</span><br><span class="line"># /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4</span><br></pre></td></tr></table></figure>
-<p>有两种方式来使用tcmalloc库，一种是在编译时链接，然后运行时通过环境变量启用不同的工具，官方wiki看起来是推荐这种方式的。命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gcc [...] -o myprogram -ltcmalloc</span><br><span class="line"># HEAPPROFILE设置输出分析文件的前缀</span><br><span class="line">HEAPPROFILE=/tmp/myprogram ./myprogram</span><br></pre></td></tr></table></figure>
-<p>另一种方式是通过<code>PRELOAD</code>的方式优先加载该动态链接库，好处是它不用重新编译代码，且可以覆盖该程序及其他在此之后链接库里的相同函数实现，实现全局使用的目的。命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">env LD_PRELOAD=&quot;/usr/lib/libtcmalloc.so&quot; HEAPPROFILE=/tmp/myprogram ./myprogram</span><br></pre></td></tr></table></figure>
-<h3 id="内存分析"><a class="header-anchor" href="#内存分析"></a>内存分析</h3>
-<p>通过上述启动程序后，每隔10s钟会在指定的输出路径输出内存采样文件，如<code>/tmp/myprogram.0001.heap</code>。通过一个简单的示例程序看下其过程。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># test.cpp</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;cstdlib&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void test() &#123;</span><br><span class="line">    vector&lt;int&gt; testv;</span><br><span class="line">    for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">        testv.push_back(i);</span><br><span class="line">    &#125;</span><br><span class="line">    # 退出不释放内存</span><br><span class="line">    exit(1);</span><br><span class="line">&#125;</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    test();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该示例通过<code>vector</code>申请了<code>10000*sizeof(int)</code>大小左右的内存，然后没有释放。编译并预加载<code>tcmalloc</code>执行。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">g++ test.cpp -o test</span><br><span class="line">env LD_PRELOAD=&quot;/usr/lib/x86_64-linux-gnu/libtcmalloc.so.4&quot; HEAPPROFILE=/tmp/test ./test</span><br><span class="line"># 执行完成后看到以下文件</span><br><span class="line">/tmp/test.0001.heap</span><br></pre></td></tr></table></figure>
-<p>使用<code>google-pprof</code>查看可以该文件，通过不同的参数可以指定显示方式，甚至web显示也可以。比如用<code>--test</code>参数显示成文本，用<code>--gv</code>或者<code>--pdf</code>可以图形化显示，如这里存到pdf文件中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ google-pprof --pdf test /tmp/test.0001.heap &gt; test.0001.heap.pdf</span><br></pre></td></tr></table></figure>
-<p>通过下图可以直观的看到<code>test</code>函数<code>alloc</code>了内存，没有<code>dealloc</code>过。</p>
-<p><img src="/images/test-0001-heap-pdf.png" alt=""></p>
-<h3 id="内存泄漏定位"><a class="header-anchor" href="#内存泄漏定位"></a>内存泄漏定位</h3>
-<p>那么，在复杂的程序中，既有申请又有释放，内存一直缓慢增长该怎么取分析定位呢？如果直接查看单个文件，并无法说明内存只有申请没有释放。这里会用到<code>pprof</code>比较两个heap文件查看差异的方法。比如运行相对较长时间程序，获得了<code>myprogram.0001.heap ... myprogram.0234.heap</code> 这些采样数据，同时通过观察进程内存在这段时间内明显增长。可以通过以下命令对比两个文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ google-pprof --pdf --base /tmp/test.0010.heap test /tmp/test.0234.heap &gt; test.compare.pdf</span><br></pre></td></tr></table></figure>
-<p>生成的pdf和上图类似，不同点在于该pdf中显示的相对值，就是0234申请的内存减去0010申请的值。可以直观的看到哪些函数相对申请了占比大的内存，大大缩小了排查范围，然后通过阅读这些函数就可以找到具体哪些容器存在未清除的问题，比如没有<code>clear</code>或<code>erase</code>。</p>
-<p>这里取第0010个heap文件是因为程序前期初始化等申请一些内存，这部分先排除在外，避免大量定位。这里可以灵活运用，比如可以先看单个文件哪些申请了大量内存再做比较。</p>
-<h2 id="bytehound"><a class="header-anchor" href="#bytehound"></a>bytehound</h2>
-<p><a target="_blank" rel="noopener" href="https://github.com/koute/bytehound">bytehound</a>是一款<code>Linux</code>平台的内存分析工具，具有丰富的前端界面，可以看趋势图、火焰图、内存申请调用栈等等。与上面不同的是它通过续写的方式生成一个<code>.dat</code>文件。</p>
-<p>它的缺点是生成的文件非常大，从笔者的测试看，该文件一分钟增加2G左右，对于缓慢增长来说，运行几个小时文件大小吃不消。再者，虽然火焰图比较直观可以看出内存热点(类似cpu性能热点分析)，但是没有内存申请比较，不太容易缩小排查范围。</p>
-<p>因为生成文件太大的问题，没有详细使用该工具，如有兴趣，可以参考他的<a target="_blank" rel="noopener" href="https://koute.github.io/bytehound/">详细文档</a></p>
-<h2 id="扩展资料"><a class="header-anchor" href="#扩展资料"></a>扩展资料</h2>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools/wiki">google-perftools官方wiki</a> - 官方wiki对该工具各方面都有详尽的说明，想了解其他功能细节可以参看</li>
-<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040982400">内存泄漏的定位与排查：Heap Profiling 原理解析</a> - 该文章详细介绍了<code>heap profile</code>的原理，主流工具<code>profile</code>的实现细节等，该文中还提到了<code> gprof, Valgrind and gperftools</code>等工具评估链接，对于想了解原理的同学建议阅读。</li>
-</ol>
+                <h2 id="模板是什么"><a class="header-anchor" href="#模板是什么"></a>模板是什么</h2>
+<blockquote><p>模板（Template）在C++ 程序设计语言中，是指函数模板与类模板[1]，是一种参数化类型机制。Java和C＃中的泛型与C++ 的模板大体对应，但也有一些功能上的显著差异（C++ 模板支持两者没有明确对应的模板模板参数和模板非类型参数，但不支持Java的通配符以及C#的泛型类型约束）。模板是C++ 的泛型编程中不可缺少的一部分。</p>
+<footer><strong>https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF_(C%2B%2B)</strong></footer></blockquote>
+<p>简单说，模板的基本用法是可以简化参数类型不同但逻辑相同的代码，特别是不同参数类型的重载函数。</p>
+<h2 id="遇到的问题"><a class="header-anchor" href="#遇到的问题"></a>遇到的问题</h2>
+<p>最近有一个特性遇到了一些问题，帮他们优化，顺便整理一下。这个特性由原来的单个action变成了多个action，这里遇到一个问题，就是有一个入参对象需要和对应的action做关联更新，只存一份这个对象无法满足需求，而对象又比较大，拷贝多份的话，浪费了大量内存。最后的方案是把会更新的部分单独拿出来做了多份，只读的部分还是共用原来这个对象，最后把更新的部分整合回去给下游用。简单用伪码表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 原对象结构</span><br><span class="line">struct Example1 &#123;</span><br><span class="line">    type var1; // 更新</span><br><span class="line">    type var2; // 更新</span><br><span class="line">    ...</span><br><span class="line">    type varn; // 只读</span><br><span class="line">&#125;;</span><br><span class="line"># 多份对象结构</span><br><span class="line">struct NewExample1 &#123;</span><br><span class="line">    type var1;</span><br><span class="line">    type var2;</span><br><span class="line">    ...</span><br><span class="line">    Example1* e1; // 只读</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>为了不影响原有的功能，特性算法开发直接把相关函数拷贝出来一份，使用新对象作为参数，拷贝一份是因为类型不一样了，且读取数据的方式也不同。这样带来一个问题，每次特性分支同步主干时，这部分拷贝出来的代码都不会被更新，需要人工和原函数校对修改，同时大量的重复代码也给维护代码带来了很大的成本。</p>
+<p>实际上，这两种类型的处理逻辑是一样的，只是类型不同且访问的数据源形式不太一样，比如使用<code>NewExample1</code>类型时，其数据源有本身可能更新的<code>var1</code>, 也有不变的部分比如<code>e1-&gt;varn</code>。这正是泛型编程可以发挥的场景，使用模板可以去掉大量的重复逻辑。</p>
+<h2 id="泛型编程"><a class="header-anchor" href="#泛型编程"></a>泛型编程</h2>
+<p>泛型编程是指使用一种独立于任何具体类型的方式进行编码，模板是泛型编程的基础。使用模板前需要搞清楚的是，模板的推导是编译期完成的，编译完成后就生成了对应类型的特化实现，并不是运行期动态特化。</p>
+<p>所以模板函数实现一般放在头文件中，编译器在类型检查时，只有看到函数实现才能特化出具体类型的函数。如果模板函数声明和实现分开，会导致链接时找不到函数实现。</p>
+<p>从上面的特性开发得知，特性分支需要同步主干代码，那么如果在特性分支上把模板函数实现都移入头文件，也会给同步造成很大的问题，也需要人工校对头文件的模板函数和cpp里的函数，最好的方式就是就地(cpp中)模板化。</p>
+<h3 id="在cpp中模板化"><a class="header-anchor" href="#在cpp中模板化"></a>在cpp中模板化</h3>
+<p>如何实现模板声明和实现的分离，在cpp文件中实现函数。检索通过<code>stackoverflow</code>找个了方案：在cpp中实现时，需要声明要特化的类型，这样在编译时就能根据特化声明来特化函数实现。当然这样就不是广义的泛型了，只支持声明特化的几种类型，详细内容看<code>stackoverflow</code>及其最佳答案里的链接。在这个特性中，这种方式满足当前的使用。示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># .h</span><br><span class="line"># 模板类</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">class Example &#123;</span><br><span class="line">    void Func1(T&amp; t);</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"># 模板函数</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void ExampleFunc(T&amp; t);</span><br><span class="line"></span><br><span class="line"># .cpp</span><br><span class="line"># 模板类实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void Example&lt;T&gt;::Func1(T&amp; t) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 明确类特化</span><br><span class="line">template class Example&lt;Example1&gt;;</span><br><span class="line">template class Example&lt;NewExample1&gt;;</span><br><span class="line"></span><br><span class="line"># 模板函数实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void ExampleFunc(T&amp; t) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 明确函数特化</span><br><span class="line">template void ExampleFunc&lt;Example1&gt;(T&amp; t);</span><br><span class="line">template void ExampleFunc&lt;NewExample1&gt;(T&amp; t);</span><br></pre></td></tr></table></figure>
+<p>结合上述类型，我们特化了<code>Example1</code>和<code>NewExample1</code>两种实现，满足我们当前的使用需求。这样能消除大部分的重复逻辑，仅仅增加了两种特化声明。</p>
+<h3 id="类型差异处理"><a class="header-anchor" href="#类型差异处理"></a>类型差异处理</h3>
+<p>前文提到，因为我们两种类型仅仅是为了避免大量冗余只读的部分，我们有些逻辑获取数据源是和类型强关联的，直接上例子更直观：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Example1类型处理</span><br><span class="line">void Example::Func1(Example1&amp; t) &#123;</span><br><span class="line">    return t.var1 + t.varn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># NewExample1类型处理, 只读部分通过指针访问Example1</span><br><span class="line">void Example::Func1(NewExample1&amp; t) &#123;</span><br><span class="line">    return t.var1 + t.e1-&gt;varn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，对于读写部分，两种类型的读取代码一摸一样，对于只读部分，就出现了差异。在不考虑复杂模板的情况下，想到的一种折中方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 模板函数实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void Example&lt;T&gt;::Func1(const Example1&amp; t1, T&amp; t2) &#123;</span><br><span class="line">    return t2.var1 + t1.varn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 全特化两种类型的实现，封装具体差异部分</span><br><span class="line">template &lt;&gt;</span><br><span class="line">void Example&lt;Example1&gt;::Func1(Example1&amp; t) &#123;</span><br><span class="line">    return Func1(t, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;&gt;</span><br><span class="line">void Example&lt;NewExample1&gt;::Func1(NewExample1&amp; t) &#123;</span><br><span class="line">    return Func1(*t.e1, t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只增加了函数调用的封装，屏蔽类型引起的差异。在消除重复代码的情况下，增加了一点函数封装的代码，当前也还可以接受。当然，这种方法，只适用于明确知道几种类型的情况下，如果泛化的类型比较多，就不是一种很好的方法了。</p>
+<h3 id="更好的方法？"><a class="header-anchor" href="#更好的方法？"></a>更好的方法？</h3>
+<p>那么，有没有更好的方法，可以直接在模板中处理类型带来的逻辑差异呢。通过<code>typeid</code>区分不同的类型是否可行？还在研究中。。。</p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接"></a>参考链接</h2>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/templates">Templates - cppreference.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/115703/storing-c-template-function-definitions-in-a-cpp-file">Storing C++ template function definitions in a .CPP file</a></p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/blog/2021/12/25/some-tips-for-cpp-template/" data-toggle="tooltip" data-placement="top"
-                           title="使用C++模板的一些技巧">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/blog/2021/12/03/refactor-in-parallel-with-multi-threads/" data-toggle="tooltip" data-placement="top"
-                           title="线程池并行化重构">Next Post &rarr;</a>
+                        <a href="/blog/2021/12/10/checking-for-mem-leaks/" data-toggle="tooltip" data-placement="top"
+                           title="记一次内存泄漏定位">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -282,7 +271,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#google-perftools"><span class="toc-text">google-perftools</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tcmalloc%E5%BA%93"><span class="toc-text">tcmalloc库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="toc-text">内存分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%AE%9A%E4%BD%8D"><span class="toc-text">内存泄漏定位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bytehound"><span class="toc-text">bytehound</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%B5%84%E6%96%99"><span class="toc-text">扩展资料</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">模板是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="toc-text">泛型编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8cpp%E4%B8%AD%E6%A8%A1%E6%9D%BF%E5%8C%96"><span class="toc-text">在cpp中模板化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%B7%AE%E5%BC%82%E5%A4%84%E7%90%86"><span class="toc-text">类型差异处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-text">更好的方法？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -325,8 +314,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "yygcui";
-    var disqus_identifier = "http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/";
-    var disqus_url = "http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/";
+    var disqus_identifier = "http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/";
+    var disqus_url = "http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/";
 
     (function () {
         var dsq = document.createElement('script');
