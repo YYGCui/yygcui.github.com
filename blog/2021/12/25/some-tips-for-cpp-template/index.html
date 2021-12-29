@@ -239,7 +239,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 模板函数实现</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void Example&lt;T&gt;::Func1(const Example1&amp; t1, T&amp; t2) &#123;</span><br><span class="line">    return t2.var1 + t1.varn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 全特化两种类型的实现，封装具体差异部分</span><br><span class="line">template &lt;&gt;</span><br><span class="line">void Example&lt;Example1&gt;::Func1(Example1&amp; t) &#123;</span><br><span class="line">    return Func1(t, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;&gt;</span><br><span class="line">void Example&lt;NewExample1&gt;::Func1(NewExample1&amp; t) &#123;</span><br><span class="line">    return Func1(*t.e1, t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>只增加了函数调用的封装，屏蔽类型引起的差异。在消除重复代码的情况下，增加了一点函数封装的代码，当前也还可以接受。当然，这种方法，只适用于明确知道几种类型的情况下，如果泛化的类型比较多，就不是一种很好的方法了。</p>
 <h3 id="更好的方法？"><a class="header-anchor" href="#更好的方法？"></a>更好的方法？</h3>
-<p>那么，有没有更好的方法，可以直接在模板中处理类型带来的逻辑差异呢。通过<code>typeid</code>区分不同的类型是否可行？还在研究中。。。</p>
+<p>那么，有没有更好的方法，可以直接在模板中处理类型带来的逻辑差异呢。是不是只能通过模板元编程来解决呢？还在研究中。。。</p>
 <h2 id="参考链接"><a class="header-anchor" href="#参考链接"></a>参考链接</h2>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/templates">Templates - cppreference.com</a></p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/115703/storing-c-template-function-definitions-in-a-cpp-file">Storing C++ template function definitions in a .CPP file</a></p>
