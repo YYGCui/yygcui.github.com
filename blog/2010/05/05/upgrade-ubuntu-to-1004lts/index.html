@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -237,7 +237,7 @@
 <p>如果你想用grub2来引导系统，而又没有安装在MBR里，可以使用LiveCD来修复，具体步骤如下：</p>
 <p>1.使用LiveCD进入ubuntu系统，打开终端。</p>
 <p>2.执行以下命令（注：/dev/sda1 是指你的ubuntu的根分区，）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> mount /dev/sda1 /mnt</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /dev /mnt/dev</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /proc /mnt/proc</span><br><span class="line"><span class="variable">$sudo</span> chroot /mnt </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> mount /dev/sda1 /mnt</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /dev /mnt/dev</span><br><span class="line"><span class="variable">$sudo</span> mount --<span class="built_in">bind</span> /proc /mnt/proc</span><br><span class="line"><span class="variable">$sudo</span> <span class="built_in">chroot</span> /mnt </span><br></pre></td></tr></table></figure>
 <p>3.执行grub2安装命令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$grub</span>-install /dev/sda</span><br></pre></td></tr></table></figure>
 <p>如果出现错误信息，执行</p>
@@ -274,6 +274,12 @@
                     <div id="disqus_thread" class="disqus-thread"></div>
                 </div>
                 <!-- disqus 评论框 end -->
+                
+
+
+                <!--加入新的评论系统-->
+                
+
                 
 
             </div>
@@ -345,6 +351,7 @@
 
 
 
+
 <!-- Footer -->
 <!-- Footer -->
 <footer>
@@ -403,7 +410,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -464,6 +471,8 @@
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -494,7 +503,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

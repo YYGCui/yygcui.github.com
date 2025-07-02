@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -194,11 +194,11 @@
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Programming/"
-                           title="Programming">Programming</a>
-                        
                         <a class="tag" href="/tags/C-C/"
                            title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
                         <a class="tag" href="/tags/Precompile/"
                            title="Precompile">Precompile</a>
@@ -243,12 +243,12 @@
 (1)#ifdef 通常通过标识符的定义与否来控制程序的中某些代码片段是否执行。在编译时启用了相应的宏，则执行相应的代码片段。
 如#ifdef DEBUG，使用宏DEBUG来控制调试信代码是否执行；#ifdef LOG，通过宏LOG来控制是否打印LOG信息。
 <p>(2)#ifndef 通常在头文件中使用，避免头文件被多次包含导致编译错误。如</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">    <span class="meta">#<span class="meta-keyword">ifndef</span> _HEADER_</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> _HEADER_</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">```    </span><br><span class="line">如果某头文件被多个代码文件包含，则该条件编译指令的作用是该头文件只被包含一次。</span><br><span class="line"></span><br><span class="line">(<span class="number">3</span>)<span class="meta">#<span class="meta-keyword">if</span> ... #<span class="meta-keyword">else</span> 或 #<span class="meta-keyword">if</span> ... #<span class="meta-keyword">elif</span> 这个条件编译指令和C语言的条件控制语句是类似的，可以嵌套使用。不同的是对“常量表达式”做了一些限制：该常量表达式必须是整型，并且其中不包含sizeof，强制类型转换运算符或枚举变量。</span></span><br><span class="line">``` c    </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> MAX 100</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">if</span> MAX&gt;100</span></span><br><span class="line">    代码片段<span class="number">1</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    代码片段<span class="number">2</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">    <span class="meta">#<span class="keyword">ifndef</span> _HEADER_</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> _HEADER_</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">```    </span><br><span class="line">如果某头文件被多个代码文件包含，则该条件编译指令的作用是该头文件只被包含一次。</span><br><span class="line"></span><br><span class="line">(<span class="number">3</span>)<span class="meta">#<span class="keyword">if</span> ... #<span class="keyword">else</span> 或 #<span class="keyword">if</span> ... #<span class="keyword">elif</span> 这个条件编译指令和C语言的条件控制语句是类似的，可以嵌套使用。不同的是对“常量表达式”做了一些限制：该常量表达式必须是整型，并且其中不包含sizeof，强制类型转换运算符或枚举变量。</span></span><br><span class="line">``` c    </span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> MAX 100</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="meta">#<span class="keyword">if</span> MAX&gt;100</span></span><br><span class="line">    代码片段<span class="number">1</span></span><br><span class="line">    <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    代码片段<span class="number">2</span></span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 <p>该条件编译指令很容易理解，但是通常在什么环境下会用到，我还没有概念。不过倒是知道它的一个巧妙用途。<br>
 当要注释或修改一大片段程序时（特别是该程序片段中已经包含了/* … */注释），那么使用#if … #else … #endif 实现程序片段的注释是既美观又方便。方法如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">要注释的代码</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">修改前的代码</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">修改后的代码</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 1</span></span><br><span class="line">修改后的代码</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">修改前的代码</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> 0</span></span><br><span class="line">要注释的代码</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> 0</span></span><br><span class="line">修改前的代码</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">修改后的代码</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> 1</span></span><br><span class="line">修改后的代码</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">修改前的代码</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 <p>(4)defined是对#ifdef或者#ifndef的条件扩展，实现def条件判断的if…else…或if…elseif…else…的功能。在单一条件情况下，#if defined _MACROS_与#ifdef _MACROS_是等价的，#if !defined _MACROS_与#ifndef _MACROS_是等价的。使用如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined _MACROS1_ <span class="comment">//另一种形式: #if defined(_MACROS1_)</span></span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined _MACROS2_</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_MACROS1_) &amp;&amp; defined(_MACROS2_)</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined _MACROS1_ <span class="comment">//另一种形式: #if defined(_MACROS1_)</span></span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined _MACROS2_</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined(_MACROS1_) &amp;&amp; defined(_MACROS2_)</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 
                 <hr>
                 
@@ -278,6 +278,12 @@
                 <!-- disqus 评论框 end -->
                 
 
+
+                <!--加入新的评论系统-->
+                
+
+                
+
             </div>
 
             <div class="hidden-xs col-sm-3 toc-col">
@@ -304,11 +310,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Programming/"
-                           title="Programming">Programming</a>
-                        
                         <a class="tag" href="/tags/C-C/"
                            title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
                         <a class="tag" href="/tags/Precompile/"
                            title="Precompile">Precompile</a>
@@ -343,6 +349,7 @@
     })();
 </script>
 <!-- disqus 公共JS代码 end -->
+
 
 
 
@@ -405,7 +412,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -466,6 +473,8 @@
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -496,7 +505,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

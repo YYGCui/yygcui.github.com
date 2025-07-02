@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -231,21 +231,21 @@
 <li>因为我无法启动mysql，所以首先要想办法启动mysql，然后dump数据。从innodb_force_recovery的值1开始尝试，看mysql能否在该修复模式下启动，不到万不得已，不要尝试值为4及以上。</li>
 <li>在我这里，mysql在值为2时可以启动，这是stop掉数据库，然后备份数据</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo service mysql stop</span><br><span class="line">mysqldump -u root -p --all-databases &gt; all-databases.sql</span><br></pre></td></tr></table></figure> 
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> service mysql stop</span><br><span class="line">mysqldump -u root -p --all-databases &gt; all-databases.sql</span><br></pre></td></tr></table></figure> 
 <ul>
 <li>删除掉出错的数据文件</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mv ib_logfile0 ib_logfile0.bak</span><br><span class="line">mv ib_logfile1 ib_logfile1.bak</span><br><span class="line">mv ibdata1 ibdata1.bak</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mv</span> ib_logfile0 ib_logfile0.bak</span><br><span class="line"><span class="built_in">mv</span> ib_logfile1 ib_logfile1.bak</span><br><span class="line"><span class="built_in">mv</span> ibdata1 ibdata1.bak</span><br></pre></td></tr></table></figure>
 <ul>
 <li>启动mysql，然后从备份文件恢复数据</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo service mysql start</span><br><span class="line">mysql -u root -p &lt; all-databases.sql</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> service mysql start</span><br><span class="line">mysql -u root -p &lt; all-databases.sql</span><br></pre></td></tr></table></figure>
 <ul>
 <li>因为在修复模式下，在插入数据时报错，也就是说此时是不能写入数据的。所以就关闭掉了修复模式</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">innodb_force_recovery = 0</span><br></pre></td></tr></table></figure>
 <p>restart mysql后，再次恢复数据</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo service mysql restart</span><br><span class="line">mysql -u root -p &lt; all-databases.sql</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> service mysql restart</span><br><span class="line">mysql -u root -p &lt; all-databases.sql</span><br></pre></td></tr></table></figure>
 <ul>
 <li>再次重启下mysql，现在mysql可以正常启动了，并且数据也回复成功。</li>
 </ul>
@@ -276,6 +276,12 @@
                     <div id="disqus_thread" class="disqus-thread"></div>
                 </div>
                 <!-- disqus 评论框 end -->
+                
+
+
+                <!--加入新的评论系统-->
+                
+
                 
 
             </div>
@@ -341,6 +347,7 @@
 
 
 
+
 <!-- Footer -->
 <!-- Footer -->
 <footer>
@@ -399,7 +406,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -460,6 +467,8 @@
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -490,7 +499,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

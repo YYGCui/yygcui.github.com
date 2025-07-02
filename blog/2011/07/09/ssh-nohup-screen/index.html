@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -275,7 +275,7 @@ Enabling either option and setting the interval for less than the time it takes 
 <p>当运行的程序需要很长时间时，在情况一下，或者想在运行该程序的同时做其他事情，或者关机下班，我们需要该程序的运行不受任何影响。这就是情况二要解决的问题。</p>
 <p>常规情况下，通过后台运行程序的方法是program&amp;，&amp;的作用是让程序在后台运行。我们可以通过命令bg查看在后台运行的进程，通过命令fg NO. 将第NO.个后台进程转到前台来运行。但是该种方法运行的程序在ssh断开后依然会因SIGHUP信号被终止。</p>
 <h2 id="1-nohup"><a class="header-anchor" href="#1-nohup"></a>1.nohup</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup - run a <span class="built_in">command</span> immune to hangups, with output to a non-tty</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">nohup</span> - run a <span class="built_in">command</span> immune to hangups, with output to a non-tty</span><br></pre></td></tr></table></figure>
 <p>nohup的作用是忽略SIGHUP信号。我们可以用这个命令避免ssh连接断开后运行的程序被终止的情况。nohup的作用只是忽略SIGHUP信号，要想在关闭ssh的情况下使程序依旧运行，还是要使用后台运行命令&amp;。nohup会将程序的标准输出会自动重定向到nohup.out，该文件和运行的程序在同一目录下。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$nohup</span> &amp;lt;<span class="built_in">command</span>&amp;gt; [arg]... &amp;amp;</span><br></pre></td></tr></table></figure>
 <p>nohup的功能单一，使用比较简单，对于不需要交互的程序比较有效，直接放在后台运行即可。但是在需要人机交互的时候，nohup就无能为力了，下面将介绍更加强大的screen命令。</p>
@@ -287,13 +287,13 @@ Enabling either option and setting the interval for less than the time it takes 
 <p>上面两种方式的不同点在于：第一种正常情况下只能通过exit退出终端，可在该虚拟终端中使用大多数命令；而第二种当命令退出时，该虚拟终端也随之退出，也就是说该虚拟终端是为command而创建的。这只是screen只基本的功能，你还可以在不终止screen中的程序的同时切换到其他窗口，甚至是断开ssh连接。screen程序定义了一些快捷键，这些快捷键都是以C-a (Ctrl + a)开始再加上一个字符表示一定的动作。例如：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$screen</span> vim a.c</span><br></pre></td></tr></table></figure>
 <p>如上命令所示，例如我创建了一个虚拟终端并用vim打开了一个文件a.c，这时我想切换到其他窗口却又不想关闭这个文件。可以使用C-a d这个快捷键来detach (分离) screen from 当前的虚拟终端。这时即使断开ssh连接，该文件依然在该虚拟终端中处于离开时的状态。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$screen</span> -ls</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$screen</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
 <p>顾名思义，该命令的功能是list出所有的screen终端。如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@freebsd ~]$ screen -ls</span><br><span class="line">There is a screen on:</span><br><span class="line">        49454.ttyp2.freebsd     (Detached)</span><br><span class="line">1 Socket <span class="keyword">in</span> /tmp/screens/S-yygc.</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@freebsd ~]$ screen -<span class="built_in">ls</span></span><br><span class="line">There is a screen on:</span><br><span class="line">        49454.ttyp2.freebsd     (Detached)</span><br><span class="line">1 Socket <span class="keyword">in</span> /tmp/screens/S-yygc.</span><br></pre></td></tr></table></figure>
 <p>如果想重新attach到这个虚拟终端，可以使用如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$screen</span> -r 49454</span><br></pre></td></tr></table></figure>
 <p>当用另一个ssh登录到主机后，list出screen终端会看到：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@freebsd ~]$ screen -ls</span><br><span class="line">There is a screen on:</span><br><span class="line">        49454.ttyp2.freebsd     (Attached)</span><br><span class="line">1 Socket <span class="keyword">in</span> /tmp/screens/S-yygc.</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yygc@freebsd ~]$ screen -<span class="built_in">ls</span></span><br><span class="line">There is a screen on:</span><br><span class="line">        49454.ttyp2.freebsd     (Attached)</span><br><span class="line">1 Socket <span class="keyword">in</span> /tmp/screens/S-yygc.</span><br></pre></td></tr></table></figure>
 <p>如果想进入到一个Attached的虚拟终端，命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$screen</span> -x 49454</span><br></pre></td></tr></table></figure>
 <p>注意，C-a快捷键只能在screen创建的虚拟终端中使用，更过的快捷键请参看<a target="_blank" rel="noopener" href="http://www.gnu.org/software/screen/manual/screen.html#Commands">Screen User’s Manual</a>。关于screen的更多参数介绍以及使用方法，请大胆的输入命令</p>
@@ -326,6 +326,12 @@ Enabling either option and setting the interval for less than the time it takes 
                     <div id="disqus_thread" class="disqus-thread"></div>
                 </div>
                 <!-- disqus 评论框 end -->
+                
+
+
+                <!--加入新的评论系统-->
+                
+
                 
 
             </div>
@@ -400,6 +406,7 @@ Enabling either option and setting the interval for less than the time it takes 
 
 
 
+
 <!-- Footer -->
 <!-- Footer -->
 <footer>
@@ -458,7 +465,7 @@ Enabling either option and setting the interval for less than the time it takes 
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -519,6 +526,8 @@ Enabling either option and setting the interval for less than the time it takes 
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -549,7 +558,7 @@ Enabling either option and setting the interval for less than the time it takes 
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

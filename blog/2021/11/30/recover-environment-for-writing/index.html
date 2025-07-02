@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -237,7 +237,7 @@
 <p>在执行<code>npm audit fix</code>或<code>npm audit fix --force</code>后依然无法解决这个报错。这是因为该工程配置的依赖包版本太老了，npm检查后认为这些包存在安全隐患。最简单的方式就是升级到最新版本。</p>
 <h3 id="Hexo升级"><a class="header-anchor" href="#Hexo升级"></a>Hexo升级</h3>
 <p>由于package.json里配置了默认版本，所以首先要检查是否有新版本，然后更新json，命令如下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装npm-check用来检查是否需要升级插件</span></span><br><span class="line">sudo npm install -g npm-check</span><br><span class="line">npm-check</span><br><span class="line"><span class="comment"># 安装npm-upgrade用来更新json</span></span><br><span class="line">sudo npm install -g npm-upgrade</span><br><span class="line">npm-upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新全局插件</span></span><br><span class="line">sudo npm update -g</span><br><span class="line"><span class="comment"># 更新本工程插件</span></span><br><span class="line">npm update --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装npm-check用来检查是否需要升级插件</span></span><br><span class="line"><span class="built_in">sudo</span> npm install -g npm-check</span><br><span class="line">npm-check</span><br><span class="line"><span class="comment"># 安装npm-upgrade用来更新json</span></span><br><span class="line"><span class="built_in">sudo</span> npm install -g npm-upgrade</span><br><span class="line">npm-upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新全局插件</span></span><br><span class="line"><span class="built_in">sudo</span> npm update -g</span><br><span class="line"><span class="comment"># 更新本工程插件</span></span><br><span class="line">npm update --save</span><br></pre></td></tr></table></figure>
 <p>更新完成后，可以用<code>hexo version</code>查看hexo及其依赖插件版本。</p>
 <h3 id="其他告警"><a class="header-anchor" href="#其他告警"></a>其他告警</h3>
 <ol>
@@ -278,6 +278,12 @@
                     <div id="disqus_thread" class="disqus-thread"></div>
                 </div>
                 <!-- disqus 评论框 end -->
+                
+
+
+                <!--加入新的评论系统-->
+                
+
                 
 
             </div>
@@ -343,6 +349,7 @@
 
 
 
+
 <!-- Footer -->
 <!-- Footer -->
 <footer>
@@ -401,7 +408,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -462,6 +469,8 @@
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -492,7 +501,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

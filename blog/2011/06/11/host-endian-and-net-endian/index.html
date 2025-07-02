@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -194,11 +194,11 @@
                         
                         <span>Tags:</span>
                         
-                        <a class="tag" href="/tags/Programming/"
-                           title="Programming">Programming</a>
-                        
                         <a class="tag" href="/tags/C-C/"
                            title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
                         <a class="tag" href="/tags/endian/"
                            title="endian">endian</a>
@@ -234,7 +234,7 @@
 <p>PC中的CPU大多数是以小端字节序处理多字节数据的，而网络传输时TCP/IP中是以大端字节序存储数据的。所以在使用socket处理主机到网络或网络到主机的数据时需要大小端字节序转换。转换函数<a target="_blank" rel="noopener" href="http://pubs.opengroup.org/onlinepubs/009695399/functions/htonl.html">htons(), htonl(), ntohs(), ntohl()</a>.</p>
 <p><strong>检测CPU大小端的方法</strong></p>
 <p>检测CPU的字节序的基本思路是以整型存储一个数值，以字符型读取该数值的低地址位，根据大小端字节序的格式判断是否符合。以C语言编写的检测程序如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">check1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> <span class="title">w</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        <span class="keyword">char</span> b;</span><br><span class="line">    &#125;c;</span><br><span class="line">    c.a=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(c.b==<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check1:this is little-endian\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check1:this is big-endian\n&quot;</span>);</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">check2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">char</span> x0,x1;</span><br><span class="line">    x=<span class="number">0x1122</span>;</span><br><span class="line">    x0=((<span class="keyword">char</span>*)&amp;x)[<span class="number">0</span>];</span><br><span class="line">    x1=((<span class="keyword">char</span>*)&amp;x)[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (x0==<span class="number">0x11</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check2:this is big-endian\n&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (x1==<span class="number">0x11</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check2:this is little-endian\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    check1();</span><br><span class="line">    check2();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">check1</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> <span class="title">w</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        <span class="type">int</span> a;</span><br><span class="line">        <span class="type">char</span> b;</span><br><span class="line">    &#125;c;</span><br><span class="line">    c.a=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(c.b==<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check1:this is little-endian\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check1:this is big-endian\n&quot;</span>);</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">check2</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">short</span> <span class="type">int</span> x;</span><br><span class="line">    <span class="type">char</span> x0,x1;</span><br><span class="line">    x=<span class="number">0x1122</span>;</span><br><span class="line">    x0=((<span class="type">char</span>*)&amp;x)[<span class="number">0</span>];</span><br><span class="line">    x1=((<span class="type">char</span>*)&amp;x)[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (x0==<span class="number">0x11</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check2:this is big-endian\n&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (x1==<span class="number">0x11</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check2:this is little-endian\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    check1();</span><br><span class="line">    check2();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
                 <hr>
                 
@@ -264,14 +264,18 @@
                 <!-- disqus 评论框 end -->
                 
 
+
+                <!--加入新的评论系统-->
+                
+
+                
+
             </div>
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E7%AB%AF%E5%AD%97%E8%8A%82%E5%BA%8F%E6%98%AF%E6%8C%87%E5%B0%86%E9%AB%98%E4%BD%8D%E5%AD%97%E8%8A%82%E5%AD%98%E5%82%A8%E5%9C%A8%E4%BD%8E%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E4%B8%AD%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%9C%B0%E5%9D%80%E4%BD%8E%E4%BD%8D%E5%AD%98%E5%82%A8%E5%80%BC%E7%9A%84%E9%AB%98%E4%BD%8D%EF%BC%8C%E5%9C%B0%E5%9D%80%E9%AB%98%E4%BD%8D%E5%AD%98%E5%82%A8%E5%80%BC%E7%9A%84%E4%BD%8E%E4%BD%8D%E3%80%82%E8%BF%99%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83%E7%9B%B4%E8%A7%82%EF%BC%8C%E9%98%85%E8%AF%BB%E6%96%B9%E4%BE%BF%E3%80%82%E4%BB%A5%E5%9B%9B%E5%AD%97%E8%8A%8216%E8%BF%9B%E5%88%B60x01020304%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E9%A1%BA%E5%BA%8F%E4%B8%BA%E4%BE%8B%EF%BC%8C%E5%81%87%E8%AE%BE%E8%B5%B7%E5%A7%8B%E5%9C%B0%E5%9D%80%E4%B8%BA1000-1000-1001-1002-1003"><span class="toc-text">大端字节序是指将高位字节存储在低地址空间中，也就是地址低位存储值的高位，地址高位存储值的低位。这种存储方式比较直观，阅读方便。以四字节16进制0x01020304在内存中的存储顺序为例，假设起始地址为1000:
-
 1000     1001     1002     1003</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#01-02-03-04"><span class="toc-text">01      |    02    |    03     |    04</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%AB%AF%E5%AD%97%E8%8A%82%E5%BA%8F%E6%98%AF%E6%8C%87%E5%B0%86%E4%BD%8E%E4%BD%8D%E5%AD%97%E8%8A%82%E5%AD%98%E5%82%A8%E5%9C%A8%E4%BD%8E%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E4%B8%AD%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%9C%B0%E5%9D%80%E4%BD%8E%E4%BD%8D%E5%AD%98%E5%82%A8%E5%80%BC%E7%9A%84%E4%BD%8E%E4%BD%8D%EF%BC%8C%E5%9C%B0%E5%9D%80%E9%AB%98%E4%BD%8D%E5%AD%98%E5%82%A8%E5%80%BC%E7%9A%84%E9%AB%98%E4%BD%8D%E3%80%82%E8%BF%99%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E7%AC%A6%E5%90%88%E6%88%91%E4%BB%AC%E7%9A%84%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F%EF%BC%8C%E6%AF%94%E5%A6%82%E7%8F%A0%E7%AE%97%E3%80%82%E5%90%8C%E6%A0%B7%E4%BB%A50x01020304%E4%B8%BA%E4%BE%8B-1000-1001-1002-1003"><span class="toc-text">小端字节序是指将低位字节存储在低地址空间中，也就是地址低位存储值的低位，地址高位存储值的高位。这种存储方式符合我们的思维方式，比如珠算。同样以0x01020304为例:
-
 1000     1001     1002     1003</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#04-03-02-01"><span class="toc-text">04      |    03    |    02     |    01</span></a></li></ol>
                 </div>
             </div>
@@ -294,11 +298,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/Programming/"
-                           title="Programming">Programming</a>
-                        
                         <a class="tag" href="/tags/C-C/"
                            title="C/C++">C/C++</a>
+                        
+                        <a class="tag" href="/tags/Programming/"
+                           title="Programming">Programming</a>
                         
                         <a class="tag" href="/tags/endian/"
                            title="endian">endian</a>
@@ -333,6 +337,7 @@
     })();
 </script>
 <!-- disqus 公共JS代码 end -->
+
 
 
 
@@ -395,7 +400,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -456,6 +461,8 @@
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -486,7 +493,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

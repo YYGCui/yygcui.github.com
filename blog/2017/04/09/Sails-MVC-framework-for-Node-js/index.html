@@ -38,7 +38,7 @@
     
 <link rel="stylesheet" href="/css/syntax.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
 
@@ -246,7 +246,7 @@
 <h2 id="Waterline"><a class="header-anchor" href="#Waterline"></a>Waterline</h2>
 <p><code>Waterline</code>是数据无关的一个抽象适配层，让你在操作数据时无需关心底层数据库类型，不用写某种数据库专用的操作代码。其底层支持<code>SQL</code>型和<code>NoSQL</code>型数据库, 如<code>MySQL</code>, <code>MongoDB</code>等。对接某一具体数据库时，你所需要做的就是在<code>config/connections.js</code>里配置适配器，在<code>config/models.js</code>配置<code>models</code>默认连接的具体适配器，当然也可以在某一具体<code>model</code>里指定连接的适配器。这样，需要切换数据库时，只需修改连接的适配器即可，不需要修改一行代码。</p>
 <p><code>model</code>中的数据模型结构如下，虽然某些字段看起来时<code>SQL</code>型数据库专用的，但定义了这些字段并不影响<code>NoSQL</code>型数据库使用。这里该<code>model</code>中的<code>connection</code>定义会覆盖掉<code>config/models.js</code>里的定义。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Model example</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">connection</span>: <span class="string">&#x27;MySQLDB&#x27;</span>,</span><br><span class="line">  <span class="attr">tableName</span>: <span class="string">&#x27;users&#x27;</span>,</span><br><span class="line">  <span class="attr">attributes</span>: &#123;</span><br><span class="line">    <span class="attr">id</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;integer&#x27;</span>,</span><br><span class="line">      <span class="attr">unique</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">primaryKey</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">columnName</span>: <span class="string">&#x27;the_primary_key&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">name</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">      <span class="attr">columnName</span>: <span class="string">&#x27;full_name&#x27;</span></span><br><span class="line">    &#125;，</span><br><span class="line"></span><br><span class="line">    <span class="attr">getFullName</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="attr">enroll</span>: <span class="function"><span class="keyword">function</span> (<span class="params">options, cb</span>) </span>&#123;</span><br><span class="line">       ...</span><br><span class="line">       cb(err, data);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Model example</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">connection</span>: <span class="string">&#x27;MySQLDB&#x27;</span>,</span><br><span class="line">  <span class="attr">tableName</span>: <span class="string">&#x27;users&#x27;</span>,</span><br><span class="line">  <span class="attr">attributes</span>: &#123;</span><br><span class="line">    <span class="attr">id</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;integer&#x27;</span>,</span><br><span class="line">      <span class="attr">unique</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">primaryKey</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">columnName</span>: <span class="string">&#x27;the_primary_key&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">name</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">      <span class="attr">columnName</span>: <span class="string">&#x27;full_name&#x27;</span></span><br><span class="line">    &#125;，</span><br><span class="line"></span><br><span class="line">    <span class="attr">getFullName</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="attr">enroll</span>: <span class="keyword">function</span> (<span class="params">options, cb</span>) &#123;</span><br><span class="line">       ...</span><br><span class="line">       <span class="title function_">cb</span>(err, data);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从上面的<code>model</code>示例可以看到，除了属性字段定义外，还有一些函数定义。这里看到的是我们自定义的函数，<code>Sails</code>还提供了一些内置函数。我们还发现函数可以在属性内，也可以在属性外，下面详细介绍一下。</p>
 <h3 id="Model-Method"><a class="header-anchor" href="#Model-Method"></a>Model Method</h3>
 <p>模型方法也称为静态方法或者类方法，放在面向对象里很好理解，就是该类提供的静态方法，不需要实例化可直接使用的方法。上面放在<code>attributes</code>外定义的方法就是模型方法。<code>Sails</code>提供的内置模型方法涵盖了增删改查，具体方法列表看<a target="_blank" rel="noopener" href="http://sailsjs.com/documentation/reference/waterline-orm/models">官方文档</a>。除了这些方法外，还支持动态查找功能，以上面的<code>model</code>为例，该<code>model</code>有属性<code>id</code>和<code>name</code>，那么就有动态查找方法<code>findById</code>和<code>findByName</code>。</p>
@@ -295,6 +295,12 @@
                     <div id="disqus_thread" class="disqus-thread"></div>
                 </div>
                 <!-- disqus 评论框 end -->
+                
+
+
+                <!--加入新的评论系统-->
+                
+
                 
 
             </div>
@@ -366,6 +372,7 @@
 
 
 
+
 <!-- Footer -->
 <!-- Footer -->
 <footer>
@@ -424,7 +431,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YYGCui 2021
+                    Copyright &copy; YYGCui 2025
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -485,6 +492,8 @@
     })
 </script>
 
+
+
 <!-- Google Analytics -->
 
 
@@ -515,7 +524,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">
