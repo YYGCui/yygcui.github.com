@@ -479,7 +479,7 @@ root (hd0,6)表示第一块硬盘上的第7个分区，逻辑分区编号5开始
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+        async("/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},

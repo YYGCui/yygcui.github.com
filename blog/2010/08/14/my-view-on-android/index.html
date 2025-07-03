@@ -431,7 +431,7 @@ Google作为android系统的主要开发维护者，是否有意做移动的“w
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://blog.cuicc.com/js/jquery.tagcloud.js",function(){
+        async("/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
