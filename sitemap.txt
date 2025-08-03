@@ -1,3 +1,4 @@
+http://blog.cuicc.com/blog/2025/08/03/devops-for-intelligent-driving/
 http://blog.cuicc.com/about/index.html
 http://blog.cuicc.com/tags/index.html
 http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/
@@ -153,6 +154,9 @@ http://blog.cuicc.com/tags/submodule/
 http://blog.cuicc.com/tags/technology/
 http://blog.cuicc.com/tags/%E4%BC%97%E7%AD%B9/
 http://blog.cuicc.com/tags/%E8%90%A5%E9%94%80/
+http://blog.cuicc.com/tags/%E6%99%BA%E8%83%BD%E9%A9%BE%E9%A9%B6/
+http://blog.cuicc.com/tags/DevOps/
+http://blog.cuicc.com/tags/CI-CD/
 http://blog.cuicc.com/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/
 http://blog.cuicc.com/categories/%E6%8A%80%E6%9C%AF%E7%A7%AF%E7%B4%AF/
 http://blog.cuicc.com/categories/%E4%B8%9A%E7%95%8C%E8%BF%BD%E8%B8%AA/
