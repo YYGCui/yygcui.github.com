@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
         kubernetes之网络分析｜YYGCui&#39;s blog
@@ -43,7 +43,7 @@
 <style>
 
     header.intro-header {
-        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+        background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
 <!-- hack iOS CSS :active style -->
@@ -161,13 +161,13 @@
 
 
 <img class="wechat-title-img"
-     src="/images/blog-bg-black-run.jpg">
+     src="/images/header/blog-bg-black-run.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('/images/blog-bg-black-run.jpg')
+        background-image: url('/images/header/blog-bg-black-run.jpg')
     }
 
     
@@ -226,11 +226,11 @@
 <p><code>Deployment</code>为<code>Pods</code>和<code>Replica sets</code>提供了声明更新，也就是说该控制器用来保证达到你描述的期望状态。使用该控制器可以方便的更新<code>Pods</code>(滚动升级)，如更新了容器镜像；可以方面的回滚到之前的部署版本；可以随时暂停和启动部署。</p>
 <p><code>Service</code>有时也被称为微服务，是一个抽象的概念，它定义了一组<code>Pods</code>以及访问它们的策略。<code>Pods</code>是通过标签选择器<code>Label Selector</code>被集合在一起的。该抽象层屏蔽了后端的<code>Pods</code>副本，对外呈现一个访问入口。这样即使后端被替换，对外也是不感知的。所以，不管是对内还是对外提供的功能，都以<code>Service</code>作为服务入口是合理的做法。</p>
 <p><code>Service</code>和<code>Deployment</code>可以看作是同一级的概念，<code>Service</code>用于<code>Pods</code>对外提供服务的管理，<code>Deployment</code>用于<code>Pods</code>本身的管理。以上各个概念之间的关系如下图：</p>
-<img src="/images/k8s-concepts.png" class="" title="Kubernetes概念关系图">
+<img src="/images/k8s/k8s-concepts.png" class="" title="Kubernetes概念关系图">
 <p><code>Nodes</code>是指<code>kubernetes</code>集群的节点，提供能力的机器，如虚拟机等，这里列举一下便于下面的网络讨论。</p>
 <h2 id="网络方案"><a class="header-anchor" href="#网络方案"></a>网络方案</h2>
 <p>基于以上的概念，可以看到涉及到的网络通信有容器间的通信，<code>Pod</code>间的通信，服务间的通信，跨节点的通信，以及延伸一下跨集群的通信。那么这些网络通信在<code>kubernetes</code>里都是如何实施的呢？<code>kubernetes</code>官方给出了一个使用<code>OpenVSwitch</code>的<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/admin/ovs-networking/">网络方案</a>。这里基于这个网络方案图扩展一下，试图涵盖所有的网络连接类型。如下图所示，针对每种网络连接类型，后面会详细讨论。</p>
-<img src="/images/k8s-network.png" class="" title="Kubernetes网络方案图">
+<img src="/images/k8s/k8s-network.png" class="" title="Kubernetes网络方案图">
 <h3 id="Container-to-Container"><a class="header-anchor" href="#Container-to-Container"></a>Container-to-Container</h3>
 <p>上面我们已经提到，<code>kubernetes</code>不会直接操作容器本身，对外呈现的最小操作单位是<code>Pod</code>，这里容器之间的通信是指一个<code>Pod</code>内的容器之间如何通信。我们观察一个<code>Pod</code>里的资源时，会发现有一个自己启动的<code>pause</code>容器，这个容器的作用是为<code>Pod</code>提供网络，所有其他的容器(也就是我们通过模板启动的容器)，都是共享<code>pause</code>容器网络的。在实现上，如<code>Docker</code>提供了<code>--net=container:ID</code>这样的选项。</p>
 <p>每个<code>pod</code>对外呈现一个唯一的IP，<code>Pod</code>内的各容器共享这个IP，也就是说各容器处于同一网络空间中，可直接使用<code>localhost</code>互相访问，需要注意的是各容器使用的端口不能冲突，可以认为<code>IP:Port</code>能够唯一确定一个容器。类比一个系统内的多个网络进程。</p>
@@ -441,9 +441,9 @@
                 <p class="copyright text-muted">
                     Copyright &copy; YYGCui 2025
                     <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://cuicc.com/">YYGCui</a>
                 </p>
 
             </div>
@@ -494,7 +494,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -532,7 +532,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
+<script defer src="https://vercount.one/js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

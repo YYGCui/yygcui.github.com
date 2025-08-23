@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
         微服务｜YYGCui&#39;s blog
@@ -43,7 +43,7 @@
 <style>
 
     header.intro-header {
-        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+        background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
 <!-- hack iOS CSS :active style -->
@@ -161,13 +161,13 @@
 
 
 <img class="wechat-title-img"
-     src="/images/blog-bg-black-run.jpg">
+     src="/images/header/blog-bg-black-run.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('/images/blog-bg-black-run.jpg')
+        background-image: url('/images/header/blog-bg-black-run.jpg')
     }
 
     
@@ -226,7 +226,7 @@
 <p>与单体风格作对比有助于开始解释微服务风格：单体应用程序被构建为单一单元。企业级应用程序通常由三部分组成：客户端侧用户接口(由运行于开发机上的浏览器里的HTML页面和Javascript组成)，数据库(由插入到通用关系型数据库管理系统中的许多数据表格组成)，服务端应用程序。服务端应用程序处理HTTP请求，执行领域逻辑，从数据库中检索、更新数据，选择、填充将要发送到浏览器的HTTP视图。服务端应用程序是一个单一的逻辑可执行单体<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。系统的任何改变都将牵涉到重新构建和部署服务端的一个新版本。</p>
 <p>这样的单体服务器是构建这样一个系统最自然的方式。处理请求的所有逻辑都运行在一个单一进程中，允许你使用编程语言的基本特性将应用程序划分类、函数和命名空间。你认真的在开发机上运行测试应用程序，并使用部署管道来保证变更已被正确地测试并部署到生产环境中。该单体的水平扩展可以通过在负载均衡器后面运行多个实例来实现。</p>
 <p>单体应用程序可以是成功的，但人们日益对他们感到挫败，尤其是随着更多的应用程序被部署在云上。变更周期被捆绑在一起 —— 即使只变更应用程序的一部分，也需要重新构建并部署整个单体。长此以往，通常将很难保持一个良好的模块架构，这使得很难变更只发生在需要变更的模块内。程序扩展要求进行整个应用程序的扩展而不是需要更多资源的应用程序部分的扩展。</p>
-<img src="/images/sketch.png" class="" title="单体和微服务">
+<img src="/images/microservice/sketch.png" class="" title="单体和微服务">
 <p>图1: 单体和微服务</p>
 <p>这些挫败导向了微服务架构风格：构建应用程序为服务套件。除了服务是可独立部署、可独立扩展的之外，每个服务都提供一个固定的模块边界。甚至允许不同的服务用不同的的语言开发，由不同的团队管理。</p>
 <p>我们不会声称微服务风格是新颖的、创新的，其本质至少可以回溯到Unix的设计哲学。但我们的确认为没有足够的人仔细考虑微服务架构，并且如果使用它很多软件实现将会更好。</p>
@@ -244,10 +244,10 @@
 <p>当想要把大型应用程序拆分成部件时，通常管理层聚焦在技术层面，导致UI团队、服务侧逻辑团队、数据库团队的划分。当团队按这些技术线路划分时，即使是简单的更改也会导致跨团队的时间和预算审批。一个聪明的团队将围绕这些优化，两害取其轻 - 只把业务逻辑强制放在它们会访问的应用程序中。换句话说，逻辑无处不在。这是Conway法则<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>在起作用的一个例子。</p>
 <blockquote><p>任何设计系统(广泛定义的)的组织将产生一种设计，他的结构就是该组织的通信结构。</p>
 <footer><strong>-- Melvyn Conway</strong><cite>1967</cite></footer></blockquote>
-<img src="/images/conways-law.png" class="" title="Conway法则">
+<img src="/images/microservice/conways-law.png" class="" title="Conway法则">
 <p>图2: Conway法则在起作用</p>
 <p>微服务采用不同的分割方法，划分成围绕业务能力组织的服务。这些服务采取该业务领域软件的宽栈实现，包括用户接口、持久化存储和任何外部协作。因此，团队都是跨职能的，包括开发需要的全方位技能：用户体验、数据库、项目管理。</p>
-<img src="/images/PreferFunctionalStaffOrganization.png" class="">
+<img src="/images/microservice/PreferFunctionalStaffOrganization.png" class="">
 <p>图3: 团队边界增强的服务边界</p>
 <p><a href="www.comparethemarket.com">www.comparethemarket.com</a>是按这种方式组织的一个公司。跨职能团队负责创建和运营产品，产品被划分成若干个体服务，这些服务通过消息总线通信。</p>
 <p>大型单体应用程序也总是可以围绕业务能力来模块化，虽然这不是常见的情况。当然，我们将敦促创建单体应用程序的大型团队将团队本身按业务线拆分。我们看到这种情况的主要问题是他们趋向于围绕太多的上下文进行组织。如果单体横跨了多个模块边界，对团队个体成员来说，很难把它们装进他们的短期记忆里。另外，我们看到模块化的路线需要大量的规则来强制实施。服务组件所要求的更加明确的分离，使得它更容易保持团队边界清晰。</p>
@@ -300,14 +300,14 @@
 <p>这些标准是远离企业世界的标准。往往被一个几乎没有近期编程经验的或受供应商过度影响的组织开发的。</p>
 </blockquote>
 <p>和概念模型的去中心化决策一样，微服务也去中心化数据存储决策。虽然单体应用程序更喜欢单一的逻辑数据库做持久化存储，但企业往往倾向于一系列应用程序共用一个单一的数据库 - 这些决定是供应商授权许可的商业模式驱动的。微服务更倾向于让每个服务管理自己的数据库，或者同一数据库技术的不同实例，或完全不同的数据库系统 - 这就是所谓的混合持久化(<a target="_blank" rel="noopener" href="http://martinfowler.com/bliki/PolyglotPersistence.html">Polyglot Persistence</a>)。你可以在单体应用程序中使用混合持久化，但它更常出现在为服务里。</p>
-<img src="/images/decentralised-data.png" class="" title="去中心化数据">
+<img src="/images/microservice/decentralised-data.png" class="" title="去中心化数据">
 <p>对跨微服务的数据来说，去中心化责任对管理升级有影响。处理更新的常用方法是在更新多个资源时使用事务来保证一致性。这个方法通常用在单体中。</p>
 <p>像这样使用事务有助于一致性，但会产生显著地临时耦合，这在横跨多个服务时是有问题的。分布式事务是出了名的难以实现，因此微服务架构强调<a target="_blank" rel="noopener" href="http://www.eaipatterns.com/ramblings/18_starbucks.html">服务间的无事务协作</a>，对一致性可能只是最后一致性和通过补偿操作处理问题有明确的认知。</p>
 <p>对很多开发团队来说，选择用这样的方式管理不一致性是一个新的挑战，但这通常与业务实践相匹配。通常业务处理一定程度的不一致，以快速响应需求，同时有某些类型的逆转过程来处理错误。这种权衡是值得的，只要修复错误的代价小于更大一致性下损失业务的代价。</p>
 <h3 id="基础设施自动化"><a class="header-anchor" href="#基础设施自动化"></a>基础设施自动化</h3>
 <p>在过去的几年中，基础设施自动化已经发生了巨大的变化，特别是云和AWS的演化已经降低了构建、部署和运维微服务的操作复杂度。</p>
 <p>许多用微服务构建的产品或系统是由在<a target="_blank" rel="noopener" href="http://martinfowler.com/bliki/ContinuousDelivery.html">持续部署</a>和它的前身<a target="_blank" rel="noopener" href="http://martinfowler.com/articles/continuousIntegration.html">持续集成</a>有丰富经验的团队构建的。团队用这种方式构建软件，广泛使用了基础设施自动化。如下面的构建管线图所示：</p>
-<img src="/images/basic-pipeline.png" class="" title="基础构建管道">
+<img src="/images/microservice/basic-pipeline.png" class="" title="基础构建管道">
 <p>图5: 基础构建管道</p>
 <p>因为这不是一篇关于持续交付的文章，我们这里将之光住几个关键特性。我们希望有尽可能多的信心，我们的软件正在工作，所以我们运行大量的<strong>自动化测试</strong>。促进科工作软件沿管道线“向上”意味着我们<strong>自动化部署</strong>到每个新的环境中。</p>
 <p>一个单体应用程序可以十分愉快地通过这些环境被构建、测试和推送。事实证明，一旦你为单体投入了自动化生产之路，那么部署更多的应用程序似乎也不会更可怕。请记住，持续部署的目标之一是使部署枯燥，所以无论是一个或三个应用程序，只要它的部署仍然枯燥就没关系<sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup>。</p>
@@ -316,7 +316,7 @@
 <p>我们发现，作为持续交付和持续部署的一个后果，增加自动化的一个副作用是创造有用的工具，以帮助开发人员和运营人员。用于创造人工制品、管理代码库、起立(standing up)简单服务或添加标准监控和日志记录的工具现在都是很常见的。web上最好的例子可能是<a target="_blank" rel="noopener" href="http://netflix.github.io/">Netflix的开源工具集</a>，但也有其他我们广泛使用的工具，如<a target="_blank" rel="noopener" href="http://dropwizard.codahale.com/">Dropwizard</a>。</p>
 </blockquote>
 <p>我们看到团队使用大量的基础设施自动化的另一个领域是在生产环境中管理微服务时。与我们上面的断言(只要部署是枯燥的)相比，单体和微服务没有太大的差别，各运营场景可以明显不同。</p>
-<img src="/images/micro-deployment.png" class="" title="微部署">
+<img src="/images/microservice/micro-deployment.png" class="" title="微部署">
 <p>图6: 模块部署常常不同</p>
 <h3 id="为失效设计"><a class="header-anchor" href="#为失效设计"></a>为失效设计</h3>
 <p>使用服务作为组件的一个结果是，应用程序需要被设计成能够容忍服务失效。任何服务调用都可能因为供应者不可用而失败，客户端必须尽可能优雅的应对这种失败。与单体应用设计相比这是一个劣势，因为它引入额外的复杂性来处理它。结果是，微服务团队不断反思服务失效如何影响用户体验。Netflix的<a target="_blank" rel="noopener" href="https://github.com/Netflix/SimianArmy">Simian Army</a>在工作日诱导服务甚至是数据中心故障来测试应用程序的弹性和监测。</p>
@@ -548,9 +548,9 @@
                 <p class="copyright text-muted">
                     Copyright &copy; YYGCui 2025
                     <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://cuicc.com/">YYGCui</a>
                 </p>
 
             </div>
@@ -601,7 +601,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -639,7 +639,7 @@
   _st('install','','2.0.0');
 </script>
 
-<script async src="//cdn.jsdelivr.net/gh/sukkaw/busuanzi@2.3/bsz.pure.mini.js"></script>
+<script defer src="https://vercount.one/js"></script>
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/images/yygcui.png">

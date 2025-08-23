@@ -4,7 +4,43 @@
   <url>
     <loc>http://blog.cuicc.com/blog/2025/08/03/devops-for-intelligent-driving/</loc>
     
-    <lastmod>2025-08-03</lastmod>
+    <lastmod>2025-08-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/</loc>
+    
+    <lastmod>2025-08-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.cuicc.com/blog/2015/07/22/microservices/</loc>
+    
+    <lastmod>2025-08-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.cuicc.com/blog/2017/12/31/my-personal-review-2017/</loc>
+    
+    <lastmod>2025-08-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.cuicc.com/blog/2017/01/02/my-personal-review-2016/</loc>
+    
+    <lastmod>2025-08-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -83,15 +119,6 @@
   </url>
   
   <url>
-    <loc>http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/</loc>
-    
-    <lastmod>2025-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.cuicc.com/blog/2017/03/26/nodejs-ECONNRESET/</loc>
     
     <lastmod>2025-03-16</lastmod>
@@ -128,15 +155,6 @@
   </url>
   
   <url>
-    <loc>http://blog.cuicc.com/blog/2017/12/31/my-personal-review-2017/</loc>
-    
-    <lastmod>2025-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.cuicc.com/blog/2017/05/14/kubernetes-multi-networks/</loc>
     
     <lastmod>2025-03-16</lastmod>
@@ -147,24 +165,6 @@
   
   <url>
     <loc>http://blog.cuicc.com/blog/2017/03/12/grow-up/</loc>
-    
-    <lastmod>2025-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.cuicc.com/blog/2017/01/02/my-personal-review-2016/</loc>
-    
-    <lastmod>2025-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.cuicc.com/blog/2015/07/22/microservices/</loc>
     
     <lastmod>2025-03-16</lastmod>
     

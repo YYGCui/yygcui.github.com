@@ -1,4 +1,8 @@
 http://blog.cuicc.com/blog/2025/08/03/devops-for-intelligent-driving/
+http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/
+http://blog.cuicc.com/blog/2015/07/22/microservices/
+http://blog.cuicc.com/blog/2017/12/31/my-personal-review-2017/
+http://blog.cuicc.com/blog/2017/01/02/my-personal-review-2016/
 http://blog.cuicc.com/about/index.html
 http://blog.cuicc.com/tags/index.html
 http://blog.cuicc.com/blog/2021/12/25/some-tips-for-cpp-template/
@@ -7,16 +11,12 @@ http://blog.cuicc.com/categories/index.html
 http://blog.cuicc.com/blog/2021/12/03/refactor-in-parallel-with-multi-threads/
 http://blog.cuicc.com/blog/2021/12/10/checking-for-mem-leaks/
 http://blog.cuicc.com/blog/2021/11/30/recover-environment-for-writing/
-http://blog.cuicc.com/blog/2017/04/30/kubernetes-network/
 http://blog.cuicc.com/blog/2017/03/26/nodejs-ECONNRESET/
 http://blog.cuicc.com/blog/2017/04/09/Sails-MVC-framework-for-Node-js/
 http://blog.cuicc.com/blog/2017/07/23/kubernetes-probe/
 http://blog.cuicc.com/blog/2017/09/10/kubernetes-network-policy/
-http://blog.cuicc.com/blog/2017/12/31/my-personal-review-2017/
 http://blog.cuicc.com/blog/2017/05/14/kubernetes-multi-networks/
 http://blog.cuicc.com/blog/2017/03/12/grow-up/
-http://blog.cuicc.com/blog/2017/01/02/my-personal-review-2016/
-http://blog.cuicc.com/blog/2015/07/22/microservices/
 http://blog.cuicc.com/blog/2015/09/20/compile-and-deploy-using-docker/
 http://blog.cuicc.com/blog/2015/10/12/mysql-can-not-startup-after-loss-power/
 http://blog.cuicc.com/blog/2015/10/25/tips-for-git-submodule/
