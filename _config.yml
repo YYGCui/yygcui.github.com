@@ -41,13 +41,28 @@ anchorjs: false                        # if you want to customize anchor. check 
 
 
 # Disqus settings 
-disqus_username: yygcui
+disqus_username: 
 
 # Duoshuo settings
 duoshuo_username:  # 你的多说帐号
 # Share component is depend on Comment so we can NOT use share only.
 duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
+# Use livere
+use_livere:
+
+# Valine comment system https://valine.js.org
+valine: 
+  enable: false
+  appid:  #Leancloud应用的appId
+  appkey:  #Leancloud应用的appKey
+  verify: false #验证码
+  notify: false #评论回复提醒
+  avatar: mm #评论列表默认头像样式
+  placeholder: Just go go #评论框占位符
+
+# use giscus
+use_giscus: true
 
 # Analytics settings
 # Baidu Analytics
