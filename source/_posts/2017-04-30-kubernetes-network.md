@@ -24,7 +24,7 @@ comments: true
 
 `Service`和`Deployment`可以看作是同一级的概念，`Service`用于`Pods`对外提供服务的管理，`Deployment`用于`Pods`本身的管理。以上各个概念之间的关系如下图：
 
-{% img /images/k8s-concepts.png Kubernetes概念关系图 %}
+{% img /images/k8s/k8s-concepts.png Kubernetes概念关系图 %}
 
 `Nodes`是指`kubernetes`集群的节点，提供能力的机器，如虚拟机等，这里列举一下便于下面的网络讨论。
 
@@ -32,7 +32,7 @@ comments: true
 
 基于以上的概念，可以看到涉及到的网络通信有容器间的通信，`Pod`间的通信，服务间的通信，跨节点的通信，以及延伸一下跨集群的通信。那么这些网络通信在`kubernetes`里都是如何实施的呢？`kubernetes`官方给出了一个使用`OpenVSwitch`的[网络方案](https://kubernetes.io/docs/admin/ovs-networking/)。这里基于这个网络方案图扩展一下，试图涵盖所有的网络连接类型。如下图所示，针对每种网络连接类型，后面会详细讨论。
 
-{% img /images/k8s-network.png Kubernetes网络方案图 %}
+{% img /images/k8s/k8s-network.png Kubernetes网络方案图 %}
 
 ### Container-to-Container
 

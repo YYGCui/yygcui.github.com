@@ -12,7 +12,7 @@ timezone:
 # custom Site settings
 # more detail check out docs
 SEOTitle: YYGCui's blog 
-header-img: //o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg
+header-img: /images/header/lion-blur-bg.jpg
 email: yygcui@gmail.com
 description: "YYGCui的个人博客"
 keyword: # seo key words
@@ -181,8 +181,8 @@ clip-avatar: "?imageView2/2/w/300/h/300/interlace/1/q/90"
 clip-home-post-bg: "?imageView2/1/w/800/h/300/interlace/1/q/70"
 
 # post default images
-post-default-img: /images/blog-bg-black-run.jpg #博文默认的图片
-post-default-img-mobile: /images/blog-bg-black-run.jpg #移动端显示的图片
+post-default-img: /images/header/blog-bg-black-run.jpg #博文默认的图片
+post-default-img-mobile: /images/header/blog-bg-black-run.jpg #移动端显示的图片
 
 # search api , set your custom key
 swiftype_key: 

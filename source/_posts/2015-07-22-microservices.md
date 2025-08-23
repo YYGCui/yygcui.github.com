@@ -25,7 +25,7 @@ tags:
 
 单体应用程序可以是成功的，但人们日益对他们感到挫败，尤其是随着更多的应用程序被部署在云上。变更周期被捆绑在一起 —— 即使只变更应用程序的一部分，也需要重新构建并部署整个单体。长此以往，通常将很难保持一个良好的模块架构，这使得很难变更只发生在需要变更的模块内。程序扩展要求进行整个应用程序的扩展而不是需要更多资源的应用程序部分的扩展。
 
-{% img /images/sketch.png 单体和微服务 %}
+{% img /images/microservice/sketch.png 单体和微服务 %}
 
 图1: 单体和微服务
 
@@ -61,13 +61,13 @@ tags:
 任何设计系统(广泛定义的)的组织将产生一种设计，他的结构就是该组织的通信结构。
 {% endblockquote %}
 
-{% img /images/conways-law.png Conway法则 %}
+{% img /images/microservice/conways-law.png Conway法则 %}
 
 图2: Conway法则在起作用
 
 微服务采用不同的分割方法，划分成围绕业务能力组织的服务。这些服务采取该业务领域软件的宽栈实现，包括用户接口、持久化存储和任何外部协作。因此，团队都是跨职能的，包括开发需要的全方位技能：用户体验、数据库、项目管理。
 
-{% img /images/PreferFunctionalStaffOrganization.png %}
+{% img /images/microservice/PreferFunctionalStaffOrganization.png %}
 
 图3: 团队边界增强的服务边界
 
@@ -156,7 +156,7 @@ Netflix是遵守这一理念的很好的例子。尤其是，以库的形式分�
 
 和概念模型的去中心化决策一样，微服务也去中心化数据存储决策。虽然单体应用程序更喜欢单一的逻辑数据库做持久化存储，但企业往往倾向于一系列应用程序共用一个单一的数据库 - 这些决定是供应商授权许可的商业模式驱动的。微服务更倾向于让每个服务管理自己的数据库，或者同一数据库技术的不同实例，或完全不同的数据库系统 - 这就是所谓的混合持久化([Polyglot Persistence](http://martinfowler.com/bliki/PolyglotPersistence.html))。你可以在单体应用程序中使用混合持久化，但它更常出现在为服务里。
 
-{% img /images/decentralised-data.png 去中心化数据 %}
+{% img /images/microservice/decentralised-data.png 去中心化数据 %}
 
 对跨微服务的数据来说，去中心化责任对管理升级有影响。处理更新的常用方法是在更新多个资源时使用事务来保证一致性。这个方法通常用在单体中。
 
@@ -170,7 +170,7 @@ Netflix是遵守这一理念的很好的例子。尤其是，以库的形式分�
 
 许多用微服务构建的产品或系统是由在[持续部署](http://martinfowler.com/bliki/ContinuousDelivery.html)和它的前身[持续集成](http://martinfowler.com/articles/continuousIntegration.html)有丰富经验的团队构建的。团队用这种方式构建软件，广泛使用了基础设施自动化。如下面的构建管线图所示：
 
-{% img /images/basic-pipeline.png 基础构建管道 %}
+{% img /images/microservice/basic-pipeline.png 基础构建管道 %}
 
 图5: 基础构建管道
 
@@ -184,7 +184,7 @@ Netflix是遵守这一理念的很好的例子。尤其是，以库的形式分�
 
 我们看到团队使用大量的基础设施自动化的另一个领域是在生产环境中管理微服务时。与我们上面的断言(只要部署是枯燥的)相比，单体和微服务没有太大的差别，各运营场景可以明显不同。
 
-{% img /images/micro-deployment.png 微部署  %}
+{% img /images/microservice/micro-deployment.png 微部署  %}
 
 图6: 模块部署常常不同
 

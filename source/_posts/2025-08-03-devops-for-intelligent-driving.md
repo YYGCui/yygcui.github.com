@@ -1,7 +1,7 @@
 ---
 title: 智能驾驶 DevOps
 date: 2025-08-03 14:33:30
-header-img: images/cloud-plane.jpg
+header-img: images/header/cloud-plane.jpg
 tags:
 - 智能驾驶
 - DevOps
@@ -22,7 +22,7 @@ DevOps 是软件开发与信息技术运维的整合及自动化实践[a]。这�
 {% endblockquote %}
 
 <div align="center">
-<img width="50%" alt="devops" src="/images/devops-infinite-loop.png" />
+<img width="50%" alt="devops" src="/images/devops/devops-infinite-loop.png" />
 </div>
 
 ## 智能驾驶是什么
@@ -37,7 +37,7 @@ DevOps 是软件开发与信息技术运维的整合及自动化实践[a]。这�
 {% endblockquote %}
 
 <div align="center">
-<img width="50%" alt="intelligent-driving" src="/images/devops-human-vs-auto.png" />
+<img width="50%" alt="intelligent-driving" src="/images/devops/devops-human-vs-auto.png" />
 </div>
 
 ## 智能驾驶 DevOps 是什么
@@ -55,7 +55,7 @@ DevOps 是软件开发与信息技术运维的整合及自动化实践[a]。这�
 - AI Model DevOps (模型 DevOps): 数据采集上云、标注、模型训练、模型发布等AI服务则构建了模型 DevOps 的整体链路，同时通过车端版本测试和运营。
 
 <div align="center">
-<img width="70%" alt="auto-devops" src="/images/devops-intelligence-driving-3loops.png" />
+<img width="70%" alt="auto-devops" src="/images/devops/devops-intelligence-driving-3loops.png" />
 </div>
 
 前面 DevOps 概念提到，DevOps 是软件开发与信息技术运维的整合及自动化实践。自动化的前提是什么，是策略（或者说是规则），有策略才能实现自动化。这是很重要的一点，是我们整个实现的基石。在开始探讨DevOps的8个核心环节之前，我们先来探讨一下各个环节相关的策略。

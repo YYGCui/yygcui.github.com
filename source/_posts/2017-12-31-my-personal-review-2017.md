@@ -2,7 +2,7 @@
 layout: post
 title: "我的2017个人总结"
 date: 2017-12-31 15:19:25
-header-img: images/daoying.jpg
+header-img: images/header/daoying.jpg
 comments: true
 categories:
 - 生活记录
