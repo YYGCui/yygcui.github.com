@@ -67,8 +67,9 @@ use_giscus: true
 # Analytics settings
 # Baidu Analytics
 ba_track_id:
-# Google Analytics
-ga_track_id: UA-37316447-1            # Format: UA-xxxxxx-xx
+# Google Analytics 
+# change to GA4 gtag id
+ga_track_id: G-GC4BHEPT9T            # Format: UA-xxxxxx-xx
 ga_domain:
 
 # Sidebar settings
