@@ -255,7 +255,16 @@ Eigen::Matrix<float, 4, 4, Eigen::RowMajor> mat;
 Eigen::Map<MatrixXd, 0, Stride<Dynamic, 1>> row_major_map(data, rows, cols);
 ```
 
-### 2. 如需兼容 CUDA / OpenCV，也推荐 RowMajor
+### 2. 兼容 CUDA / OpenCV
+Eigen 的默认存储顺序是列主序(Colunm-Major), CUDA的默认存储顺序和 C 语言的一致是行主序(Row-Major)。CPU 上的 Eigen 数据复制到 GPU 时，需要注意行列顺序。 
+
+cuBLAS 库的 API 默认使用的是列主序，这和 Eigen 是一致的。在使用 CUDA kernel 和 cuBLAS 库时需特别注意，这是一个常见的陷阱。
+
+在定义 Eigen 矩阵类型时显式指定行主序，保证 Eigen 矩阵的内存布局和 CUDA 的一致。
+```cpp
+Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> mat;
+cudaMemcpy(d_ptr, mat.data(), rows*cols*sizeof(float), cudaMemcpyHostToDevice);
+```
 
 ## 八、配套 CMake 编译选项
 
