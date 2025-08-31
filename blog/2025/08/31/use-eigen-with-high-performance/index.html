@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Eigen高性能使用｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2025/08/31/use-eigen-with-high-performance/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/images/header/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/header/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/header/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Eigen高性能使用</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2025-08-31
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/智能驾驶/"
+                           title="智能驾驶">智能驾驶</a>
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/Eigen/"
+                           title="Eigen">Eigen</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Eigen高性能使用
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>之所以写这个话题，是因为在实际工作中遇到了相关的问题，比如在定位coredump问题时发现是因为Eigen内存未对齐导致，比如在优化性能时发现有隐含的动态内存申请是因为使用动态矩阵导致… 基于上述实际问题，发现很多人只是会使用这个库，但是不知道怎么使用更高效，所以整理了以下规范。</p>
+<blockquote><p>Eigen 是一个用于线性代数的 C++ 模板库：包括矩阵、向量、数值求解器以及相关算法。</p>
+<footer><strong>https://eigen.tuxfamily.org/index.php?title=Main_Page</strong></footer></blockquote>
+<h2 id="一、头文包含要求"><a class="header-anchor" href="#一、头文包含要求"></a>一、头文包含要求</h2>
+<p>按需包含， 只包含需要的：</p>
+  <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Eigen/Core&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Eigen/Dense&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Eigen/Geometry&gt;</span>  <span class="comment">// Quaternion, Transform</span></span></span><br></pre></td></tr></table></figure>
+<p>🚫 禁用 <code>using namespace Eigen</code>; 避免名称冲突</p>
+<h2 id="二、类型选择和初始化"><a class="header-anchor" href="#二、类型选择和初始化"></a>二、类型选择和初始化</h2>
+<h3 id="优先选择固定大小矩阵："><a class="header-anchor" href="#优先选择固定大小矩阵："></a>优先选择固定大小矩阵：</h3>
+<table>
+<thead>
+<tr>
+<th>向量/矩阵</th>
+<th>类型推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2D/3D 向量</td>
+<td><code>Eigen::Vector2f / Vector2d、Vector3f / Vector3d</code></td>
+</tr>
+<tr>
+<td>小矩阵（&lt;= 4x4）</td>
+<td><code>Matrix3f, Matrix4d</code></td>
+</tr>
+<tr>
+<td>大矩阵（&gt; 4x4）</td>
+<td><code>MatrixXf, MatrixXd</code>，但注意维度、性能</td>
+</tr>
+</tbody>
+</table>
+<p>🚫 不推荐 Matrix&lt;double, 3, 1&gt;；推荐用 Vector3d，简洁可读性高。</p>
+<h3 id="初始化"><a class="header-anchor" href="#初始化"></a>初始化</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">Eigen::Vector3d <span class="title">pos</span><span class="params">(<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>)</span></span>;</span><br><span class="line">Eigen::Matrix3d rot = Eigen::Matrix3d::<span class="built_in">Identity</span>();</span><br></pre></td></tr></table></figure>
+<p>用 setZero(), setIdentity() 初始化，不用手动循环清零。</p>
+<p>使用 reserve() 和 conservativeResize() 时要小心，它们可能频繁触发 reallocation。</p>
+<h2 id="三、参数传递"><a class="header-anchor" href="#三、参数传递"></a>三、参数传递</h2>
+<table>
+<thead>
+<tr>
+<th>目的</th>
+<th>写法</th>
+<th>推荐理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只读（传参）</td>
+<td>const Eigen::Vector3d&amp;</td>
+<td>零拷贝，性能高</td>
+</tr>
+<tr>
+<td>可接受表达式/子块</td>
+<td>const Eigen::Ref&lt;const Eigen::Vector3d&gt;&amp;</td>
+<td>通用接口适用</td>
+</tr>
+<tr>
+<td>可修改</td>
+<td>Eigen::Vector3d&amp;</td>
+<td>允许函数修改值</td>
+</tr>
+<tr>
+<td>可修改 + 表达式</td>
+<td>Eigen::Ref&lt;Eigen::Vector3d&gt;</td>
+<td>修改临时块等复杂结构</td>
+</tr>
+</tbody>
+</table>
+<p>🚫 不推荐值传参，多一次拷贝；推荐使用引用传参。</p>
+<h2 id="四、性能优化"><a class="header-anchor" href="#四、性能优化"></a>四、性能优化</h2>
+<h3 id="1-避免使用动态大小矩阵处理小维度矩阵"><a class="header-anchor" href="#1-避免使用动态大小矩阵处理小维度矩阵"></a>1. 避免使用动态大小矩阵处理小维度矩阵</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不推荐</span></span><br><span class="line"><span class="function">Eigen::MatrixXd <span class="title">A</span><span class="params">(<span class="number">3</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line"><span class="comment">// 推荐</span></span><br><span class="line">Eigen::Matrix3d A;</span><br></pre></td></tr></table></figure>
+<p>🚫 避免使用动态大小矩阵，动态大小矩阵，每次都会动态申请内存malloc/free</p>
+<h3 id="2-避免临时物件"><a class="header-anchor" href="#2-避免临时物件"></a>2. 避免临时物件</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不推荐：产生多个临时表达式</span></span><br><span class="line"><span class="comment">// C.inverse会产生临时矩阵，然后两个乘法分别产生临时矩阵</span></span><br><span class="line"><span class="comment">// auto 会产生动态矩阵，申请内存</span></span><br><span class="line"><span class="keyword">auto</span> result = A * B + C.<span class="built_in">inverse</span>() * D;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 推荐</span></span><br><span class="line">Eigen::Matrix3d tmp = C.<span class="built_in">inverse</span>() * D;</span><br><span class="line">Eigen::Matrix3d result = A * B + tmp;</span><br><span class="line"><span class="comment">// 性能更好的写法</span></span><br><span class="line">Eigen::Matrix3d result = C.<span class="built_in">inverse</span>() * D;</span><br><span class="line">result.<span class="built_in">noalias</span>() += A * B;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>🚫 避免使用auto， auto 默认使用动态大小矩阵，会动态申请内存</p>
+<h3 id="3-利用表达式模板"><a class="header-anchor" href="#3-利用表达式模板"></a>3. 利用表达式模板</h3>
+<p><strong>链式表达式</strong>：合并操作以减少临时变量。</p>
+<p>只要右侧表达式不涉及求逆<code>inverse()</code>、不重复使用左值变量，就采用合并写法，Eigen 内部优化，内存访问少</p>
+ <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不推荐：多次内存分配，生成临时变量</span></span><br><span class="line">temp1 = A * B;</span><br><span class="line">temp2 = C * D;</span><br><span class="line">result = temp1 + temp2; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 推荐：Eigen 合并计算</span></span><br><span class="line">result = A * B + C * D;</span><br></pre></td></tr></table></figure>
+<p>🚫 尽量不要人为拆分表达式，除非涉及求逆、堆叠等，可以换个更好的写法</p>
+ <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">result = result + A * B;  <span class="comment">// 可能导致别名冲突和慢速路径</span></span><br><span class="line">result = result.<span class="built_in">eval</span>() + A * B;  <span class="comment">// 强制中间结果保存，避免问题</span></span><br><span class="line">result.<span class="built_in">noalias</span>() += A * B; <span class="comment">// 更高效</span></span><br></pre></td></tr></table></figure>
+<p>🚫 避免 .eval()，除非你真的想 materialize 结果</p>
+<h3 id="4-使用-noalias-防止多余内存拷贝"><a class="header-anchor" href="#4-使用-noalias-防止多余内存拷贝"></a>4. 使用 <code>.noalias()</code> 防止多余内存拷贝</h3>
+<p>左值和右值没有混叠时可用，没有别名关系（如 C != A &amp;&amp; C != B）</p>
+<p>避免 Eigen 内部自动别名检测（runtime check），直接告诉它 C 与右侧没有共享内存；</p>
+<p>编译时可以进一步优化，尤其在<strong>大矩阵</strong>计算中更明显。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 慢</span></span><br><span class="line">C = A * B;</span><br><span class="line"><span class="comment">// 快</span></span><br><span class="line">C.<span class="built_in">noalias</span>() = A * B;</span><br></pre></td></tr></table></figure>
+<h3 id="5-避免直接反矩阵"><a class="header-anchor" href="#5-避免直接反矩阵"></a>5. 避免直接反矩阵</h3>
+<p>矩阵求逆代价高、数值不稳定，建议替换为 solve() 系列，根据矩阵类型选择合适的求解器</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不推荐</span></span><br><span class="line">x = A.<span class="built_in">inverse</span>() * b;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 推荐： A 必须是对称正定矩阵（否则 .ldlt() 会失败或者返回错误结果）</span></span><br><span class="line">x = A.<span class="built_in">ldlt</span>().<span class="built_in">solve</span>(b);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用矩阵</span></span><br><span class="line"><span class="comment">// 适用于 矩阵表达式，比如 Eigen::MatrixXd</span></span><br><span class="line"><span class="function">Eigen::MatrixXd <span class="title">A</span><span class="params">(<span class="number">3</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line"><span class="function">Eigen::VectorXd <span class="title">b</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">Eigen::VectorXd x = A.<span class="built_in">partialPivLu</span>().<span class="built_in">solve</span>(b);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 固定类型的写法</span></span><br><span class="line">Eigen::Matrix3d A;</span><br><span class="line">Eigen::Vector3d b;</span><br><span class="line"></span><br><span class="line"><span class="function">Eigen::PartialPivLU&lt;Eigen::Matrix3d&gt; <span class="title">lu</span><span class="params">(A)</span></span>;</span><br><span class="line">Eigen::Vector3d x = lu.<span class="built_in">solve</span>(b);</span><br></pre></td></tr></table></figure>
+<p><strong>常见矩阵类型说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>适用矩阵类型</th>
+<th>相对速度</th>
+<th>稳定性</th>
+<th>特殊要求</th>
+<th>适用规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inverse()</td>
+<td>通用</td>
+<td>基准</td>
+<td>中等</td>
+<td>无</td>
+<td>&lt;= 100x100</td>
+</tr>
+<tr>
+<td>LU</td>
+<td>通用方阵</td>
+<td>1.2x</td>
+<td>高</td>
+<td>可逆矩阵</td>
+<td>100-1000</td>
+</tr>
+<tr>
+<td>LDLT</td>
+<td>对称矩阵</td>
+<td>2.0x</td>
+<td>高</td>
+<td>对称</td>
+<td>-</td>
+</tr>
+<tr>
+<td>LLT</td>
+<td>对称正定</td>
+<td>2.3x</td>
+<td>很高</td>
+<td>对称正定</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-数据映射与零拷贝"><a class="header-anchor" href="#6-数据映射与零拷贝"></a>6. 数据映射与零拷贝</h3>
+<p>Eigen::Map：直接操作外部内存，避免复制。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> data[<span class="number">16</span>];</span><br><span class="line"><span class="function">Eigen::Map&lt;Eigen::Matrix4d&gt; <span class="title">matrix</span><span class="params">(data)</span></span>;  <span class="comment">// 映射数组为 4x4 矩阵</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-逐元素操作优化"><a class="header-anchor" href="#7-逐元素操作优化"></a>7. 逐元素操作优化</h3>
+<p>使用 .array() 或逐元素函数（如 .cwiseProduct()）。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 逐元素乘法</span></span><br><span class="line">result = a.<span class="built_in">array</span>() * b.<span class="built_in">array</span>();</span><br><span class="line"><span class="comment">// 或使用 cwiseProduct</span></span><br><span class="line">result = a.<span class="built_in">cwiseProduct</span>(b);</span><br></pre></td></tr></table></figure>
+<h3 id="8-复合赋值运算符"><a class="header-anchor" href="#8-复合赋值运算符"></a>8. 复合赋值运算符</h3>
+<p>优先使用 +=、-= 直接修改原变量。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不推荐：临时变量、多余的内存拷贝</span></span><br><span class="line">A = A + B * C 更高效  </span><br><span class="line"><span class="comment">// 推荐：表达式优化、复用内存</span></span><br><span class="line">A += B * C;  </span><br></pre></td></tr></table></figure>
+<h3 id="9-并行化加速"><a class="header-anchor" href="#9-并行化加速"></a>9. 并行化加速</h3>
+<p>Eigen 在进行一些矩阵运算（如大矩阵乘法、求逆、分解）时，会自动使用多线程加速。如果你不设置，Eigen 会默认尝试使用系统检测到的核心数。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Eigen::<span class="built_in">setNbThreads</span>(<span class="number">4</span>);  <span class="comment">// 设置线程数</span></span><br></pre></td></tr></table></figure>
+<p>可通过以下接口查询当前设置的线程数</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> threads = Eigen::<span class="built_in">nbThreads</span>();  <span class="comment">// 获取当前设置值</span></span><br></pre></td></tr></table></figure>
+<p>建议按需配置，避免线程过多抢占资源，需要测试线程数对性能的影响</p>
+<h2 id="五、带实体结构和-STL-字段"><a class="header-anchor" href="#五、带实体结构和-STL-字段"></a>五、带实体结构和 STL 字段</h2>
+<h3 id="实体结构加对齐操作程序"><a class="header-anchor" href="#实体结构加对齐操作程序"></a>实体结构加对齐操作程序</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// struct/class，都需要对齐</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Pose</span> &#123;</span><br><span class="line">  EIGEN_MAKE_ALIGNED_OPERATOR_NEW</span><br><span class="line">  Eigen::Vector3d position;</span><br><span class="line">  Eigen::Quaterniond orientation;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>固定尺寸对象：需内存对齐，应用<code>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</code>，避免 SIMD 错误。否则在某些平台可能<strong>崩溃</strong></p>
+<h3 id="应用-aligned-allocator"><a class="header-anchor" href="#应用-aligned-allocator"></a>应用 aligned allocator</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">std::vector&lt;Eigen::Vector3d, Eigen::aligned_allocator&lt;Eigen::Vector3d&gt;&gt; points;</span><br></pre></td></tr></table></figure>
+<blockquote><p>Using STL containers on fixed-size vectorizable Eigen types, or classes having members of such types, requires taking the following two steps:</p>
+<p>A 16-byte-aligned allocator must be used. Eigen does provide one ready for use: aligned_allocator.</p>
+<p>If you want to use the std::vector container, you need to #include &lt;Eigen/StdVector&gt;.</p>
+<footer><strong>https://libeigen.gitlab.io/eigen/docs-3.3/group__TopicStructHavingEigenMembers.html Eigen 3.3.*版本</strong></footer></blockquote>
+<p>Eigen 3.3 版本必须应用aligned_allocator，否则可能导致<strong>崩溃</strong>，如出现地址未对齐的 SIGSEGV 错误。</p>
+<p>Eigen 3.4 版本文档说明在C++17，gcc 7/clang 5以上，由编译器搞定对齐问题: <a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/dox/group__TopicStructHavingEigenMembers.html">EIGEN_MAKE_ALIGNED_OPERATOR_NEW说明</a>；<a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/dox/group__TopicStlContainers.html">aligned_allocator说明</a>。</p>
+<p>注意使用的版本，并按对应的策略实现。</p>
+<p><em>注：</em></p>
+<ol>
+<li>EIGEN_MAKE_ALIGNED_OPERATOR_NEW 会重载堆内存操作 new/delete , 使用 Eigen 的对齐分配器； 所以应用 EIGEN_MAKE_ALIGNED_OPERATOR_NEW 后， 该类(class/struct)自身new出来的Eigen::Vector3d 或者 std::vector<a href="Eigen::Vector3d">Eigen::Vector3d</a> 都保证了内存对齐。</li>
+<li>在 类(class/struct) 中，如果应用了 EIGEN_MAKE_ALIGNED_OPERATOR_NEW， 可以不需要再对 vector 指定 Eigen::aligned_allocator</li>
+</ol>
+<h2 id="六、显式类型转换"><a class="header-anchor" href="#六、显式类型转换"></a>六、显式类型转换</h2>
+<p>避免隐式转换：统一标量类型（如全用 double），或显式转换。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">Eigen::Vector2d <span class="title">vd</span><span class="params">(<span class="number">1.0</span>, <span class="number">2.0</span>)</span></span>;</span><br><span class="line">Eigen::Vector2f vf = vd.<span class="built_in">cast</span>&lt;<span class="type">float</span>&gt;();  <span class="comment">// double -&gt; float 显式转换</span></span><br></pre></td></tr></table></figure>
+<p>注意：.cast&lt;&gt;() 只转类型，不改维度</p>
+<h2 id="七、特殊情况"><a class="header-anchor" href="#七、特殊情况"></a>七、特殊情况</h2>
+<p>默认列优先：与 Fortran/MATLAB 兼容，但与其他库交互时注意顺序。</p>
+<h3 id="1-如果需要行优先存储："><a class="header-anchor" href="#1-如果需要行优先存储："></a>1. 如果需要行优先存储：</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Eigen::Matrix&lt;<span class="type">float</span>, <span class="number">4</span>, <span class="number">4</span>, Eigen::RowMajor&gt; mat;</span><br><span class="line"><span class="comment">// 映射行优先数据</span></span><br><span class="line">Eigen::Map&lt;MatrixXd, <span class="number">0</span>, Stride&lt;Dynamic, <span class="number">1</span>&gt;&gt; <span class="built_in">row_major_map</span>(data, rows, cols);</span><br></pre></td></tr></table></figure>
+<h3 id="2-如需兼容-CUDA-OpenCV，也推荐-RowMajor"><a class="header-anchor" href="#2-如需兼容-CUDA-OpenCV，也推荐-RowMajor"></a>2. 如需兼容 CUDA / OpenCV，也推荐 RowMajor</h3>
+<h2 id="八、配套-CMake-编译选项"><a class="header-anchor" href="#八、配套-CMake-编译选项"></a>八、配套 CMake 编译选项</h2>
+<p>Eigen 默认会尝试为某些类型（如 Vector4f, Matrix&lt;float, 4, 4&gt; 等）做 SSE/AVX SIMD 对齐优化，提高计算效率。</p>
+<p>但是如果你在 某些编译环境中 或使用 静态变量（static）/全局变量，而这些变量是 Eigen 类型的，就可能引发 alignment 问题（例如崩溃或未定义行为）</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">add_definitions</span>(-DEIGEN_DONT_ALIGN_STATICALLY=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>这个宏只影响静态变量是否使用内存对齐。</p>
+<p>它不会影响动态分配的 Eigen 对象（如 new Eigen::Vector3f()），这些是安全的。</p>
+<p>如果你没有使用静态或全局变量，就 不要定义该宏，以便保留性能优化。</p>
+<h2 id="九、编译优化"><a class="header-anchor" href="#九、编译优化"></a>九、编译优化</h2>
+<h3 id="1-编译器选项："><a class="header-anchor" href="#1-编译器选项："></a>1. 编译器选项：</h3>
+<p>通过开启编译选项优化性能：</p>
+<ul>
+<li>O3: 编译器会进行循环展开、函数内联、向量化等优化，通常能显著提升 Eigen 矩阵运算的性能。</li>
+<li>march: 开启 CPU 支持的 SIMD 指令集，从而提升 Eigen 内部向量化的效率。</li>
+<li>ffast-math:  放宽对 IEEE 754 浮点标准的严格遵守，允许编译器进行激进优化，提升矩阵运算和数值求解的速度。</li>
+</ul>
+<p>GCC / Clang:</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 这里示例是native, 建议使用具体架构，特别是交叉编译时，如x86_64, arm8.2</span></span><br><span class="line">-O3 -march=native -ffast-<span class="keyword">math</span></span><br></pre></td></tr></table></figure>
+<p>注意：上述编译选项，有得有失，比如使用O3生成的代码会更大，编译时间更长，有时也可能触发编译器的 bug 或导致调试困难。一般建议用O2即可，除非性能尤其重要根据实际测试情况来定。</p>
+<p>特别指出 Nvidia 智能驾驶芯片的march如下：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment"># arch set</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">&quot;$&#123;HARDWARE&#125;&quot;</span> <span class="keyword">STREQUAL</span> <span class="string">&quot;orin&quot;</span>)</span><br><span class="line">    <span class="comment">#cpu part 0xd42</span></span><br><span class="line">    <span class="keyword">set</span>(CMAKE_C_FLAGS <span class="string">&quot;$&#123;CMAKE_C_FLAGS&#125; -march=armv8.2-a&quot;</span> -mtune=cortex-a78ae<span class="string">&quot;)</span></span><br><span class="line"><span class="string">    set(CMAKE_CXX_FLAGS &quot;</span><span class="variable">$&#123;CMAKE_CXX_FLAGS&#125;</span> -march=armv8.<span class="number">2</span>-a<span class="string">&quot; -mtune=cortex-a78ae&quot;</span>)</span><br><span class="line"><span class="keyword">elseif</span> (<span class="string">&quot;$&#123;HARDWARE&#125;&quot;</span> <span class="keyword">STREQUAL</span> <span class="string">&quot;thor&quot;</span>)</span><br><span class="line">    <span class="comment">#cpu part 0xd83</span></span><br><span class="line">    <span class="keyword">set</span>(CMAKE_C_FLAGS <span class="string">&quot;$&#123;CMAKE_C_FLAGS&#125; -march=armv9-a&quot;</span> -mtune=neoverse-v3ae<span class="string">&quot;)</span></span><br><span class="line"><span class="string">    set(CMAKE_CXX_FLAGS &quot;</span><span class="variable">$&#123;CMAKE_CXX_FLAGS&#125;</span> -march=armv9-a<span class="string">&quot; -mtune=neoverse-v3ae&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span> ()</span><br></pre></td></tr></table></figure>
+<p>注意：mtune参数用于更细节的架构描述，可能有些编译器版本不支持，可以删除掉。</p>
+<h3 id="2-检查-SIMD-是否生效"><a class="header-anchor" href="#2-检查-SIMD-是否生效"></a>2. 检查 SIMD 是否生效</h3>
+<p>CPU 支持的 SIMD 指令集是否生效，可以通过代码来校验。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">std::cout &lt;&lt; Eigen::<span class="built_in">SimdInstructionSetsInUse</span>() &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接"></a>参考链接</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://chatgpt.com/">ChatGPT 各种相关 prompt 的回答</a></li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2025/08/03/devops-for-intelligent-driving/" data-toggle="tooltip" data-placement="top"
+                           title="智能驾驶 DevOps">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+                <!--加入新的评论系统-->
+                
+                    <div id="giscus" class="giscus"></div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="YYGCui/yygcui.github.com"
+                        data-repo-id="MDEwOlJlcG9zaXRvcnkzNjQ0NzEx"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOADedJ84CsxOP"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="top"
+                        data-theme="noborder_light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%A4%B4%E6%96%87%E5%8C%85%E5%90%AB%E8%A6%81%E6%B1%82"><span class="toc-text">一、头文包含要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">二、类型选择和初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E9%80%89%E6%8B%A9%E5%9B%BA%E5%AE%9A%E5%A4%A7%E5%B0%8F%E7%9F%A9%E9%98%B5%EF%BC%9A"><span class="toc-text">优先选择固定大小矩阵：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-text">三、参数传递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-text">四、性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E7%9F%A9%E9%98%B5%E5%A4%84%E7%90%86%E5%B0%8F%E7%BB%B4%E5%BA%A6%E7%9F%A9%E9%98%B5"><span class="toc-text">1. 避免使用动态大小矩阵处理小维度矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%81%BF%E5%85%8D%E4%B8%B4%E6%97%B6%E7%89%A9%E4%BB%B6"><span class="toc-text">2. 避免临时物件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%A9%E7%94%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A8%A1%E6%9D%BF"><span class="toc-text">3. 利用表达式模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-noalias-%E9%98%B2%E6%AD%A2%E5%A4%9A%E4%BD%99%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D"><span class="toc-text">4. 使用 .noalias() 防止多余内存拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%81%BF%E5%85%8D%E7%9B%B4%E6%8E%A5%E5%8F%8D%E7%9F%A9%E9%98%B5"><span class="toc-text">5. 避免直接反矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%95%B0%E6%8D%AE%E6%98%A0%E5%B0%84%E4%B8%8E%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="toc-text">6. 数据映射与零拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E9%80%90%E5%85%83%E7%B4%A0%E6%93%8D%E4%BD%9C%E4%BC%98%E5%8C%96"><span class="toc-text">7. 逐元素操作优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%A4%8D%E5%90%88%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">8. 复合赋值运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%8A%A0%E9%80%9F"><span class="toc-text">9. 并行化加速</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%A6%E5%AE%9E%E4%BD%93%E7%BB%93%E6%9E%84%E5%92%8C-STL-%E5%AD%97%E6%AE%B5"><span class="toc-text">五、带实体结构和 STL 字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E7%BB%93%E6%9E%84%E5%8A%A0%E5%AF%B9%E9%BD%90%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"><span class="toc-text">实体结构加对齐操作程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8-aligned-allocator"><span class="toc-text">应用 aligned allocator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">六、显式类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5"><span class="toc-text">七、特殊情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E8%A1%8C%E4%BC%98%E5%85%88%E5%AD%98%E5%82%A8%EF%BC%9A"><span class="toc-text">1. 如果需要行优先存储：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A6%82%E9%9C%80%E5%85%BC%E5%AE%B9-CUDA-OpenCV%EF%BC%8C%E4%B9%9F%E6%8E%A8%E8%8D%90-RowMajor"><span class="toc-text">2. 如需兼容 CUDA &#x2F; OpenCV，也推荐 RowMajor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E9%85%8D%E5%A5%97-CMake-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9"><span class="toc-text">八、配套 CMake 编译选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96"><span class="toc-text">九、编译优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BC%96%E8%AF%91%E5%99%A8%E9%80%89%E9%A1%B9%EF%BC%9A"><span class="toc-text">1. 编译器选项：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A3%80%E6%9F%A5-SIMD-%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-text">2. 检查 SIMD 是否生效</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/智能驾驶/"
+                           title="智能驾驶">智能驾驶</a>
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/Eigen/"
+                           title="Eigen">Eigen</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2025
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_uv" style="font-size: 12px;">, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
+                    <br>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://www.cuicc.com/">YYGCui</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GC4BHEPT9T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GC4BHEPT9T');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script defer src="https://vercount.one/js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>
