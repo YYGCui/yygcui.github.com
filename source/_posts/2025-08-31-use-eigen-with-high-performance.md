@@ -1,6 +1,7 @@
 ---
 title: Eigen高性能使用
 date: 2025-08-31 11:34:24
+header-img: images/header/river-cloud.jpg
 tags:
 - 性能优化
 - 智能驾驶
