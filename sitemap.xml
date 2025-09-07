@@ -2,9 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.cuicc.com/blog/2025/09/07/use-ros2-with-high-performance/</loc>
+    
+    <lastmod>2025-09-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.cuicc.com/blog/2025/08/31/use-eigen-with-high-performance/</loc>
     
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -643,7 +652,7 @@
 
   <url>
     <loc>http://blog.cuicc.com/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -651,630 +660,637 @@
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E5%BF%83%E6%99%BA/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/kubernetes/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/docker/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Node-js/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Sails/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/MVC/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/C-C/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/hexo/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/flannel/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/multi-networks/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Linux/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/ubuntu/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/upgrade/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/BlackBerry/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Mobile/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/iPhone/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E6%B1%82%E8%81%8C%E9%9D%A2%E8%AF%95/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/MPI/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Visual-Studio/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Android/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/DTG/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/debian/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/gcc/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/twitter/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/vpn/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E5%9B%A2%E8%B4%AD/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/intern/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/job/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/metro/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/expo/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/OEM/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/win7/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/DHCP/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/relay/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Programming/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/perl/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/variables/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/social-network/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/startup/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E7%A0%94%E7%A9%B6%E7%94%9F/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/pack/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/unpack/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/BT/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Wlan/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Open-Source/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Precompile/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/endian/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/nohup/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/screen/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/SSH/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/binutils/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/decompile/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/putty/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Macros/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/IT/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/gentoo/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/MBR/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/winxp/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E6%99%BA%E9%BD%BF/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E5%9B%9E%E5%AE%B6/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/B2C/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E7%A7%9F%E6%88%BF/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/automation/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E6%9E%81%E5%93%81%E6%88%BF%E4%B8%9C/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/backtrace/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/core-dump/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/gdb/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E4%BA%BA%E7%94%9F%E7%9B%AE%E6%A0%87/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Root/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/KSD301/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Octopress/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/longtail/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E9%95%BF%E5%B0%BE%E7%90%86%E8%AE%BA/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/microservices/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/compile/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/deploy/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/mysql/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/git/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/submodule/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/technology/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E4%BC%97%E7%AD%B9/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E8%90%A5%E9%94%80/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E6%99%BA%E8%83%BD%E9%A9%BE%E9%A9%B6/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/DevOps/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/CI-CD/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/tags/Eigen/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.cuicc.com/tags/ROS2/</loc>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1283,35 +1299,35 @@
   
   <url>
     <loc>http://blog.cuicc.com/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/categories/%E6%8A%80%E6%9C%AF%E7%A7%AF%E7%B4%AF/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/categories/%E4%B8%9A%E7%95%8C%E8%BF%BD%E8%B8%AA/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/categories/%E8%81%8C%E5%9C%BA%E6%84%9F%E6%82%9F/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://blog.cuicc.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2025-08-31</lastmod>
+    <lastmod>2025-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

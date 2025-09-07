@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        ROS2高性能使用｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2025/09/07/use-ros2-with-high-performance/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/images/header/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/header/river-cloud2.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/header/river-cloud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>ROS2高性能使用</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2025-09-07
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/智能驾驶/"
+                           title="智能驾驶">智能驾驶</a>
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/ROS2/"
+                           title="ROS2">ROS2</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            ROS2高性能使用
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>在做性能优化时，发现 ros::spin 的线程有些节点的 CPU 占比比较大，通过 perf 抓取性能日志分析，主要集中在几点：subscription 注册的 callback 消耗大，subscription 时反序列化操作消耗大，publish 时存在一定的动态内存消耗等等。为优化以上性能热点，我们先简单分析一下源码，看看 ROS2 的实现机制。</p>
+<h2 id="源码分析"><a class="header-anchor" href="#源码分析"></a>源码分析</h2>
+<h3 id="spin流程"><a class="header-anchor" href="#spin流程"></a>spin流程</h3>
+<p>在业务节点中 create_subsription 注册 callback，并 spin 后，ros 线程的调用链大致如下，等待消息，轮询或者事件触发，调用 subscription 处理队列里的消息，消息进入回调，最终调用用户注册的 callback 执行并等待完成。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户 callback</span><br><span class="line">   ↑</span><br><span class="line">AnySubscriptionCallback::dispatch</span><br><span class="line">   ↑</span><br><span class="line">SubscriptionBase::handle_message</span><br><span class="line">   ↑</span><br><span class="line">Executor::execute_ready_executables</span><br><span class="line">   ↑</span><br><span class="line">Executor::spin_once (wait_set 触发)</span><br><span class="line">   ↑</span><br><span class="line">rclcpp::spin(node)</span><br></pre></td></tr></table></figure>
+<h3 id="callback"><a class="header-anchor" href="#callback"></a>callback</h3>
+<p>其 dispatch 源码摘录如下，这里通过 shared_ptr 传入 message，根据 用户 注册的 callback 参数类型，传入相应的引用或者指针类型。这里可以看到 callback 调用结束才能走下去结束 dispatch。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dispatch</span><span class="params">(std::shared_ptr&lt;MessageT&gt; message, <span class="type">const</span> rclcpp::MessageInfo &amp; message_info)</span> </span>&#123;</span><br><span class="line">  ... <span class="comment">// 省略部分</span></span><br><span class="line">  std::<span class="built_in">visit</span>(</span><br><span class="line">      [&amp;message, &amp;message_info, <span class="keyword">this</span>](<span class="keyword">auto</span> &amp;&amp; callback) &#123;</span><br><span class="line">        <span class="keyword">using</span> T = std::<span class="type">decay_t</span>&lt;<span class="keyword">decltype</span>(callback)&gt;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">constexpr</span> (std::is_same_v&lt;T, ConstRefCallback&gt;) &#123;</span><br><span class="line">          <span class="built_in">callback</span>(*message);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (std::is_same_v&lt;T, ConstRefWithInfoCallback&gt;) &#123;</span><br><span class="line">          <span class="built_in">callback</span>(*message, message_info);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (std::is_same_v&lt;T, UniquePtrCallback&gt;) &#123;</span><br><span class="line">          <span class="built_in">callback</span>(<span class="built_in">create_unique_ptr_from_shared_ptr_message</span>(message));</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (std::is_same_v&lt;T, UniquePtrWithInfoCallback&gt;) &#123;</span><br><span class="line">          <span class="built_in">callback</span>(<span class="built_in">create_unique_ptr_from_shared_ptr_message</span>(message), message_info);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (  <span class="comment">// NOLINT[readability/braces]</span></span><br><span class="line">          std::is_same_v&lt;T, SharedConstPtrCallback&gt;||</span><br><span class="line">          std::is_same_v&lt;T, ConstRefSharedConstPtrCallback&gt;||</span><br><span class="line">          std::is_same_v&lt;T, SharedPtrCallback&gt;)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">callback</span>(message);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (  <span class="comment">// NOLINT[readability/braces]</span></span><br><span class="line">          std::is_same_v&lt;T, SharedConstPtrWithInfoCallback&gt;||</span><br><span class="line">          std::is_same_v&lt;T, ConstRefSharedConstPtrWithInfoCallback&gt;||</span><br><span class="line">          std::is_same_v&lt;T, SharedPtrWithInfoCallback&gt;)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">callback</span>(message, message_info);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="built_in">static_assert</span>(always_false_v&lt;T&gt;, <span class="string">&quot;unhandled callback type&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, callback_variant_);</span><br><span class="line">    ... <span class="comment">// 省略部分</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="publish"><a class="header-anchor" href="#publish"></a>publish</h3>
+<p>publish 函数有两个重载实现，一个是通过引用，一个是通过智能指针。从我们摘取的代码片段，逐一分析下这俩函数：</p>
+<ul>
+<li>引用传参： 没有开启 intra_process 时，直接走 inter_process；开启 intra_process 时，拷贝 msg 到 unique_ptr，然后调用 unique_ptr 参数函数重载。</li>
+<li>智能指针传参： 没有开启 intra_process 时，直接走 inter_process。开启 intra_process 时，如果总订阅数多于进程内订阅数，将 unique_ptr 转成 shared_ptr，进程内走 intra_process，shared_msg 给进程间走 inter_process；否则直接走 intra_process。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">publish</span><span class="params">(<span class="type">const</span> MessageT &amp; msg)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// RCUTILS_LOG_WARN_NAMED(ROS_PACKAGE_NAME_RCLCPP,</span></span><br><span class="line">    <span class="comment">//                        &quot;[PUB]publish msg START for topic: %s of node: %s&quot;,</span></span><br><span class="line">    <span class="comment">//                         get_topic_name(), node_name_.c_str());</span></span><br><span class="line">    <span class="keyword">auto</span> start = std::chrono::steady_clock::<span class="built_in">now</span>();</span><br><span class="line">    <span class="comment">// Avoid allocating when not using intra process.</span></span><br><span class="line">    <span class="keyword">if</span> (!intra_process_is_enabled_) &#123;</span><br><span class="line">      <span class="comment">// In this case we&#x27;re not using intra process.</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>-&gt;<span class="built_in">do_inter_process_publish</span>(msg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Otherwise we have to allocate memory in a unique_ptr and pass it along.</span></span><br><span class="line">    <span class="comment">// As the message is not const, a copy should be made.</span></span><br><span class="line">    <span class="comment">// A shared_ptr&lt;const MessageT&gt; could also be constructed here.</span></span><br><span class="line">    <span class="keyword">auto</span> ptr = MessageAllocatorTraits::<span class="built_in">allocate</span>(*message_allocator_.<span class="built_in">get</span>(), <span class="number">1</span>);</span><br><span class="line">    MessageAllocatorTraits::<span class="built_in">construct</span>(*message_allocator_.<span class="built_in">get</span>(), ptr, msg);</span><br><span class="line">    <span class="function">MessageUniquePtr <span class="title">unique_msg</span><span class="params">(ptr, message_deleter_)</span></span>;</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">publish</span>(std::<span class="built_in">move</span>(unique_msg));</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void publish(std::unique_ptr&lt;MessageT, MessageDeleter&gt; msg) &#123;</span><br><span class="line">    ...</span><br><span class="line">    if (!intra_process_is_enabled_) &#123;</span><br><span class="line">      this-&gt;do_inter_process_publish(*msg);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line">    // If an interprocess subscription exist, then the unique_ptr is promoted</span><br><span class="line">    // to a shared_ptr and published.</span><br><span class="line">    // This allows doing the intraprocess publish first and then doing the</span><br><span class="line">    // interprocess publish, resulting in lower publish-to-subscribe latency.</span><br><span class="line">    // It&#x27;s not possible to do that with an unique_ptr,</span><br><span class="line">    // as do_intra_process_publish takes the ownership of the message.</span><br><span class="line">    bool inter_process_publish_needed =</span><br><span class="line">      get_subscription_count() &gt; get_intra_process_subscription_count();</span><br><span class="line"></span><br><span class="line">    if (inter_process_publish_needed) &#123;</span><br><span class="line">      auto shared_msg = this-&gt;do_intra_process_publish_and_return_shared(std::move(msg));</span><br><span class="line">      this-&gt;do_inter_process_publish(*shared_msg);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      this-&gt;do_intra_process_publish(std::move(msg));</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h2 id="优化方法"><a class="header-anchor" href="#优化方法"></a>优化方法</h2>
+<h3 id="降时延"><a class="header-anchor" href="#降时延"></a>降时延</h3>
+<p>节点内 spin 流程是单线程处理的，也就是说该节点的所有 subscription 的 callback 是串行调用的， callback 的处理时间直接影响该节点的整体时间。<br>
+那么这里优化方式比较直接，callback 只做消息的接收，不执行逻辑处理，处理由其他线程来做。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MsgCallback</span><span class="params">(<span class="type">const</span> xxx::msg::xxx::ConstSharedPtr msg)</span> </span>&#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="comment">// 简单举例，把 msg 指针存一下供其他线程使用</span></span><br><span class="line">   xxx_msg_ = msg;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="减拷贝"><a class="header-anchor" href="#减拷贝"></a>减拷贝</h3>
+<p>上面分析了 publish 的两个方法，可以看到如果使用引用传参，在进程内通信下会多一次拷贝；然后在智能指针传参时，跨进程通信再多一次拷贝。这里我们可以通过使用 unique_ptr 传参直接减免一次拷贝。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">\\ 示例：</span><br><span class="line">std::unique_ptr&lt;xxx::msg&gt; msg;</span><br><span class="line">msg-&gt;xxx = xxx;</span><br><span class="line">node-&gt;<span class="built_in">publish</span>(std::<span class="built_in">move</span>(msg));</span><br></pre></td></tr></table></figure>
+<h3 id="共享内存"><a class="header-anchor" href="#共享内存"></a>共享内存</h3>
+<p><a target="_blank" rel="noopener" href="https://design.ros2.org/articles/intraprocess_communications.html">进程内通信</a> 可以使进程内的 pub - sub 间直接共享内存，减少了消息拷贝、序列化、反序列化的资源使用。打开进程内通信的方式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">\\ 示例：</span><br><span class="line">rclcpp::NodeOptions node_options;</span><br><span class="line">node_options.<span class="built_in">use_intra_process_comms</span>(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">\\ 使用示例<span class="number">1</span> - 直接创建node：</span><br><span class="line">rclcpp::Node::SharedPtr node = rclcpp::Node::<span class="built_in">make_shared</span>(<span class="string">&quot;node_name&quot;</span>, <span class="string">&quot;/namespace&quot;</span>, node_options);</span><br><span class="line"></span><br><span class="line">\\ 使用示例<span class="number">2</span> - XXXNode继承rclcpp node：</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">XXXNode</span> : <span class="keyword">public</span> rclcpp::Node &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">XXXNode</span>(<span class="type">const</span> std::string &amp;node_name, <span class="type">const</span> std::string &amp;name_space, <span class="type">const</span> rclcpp::NodeOptions&amp; node_options)</span><br><span class="line">    : rclcpp::<span class="built_in">Node</span>(node_name, name_space, node_options) &#123;....&#125;</span><br><span class="line">    </span><br><span class="line">XXXNode node = std::<span class="built_in">make_shared</span>&lt;XXXNode&gt;(<span class="string">&quot;node_name&quot;</span>, <span class="string">&quot;/namespace&quot;</span>, option);</span><br></pre></td></tr></table></figure>
+<p><strong>特别注意</strong>：需要确保进程内订阅消息时不会修改原消息，因为该启用配置后进程内 publish 节点 和所有 subcription 节点是共享内存使用的。</p>
+<p>callback 要求参数两层const保证指针和消息内容无法被修改，如果通过指针传递给其他方法都应该是 const，不要 cast 掉。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">\\ 第一个<span class="type">const</span> 保证 ptr不能被修改</span><br><span class="line">\\ 第二个<span class="type">const</span>/ConstSharedPtr 保证 ptr 指向的内容不能被修改.</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(<span class="type">const</span> xxx::msg::yyy::ConstSharedPtr msg)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">\\ 或</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(<span class="type">const</span> std::shared_ptr&lt;xxx::msg::yyy <span class="type">const</span>&gt; msg &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">    ...</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>两种类型的区别如下：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>特点</th>
+<th>推荐场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SharedPtr</code></td>
+<td>可以修改消息</td>
+<td>你确实要在回调里修改消息（<strong>极少见</strong>），或者想要传给其他 API 要求 <code>shared_ptr&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>ConstSharedPtr</code></td>
+<td>不可以修改消息</td>
+<td><strong>绝大多数情况</strong>，订阅者只是读取消息，不修改内容</td>
+</tr>
+</tbody>
+</table>
+<h3 id="代理订阅"><a class="header-anchor" href="#代理订阅"></a>代理订阅</h3>
+<p>前面讲到进程内通信可以实现零拷贝，免序列化反序列化。很多场景下，我们是进程内的各个节点 subscribe 了另一个进程的 publish 的 msg，这种模式下，每个 subscribe 的节点都要反序列化一份，增加了重复的资源消耗。</p>
+<p>如何避免这种情况，去掉重复的反序列化资源消耗呢？ 我们可以增加一个中继节点 node_relay，来接收 process1 进程 publish 的 /ns1/topic1，在 process2 中 通过 node_relay 共享给所有同进程内订阅的节点，间接实现 intra_process 通信。如下图：</p>
+<img width="450" height="171" alt="ros_relay_agent" src="/images/ros2/ros2-relay-node.jpg" />
+<p>由于新增加了一个额外的节点，所以在引入这种优化方式时，需要评估下该中继节点的资源消耗，和其他节点反序列化消耗。取最优解，可能收到 subscription 的数量、msg 的大小、topic 的帧率等的影响。</p>
+<p>在开发实现中，process2 里的节点可以按实际情况订阅<code>/ns1/topic1</code>, 通过 remap 配置屏蔽掉<code>/relay_ns1/topic1</code>的差异，以方便上述性能评估，及后续的其他组合。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 命令行参数</span><br><span class="line">./bin/process2 --ros-args -r /ns1/topic1:=/relay_ns1/topic1</span><br></pre></td></tr></table></figure>
+<p>上述 remap 作用于 process2 里的所有节点，我们只期望作用域 node2* 节点，中继节点还要正常处理 /ns1/topic1，所以中继节点需要屏蔽掉参数设置。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 中继节点重建node示例</span></span><br><span class="line">rclcpp::NodeOptions node_options;</span><br><span class="line">node_options.<span class="built_in">use_global_arguments</span>(<span class="literal">false</span>); <span class="comment">// 屏蔽全局参数</span></span><br><span class="line">node_options.<span class="built_in">use_intra_process_comms</span>(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">\\ 使用示例<span class="number">1</span> - 直接创建node：</span><br><span class="line">rclcpp::Node::SharedPtr relay_node = rclcpp::Node::<span class="built_in">make_shared</span>(<span class="string">&quot;node_name&quot;</span>, <span class="string">&quot;/ns1&quot;</span>, node_options);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><em>注：在实际使用中，发现即使开启了进程内通信，并配置了代理订阅，subscription 还是有反序列化的存在，这是 ROS 底层 DDS 通信层导致的。这里可能需要二开才能解决，暂且不表。</em></p>
+<h2 id="参考资料"><a class="header-anchor" href="#参考资料"></a>参考资料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros2/ros2">ros2 源代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://design.ros2.org/articles/intraprocess_communications.html">ros2 进程内通信</a></li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2025/08/31/use-eigen-with-high-performance/" data-toggle="tooltip" data-placement="top"
+                           title="Eigen高性能使用">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+                <!--加入新的评论系统-->
+                
+                    <div id="giscus" class="giscus"></div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="YYGCui/yygcui.github.com"
+                        data-repo-id="MDEwOlJlcG9zaXRvcnkzNjQ0NzEx"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOADedJ84CsxOP"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="top"
+                        data-theme="noborder_light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#spin%E6%B5%81%E7%A8%8B"><span class="toc-text">spin流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#callback"><span class="toc-text">callback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#publish"><span class="toc-text">publish</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-text">优化方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%8D%E6%97%B6%E5%BB%B6"><span class="toc-text">降时延</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E6%8B%B7%E8%B4%9D"><span class="toc-text">减拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="toc-text">共享内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E8%AE%A2%E9%98%85"><span class="toc-text">代理订阅</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/智能驾驶/"
+                           title="智能驾驶">智能驾驶</a>
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/ROS2/"
+                           title="ROS2">ROS2</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2025
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_uv" style="font-size: 12px;">, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
+                    <br>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://www.cuicc.com/">YYGCui</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GC4BHEPT9T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GC4BHEPT9T');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script defer src="https://vercount.one/js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

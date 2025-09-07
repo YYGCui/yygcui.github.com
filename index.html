@@ -308,7 +308,30 @@
 
 
 <div class="post-preview "
-     style="background-image: url('/images/header/blog-bg-black-run.jpg')">
+     style="background-image: url('/images/header/river-cloud2.jpg')">
+    <a href="/blog/2025/09/07/use-ros2-with-high-performance/">
+        <h2 class="post-title">
+            ROS2高性能使用
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2025-09-07
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                在做性能优化时，发现 ros::spin 的线程有些节点的 CPU 占比比较大，通过 perf 抓取性能日志分析，主要集中在几点：subscription 注册的 callback 消耗大，subscription 时反序列化操作消耗大，publish 时存在一定的动态内存消耗等等。为优化以上性..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/header/river-cloud.jpg')">
     <a href="/blog/2025/08/31/use-eigen-with-high-performance/">
         <h2 class="post-title">
             Eigen高性能使用
@@ -465,29 +488,6 @@ WSL环境
 朱自清匆匆
 每年这个时候总结一下，看看去年的目标实现的怎么样，今年有哪些计划。
 201..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/header/blog-bg-black-run.jpg')">
-    <a href="/blog/2017/09/10/kubernetes-network-policy/">
-        <h2 class="post-title">
-            kubernetes之多网络策略
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-09-10
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                网络策略(Network Policy)是Kubernetes提供的一种规范，它描述了一组Pod是如何被允许相互通信的，以及和其他端点是如何通信的。Kubernetes只提供了这样的机制，具体功能由网络插件(Network Plugins)实现，流行的网络插件有很多，但并不是所有的网络插件都提供..
             </p>
         </div>
     </a>
@@ -799,11 +799,16 @@ WSL环境
                     
                     
                     <a href="/tags/智能驾驶/" title="智能驾驶"
-                       rel="2">智能驾驶</a>
+                       rel="3">智能驾驶</a>
                     
                     
                     
                     
+                    
+                    
+                    
+                    <a href="/tags/性能优化/" title="性能优化"
+                       rel="2">性能优化</a>
                     
                     
                     
