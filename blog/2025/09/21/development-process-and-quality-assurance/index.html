@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        开发流程和质量｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2025/09/21/development-process-and-quality-assurance/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/images/header/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/header/river-cloud3.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/header/river-cloud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>开发流程和质量</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2025-09-21
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/DevOps/"
+                           title="DevOps">DevOps</a>
+                        
+                        <a class="tag" href="/tags/CI-CD/"
+                           title="CI/CD">CI/CD</a>
+                        
+                        <a class="tag" href="/tags/QA/"
+                           title="QA">QA</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            开发流程和质量
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>前面写了 智能驾驶 DevOps 总览，没有深入的探讨各个关键阶段，本文结合作者在智能驾驶行业的工作经验，着重探讨一下开发环节的流程以及开发质量。谈到开发流程，就不得不提汽车行业软件基本上相关厂商必须要同时掌握和实施的两大支柱：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Automotive_SPICE">ASPICE</a> 和 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/ISO_26262">ISO 26262 (功能安全)</a>。</p>
+<h2 id="ASPICE-ISO-26262"><a class="header-anchor" href="#ASPICE-ISO-26262"></a>ASPICE &amp; ISO 26262</h2>
+<p>ASPICE 是用于评估和改进汽车软件开发过程的一套过程评估参考模型。它提供了一整套最佳实践，用于评估和改进汽车电子和软件开发过程的能力成熟度，保证汽车软件和电子系统开发过程的 可控性、可复用性、可验证性和安全性，最终提升软件的质量和可靠性。</p>
+<p>ISO 26262 (功能安全) 是一个功能安全标准，即使系统在出现故障时，仍能保证不会引发不可接受的风险。它规定了汽车电子电气系统在整个生命周期（从概念、开发、生产、运维到报废）中需要遵循的安全相关活动和要求。</p>
+<p>主要特性做一个总结如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left"><strong>ASPICE</strong></th>
+<th style="text-align:left"><strong>ISO 26262</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>核心焦点</strong></td>
+<td style="text-align:left"><strong>过程能力</strong>（How to build）</td>
+<td style="text-align:left"><strong>功能安全</strong>（What to build for safety）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>范围</strong></td>
+<td style="text-align:left">所有汽车电子/软件项目</td>
+<td style="text-align:left">仅与安全相关的系统（Safety-related systems）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>性质</strong></td>
+<td style="text-align:left"><strong>过程评估模型</strong>（Guideline/Best Practice）</td>
+<td style="text-align:left"><strong>功能安全标准</strong>（Standard，含合规性要求）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>主要目的</strong></td>
+<td style="text-align:left">过程改进、能力评估、保证质量</td>
+<td style="text-align:left">风险管控、安全保证、合规认证</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>等级概念</strong></td>
+<td style="text-align:left"><strong>能力等级</strong>（Capability Level 0-5）</td>
+<td style="text-align:left"><strong>安全等级</strong>（ASIL A/B/C/D）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>强制性</strong></td>
+<td style="text-align:left">通常由客户合同要求，非法律强制</td>
+<td style="text-align:left">虽非法律，但是行业准入门槛，具有<strong>准强制性</strong></td>
+</tr>
+</tbody>
+</table>
+<p>ASPICE 和 ISO 26262 的总览图如下，两者都使用 V 模型来组织开发流程、嵌入安全活动。V 模型（V-Model）是一种经典的开发流程模型，是在软件开发过程中以测试阶段与开发阶段对应关系为特征的模型，它的核心思想是开发的每个阶段，都要有相应的验证与确认活动来保证质量。</p>
+<img width="636" height="514" alt="automotive-spice-v-model-overview" src="/images/dpqa/automotive-spice-v-model-overview.png" />
+<div style="text-align: center;">
+<p>图片来源: <a target="_blank" rel="noopener" href="https://spyro-soft.com/blog/automotive/aspice-101-a-guide-to-automotive-spice">《ASPICE V 模型概述》</a></p>
+</div>
+<img width="636" height="508" alt="iso-26262-v-model-overview" src="/images/dpqa/iso-26262-v-model-overview.png" />
+<div style="text-align: center;">
+<p>图片来源: <a target="_blank" rel="noopener" href="https://www.iso.org/obp/ui/fr/#iso:std:iso:26262:-11:ed-1:v1:en">《ISO 26262 系列标准概述》</a></p>
+</div>
+<p>ASPICE 从 SWE.1 到 SWE.5 和 ISO 26262 从 6-5 到 6-11 的描述是一脉相承的，从需求、设计、实现到验证、集成、测试。它们所表达的核心本质概括一下就两点：<strong>双向可追溯，过程可监控</strong>。达成这两点就能保证开发过程可控，开发出来的产品安全，进而达成甲方的要求或者认证的需求。实现这两点离不开标准化的流程和规范化的操作，以及按标准和规范执行的质量监督。</p>
+<h2 id="标准化-规范化"><a class="header-anchor" href="#标准化-规范化"></a>标准化 &amp; 规范化</h2>
+<p>为达成 ASPICE 和 ISO 26262 的落地实施，我们需要一套标准化的流程，规范化的指导帮助所有参与者的执行和输出一致。开发流程一般由质量部或者相关团队根据公司的需求来设计，大致框架都差不多，为了后续方便描述，以一个迭代过程设计了一个开发流程示例。</p>
+<img width="636" height="342" alt="dev-process-example" src="/images/dpqa/development-process-example.png" />
+<h3 id="计划阶段"><a class="header-anchor" href="#计划阶段"></a>计划阶段</h3>
+<ul>
+<li>输入：产品项目计划</li>
+<li>活动：迭代计划，迭代范围圈定</li>
+<li>输出：迭代计划表，迭代交付项列表</li>
+<li>工具：Confluence 或 专用/自研项目管理工具</li>
+<li>责任：PM</li>
+</ul>
+<h3 id="需求阶段"><a class="header-anchor" href="#需求阶段"></a>需求阶段</h3>
+<ul>
+<li>输入：产品需求</li>
+<li>活动：需求转化，评审，文档化，串讲</li>
+<li>输出：系统需求，设计需求，分配需求，需求规格说明书，纪要</li>
+<li>工具：JIRA, Confluence 或 专用/自研项目需求管理工具</li>
+<li>责任：SE, MDE</li>
+</ul>
+<h3 id="设计阶段"><a class="header-anchor" href="#设计阶段"></a>设计阶段</h3>
+<ul>
+<li>输入：系统需求，设计需求</li>
+<li>活动：系统设计，架构设计，用例设计，文档化，串讲</li>
+<li>输出：设计文档，设计需求，需求规格说明书</li>
+<li>工具：JIRA, Confluence, <a target="_blank" rel="noopener" href="http://draw.io">draw.io</a> 或 专用/自研设计工具</li>
+<li>责任：SE, MDE, TSE</li>
+</ul>
+<h3 id="开发阶段"><a class="header-anchor" href="#开发阶段"></a>开发阶段</h3>
+<ul>
+<li>输入：分配需求，编码规范，Git策略，开发工具链</li>
+<li>活动：详细设计，代码实现，单元验证，用例开发</li>
+<li>输出：设计文档，代码，单元验证报告</li>
+<li>工具：JIRA, Confluence, Gitlab, gtest/vectorcast, sonarqube/coverity等</li>
+<li>责任：MDE, SWE, TE</li>
+</ul>
+<h3 id="测试阶段"><a class="header-anchor" href="#测试阶段"></a>测试阶段</h3>
+<ul>
+<li>输入：软件包，测试用例</li>
+<li>活动：集成测试，功能测试</li>
+<li>输出：测试报告</li>
+<li>工具：JIRA, Confluence, Python 或 自研测试平台</li>
+<li>责任：TE</li>
+</ul>
+<h3 id="发布阶段"><a class="header-anchor" href="#发布阶段"></a>发布阶段</h3>
+<ul>
+<li>输入：软件包，交付项列表，报告</li>
+<li>活动：评审软件合格性</li>
+<li>输出：评审结论</li>
+<li>工具：Confluence 或 专用/自研项目需求管理工具</li>
+<li>责任：PM, QA</li>
+</ul>
+<p>QA 是流程的制定者，流程落地的审核者。上述只写了发布阶段的评审，实际上每个阶段都有准出标准。QA 在迭代过程中，根据各阶段的输出评审是否达成标准以及标准是否合理，不断优化流程，达成提高迭代效率和提高版本质量的双收益。</p>
+<p>其他角色是流程的执行者，有没有真实的执行，是否达成准出标准，通过质量审计来评判，最直观的评判指标就是版本质量(版本问题，客诉等)。</p>
+<h2 id="开发工具链"><a class="header-anchor" href="#开发工具链"></a>开发工具链</h2>
+<p>开发阶段是涉及工具链最复杂的一个阶段，我们稍微展开以下。</p>
+<h3 id="编程规范"><a class="header-anchor" href="#编程规范"></a>编程规范</h3>
+<p><a target="_blank" rel="noopener" href="https://google.github.io/styleguide/cppguide.html">Google C++ Style Guide</a>: 是 Google 公司制定的 C++ 编程规范，旨在规范代码编写风格，是 C++ 开发者们普遍认可并参考的业界标准之一，编程风格没有好坏，关键是要统一，有利于提高代码的可读性、可维护性和团队协作效率。</p>
+<p>检查工具：SonarQube及其开源工具集，如 <a target="_blank" rel="noopener" href="https://clang.llvm.org/extra/clang-tidy/">Clang-tidy</a></p>
+<h3 id="安全规范"><a class="header-anchor" href="#安全规范"></a>安全规范</h3>
+<p><a target="_blank" rel="noopener" href="https://misra.org.uk/">MISRA C++ Guidelines</a>: 是一套为在关键系统中编写安全、可靠的C++代码而制定的指导原则，主要目的是为了避免语言中可能导致不确定行为的特性，从而提高软件的安全性、可靠性，降低缺陷和漏洞的风险。</p>
+<p>检查工具：Coverity，Parasoft 等，这一类主要靠商用工具，开源工具比较薄弱。</p>
+<h3 id="架构度量"><a class="header-anchor" href="#架构度量"></a>架构度量</h3>
+<p>从代码实现相关指标来度量软件架构，这是一个直接粗暴的度量方法，可以从圈复杂度，类定义代码行数，类实现代码行数，重复代码率，方法调用数，方法被调用数等等指标从模块，类，函数等各个维度做一些度量统计。架构度量没有统一的标准和完善的自动化工具，评审也是一个常用的方法。</p>
+<p>检查工具：SonarQube 等</p>
+<h3 id="安全编译"><a class="header-anchor" href="#安全编译"></a>安全编译</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pwl999/article/details/111035160">GCC 安全编译选项</a>: 操作系统提供了许多安全机制来尝试降低或阻止缓冲区溢出攻击带来的安全风险。这些机制包含随机化程序内存布局、禁止在数据区域执行代码、在栈上添加特殊值检测覆盖、限制数据区域写入权限、在编译时插入边界检查以及编译告警转Error。</p>
+<p>检查工具：gcc 编译选项配置</p>
+<h3 id="单元测试"><a class="header-anchor" href="#单元测试"></a>单元测试</h3>
+<p>单元测试是对软件中最小的可测试代码单元（如函数、方法或类）进行验证的测试活动。它由开发人员编写，旨在确保每个代码单元都能按照预期正常运行，并在编写代码时或之后进行，以发现和隔离代码中的错误。单元测试强调代码的逻辑正确性，并通过使用测试桩程序（如Stubs和Mocks）来隔离外部依赖。</p>
+<p>检查工具：对于 ASIL B 及以下的安全等级，一般满足语句、分支覆盖即可，使用开源工具 <a target="_blank" rel="noopener" href="https://github.com/google/googletest">Googletest</a> 是一个高效选择；对于 ASIL D 安全等级，推荐商用工具 VectorCAST、 Parasoft，工具本身通过功能安全认证，支持 MC/DC 覆盖。</p>
+<h3 id="Git-提交规范"><a class="header-anchor" href="#Git-提交规范"></a>Git 提交规范</h3>
+<p>git commit message 应该清晰明了，说明本次提交的目的，具体做了什么操作。约定好统一的格式和书写语言。在提交到远端时，将同一类 commit 合并成一个，非必要不增加新的 commit。</p>
+<ul>
+<li>使用 Gerrit 平台时，推荐约定好 commit message 模板，体现修改的类型，修改内容，对应的需求或者问题单，以单一 commit 提交评审合入。</li>
+<li>使用 Gitlab 平台时，推荐简化 commit message，体现修改内容即可，约定好 Gitlab MR 模板，体现修改的类型，修改内容，对应的需求或者问题单，乃至实现方案，计划合入版本等信息辅助合入评审。</li>
+</ul>
+<p>检查工具：Git hook .commit-msg, Gitlab .gitlab/merge_request_templates/Default.md, 通过 pipeline 校验有效性</p>
+<p>上述工具链，通过 CI 集成到 pipeline 中按 Git commit 或者 MR 自动化检查。</p>
+<h2 id="双向可追溯，过程可监控"><a class="header-anchor" href="#双向可追溯，过程可监控"></a>双向可追溯，过程可监控</h2>
+<h3 id="可追溯"><a class="header-anchor" href="#可追溯"></a>可追溯</h3>
+<p>双向追溯不仅可以向前追溯，即从需求到实现到测试的过程；也可以向后追溯，即从测试回溯到实现回溯到需求。这种机制的核心目的是确保软件开发过程中的每个部分都与其相关的需求和目标保持一致。</p>
+<h3 id="可监控"><a class="header-anchor" href="#可监控"></a>可监控</h3>
+<p>可监控是指某个过程不是“黑箱操作”，而是有手段去跟踪、测量、检查、反馈，能确保过程按照预期运行。这要求过程中有数据、有指标、有反馈，核心目的是能实时发现问题并确保过程可控。</p>
+<p>追溯过程和相关数据指标如图，通过数字化平台自动分析统计：</p>
+<img width="636" height="328" alt="trace-monitor" src="/images/dpqa/process-trace-and-monitor.png" />
+<p>最后总结一下，开发流程要符合现状，不要太理想化；质量要客观中立，不要偏向任何一方。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2025/09/07/use-ros2-with-high-performance/" data-toggle="tooltip" data-placement="top"
+                           title="ROS2高性能使用">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+                <!--加入新的评论系统-->
+                
+                    <div id="giscus" class="giscus"></div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="YYGCui/yygcui.github.com"
+                        data-repo-id="MDEwOlJlcG9zaXRvcnkzNjQ0NzEx"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOADedJ84CsxOP"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="top"
+                        data-theme="noborder_light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ASPICE-ISO-26262"><span class="toc-text">ASPICE &amp; ISO 26262</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%8C%96-%E8%A7%84%E8%8C%83%E5%8C%96"><span class="toc-text">标准化 &amp; 规范化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E9%98%B6%E6%AE%B5"><span class="toc-text">计划阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E9%98%B6%E6%AE%B5"><span class="toc-text">需求阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E9%98%B6%E6%AE%B5"><span class="toc-text">设计阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E9%98%B6%E6%AE%B5"><span class="toc-text">开发阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E9%98%B6%E6%AE%B5"><span class="toc-text">测试阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E9%98%B6%E6%AE%B5"><span class="toc-text">发布阶段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-text">开发工具链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83"><span class="toc-text">编程规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E8%A7%84%E8%8C%83"><span class="toc-text">安全规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E5%BA%A6%E9%87%8F"><span class="toc-text">架构度量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%BC%96%E8%AF%91"><span class="toc-text">安全编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83"><span class="toc-text">Git 提交规范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E5%8F%AF%E8%BF%BD%E6%BA%AF%EF%BC%8C%E8%BF%87%E7%A8%8B%E5%8F%AF%E7%9B%91%E6%8E%A7"><span class="toc-text">双向可追溯，过程可监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%BF%BD%E6%BA%AF"><span class="toc-text">可追溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%9B%91%E6%8E%A7"><span class="toc-text">可监控</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/DevOps/"
+                           title="DevOps">DevOps</a>
+                        
+                        <a class="tag" href="/tags/CI-CD/"
+                           title="CI/CD">CI/CD</a>
+                        
+                        <a class="tag" href="/tags/QA/"
+                           title="QA">QA</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2025
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_uv" style="font-size: 12px;">, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
+                    <br>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://www.cuicc.com/">YYGCui</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GC4BHEPT9T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GC4BHEPT9T');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script defer src="https://vercount.one/js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>
