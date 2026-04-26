@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        fastgrind源码分析和使用的坑｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2026/04/26/fastgrind-source-code-analysis-and-use-guide/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/images/header/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/header/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/header/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>fastgrind源码分析和使用的坑</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2026-04-26
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/内存/"
+                           title="内存">内存</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            fastgrind源码分析和使用的坑
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><a target="_blank" rel="noopener" href="https://github.com/adny-code/fastgrind">fastgrind</a> 是 一个仅头文件、轻量级、快速、线程安全、类似valgrind的内存监视器，可输出类似perf的报告。专为C++应用程序的运行时内存分配跟踪和调用栈分析而设计。Fastgrind通过自动和手动插桩两种方式提供全面的内存使用洞察。</p>
+<h2 id="工程应用"><a class="header-anchor" href="#工程应用"></a>工程应用</h2>
+<p>fastgrind 只有一个头文件，对存量代码相对比较友好，微量入侵源码 和 编译工程。以自动插桩为例，代码修改如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 某个cpp里 include 该头文件</span><br><span class="line">#include &quot;fastgrind.h&quot;</span><br></pre></td></tr></table></figure>
+<p>工程修改稍微多一些，可以直接参考fastgrind的demo</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启自动插桩</span><br><span class="line">-DFASTGRIND_INSTRUMENT</span><br><span class="line"># 开启 gcc 插桩</span><br><span class="line"> -finstrument-functions</span><br><span class="line"># wrapper 现有内存分配释放函数</span><br><span class="line">-Wl,--wrap=...</span><br></pre></td></tr></table></figure>
+<h2 id="源码分析"><a class="header-anchor" href="#源码分析"></a>源码分析</h2>
+<p>那么，它是怎么做到的呢，下面从源码分析一下实现原理：</p>
+<h3 id="关键数据结构"><a class="header-anchor" href="#关键数据结构"></a>关键数据结构</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">struct memFrame // 用于存储采样信息，以time为key</span><br><span class="line">class memStack // 用于存储调用栈，为避免锁竞争，定义为 thread_local 变量</span><br><span class="line">class memLocalInfo // 用于存放线程的内存相关信息，为避免锁竞争，定义为 thread_local 变量</span><br><span class="line">class memGlobalInfo // 用于汇聚个线程的memLocalInfo，生成全局内存信息</span><br></pre></td></tr></table></figure>
+<h3 id="函数插桩流程"><a class="header-anchor" href="#函数插桩流程"></a>函数插桩流程</h3>
+<p>函数插桩有两种方式，一种是通过使用GCC的编译选项-finstrument-functions 实现的自动插桩功能；一种是通过人工在函数中插入桩代码实现的按需插桩。</p>
+<p>自动插桩当指定该选项编译程序时，GCC会在程序的每个函数中增加两个插桩函数_cyg_profile_func_enter和__cyg_profile_func_exit。其中_cyg_profile_func_enter在函数入口处被调用，_cyg_profile_func_exit在函数出口处被调用。</p>
+<p>流程如下，简单说入口插桩时把当前函数指针 push 到 memStack 中， 出口插桩时把当前函数指针 从 memStack 中 pop 掉。这个操作主要是给函数体提供调用栈信息的。</p>
+<img width="100%" height="100%" alt="auto instrument" src="/images/fastgrind/auto-instrument.png" />
+<p>人工插桩需要自行在函数开始处加上桩代码<code>__FASTGRIND__::FAST_GRIND</code>, 该宏定义是采用RAII技术的fastgrind类，其流程如下</p>
+<img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/manual-instrument.png" />
+<h3 id="wrap流程"><a class="header-anchor" href="#wrap流程"></a>wrap流程</h3>
+<p>结合上面的插桩流程，在调用wrap后的 malloc/free 时，memLocalInfo 从 memStack获取调用 malloc/free 的函数，并计算内存的增减，并按采样周期来设置memFrame。</p>
+<img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/wrap-malloc.png" />
+<p>在调用free时，从该线程的memStack中，找到对应的调用函数，并计算释放内存。这里也可以看出，它操作的是thread_local变量，无法处理跨线程释放的情况。</p>
+<img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/wrap-free.png" />
+<h3 id="main插桩流程"><a class="header-anchor" href="#main插桩流程"></a>main插桩流程</h3>
+<p>main插桩是通过使用GCC的关键字__attribute__来实现的，<strong>attribute</strong>((weak, constructor)) 属性的函数函数在进入main函数前调用，<strong>attribute</strong>((weak, destructor)) 属性的函数在main函数返回后调用。</p>
+<p>流程如下，在main调用前创建memGlobalInfo；在线程结束时，线程变量memLocalInfo析构，这时memLocalInfo的信息merge到memGlobalInfo中，这一步是有锁操作，放在退出时减少业务运行的性能消耗；在main之后执行memGlobalInfo的析构，并生成日志， txt调用栈日志，json可解析html日志。</p>
+<img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/main-thread-exit.png" />
+<h2 id="使用约束"><a class="header-anchor" href="#使用约束"></a>使用约束</h2>
+<p>从源码分析看，日志生成依赖 after_main() 函数被调用，该函数在 main() 函数返回或者 exit()被调用时，才会执行。那么这就要求进程能够正常退出，比如运行完自己退出、ctrl-c 结束掉、或者kill -15 结束：</p>
+<ul>
+<li>没有 coredump</li>
+<li>没有 abort</li>
+<li>没有 kill -9</li>
+<li>没有调用系统函数_exit()</li>
+</ul>
+<p>从处理机制看，它使用TLS技术提升了性能，同时也牺牲了准确性。当内存在线程间转移时，它无法准确统计这一情况，如A线程申请，转移给B线程</p>
+<ul>
+<li>A线程申请和释放不匹配，释放少了转移的部分</li>
+<li>B线程申请和释放也不匹配，释放多了转移过来的部分</li>
+</ul>
+<p>从工程上看，它依赖GCC的wrap机制，wrap是在链接期绑定到对应的 _<em>wrap</em>*** 函数的，在交叉编译时，可能走了libc的malloc，没有使用PLT的；再者，该机制无法作用于现有的动态库，推荐：</p>
+<ul>
+<li>在目标环境编译</li>
+<li>使用LD_PRELOAD的方式强制覆盖</li>
+</ul>
+<p>另外，从宏定义可以看出，fastgrind也支持使用主流内存分配器tcmalloc和jemalloc的场景。</p>
+<ul>
+<li>FASTGRIND_TC_MALLOC</li>
+<li>FASTGRIND_JE_MALLOC</li>
+</ul>
+<h2 id="结果输出"><a class="header-anchor" href="#结果输出"></a>结果输出</h2>
+<p>在程序正常退出时，在运行目录生成内存采集信息，fastgrind.json 和 fastgrind.text</p>
+<p>在tools下，提供解析工具，生成 fastgrind.html，可以看到线程、函数、内存使用<br>
+python <a target="_blank" rel="noopener" href="http://fastgrind.py">fastgrind.py</a> fastgrind.json</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2025/09/21/development-process-and-quality-assurance/" data-toggle="tooltip" data-placement="top"
+                           title="开发流程和质量">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+                <!--加入新的评论系统-->
+                
+                    <div id="giscus" class="giscus"></div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="YYGCui/yygcui.github.com"
+                        data-repo-id="MDEwOlJlcG9zaXRvcnkzNjQ0NzEx"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOADedJ84CsxOP"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="top"
+                        data-theme="noborder_light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8"><span class="toc-text">工程应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">关键数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8F%92%E6%A1%A9%E6%B5%81%E7%A8%8B"><span class="toc-text">函数插桩流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wrap%E6%B5%81%E7%A8%8B"><span class="toc-text">wrap流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main%E6%8F%92%E6%A1%A9%E6%B5%81%E7%A8%8B"><span class="toc-text">main插桩流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%BA%A6%E6%9D%9F"><span class="toc-text">使用约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E8%BE%93%E5%87%BA"><span class="toc-text">结果输出</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/内存/"
+                           title="内存">内存</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2026
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_uv" style="font-size: 12px;">, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
+                    <br>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://www.cuicc.com/">YYGCui</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GC4BHEPT9T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GC4BHEPT9T');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script defer src="https://vercount.one/js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

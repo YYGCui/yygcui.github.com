@@ -308,6 +308,31 @@
 
 
 <div class="post-preview "
+     style="background-image: url('/images/header/blog-bg-black-run.jpg')">
+    <a href="/blog/2026/04/26/fastgrind-source-code-analysis-and-use-guide/">
+        <h2 class="post-title">
+            fastgrind源码分析和使用的坑
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2026-04-26
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                fastgrind 是 一个仅头文件、轻量级、快速、线程安全、类似valgrind的内存监视器，可输出类似perf的报告。专为C++应用程序的运行时内存分配跟踪和调用栈分析而设计。Fastgrind通过自动和手动插桩两种方式提供全面的内存使用洞察。
+工程应用
+fastgrind 只有一个头文件，..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
      style="background-image: url('/images/header/river-cloud3.jpg')">
     <a href="/blog/2025/09/21/development-process-and-quality-assurance/">
         <h2 class="post-title">
@@ -461,31 +486,6 @@ Eigen 是..
         <div class="post-content-preview">
             <p>
                 最近业务新特性开发，由原来的单个action变成了多个action，最后取一个最优action。由于action变多，运行时间也相应多了几倍，action之间是相互独立，互不影响的，那么就想通过并行化的方法提升下性能，这个时候自然而然就想到了线程池。本文记录一下此次并行化重构业务代码时遇到的一些..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/header/blog-bg-black-run.jpg')">
-    <a href="/blog/2021/11/30/recover-environment-for-writing/">
-        <h2 class="post-title">
-            恢复Hexo博客环境
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-11-30
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                博客荒废了好些年了，这段时间觉得没有大的、好的主题可以写，就一直处于断更状态。最近发现就当笔记记录一些东西备查也是挺好，如果再次过程中还能对他人有一点帮助，那就更好了。是时候捡起来继续了，首先要恢复出本地的写作及部署环境，这里记录一下以备下次使用…
-WSL环境
-如果直接使用Windows或Mac..
             </p>
         </div>
     </a>
@@ -812,7 +812,9 @@ WSL环境
                     
                     
                     <a href="/tags/性能优化/" title="性能优化"
-                       rel="2">性能优化</a>
+                       rel="3">性能优化</a>
+                    
+                    
                     
                     
                     

@@ -6,7 +6,7 @@
   <link href="http://blog.cuicc.com/atom.xml" rel="self"/>
   
   <link href="http://blog.cuicc.com/"/>
-  <updated>2025-09-21T09:17:27.681Z</updated>
+  <updated>2026-04-26T12:53:35.294Z</updated>
   <id>http://blog.cuicc.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>fastgrind源码分析和使用的坑</title>
+    <link href="http://blog.cuicc.com/blog/2026/04/26/fastgrind-source-code-analysis-and-use-guide/"/>
+    <id>http://blog.cuicc.com/blog/2026/04/26/fastgrind-source-code-analysis-and-use-guide/</id>
+    <published>2026-04-26T10:24:53.000Z</published>
+    <updated>2026-04-26T12:53:35.294Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/adny-code/fastgrind">fastgrind</a> 是 一个仅头文件、轻量级、快速、线程安全、类似valgrind的内存监视器，可输出类似perf的报告。专为C++应用程序的运行时内存分配跟踪和调用栈分析而设计。Fastgrind通过自动和手动插桩两种方式提供全面的内存使用洞察。</p><h2 id="工程应用"><a class="header-anchor" href="#工程应用"></a>工程应用</h2><p>fastgrind 只有一个头文件，对存量代码相对比较友好，微量入侵源码 和 编译工程。以自动插桩为例，代码修改如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 某个cpp里 include 该头文件</span><br><span class="line">#include &quot;fastgrind.h&quot;</span><br></pre></td></tr></table></figure><p>工程修改稍微多一些，可以直接参考fastgrind的demo</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启自动插桩</span><br><span class="line">-DFASTGRIND_INSTRUMENT</span><br><span class="line"># 开启 gcc 插桩</span><br><span class="line"> -finstrument-functions</span><br><span class="line"># wrapper 现有内存分配释放函数</span><br><span class="line">-Wl,--wrap=...</span><br></pre></td></tr></table></figure><h2 id="源码分析"><a class="header-anchor" href="#源码分析"></a>源码分析</h2><p>那么，它是怎么做到的呢，下面从源码分析一下实现原理：</p><h3 id="关键数据结构"><a class="header-anchor" href="#关键数据结构"></a>关键数据结构</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">struct memFrame // 用于存储采样信息，以time为key</span><br><span class="line">class memStack // 用于存储调用栈，为避免锁竞争，定义为 thread_local 变量</span><br><span class="line">class memLocalInfo // 用于存放线程的内存相关信息，为避免锁竞争，定义为 thread_local 变量</span><br><span class="line">class memGlobalInfo // 用于汇聚个线程的memLocalInfo，生成全局内存信息</span><br></pre></td></tr></table></figure><h3 id="函数插桩流程"><a class="header-anchor" href="#函数插桩流程"></a>函数插桩流程</h3><p>函数插桩有两种方式，一种是通过使用GCC的编译选项-finstrument-functions 实现的自动插桩功能；一种是通过人工在函数中插入桩代码实现的按需插桩。</p><p>自动插桩当指定该选项编译程序时，GCC会在程序的每个函数中增加两个插桩函数_cyg_profile_func_enter和__cyg_profile_func_exit。其中_cyg_profile_func_enter在函数入口处被调用，_cyg_profile_func_exit在函数出口处被调用。</p><p>流程如下，简单说入口插桩时把当前函数指针 push 到 memStack 中， 出口插桩时把当前函数指针 从 memStack 中 pop 掉。这个操作主要是给函数体提供调用栈信息的。</p><img width="100%" height="100%" alt="auto instrument" src="/images/fastgrind/auto-instrument.png" /><p>人工插桩需要自行在函数开始处加上桩代码<code>__FASTGRIND__::FAST_GRIND</code>, 该宏定义是采用RAII技术的fastgrind类，其流程如下</p><img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/manual-instrument.png" /><h3 id="wrap流程"><a class="header-anchor" href="#wrap流程"></a>wrap流程</h3><p>结合上面的插桩流程，在调用wrap后的 malloc/free 时，memLocalInfo 从 memStack获取调用 malloc/free 的函数，并计算内存的增减，并按采样周期来设置memFrame。</p><img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/wrap-malloc.png" /><p>在调用free时，从该线程的memStack中，找到对应的调用函数，并计算释放内存。这里也可以看出，它操作的是thread_local变量，无法处理跨线程释放的情况。</p><img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/wrap-free.png" /><h3 id="main插桩流程"><a class="header-anchor" href="#main插桩流程"></a>main插桩流程</h3><p>main插桩是通过使用GCC的关键字__attribute__来实现的，<strong>attribute</strong>((weak, constructor)) 属性的函数函数在进入main函数前调用，<strong>attribute</strong>((weak, destructor)) 属性的函数在main函数返回后调用。</p><p>流程如下，在main调用前创建memGlobalInfo；在线程结束时，线程变量memLocalInfo析构，这时memLocalInfo的信息merge到memGlobalInfo中，这一步是有锁操作，放在退出时减少业务运行的性能消耗；在main之后执行memGlobalInfo的析构，并生成日志， txt调用栈日志，json可解析html日志。</p><img width="100%" height="100%" alt="manual instrument" src="/images/fastgrind/main-thread-exit.png" /><h2 id="使用约束"><a class="header-anchor" href="#使用约束"></a>使用约束</h2><p>从源码分析看，日志生成依赖 after_main() 函数被调用，该函数在 main() 函数返回或者 exit()被调用时，才会执行。那么这就要求进程能够正常退出，比如运行完自己退出、ctrl-c 结束掉、或者kill -15 结束：</p><ul><li>没有 coredump</li><li>没有 abort</li><li>没有 kill -9</li><li>没有调用系统函数_exit()</li></ul><p>从处理机制看，它使用TLS技术提升了性能，同时也牺牲了准确性。当内存在线程间转移时，它无法准确统计这一情况，如A线程申请，转移给B线程</p><ul><li>A线程申请和释放不匹配，释放少了转移的部分</li><li>B线程申请和释放也不匹配，释放多了转移过来的部分</li></ul><p>从工程上看，它依赖GCC的wrap机制，wrap是在链接期绑定到对应的 _<em>wrap</em>*** 函数的，在交叉编译时，可能走了libc的malloc，没有使用PLT的；再者，该机制无法作用于现有的动态库，推荐：</p><ul><li>在目标环境编译</li><li>使用LD_PRELOAD的方式强制覆盖</li></ul><p>另外，从宏定义可以看出，fastgrind也支持使用主流内存分配器tcmalloc和jemalloc的场景。</p><ul><li>FASTGRIND_TC_MALLOC</li><li>FASTGRIND_JE_MALLOC</li></ul><h2 id="结果输出"><a class="header-anchor" href="#结果输出"></a>结果输出</h2><p>在程序正常退出时，在运行目录生成内存采集信息，fastgrind.json 和 fastgrind.text</p><p>在tools下，提供解析工具，生成 fastgrind.html，可以看到线程、函数、内存使用<br>python <a href="http://fastgrind.py">fastgrind.py</a> fastgrind.json</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/adny-code/fastgrind&quot;&gt;fastgrind&lt;/a&gt; 是 一个仅头文件、轻量级、快速、线程安全、类似valgrind的内存监视器，可输出类似perf的报告。专为C++应用程序的运行时内存分配跟踪和调用栈</summary>
+      
+    
+    
+    
+    <category term="技术积累" scheme="http://blog.cuicc.com/categories/%E6%8A%80%E6%9C%AF%E7%A7%AF%E7%B4%AF/"/>
+    
+    
+    <category term="性能优化" scheme="http://blog.cuicc.com/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    <category term="内存" scheme="http://blog.cuicc.com/tags/%E5%86%85%E5%AD%98/"/>
+    
+  </entry>
   
   <entry>
     <title>开发流程和质量</title>
@@ -504,36 +530,6 @@
     
     
     <category term="总结" scheme="http://blog.cuicc.com/tags/%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>技术开发的一些思考</title>
-    <link href="http://blog.cuicc.com/blog/2015/12/06/thinking-about-technoloy-development/"/>
-    <id>http://blog.cuicc.com/blog/2015/12/06/thinking-about-technoloy-development/</id>
-    <published>2015-12-06T08:52:35.000Z</published>
-    <updated>2025-03-16T07:58:25.510Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="技术开发是什么"><a class="header-anchor" href="#技术开发是什么"></a>技术开发是什么</h3><p>维基百科上没有相关词条，百度百科解释如下：</p><blockquote><p>技术开发（Technical Development）是把研究所得到的发现或一般科学知识应用于产品和工艺上的技术活动。 工业企业技术开发的对象主要有：产品的开发、设备与工具的开发、生产工艺的开发、能源与原材料的开发、改善环境的技术开发等。不同的企业可根据不同的情况选择技术开发的重点。</p><footer><strong>技术开发</strong><cite><a href="http://baike.baidu.com/view/1273954.htm">百度百科</a></cite></footer></blockquote><p>归纳总结一下，现在的技术开发无外乎以下两点：</p><ol><li>发明创造新技术解决(潜在)问题</li><li>组合现有前沿技术解决(潜在)问题</li></ol><p>对大多数企业来说，大多数时候都是在用第2点。能够做到第1点的少之又少。</p><span id="more"></span><h3 id="技术开发做什么"><a class="header-anchor" href="#技术开发做什么"></a>技术开发做什么</h3><p>我所理解的技术开发要快速做出产品原型，验证是否可用于正式产品中。基于这个理解，技术开发需要做以下两点：</p><ol><li>可行性验证，验证该技术方案是否可行，能否达到需求的目标</li><li>可用性实施，在可行性基础上，该技术方案能否易于实施，达到可用易用的程度。</li></ol><p><em>对产品实践来说，真正的技术积累来自于可用性，可行性无法识别问题点</em></p><h3 id="技术开发问题点"><a class="header-anchor" href="#技术开发问题点"></a>技术开发问题点</h3><p>通常我们的开发方式，我们的架构演进方式是：</p><ol><li>先实现，先达到需求的目标</li><li>再优化，优化设计不好的地方</li><li>服务化，服务化改造</li><li>合适化，选择合适的技术实现</li></ol><h4 id="我们遇到的问题"><a class="header-anchor" href="#我们遇到的问题"></a>我们遇到的问题</h4><ol><li>只有大饼，没有实施目标</li><li>大饼的概念，大饼的概念图，怎么做饼？</li><li>SE/项目经理职责不明确<ol><li>目标具体化及分解</li><li>软件架构设计</li></ol></li><li>项目经理太弱势<ol><li>项目实施决策</li><li>技术背景权威</li><li>迭代划分实施</li><li>责任划分跟踪</li><li>迭代目标评估</li></ol></li><li>不思求变<ol><li>历史包袱太重，如何平衡兼容与创新</li><li>拥抱先进生产力工具，提高效率</li></ol></li></ol><h4 id="结果如何"><a class="header-anchor" href="#结果如何"></a>结果如何</h4><ol><li>原型基本就是过家家</li><li>假装能以及解决了问题</li><li>自以为做的很高大上</li><li>盲目追求/包装新概念</li></ol><h3 id="技术开发怎么做"><a class="header-anchor" href="#技术开发怎么做"></a>技术开发怎么做</h3><p>回到最初的看法，把技术开发团队想象成是一家创业公司，应该怎么做。</p><p>从想法/需求到快速实现原型，到投入市场验证，到不断迭代优化，到用户体验良好的产品。</p><p>对于我们来说，看起来是这样的：</p><ol><li>需求分析出明确目标，目标分解，架构设计，迭代划分</li><li>从原型最小集出发，每个迭代都是可用的(可投入“市场”验证)</li><li>根据市场反馈，迭代优化，再次循环</li></ol><p>从具体开发来说：</p><ol><li>每次迭代目标对齐，做什么</li><li>每次迭代需求与设计明确</li><li>每次迭代各模块自我充分的分析与设计</li><li>每次迭代完成系统是可以用的，保证这个基本点</li></ol><p><em>暂时想到这么多</em></p><p><em>仅从个人角度看，感觉有点片面，从高层看是否如此呢</em></p>]]></content>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;技术开发是什么&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#技术开发是什么&quot;&gt;&lt;/a&gt;技术开发是什么&lt;/h3&gt;
-&lt;p&gt;维基百科上没有相关词条，百度百科解释如下：&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;技术开发（Technical Development）是把研究所得到的发现或一般科学知识应用于产品和工艺上的技术活动。 工业企业技术开发的对象主要有：产品的开发、设备与工具的开发、生产工艺的开发、能源与原材料的开发、改善环境的技术开发等。不同的企业可根据不同的情况选择技术开发的重点。&lt;/p&gt;
-&lt;footer&gt;&lt;strong&gt;技术开发&lt;/strong&gt;&lt;cite&gt;&lt;a href=&quot;http://baike.baidu.com/view/1273954.htm&quot;&gt;百度百科&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;
-&lt;p&gt;归纳总结一下，现在的技术开发无外乎以下两点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;发明创造新技术解决(潜在)问题&lt;/li&gt;
-&lt;li&gt;组合现有前沿技术解决(潜在)问题&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;对大多数企业来说，大多数时候都是在用第2点。能够做到第1点的少之又少。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="职场感悟" scheme="http://blog.cuicc.com/categories/%E8%81%8C%E5%9C%BA%E6%84%9F%E6%82%9F/"/>
-    
-    
-    <category term="technology" scheme="http://blog.cuicc.com/tags/technology/"/>
     
   </entry>
   
