@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YYGCui的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        线程级内存监控调查与分析｜YYGCui&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.cuicc.com/blog/2026/06/03/thread-level-memory-monitor-research-and-analysis/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/images/header/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YYGCui
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archive</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var $navlist = document.querySelectorAll('#huxblog_navbar .navbar-nav .li');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/header/blog-bg-black-run.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/header/blog-bg-black-run.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>线程级内存监控调查与分析</h1>
+                    
+                    <span class="meta">
+                         作者 YYGCui
+                        <span>
+                          日期 2026-06-03
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        <span>Categories:</span>
+                        
+                        <a class="tag" href="/categories/技术积累/"
+                           title="技术积累">技术积累</a>
+                        
+                        <span>Tags:</span>
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/内存/"
+                           title="内存">内存</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            线程级内存监控调查与分析
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>继上篇 fastgrind 的分析，fastgrind 的核心功能在于内存泄漏检测、调用栈分析，虽然能够获取到每个线程及该线程函数的申请释放信息，但应用场景不是监控线程的内存情况，也无法做精确的统计。</p>
+<p>那么，有什么办法可以做到线程级的内存监控，并且消耗尽可能少的资源？类似系统本身获取获取到线程的CPU占用信息。这里主要的难点在于效率，监控本身消耗的资源要少，同时不会对业务线程造成效率影响。这里以fastgrind的demo代码作为测试示例，分别讲解下面的几个方式。</p>
+<h2 id="测试代码"><a class="header-anchor" href="#测试代码"></a>测试代码</h2>
+<p>这里以 fastgrind/demo/auto_instrument/compile_with_cmake demo用例为例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PackageA::PackageA()</span><br><span class="line">&#123;</span><br><span class="line">    buffer_ = (int *) malloc(sizeof(int) * 256); // 申请 1024</span><br><span class="line"></span><br><span class="line">    char *tmp = (char *) malloc(256); // 申请 256</span><br><span class="line">    free(tmp); // 释放 256</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PackageA::~PackageA()</span><br><span class="line">&#123;</span><br><span class="line">    free(buffer_); // 释放 1024</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void PackageA::allocTest() const</span><br><span class="line">&#123;</span><br><span class="line">    long long *tmp = new long long[128]; // 申请 1024</span><br><span class="line">    delete[] tmp; // 释放 1024</span><br><span class="line"></span><br><span class="line">    long long *tmp2 = (long long *) malloc(sizeof(long long) * 128); // 申请 1024</span><br><span class="line">    free(tmp2); // 释放 1024</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>代码加了内存申请、释放的注释，注意，这里是代码角度的虚拟内存，编译可能对未使用的代码片段做优化，延迟向OS申请。</p>
+<h2 id="使用jemalloc"><a class="header-anchor" href="#使用jemalloc"></a>使用jemalloc</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/jemalloc/jemalloc">jemalloc</a> 是一个通用的 malloc(3) 实现，重点关注减少内存碎片以及支持可扩展的并发性能。它是一个高性能的内存分配器，同时也具备面向开发者的支持特性，如堆内存分析（heap profiling）以及丰富的监控与调优接口（hooks），这里正是利用这一点来实现。</p>
+<p>示例代码如下，通过 jemalloc 的 mallctl 接口，获取 thread 的 allocated 或 deallocated 字节数，注意这里的字节数是累计的，如果要获取增量需要做一下做一下两次统计的差值。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">#include &lt;sys/syscall.h&gt;   // SYS_gettid</span><br><span class="line">#include &lt;unistd.h&gt;       // syscall(), pid_t</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void print_thread_stats(pid_t tid)</span><br><span class="line">&#123;</span><br><span class="line">    size_t allocated = 0;</span><br><span class="line">    size_t sz = sizeof(allocated);</span><br><span class="line"></span><br><span class="line">    if (mallctl(&quot;thread.allocated&quot;, &amp;allocated, &amp;sz, NULL, 0) == 0) &#123;</span><br><span class="line">        printf(&quot;Thread[%d] allocated: %zu bytes\n&quot;, tid, allocated);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    size_t deallocated = 0;</span><br><span class="line">    sz = sizeof(deallocated);</span><br><span class="line">    if (mallctl(&quot;thread.deallocated&quot;, &amp;deallocated, &amp;sz, NULL, 0) == 0) &#123;</span><br><span class="line">        printf(&quot;Thread[%d] deallocated: %zu bytes\n&quot;, tid, deallocated);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;Thread[%d] memory: %zu bytes\n&quot;, tid, allocated - deallocated);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void thread1()</span><br><span class="line">&#123;</span><br><span class="line">    pid_t tid = syscall(SYS_gettid);</span><br><span class="line">    for (unsigned i = 0; i &lt; 5; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        PackageA a;</span><br><span class="line">        a.allocTest();</span><br><span class="line">        sleep(1);</span><br><span class="line">	    print_thread_stats(tid);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>执行输出结果:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$LD_PRELOAD=../libjemalloc.so ./app                                                             </span><br><span class="line">Thread[726648] allocated: 1024 bytes                                                                                                     </span><br><span class="line">Thread[726648] deallocated: 0 bytes                                                                                                     </span><br><span class="line">Thread[726648] memory: 1024 bytes                                                                                                       </span><br><span class="line">Thread[726648] allocated: 3072 bytes                                                                                                     </span><br><span class="line">Thread[726648] deallocated: 1024 bytes                                                                                                   </span><br><span class="line">Thread[726648] memory: 2048 bytes                                                                                                       </span><br><span class="line">Thread[726648] allocated: 4096 bytes                                                                                                     </span><br><span class="line">Thread[726648] deallocated: 2048 bytes                                                                                                   </span><br><span class="line">Thread[726648] memory: 2048 bytes                                                                                                       </span><br><span class="line">Thread[726648] allocated: 5120 bytes                                                                                                     </span><br><span class="line">Thread[726648] deallocated: 3072 bytes                                                                                                   </span><br><span class="line">Thread[726648] memory: 2048 bytes                                                                                                       </span><br><span class="line">Thread[726648] allocated: 6144 bytes                                                                                                     </span><br><span class="line">Thread[726648] deallocated: 4096 bytes                                                                                                   </span><br><span class="line">Thread[726648] memory: 2048 bytes</span><br></pre></td></tr></table></figure>
+<p>从日志可以看到，第一轮申请 1024 ，第二轮申请了 2048 ，从代码分析看，每一轮的申请量应该都是 1024 。这里多出来的 1024 从哪里来呢？搜索得到的结论是jemalloc 向 OS 申请时才会被记录，这里存在一个疑问，为什么不能复用第一轮的缓存，要分析源码才能证实。 从这个结果数据可以看出，它并不能精确表达用户实际的申请释放，这里只能看内存趋势。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">buffer_(malloc)   → 1024</span><br><span class="line">tmp(malloc)   → 256</span><br><span class="line">tmp(free)</span><br><span class="line">tmp(new[])   → 1024</span><br><span class="line">tmp(delete[])</span><br><span class="line">tmp2(malloc) → 1024</span><br><span class="line">tmp2(free)</span><br><span class="line"># 统计</span><br><span class="line">buffer_(free)</span><br></pre></td></tr></table></figure>
+<h3 id="优势"><a class="header-anchor" href="#优势"></a>优势</h3>
+<ul>
+<li>线程级统计</li>
+<li>性能比较好，O(1)的复杂度</li>
+</ul>
+<h3 id="劣势"><a class="header-anchor" href="#劣势"></a>劣势</h3>
+<ul>
+<li>代码侵入性，需要在每个线程增加统计接口</li>
+<li>统计准确性不加，适合看趋势</li>
+</ul>
+<h2 id="使用mimalloc"><a class="header-anchor" href="#使用mimalloc"></a>使用mimalloc</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/microsoft/mimalloc">mimalloc</a>（发音为“me-malloc”）是一种具有出色性能特点的通用内存分配器。它具有小巧且一致、空闲列表分片、空闲列表多分片、急切页面清理、安全、一流堆、有界性、快速等显著特性。在mimalloc的基准测试中，mimalloc的性能优于其他领先的内存分配器（jemalloc、tcmalloc、Hoard等），并且通常使用更少的内存。</p>
+<p>示例代码如下，通过 mimalloc 的 mi_heap_visit_blocks 接口，遍历 block 获取 thread 当前持有的 total_bytes，注意这里 stat 的字节数是累计的，如果要获取增量需要把 stat 做成每次统计的局部量。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;sys/syscall.h&gt;   // SYS_gettid</span><br><span class="line">#include &lt;unistd.h&gt;       // syscall(), pid_t</span><br><span class="line">#include &lt;mimalloc.h&gt;</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    size_t total_bytes;</span><br><span class="line">    size_t block_count;</span><br><span class="line">&#125; heap_stat_t;</span><br><span class="line"></span><br><span class="line">bool visitor(</span><br><span class="line">    const mi_heap_t* heap,</span><br><span class="line">    const mi_heap_area_t* area,</span><br><span class="line">    void* block,</span><br><span class="line">    size_t block_size,</span><br><span class="line">    void* arg)</span><br><span class="line">&#123;</span><br><span class="line">    (void)heap;</span><br><span class="line">    (void)area;</span><br><span class="line">    (void)block;</span><br><span class="line"></span><br><span class="line">    heap_stat_t* stat = (heap_stat_t*)arg;</span><br><span class="line">    stat-&gt;total_bytes += block_size;</span><br><span class="line">    stat-&gt;block_count += 1;</span><br><span class="line"></span><br><span class="line">    return true; // 继续遍历</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mi_heap_t* heap_init()</span><br><span class="line">&#123;</span><br><span class="line">    // 1. 创建线程私有 heap</span><br><span class="line">    mi_heap_t* heap = mi_heap_new();</span><br><span class="line"></span><br><span class="line">    // 2. 绑定为当前线程的 default heap</span><br><span class="line">    mi_heap_set_default(heap);</span><br><span class="line"></span><br><span class="line">    return heap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void heap_deinit(mi_heap_t* heap)</span><br><span class="line">&#123;</span><br><span class="line">    // 3. 恢复原 heap（可选但推荐）</span><br><span class="line">    mi_heap_set_default(mi_heap_get_backing());</span><br><span class="line"></span><br><span class="line">    // 4. 删除私有 heap（非常重要）</span><br><span class="line">    mi_heap_delete(heap);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print_thread_stats(pid_t tid, mi_heap_t* heap, heap_stat_t &amp;stat)</span><br><span class="line">&#123;</span><br><span class="line">    mi_heap_visit_blocks(</span><br><span class="line">        heap,           // 当前线程 heap</span><br><span class="line">        false,          // 只统计 live block</span><br><span class="line">        visitor,</span><br><span class="line">        &amp;stat</span><br><span class="line">    );</span><br><span class="line">    printf(&quot;Thread[%d] total: %zu bytes, count: %zu\n&quot;, tid, stat.total_bytes, stat.block_count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void thread1()</span><br><span class="line">&#123;</span><br><span class="line">    pid_t tid = syscall(SYS_gettid);</span><br><span class="line">    mi_heap_t* heap = heap_init();</span><br><span class="line">    heap_stat_t stat&#123;0,0&#125;;</span><br><span class="line">    for (unsigned i = 0; i &lt; 5; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">	    PackageA a;</span><br><span class="line">        a.allocTest();</span><br><span class="line">        sleep(1);</span><br><span class="line">	    print_thread_stats(tid, heap, stat);</span><br><span class="line">    &#125;</span><br><span class="line">    heap_deinit(heap);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ./app</span><br><span class="line">Thread[758926] total: 1024 bytes, count: 1</span><br><span class="line">Thread[758926] total: 2048 bytes, count: 2</span><br><span class="line">Thread[758926] total: 3072 bytes, count: 3</span><br><span class="line">Thread[758926] total: 4096 bytes, count: 4</span><br><span class="line">Thread[758926] total: 5120 bytes, count: 5</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 如把 stat 作为 print_thread_stats 的函数内局部变量，获取的就是本轮的内存占用</span><br><span class="line">$ LD_PRELOAD=../../mimalloc_3.0.11/lib/libmimalloc.so ./app                                                                                           </span><br><span class="line">Thread[242478] total: 1024 bytes, count: 1                                                                              </span><br><span class="line">Thread[242478] total: 1024 bytes, count: 1                                                                              </span><br><span class="line">Thread[242478] total: 1024 bytes, count: 1                                                                              </span><br><span class="line">Thread[242478] total: 1024 bytes, count: 1                                                                              </span><br><span class="line">Thread[242478] total: 1024 bytes, count: 1                    </span><br></pre></td></tr></table></figure>
+<p>mimalloc 的累计统计结果更难以理解，看起来每轮都申请了一份内存，而没有复用。</p>
+<h3 id="优势-v2"><a class="header-anchor" href="#优势-v2"></a>优势</h3>
+<ul>
+<li>线程级统计</li>
+<li>每轮统计live数据准确</li>
+</ul>
+<h3 id="劣势-v2"><a class="header-anchor" href="#劣势-v2"></a>劣势</h3>
+<ul>
+<li>代码侵入性，需要在每个线程增加统计接口</li>
+<li>遍历 block 是 O(N) 复杂度，在高频使用时，性能无法接受。</li>
+</ul>
+<h2 id="总结"><a class="header-anchor" href="#总结"></a>总结</h2>
+<p>主流的内存工具分两类：一类是valgrind、fastgrind、perf等类似的内存分析、泄露定位工具。基本都能抓取详细的调用栈，内存的使用量，按进程的统计量等等。 另一类是tcmalloc、jemalloc、mimalloc等类似的高效内存分配器。主要功能是高效的分配回收内存，附带了一些profiling工具。</p>
+<p>从我们的查找结果来看，没有找到开源实现来做线程级的内存监控。主要原因在于 Linux 是按进程维度管理内存的，进程中的不同线程共享该进程的虚拟内存；另一方面虚拟内存不一定会向 OS 申请物理内存，虚拟内存并不代表该进程实际使用的内存。</p>
+<p>那么，除了上述的各种开源工具外，是否还有更好的方式，来做到线程级内存监控？</p>
+<p>这里有两个思路：</p>
+<p>一个思路是从功能安全吸取经验，不使用动态内存。在初始化阶段把所有内存申请好，运行时复用，这也可以变相达成线程内存监控的功能。这种方式不只是在运行时可监控，甚至也可以做到静态可监控。每个线程的内存使用量都是设计时已知的。</p>
+<p>另一个思路是统计线程的虚拟内存申请释放，重载 malloc/free、new/delete 等接口，使用 TLS 方法记录每个线程的内存情况。使用 PRELOAD 的方式可以做到代码无侵入，但重载增加的记录功能会带来一定的性能损耗，这在低成本硬件上是否可接受需要评估一下。 这里还有一个难点是对于跨线程释放的内存，正确的统计道申请线程上，避免因统计带来的账面内存泄露现象。</p>
+<p>下述两个方法，根据情况取舍：</p>
+<ul>
+<li>强行注入 16 字节的 memory header，跟踪内存来自哪个线程，性能上损耗不大，但对于小内存不友好，每次申请增加 16 个字节。</li>
+<li>增加一个全局数组，记录 tid 和 内存的关系，数组需要限制大小，频繁申请可能会记录不全，线程间需要加锁访问，性能上有损耗。</li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2026/04/26/fastgrind-source-code-analysis-and-use-guide/" data-toggle="tooltip" data-placement="top"
+                           title="fastgrind源码分析和使用的坑">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+                <!--加入新的评论系统-->
+                
+                    <div id="giscus" class="giscus"></div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="YYGCui/yygcui.github.com"
+                        data-repo-id="MDEwOlJlcG9zaXRvcnkzNjQ0NzEx"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDOADedJ84CsxOP"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="top"
+                        data-theme="noborder_light"
+                        data-lang="zh-CN"
+                        data-loading="lazy"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="toc-text">测试代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8jemalloc"><span class="toc-text">使用jemalloc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8A%BF"><span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A3%E5%8A%BF"><span class="toc-text">劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8mimalloc"><span class="toc-text">使用mimalloc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8A%BF-v2"><span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A3%E5%8A%BF-v2"><span class="toc-text">劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/性能优化/"
+                           title="性能优化">性能优化</a>
+                        
+                        <a class="tag" href="/tags/内存/"
+                           title="内存">内存</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/cui-yan-bao">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/yygccui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/YYGCui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yanbaoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YYGCui 2026
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <span id="busuanzi_container_site_uv" style="font-size: 12px;">, UV: <span id="busuanzi_value_site_uv"></span> Times</span>
+                    <br>
+                    Theme by <a target="_blank" rel="noopener" href="https://haojen.github.io/">Haojen Ma</a>, improved by <a target="_blank" rel="noopener" href="https://www.cuicc.com/">YYGCui</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GC4BHEPT9T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GC4BHEPT9T');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script defer src="https://vercount.one/js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/yygcui.png">
+</body>
+
+</html>

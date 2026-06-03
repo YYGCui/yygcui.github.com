@@ -309,6 +309,30 @@
 
 <div class="post-preview "
      style="background-image: url('/images/header/blog-bg-black-run.jpg')">
+    <a href="/blog/2026/06/03/thread-level-memory-monitor-research-and-analysis/">
+        <h2 class="post-title">
+            线程级内存监控调查与分析
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2026-06-03
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                继上篇 fastgrind 的分析，fastgrind 的核心功能在于内存泄漏检测、调用栈分析，虽然能够获取到每个线程及该线程函数的申请释放信息，但应用场景不是监控线程的内存情况，也无法做精确的统计。
+那么，有什么办法可以做到线程级的内存监控，并且消耗尽可能少的资源？类似系统本身获取获取到线程的..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/header/blog-bg-black-run.jpg')">
     <a href="/blog/2026/04/26/fastgrind-source-code-analysis-and-use-guide/">
         <h2 class="post-title">
             fastgrind源码分析和使用的坑
@@ -463,29 +487,6 @@ Eigen 是..
         <div class="post-content-preview">
             <p>
                 最近测试时发现，运行相对较长一段时间后进程因内存使用超过配额上限而被杀掉，这应该是内存缓慢增长导致的，也就是说出现了内存泄漏。这个进程代码是用C++实现的，且基本没有使用malloc/free, new/delete等显式的内存申请释放，但代码中大量使用了标准库的容器类。这种因为业务逻辑导致容器..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/header/blog-bg-black-run.jpg')">
-    <a href="/blog/2021/12/03/refactor-in-parallel-with-multi-threads/">
-        <h2 class="post-title">
-            线程池并行化重构
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-12-03
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                最近业务新特性开发，由原来的单个action变成了多个action，最后取一个最优action。由于action变多，运行时间也相应多了几倍，action之间是相互独立，互不影响的，那么就想通过并行化的方法提升下性能，这个时候自然而然就想到了线程池。本文记录一下此次并行化重构业务代码时遇到的一些..
             </p>
         </div>
     </a>
@@ -812,7 +813,7 @@ Eigen 是..
                     
                     
                     <a href="/tags/性能优化/" title="性能优化"
-                       rel="3">性能优化</a>
+                       rel="4">性能优化</a>
                     
                     
                     
@@ -821,6 +822,9 @@ Eigen 是..
                     
                     
                     
+                    
+                    <a href="/tags/内存/" title="内存"
+                       rel="2">内存</a>
                     
                     
                 </div>
