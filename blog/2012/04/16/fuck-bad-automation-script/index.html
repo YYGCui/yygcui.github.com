@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;每到周五delivery的时候，就是体现我是一个苦逼的IT民工的时候。如果幸得春哥曾哥庇佑，一切顺利的话，只需要跑跑自动化脚本就好了，这倒没有什么令人抓狂的，因为一切都是按照理想状态发展的。即便有时候被硬件平台block住，也是短暂时间可以解决的，即使查不到原因，重启一下平台也就搞定了。最苦逼的莫过于硬件平台莫名其妙的挂掉了，自动化脚本莫名其妙的终止了。不幸的是上周五就被我遇上了，幸运的是我该考虑改进这个“拿来即用”的脚本了…&lt;/p&gt;">
+    
+    <meta name="keywords" content="Linux,automation">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="自动化脚本让我手动了一晚上">
+    <meta property="og:description" content="&lt;p&gt;每到周五delivery的时候，就是体现我是一个苦逼的IT民工的时候。如果幸得春哥曾哥庇佑，一切顺利的话，只需要跑跑自动化脚本就好了，这倒没有什么令人抓狂的，因为一切都是按照理想状态发展的。即便有时候被硬件平台block住，也是短暂时间可以解决的，即使查不到原因，重启一下平台也就搞定了。最苦逼的莫过于硬件平台莫名其妙的挂掉了，自动化脚本莫名其妙的终止了。不幸的是上周五就被我遇上了，幸运的是我该考虑改进这个“拿来即用”的脚本了…&lt;/p&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2012/04/16/fuck-bad-automation-script/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="自动化脚本让我手动了一晚上">
+    <meta name="twitter:description" content="&lt;p&gt;每到周五delivery的时候，就是体现我是一个苦逼的IT民工的时候。如果幸得春哥曾哥庇佑，一切顺利的话，只需要跑跑自动化脚本就好了，这倒没有什么令人抓狂的，因为一切都是按照理想状态发展的。即便有时候被硬件平台block住，也是短暂时间可以解决的，即使查不到原因，重启一下平台也就搞定了。最苦逼的莫过于硬件平台莫名其妙的挂掉了，自动化脚本莫名其妙的终止了。不幸的是上周五就被我遇上了，幸运的是我该考虑改进这个“拿来即用”的脚本了…&lt;/p&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         自动化脚本让我手动了一晚上｜YYGCui&#39;s blog
@@ -41,20 +55,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +177,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -238,24 +255,18 @@
 <p>暂时想到这么多，以后遇到其他情况随时补充。</p>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2012/04/19/disgusting-landlord/" data-toggle="tooltip" data-placement="top"
-                           title="后极品房东">&larr; Previous Post</a>
+                        <a href="/blog/2012/04/19/disgusting-landlord/" title="后极品房东">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2012/03/27/boring-renting/" data-toggle="tooltip" data-placement="top"
-                           title="租房很烦心">Next Post &rarr;</a>
+                        <a href="/blog/2012/03/27/boring-renting/" title="租房很烦心">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -330,8 +341,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -407,16 +417,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -434,23 +434,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -473,20 +473,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

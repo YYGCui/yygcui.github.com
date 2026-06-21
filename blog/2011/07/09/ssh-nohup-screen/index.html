@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;使用ssh连接远程主机时，最常遇到的两个情况：一是当一段时间没有交互时ssh会自动断开连接，这时你通过ssh登录终端运行的程序也将会随之被终止。另一个是当你想通过ssh登录终端提交一个程序，并想让它在断开ssh连接后依然运行；或者让它在后台运行，但依然可以随时调入前台进行交互操作。如果你也遇到了这样的情况，我想下面的方法可以帮助你。&lt;/p&gt;">
+    
+    <meta name="keywords" content="Linux,nohup,screen,SSH">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="远程会话管理: ssh, nohup, screen">
+    <meta property="og:description" content="&lt;p&gt;使用ssh连接远程主机时，最常遇到的两个情况：一是当一段时间没有交互时ssh会自动断开连接，这时你通过ssh登录终端运行的程序也将会随之被终止。另一个是当你想通过ssh登录终端提交一个程序，并想让它在断开ssh连接后依然运行；或者让它在后台运行，但依然可以随时调入前台进行交互操作。如果你也遇到了这样的情况，我想下面的方法可以帮助你。&lt;/p&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2011/07/09/ssh-nohup-screen/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="远程会话管理: ssh, nohup, screen">
+    <meta name="twitter:description" content="&lt;p&gt;使用ssh连接远程主机时，最常遇到的两个情况：一是当一段时间没有交互时ssh会自动断开连接，这时你通过ssh登录终端运行的程序也将会随之被终止。另一个是当你想通过ssh登录终端提交一个程序，并想让它在断开ssh连接后依然运行；或者让它在后台运行，但依然可以随时调入前台进行交互操作。如果你也遇到了这样的情况，我想下面的方法可以帮助你。&lt;/p&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         远程会话管理: ssh, nohup, screen｜YYGCui&#39;s blog
@@ -41,20 +55,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +177,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -301,24 +318,18 @@ Enabling either option and setting the interval for less than the time it takes 
 <p>小结一下，想通过ssh后台运行程序时，一般都是耗时较长、不需要交互的程序，这时使用nohup比较方便，所有的标准输出可以在nohup.out文件中看到。如果该程序耗时长、又需要交互，或者不想关闭打开的文件又要切换窗口，这时可以通过screen来运行，这样可以随时切换到其他窗口又不影响程序的运行、不需要关闭文件。</p>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/07/20/binutils-of-linux/" data-toggle="tooltip" data-placement="top"
-                           title="Linux下的二进制工具(反编译工具)">&larr; Previous Post</a>
+                        <a href="/blog/2011/07/20/binutils-of-linux/" title="Linux下的二进制工具(反编译工具)">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/06/11/host-endian-and-net-endian/" data-toggle="tooltip" data-placement="top"
-                           title="主机字节序和网路字节序">Next Post &rarr;</a>
+                        <a href="/blog/2011/06/11/host-endian-and-net-endian/" title="主机字节序和网路字节序">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -399,8 +410,7 @@ Enabling either option and setting the interval for less than the time it takes 
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -476,16 +486,6 @@ Enabling either option and setting the interval for less than the time it takes 
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -503,23 +503,23 @@ Enabling either option and setting the interval for less than the time it takes 
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -542,20 +542,10 @@ Enabling either option and setting the interval for less than the time it takes 
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

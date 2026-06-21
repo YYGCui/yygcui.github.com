@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;字节序(endian)是指存放多个字节的顺序，典型的字节序分类为主机字节序和网络字节序。主机字节序(host endian)是指整数在内存中存放的顺序，有大端字节序(big-endian)和小端字节序(little-endian)两种。网络字节序(net endian)是指TCP/IP中规定的数据表示格式，与CPU、OS无关，采用大端字节序(big-endian)存放方式。&lt;/p&gt;">
+    
+    <meta name="keywords" content="Programming,C/C++,endian">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="主机字节序和网路字节序">
+    <meta property="og:description" content="&lt;p&gt;字节序(endian)是指存放多个字节的顺序，典型的字节序分类为主机字节序和网络字节序。主机字节序(host endian)是指整数在内存中存放的顺序，有大端字节序(big-endian)和小端字节序(little-endian)两种。网络字节序(net endian)是指TCP/IP中规定的数据表示格式，与CPU、OS无关，采用大端字节序(big-endian)存放方式。&lt;/p&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2011/06/11/host-endian-and-net-endian/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="主机字节序和网路字节序">
+    <meta name="twitter:description" content="&lt;p&gt;字节序(endian)是指存放多个字节的顺序，典型的字节序分类为主机字节序和网络字节序。主机字节序(host endian)是指整数在内存中存放的顺序，有大端字节序(big-endian)和小端字节序(little-endian)两种。网络字节序(net endian)是指TCP/IP中规定的数据表示格式，与CPU、OS无关，采用大端字节序(big-endian)存放方式。&lt;/p&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         主机字节序和网路字节序｜YYGCui&#39;s blog
@@ -41,20 +55,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +177,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -237,24 +254,18 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">check1</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> <span class="title">w</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        <span class="type">int</span> a;</span><br><span class="line">        <span class="type">char</span> b;</span><br><span class="line">    &#125;c;</span><br><span class="line">    c.a=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(c.b==<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check1:this is little-endian\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check1:this is big-endian\n&quot;</span>);</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">check2</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">short</span> <span class="type">int</span> x;</span><br><span class="line">    <span class="type">char</span> x0,x1;</span><br><span class="line">    x=<span class="number">0x1122</span>;</span><br><span class="line">    x0=((<span class="type">char</span>*)&amp;x)[<span class="number">0</span>];</span><br><span class="line">    x1=((<span class="type">char</span>*)&amp;x)[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (x0==<span class="number">0x11</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check2:this is big-endian\n&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (x1==<span class="number">0x11</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check2:this is little-endian\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    check1();</span><br><span class="line">    check2();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2011/07/09/ssh-nohup-screen/" data-toggle="tooltip" data-placement="top"
-                           title="远程会话管理: ssh, nohup, screen">&larr; Previous Post</a>
+                        <a href="/blog/2011/07/09/ssh-nohup-screen/" title="远程会话管理: ssh, nohup, screen">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2011/05/29/conditional-compilation/" data-toggle="tooltip" data-placement="top"
-                           title="条件编译">Next Post &rarr;</a>
+                        <a href="/blog/2011/05/29/conditional-compilation/" title="条件编译">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -334,8 +345,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -411,16 +421,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -438,23 +438,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -477,20 +477,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

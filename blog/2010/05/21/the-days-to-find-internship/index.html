@@ -1,21 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;从09年到现在，海投了无数简历，也去笔试面试了一些，简单的用一句话来总结就是：面试一次，被鄙视一次。特此一篇记录那些笔试与被鄙视的日子。&lt;/p&gt;
+&lt;p&gt;2009篇:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.matrix-controls.com&#34;&gt;Matrix&lt;/a&gt;: 第一次找实习，第一次海投简历，第一次去笔试、面试，这么多第一次都奉献给了Matrix，为了迎接这来之不易的第一次，把数据结构等好好的看了看，可惜时间有限没有仔细看。Matrix主要在做嵌入式方面，面试也比较随意，只有一道题：字符串查找。当时面试官出的题是有100个字符，从中查找3个字符的子串的位置。听到这道题目时就在心里偷偷笑，刚看过的KMP算法用上了，然后很快的做完这道题目。面试官没有细看我写的代码，只是让我描述一下算法，待我描述完KMP算法后，他让我再优化一下，当时就懵了，KMP不是传说中字符串查找最快的算法吗，怎么还能优化啊！想了半天没有想出来，这时他给出了一个优化方法：用hash表，每个字符作为一个hash value，三个字符一组，如果再优化一下的话可以用哈希的哈希。顿悟，用空间换取时间~~~又问hash查找的时间复杂度，这个没记住。结果可想而知，以失败告终。&lt;br&gt;
+感悟：书本上的知识仅仅是理论上的，你没有实际使用过不会有深入的理解的，学以致用才是王道。数据结构还是要好好学习的。&lt;/p&gt;">
+    
+    <meta name="keywords" content="求职面试">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="那些笔试与被鄙视的日子">
+    <meta property="og:description" content="&lt;p&gt;从09年到现在，海投了无数简历，也去笔试面试了一些，简单的用一句话来总结就是：面试一次，被鄙视一次。特此一篇记录那些笔试与被鄙视的日子。&lt;/p&gt;
+&lt;p&gt;2009篇:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.matrix-controls.com&#34;&gt;Matrix&lt;/a&gt;: 第一次找实习，第一次海投简历，第一次去笔试、面试，这么多第一次都奉献给了Matrix，为了迎接这来之不易的第一次，把数据结构等好好的看了看，可惜时间有限没有仔细看。Matrix主要在做嵌入式方面，面试也比较随意，只有一道题：字符串查找。当时面试官出的题是有100个字符，从中查找3个字符的子串的位置。听到这道题目时就在心里偷偷笑，刚看过的KMP算法用上了，然后很快的做完这道题目。面试官没有细看我写的代码，只是让我描述一下算法，待我描述完KMP算法后，他让我再优化一下，当时就懵了，KMP不是传说中字符串查找最快的算法吗，怎么还能优化啊！想了半天没有想出来，这时他给出了一个优化方法：用hash表，每个字符作为一个hash value，三个字符一组，如果再优化一下的话可以用哈希的哈希。顿悟，用空间换取时间~~~又问hash查找的时间复杂度，这个没记住。结果可想而知，以失败告终。&lt;br&gt;
+感悟：书本上的知识仅仅是理论上的，你没有实际使用过不会有深入的理解的，学以致用才是王道。数据结构还是要好好学习的。&lt;/p&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2010/05/21/the-days-to-find-internship/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="那些笔试与被鄙视的日子">
+    <meta name="twitter:description" content="&lt;p&gt;从09年到现在，海投了无数简历，也去笔试面试了一些，简单的用一句话来总结就是：面试一次，被鄙视一次。特此一篇记录那些笔试与被鄙视的日子。&lt;/p&gt;
+&lt;p&gt;2009篇:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.matrix-controls.com&#34;&gt;Matrix&lt;/a&gt;: 第一次找实习，第一次海投简历，第一次去笔试、面试，这么多第一次都奉献给了Matrix，为了迎接这来之不易的第一次，把数据结构等好好的看了看，可惜时间有限没有仔细看。Matrix主要在做嵌入式方面，面试也比较随意，只有一道题：字符串查找。当时面试官出的题是有100个字符，从中查找3个字符的子串的位置。听到这道题目时就在心里偷偷笑，刚看过的KMP算法用上了，然后很快的做完这道题目。面试官没有细看我写的代码，只是让我描述一下算法，待我描述完KMP算法后，他让我再优化一下，当时就懵了，KMP不是传说中字符串查找最快的算法吗，怎么还能优化啊！想了半天没有想出来，这时他给出了一个优化方法：用hash表，每个字符作为一个hash value，三个字符一组，如果再优化一下的话可以用哈希的哈希。顿悟，用空间换取时间~~~又问hash查找的时间复杂度，这个没记住。结果可想而知，以失败告终。&lt;br&gt;
+感悟：书本上的知识仅仅是理论上的，你没有实际使用过不会有深入的理解的，学以致用才是王道。数据结构还是要好好学习的。&lt;/p&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         那些笔试与被鄙视的日子｜YYGCui&#39;s blog
@@ -41,20 +64,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +186,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -234,24 +260,18 @@
 <p>以上是我笔试面试的分享，每笔试面试一次，都发现自己会的太少了，少也就罢了，还不精~<s>继续充电，继续找实习中</s>~</p>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/06/06/blackberry-use-tips-and-apps/" data-toggle="tooltip" data-placement="top"
-                           title="BlackBerry使用小记及软件应用">&larr; Previous Post</a>
+                        <a href="/blog/2010/06/06/blackberry-use-tips-and-apps/" title="BlackBerry使用小记及软件应用">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/05/05/upgrade-ubuntu-to-1004lts/" data-toggle="tooltip" data-placement="top"
-                           title="升级Ubuntu到10.04 LTS">Next Post &rarr;</a>
+                        <a href="/blog/2010/05/05/upgrade-ubuntu-to-1004lts/" title="升级Ubuntu到10.04 LTS">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -323,8 +343,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -400,16 +419,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -427,23 +436,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -466,20 +475,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

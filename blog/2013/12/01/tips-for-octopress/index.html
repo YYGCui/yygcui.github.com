@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;周末，把之前建立的Octopress blog在新机器上重新配置了下，顺便整理一下配置过程，以备查询。从头配置一个Octopress blog，可以直接参照&lt;a href=&#34;http://octopress.org/docs/setup/&#34;&gt;官方文档&lt;/a&gt;，步骤很清晰，没有什么难度。这篇文档主要整理如何在windows上重新部署Octopress。&lt;/p&gt;">
+    
+    <meta name="keywords" content="Octopress">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="tips for octopress">
+    <meta property="og:description" content="&lt;p&gt;周末，把之前建立的Octopress blog在新机器上重新配置了下，顺便整理一下配置过程，以备查询。从头配置一个Octopress blog，可以直接参照&lt;a href=&#34;http://octopress.org/docs/setup/&#34;&gt;官方文档&lt;/a&gt;，步骤很清晰，没有什么难度。这篇文档主要整理如何在windows上重新部署Octopress。&lt;/p&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2013/12/01/tips-for-octopress/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="tips for octopress">
+    <meta name="twitter:description" content="&lt;p&gt;周末，把之前建立的Octopress blog在新机器上重新配置了下，顺便整理一下配置过程，以备查询。从头配置一个Octopress blog，可以直接参照&lt;a href=&#34;http://octopress.org/docs/setup/&#34;&gt;官方文档&lt;/a&gt;，步骤很清晰，没有什么难度。这篇文档主要整理如何在windows上重新部署Octopress。&lt;/p&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         tips for octopress｜YYGCui&#39;s blog
@@ -41,20 +55,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +177,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -259,24 +276,18 @@
 <p>*<em>本文方法都引自<code>google windows octopress</code></em></p>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/05/12/notes-about-the-longtail-theory/" data-toggle="tooltip" data-placement="top"
-                           title="无处不在的长尾">&larr; Previous Post</a>
+                        <a href="/blog/2015/05/12/notes-about-the-longtail-theory/" title="无处不在的长尾">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2013/10/11/Root-Galaxy-Nexus/" data-toggle="tooltip" data-placement="top"
-                           title="Root Galaxy Nexus">Next Post &rarr;</a>
+                        <a href="/blog/2013/10/11/Root-Galaxy-Nexus/" title="Root Galaxy Nexus">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -348,8 +359,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -425,16 +435,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -452,23 +452,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -491,20 +491,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

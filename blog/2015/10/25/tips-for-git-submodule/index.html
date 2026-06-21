@@ -1,21 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;近来使用&lt;code&gt;git submodule&lt;/code&gt;来管理项目，趟过一些坑，整理记录一下。&lt;/p&gt;
+&lt;p&gt;##为啥使用submodule&lt;/p&gt;
+&lt;p&gt;Git官网如是说，简单的说，就是在引入第三方库时，或者一些公共模块的管理时，可以使用submodule，既单独管理更新，又能很方便的引入使用。&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;A submodule allows you to keep another Git repository in a subdirectory of your repository. The other repository has its own history, which does not interfere with the history of the current repository. This can be used to have external dependencies such as third party libraries for example.&lt;/p&gt;
+&lt;footer&gt;&lt;strong&gt;Git&lt;/strong&gt;&lt;cite&gt;&lt;a href=&#34;https://git-scm.com/docs/git-submodule&#34;&gt;git-submodule Document&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;">
+    
+    <meta name="keywords" content="git,submodule">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="tips for git submodule">
+    <meta property="og:description" content="&lt;p&gt;近来使用&lt;code&gt;git submodule&lt;/code&gt;来管理项目，趟过一些坑，整理记录一下。&lt;/p&gt;
+&lt;p&gt;##为啥使用submodule&lt;/p&gt;
+&lt;p&gt;Git官网如是说，简单的说，就是在引入第三方库时，或者一些公共模块的管理时，可以使用submodule，既单独管理更新，又能很方便的引入使用。&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;A submodule allows you to keep another Git repository in a subdirectory of your repository. The other repository has its own history, which does not interfere with the history of the current repository. This can be used to have external dependencies such as third party libraries for example.&lt;/p&gt;
+&lt;footer&gt;&lt;strong&gt;Git&lt;/strong&gt;&lt;cite&gt;&lt;a href=&#34;https://git-scm.com/docs/git-submodule&#34;&gt;git-submodule Document&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2015/10/25/tips-for-git-submodule/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="tips for git submodule">
+    <meta name="twitter:description" content="&lt;p&gt;近来使用&lt;code&gt;git submodule&lt;/code&gt;来管理项目，趟过一些坑，整理记录一下。&lt;/p&gt;
+&lt;p&gt;##为啥使用submodule&lt;/p&gt;
+&lt;p&gt;Git官网如是说，简单的说，就是在引入第三方库时，或者一些公共模块的管理时，可以使用submodule，既单独管理更新，又能很方便的引入使用。&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;A submodule allows you to keep another Git repository in a subdirectory of your repository. The other repository has its own history, which does not interfere with the history of the current repository. This can be used to have external dependencies such as third party libraries for example.&lt;/p&gt;
+&lt;footer&gt;&lt;strong&gt;Git&lt;/strong&gt;&lt;cite&gt;&lt;a href=&#34;https://git-scm.com/docs/git-submodule&#34;&gt;git-submodule Document&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         tips for git submodule｜YYGCui&#39;s blog
@@ -41,20 +67,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +189,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -245,24 +274,18 @@
 <p>如果直接修改了submodule的内容，然后commit了该修改，那么在push时会出现up-to-update的情况。这时可以用如下命令挽救</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yygcui@ubuntu$ git checkout master</span><br><span class="line">Warning: you are leaving 1 commit behind, not connected to</span><br><span class="line">any of your branches:</span><br><span class="line"></span><br><span class="line">  &lt;commit id&gt; forget to check out master</span><br><span class="line"></span><br><span class="line">If you want to keep them by creating a new branch, this may be a good time</span><br><span class="line">to do so with:</span><br><span class="line"></span><br><span class="line"> git branch new_branch_name &lt;commit id&gt;</span><br><span class="line"></span><br><span class="line">Switched to branch &#x27;master&#x27;</span><br><span class="line">yygcui@ubuntu$ git cherry-pick &lt;commit id&gt;</span><br><span class="line">yygcui@ubuntu$ git push</span><br></pre></td></tr></table></figure>
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2015/12/06/thinking-about-technoloy-development/" data-toggle="tooltip" data-placement="top"
-                           title="技术开发的一些思考">&larr; Previous Post</a>
+                        <a href="/blog/2015/12/06/thinking-about-technoloy-development/" title="技术开发的一些思考">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/" data-toggle="tooltip" data-placement="top"
-                           title="mysql掉电后无法启动 InnoDB: is in the future!">Next Post &rarr;</a>
+                        <a href="/blog/2015/10/12/mysql-can-not-startup-after-loss-power/" title="mysql掉电后无法启动 InnoDB: is in the future!">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -337,8 +360,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -414,16 +436,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -441,23 +453,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -480,20 +492,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

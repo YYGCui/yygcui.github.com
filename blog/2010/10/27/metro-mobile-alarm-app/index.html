@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;好久没有更新了，不是偷懒，最近累的要死，有很多想写的都积攒下来了…&lt;/p&gt;
+&lt;p&gt;临近毕业，最近一直在赶场参加校园招聘笔试什么的，白天还在实习，晚上周末去笔试，所以搞的很累。都怪自己不淡定阿，要想好好找工作就干脆不去实习了，要不就好好实习留下来，两边都不想放弃，最终没时间准备找工作，又没好好实习，到头来什么都得不到啊！&lt;/p&gt;
+&lt;p&gt;地铁闹铃，更确切地讲，就是通过无线终端设置到站提醒功能。这个想法的由来是缘于一次下班后乘地铁去参加宣讲会和笔试，上一天班就已经很累了，再乘坐噪杂的地铁，很难听清楚报站，灵光一闪想到了这么个想法，其实还是有一定可行性的，待我好好分析一下：&lt;/p&gt;">
+    
+    <meta name="keywords" content="Mobile,metro">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="地铁闹铃">
+    <meta property="og:description" content="&lt;p&gt;好久没有更新了，不是偷懒，最近累的要死，有很多想写的都积攒下来了…&lt;/p&gt;
+&lt;p&gt;临近毕业，最近一直在赶场参加校园招聘笔试什么的，白天还在实习，晚上周末去笔试，所以搞的很累。都怪自己不淡定阿，要想好好找工作就干脆不去实习了，要不就好好实习留下来，两边都不想放弃，最终没时间准备找工作，又没好好实习，到头来什么都得不到啊！&lt;/p&gt;
+&lt;p&gt;地铁闹铃，更确切地讲，就是通过无线终端设置到站提醒功能。这个想法的由来是缘于一次下班后乘地铁去参加宣讲会和笔试，上一天班就已经很累了，再乘坐噪杂的地铁，很难听清楚报站，灵光一闪想到了这么个想法，其实还是有一定可行性的，待我好好分析一下：&lt;/p&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2010/10/27/metro-mobile-alarm-app/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="地铁闹铃">
+    <meta name="twitter:description" content="&lt;p&gt;好久没有更新了，不是偷懒，最近累的要死，有很多想写的都积攒下来了…&lt;/p&gt;
+&lt;p&gt;临近毕业，最近一直在赶场参加校园招聘笔试什么的，白天还在实习，晚上周末去笔试，所以搞的很累。都怪自己不淡定阿，要想好好找工作就干脆不去实习了，要不就好好实习留下来，两边都不想放弃，最终没时间准备找工作，又没好好实习，到头来什么都得不到啊！&lt;/p&gt;
+&lt;p&gt;地铁闹铃，更确切地讲，就是通过无线终端设置到站提醒功能。这个想法的由来是缘于一次下班后乘地铁去参加宣讲会和笔试，上一天班就已经很累了，再乘坐噪杂的地铁，很难听清楚报站，灵光一闪想到了这么个想法，其实还是有一定可行性的，待我好好分析一下：&lt;/p&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         地铁闹铃｜YYGCui&#39;s blog
@@ -41,20 +61,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +183,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -230,24 +253,18 @@
 <p>PS: 昨晚想到的结尾并不是这样地…昨晚没有写完，今天上了一天班，回来给忘了，啊啊啊啊~~~~下次一定要一气写完!!!</p>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2010/11/01/emotion-of-view-expo-2010/" data-toggle="tooltip" data-placement="top"
-                           title="走，排队，看电影">&larr; Previous Post</a>
+                        <a href="/blog/2010/11/01/emotion-of-view-expo-2010/" title="走，排队，看电影">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2010/10/02/block-sales-change-life/" data-toggle="tooltip" data-placement="top"
-                           title="团购改变生活">Next Post &rarr;</a>
+                        <a href="/blog/2010/10/02/block-sales-change-life/" title="团购改变生活">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -322,8 +339,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -399,16 +415,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -426,23 +432,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -465,20 +471,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>

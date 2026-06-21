@@ -4,35 +4,29 @@
  * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-// Tooltip Init
-$(function() {
-    $("[data-toggle='tooltip']").tooltip();
-});
-
-
-// make all images responsive
-/*
- * Unuse by Hux
- * actually only Portfolio-Pages can't use it and only post-img need it.
- * so I modify the _layout/post and CSS to make post-img responsive!
- */
-// $(function() {
-//  $("img").addClass("img-responsive");
-// });
-
 // responsive tables
-$(document).ready(function() {
-    $("table").wrap("<div class='table-responsive'></div>");
-    $("table").addClass("table");
-});
+(function() {
+    var tables = document.querySelectorAll('table');
+    for (var i = 0; i < tables.length; i++) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'table-responsive';
+        tables[i].parentNode.insertBefore(wrapper, tables[i]);
+        wrapper.appendChild(tables[i]);
+        tables[i].classList.add('table');
+    }
+})();
 
 // responsive embed videos
-$(document).ready(function () {
-    $('iframe[src*="youtube.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-    $('iframe[src*="youtube.com"]').addClass('embed-responsive-item');
-    $('iframe[src*="vimeo.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-    $('iframe[src*="vimeo.com"]').addClass('embed-responsive-item');
-});
+(function() {
+    var iframes = document.querySelectorAll('iframe[src*="youtube.com"], iframe[src*="vimeo.com"]');
+    for (var i = 0; i < iframes.length; i++) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'embed-responsive embed-responsive-16by9';
+        iframes[i].parentNode.insertBefore(wrapper, iframes[i]);
+        wrapper.appendChild(iframes[i]);
+        iframes[i].classList.add('embed-responsive-item');
+    }
+})();
 
 // 判断是不是博文页面
 function isPages(attr){
@@ -90,8 +84,6 @@ function scrollCheck(scrollTarget, toggleClass, scrollHeight){
 (function () {
     var navTop = document.querySelector('#nav-top');
     navTop.ondblclick = function () {
-        $('body').animate({
-            scrollTop: 0
-        }, 500)
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 })();

@@ -1,21 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <!-- Head tag -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="YYGCui的个人博客">
-    <meta name="keyword" content="">
+    <meta name="description" content="&lt;p&gt;项目中使用Core dump来Debug程序崩溃问题，在无盘环境下，往往无法在规定时间内及时传输出形成的大的Core file，在刘博的指导下，希望同时通过backtrace来记录系统崩溃时的log，这样在没有Core file的情况下，也可以大致上分析产生问题的地方。我也趁此机会好好学习了一下如何用Core dump来debug，如何实现backtrace和分析backtrace。&lt;/p&gt;
+&lt;h2 id=&#34;1-Core-dump&#34;&gt;&lt;a class=&#34;header-anchor&#34; href=&#34;#1-Core-dump&#34;&gt;&lt;/a&gt;1. Core dump&lt;/h2&gt;
+&lt;p&gt;在大多数Linux发布版中，Core dump是默认不开启的。可以使用命令ulimit -c来查看core file的大小限制以及配置开启core dump。&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;variable&#34;&gt;$ulimit&lt;/span&gt; -c&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 &lt;span class=&#34;comment&#34;&gt;#0个字节说明不能创建core file, core dump没有开启&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;">
+    
+    <meta name="keywords" content="Linux,Programming,C/C++,backtrace,core dump,gdb">
+    
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="alternate" type="application/atom+xml" title="YYGCui" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Core dump与backtrace">
+    <meta property="og:description" content="&lt;p&gt;项目中使用Core dump来Debug程序崩溃问题，在无盘环境下，往往无法在规定时间内及时传输出形成的大的Core file，在刘博的指导下，希望同时通过backtrace来记录系统崩溃时的log，这样在没有Core file的情况下，也可以大致上分析产生问题的地方。我也趁此机会好好学习了一下如何用Core dump来debug，如何实现backtrace和分析backtrace。&lt;/p&gt;
+&lt;h2 id=&#34;1-Core-dump&#34;&gt;&lt;a class=&#34;header-anchor&#34; href=&#34;#1-Core-dump&#34;&gt;&lt;/a&gt;1. Core dump&lt;/h2&gt;
+&lt;p&gt;在大多数Linux发布版中，Core dump是默认不开启的。可以使用命令ulimit -c来查看core file的大小限制以及配置开启core dump。&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;variable&#34;&gt;$ulimit&lt;/span&gt; -c&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 &lt;span class=&#34;comment&#34;&gt;#0个字节说明不能创建core file, core dump没有开启&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;">
+    <meta property="og:url" content="http://blog.cuicc.com/blog/2012/09/17/core-dump-and-backtrace/">
+    <meta property="og:image" content="/images/header/lion-blur-bg.jpg">
+    <meta property="og:site_name" content="YYGCui">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Core dump与backtrace">
+    <meta name="twitter:description" content="&lt;p&gt;项目中使用Core dump来Debug程序崩溃问题，在无盘环境下，往往无法在规定时间内及时传输出形成的大的Core file，在刘博的指导下，希望同时通过backtrace来记录系统崩溃时的log，这样在没有Core file的情况下，也可以大致上分析产生问题的地方。我也趁此机会好好学习了一下如何用Core dump来debug，如何实现backtrace和分析backtrace。&lt;/p&gt;
+&lt;h2 id=&#34;1-Core-dump&#34;&gt;&lt;a class=&#34;header-anchor&#34; href=&#34;#1-Core-dump&#34;&gt;&lt;/a&gt;1. Core dump&lt;/h2&gt;
+&lt;p&gt;在大多数Linux发布版中，Core dump是默认不开启的。可以使用命令ulimit -c来查看core file的大小限制以及配置开启core dump。&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;variable&#34;&gt;$ulimit&lt;/span&gt; -c&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 &lt;span class=&#34;comment&#34;&gt;#0个字节说明不能创建core file, core dump没有开启&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;">
+    <meta name="twitter:image" content="/images/header/lion-blur-bg.jpg">
     <title>
         
         Core dump与backtrace｜YYGCui&#39;s blog
@@ -41,20 +64,23 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     header.intro-header {
         background-image: url('/images/header/lion-blur-bg.jpg')
     }
 </style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
+<body class="fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -160,7 +186,7 @@
 <!--only post-->
 
 
-<img class="wechat-title-img"
+<img class="wechat-title-img" alt="wechat share"
      src="/images/header/blog-bg-black-run.jpg">
 
 
@@ -302,24 +328,18 @@
 </ol>
 
                 <hr>
-                
-
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2012/11/26/time-vs-us/" data-toggle="tooltip" data-placement="top"
-                           title="时间是静止的，流逝的是我们">&larr; Previous Post</a>
+                        <a href="/blog/2012/11/26/time-vs-us/" title="时间是静止的，流逝的是我们">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2012/04/19/disgusting-landlord/" data-toggle="tooltip" data-placement="top"
-                           title="后极品房东">Next Post &rarr;</a>
+                        <a href="/blog/2012/04/19/disgusting-landlord/" title="后极品房东">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
-
-                
 
                 
 
@@ -406,8 +426,7 @@
     </div>
 </article>
 
-
-
+    
 
 
 
@@ -483,16 +502,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-
-<script src="/js/jquery.min.js"></script>
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script src="/js/bootstrap.min.js"></script>
-
-
 <!-- Custom Theme JavaScript -->
 
 <script src="/js/blog.js"></script>
@@ -510,23 +519,23 @@
     }
 </script>
 
-<!-- jquery.tagcloud.js -->
+<!-- jquery.tagcloud.js (tag pages only) -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+    if(document.getElementById('tag_cloud')){
+        async("/js/jquery.min.js",function(){
+            async("/js/jquery.tagcloud.js",function(){
+                $.fn.tagcloud.defaults = {
+                    color: {start: '#bbbbee', end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            });
+        });
     }
 </script>
 
 <!--fastClick.js -->
 <script>
-    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -549,20 +558,10 @@
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
 
 <script defer src="https://vercount.one/js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="/images/yygcui.png">
 </body>
 
 </html>
